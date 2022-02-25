@@ -1,3 +1,4 @@
+import React from 'react';
 import { FaCaretDown, FaCaretUp } from 'react-icons/fa';
 import { IconType } from 'react-icons/lib';
 
@@ -7,7 +8,7 @@ interface IconInterface {
 enum IconList {
     caretDown = 'caret-down',
     caretUp = 'caret-up'
-};
+}
 
 const iconMap: IconInterface = {
     [IconList.caretDown]: FaCaretDown,
@@ -26,10 +27,10 @@ function Icon({
     const IconComponent = iconMap[icon];
     return (
         <IconComponent
-             style={{
-                 color,
-                 fontSize
-             }} 
+            style={{
+                color,
+                fontSize
+            }} 
         />
     );
 }

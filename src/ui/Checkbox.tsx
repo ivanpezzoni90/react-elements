@@ -1,12 +1,12 @@
-import { useEffect, useRef, useState } from 'react';
-import styled from 'styled-components'
+import React, { useEffect, useRef, useState } from 'react';
+import styled from 'styled-components';
 import { generateID } from '../helpers';
 import Element from './Element';
 
 const CheckboxContainer = styled.div`
   display: inline-block;
   vertical-align: middle;
-`
+`;
 const Icon = styled.svg`
   fill: none;
   stroke: white;
@@ -70,8 +70,8 @@ function Checkbox({
     }
 
     useEffect(() => {
-        setChecked(checkedFromProps)
-    }, [checkedFromProps])
+        setChecked(checkedFromProps);
+    }, [checkedFromProps]);
 
     return (
         <Element
@@ -82,17 +82,17 @@ function Checkbox({
             <CheckboxContainer
                 className={className}
             >
-            <HiddenCheckbox
-                checked={checked}
-                onChange={onCheckboxChange}
-            />
-            <StyledCheckbox
-                checked={checked}
-            >
-                <Icon viewBox="0 0 24 24">
-                <polyline points="20 6 9 17 4 12" />
-                </Icon>
-            </StyledCheckbox>
+                <HiddenCheckbox
+                    checked={checked}
+                    onChange={onCheckboxChange}
+                />
+                <StyledCheckbox
+                    checked={checked}
+                >
+                    <Icon viewBox="0 0 24 24">
+                        <polyline points="20 6 9 17 4 12" />
+                    </Icon>
+                </StyledCheckbox>
             </CheckboxContainer>
         </Element>
     );

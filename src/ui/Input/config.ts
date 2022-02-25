@@ -3,7 +3,7 @@ export const calculateInputLength = (length: string) => ({
     m: '16em',
     l: '32em',
     full: '100%'
-  }[length]);
+}[length]);
   
 export const calculateInnerInputLength = (length: string) => ({
     s: '6em',
@@ -21,21 +21,21 @@ export interface InputProps {
     onBlur: Function,
     onChange: Function,
     length: string,
-};
+}
 
 export interface InputWrapperProps {
   length: string,
   active: boolean
   locked: boolean
-};
+}
 
 export interface LabelProps {
   error: string,
   active: boolean,
-};
+}
 
 export interface InputElementProps {
   error: string,
   length: string,
   active: boolean,
-};
+}

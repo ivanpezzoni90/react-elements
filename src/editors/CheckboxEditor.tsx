@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { Fragment } from 'react';
 import Editor from './Editor';
 import Checkbox from '../ui/Checkbox';
@@ -37,6 +39,6 @@ export default function CheckboxEditor() {
                 </ElementContainer>
             </Fragment>
         );
-    }
+    };
        
 }

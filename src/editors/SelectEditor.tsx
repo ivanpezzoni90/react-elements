@@ -1,3 +1,5 @@
+import React from 'react';
+
 import Editor from './Editor';
 import { Fragment } from 'react';
 import { EditorContainer, ElementContainer } from './commons';
@@ -53,6 +55,6 @@ export default function SelectEditor() {
                 </ElementContainer>
             </Fragment>
         );
-    }
+    };
        
 }

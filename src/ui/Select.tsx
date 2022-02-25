@@ -1,3 +1,4 @@
+import React from 'react';
 import { Fragment, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { generateID } from '../helpers';
@@ -52,7 +53,7 @@ const SelectWrapper = styled.div<SelectWrapperProps>`
         ? `background-color: #ffffff;
           box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2);`
         : ''
-    }
+}
     &:hover{
         background-color: rgba(255, 255, 255, 0.45);
         box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.05);
@@ -79,7 +80,7 @@ const Label = styled.div<LabelProps>`
           color: #666;
           font-size: 12px;`
         : ''
-    }
+}
 `;
 
 const IconWrapper = styled.div`
@@ -91,15 +92,15 @@ const IconWrapper = styled.div`
 interface LabelProps {
     htmlFor: string
     hasValue: boolean
-};
+}
 interface SelectElementProps {
-};
+}
 interface SelectWrapperProps{
     hasValue: boolean
-};
+}
 
-const DropDownListContainer = styled("div")``;
-const DropDownList = styled("ul")`
+const DropDownListContainer = styled('div')``;
+const DropDownList = styled('ul')`
     margin: 0;
     padding: 0;
     background-color: #ffffff;
@@ -115,9 +116,9 @@ interface ListItemProps {
     onClick: Function
     key: string
     selected: boolean
-};
+}
 
-const ListItem = styled("li")<ListItemProps>`
+const ListItem = styled('li')<ListItemProps>`
     list-style: none;
     padding: 0.5em 1em 0.5em 1em;
     &:hover {
@@ -127,7 +128,7 @@ const ListItem = styled("li")<ListItemProps>`
         ? `background: #adadad;
             color: #ffffff;`
         : ''
-    }
+}
 `;
 
 function Select(props: {
@@ -141,7 +142,6 @@ function Select(props: {
         options,
         value: valueFromProps,
         label = '',
-        labelPosition,
         onChange
     } = props;
 
@@ -210,7 +210,7 @@ function Select(props: {
                 </IconWrapper>
             </SelectWrapper>
         </Fragment>
-    )
+    );
 }
 
 Select.defaultProps = {
@@ -219,6 +219,6 @@ Select.defaultProps = {
     label: 'Label',
     labelPosition: undefined,
     onChange: () => {}
-}
+};
 
 export default Select;

@@ -1,3 +1,5 @@
+import React from 'react';
+
 import Editor from './Editor';
 
 import { Editor as EditorType } from '../types';
@@ -81,6 +83,6 @@ export default function InputEditor() {
                 </ElementContainer>
             </Fragment>
         );
-    }
+    };
        
 }

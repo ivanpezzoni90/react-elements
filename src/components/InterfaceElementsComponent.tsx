@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { useState } from 'react';
 import styled from 'styled-components';
 import { Components, getComponentByKey } from '../constants/componentsMap';
@@ -49,7 +51,7 @@ function IEAside({
                 </Component>
             ))}
         </Aside>
-    )
+    );
 }
 
 function IEWorkarea({
@@ -63,7 +65,7 @@ function IEWorkarea({
         <Workarea>
             <Editor />
         </Workarea>
-    )
+    );
 }
 
 export default function IEComponent() {
@@ -85,5 +87,5 @@ export default function IEComponent() {
                 currentComponentKey={currentKey}
             />
         </Container>
-    )
+    );
 }

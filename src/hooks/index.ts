@@ -11,10 +11,10 @@ export const useEditorInit = (defaultProps: Object) => {
         setProps(Object.assign({}, props, {
             [prop]: value
         }));
-    }
+    };
 
     return {
         onChangeProp,
         props
     };
-}
+};

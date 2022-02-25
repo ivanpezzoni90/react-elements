@@ -1,3 +1,5 @@
+import React from 'react';
+
 import styled from 'styled-components';
 import { Editor as EditorType } from '../types';
 import Checkbox from '../ui/Checkbox';
@@ -43,17 +45,17 @@ export default function Editor({
                                     length={'s'}                                    
                                 />),
                                 select: (<Select
-                                        options={e.options ? e.options : []}
-                                        // value={Array.isArray(e.default)
-                                        //     ? e.default as Array<string>
-                                        //     : e.default as string
-                                        // }
-                                        value={e.default as string}
-                                        label={e.label}
-                                        onChange={(newValue: string | Array<string>) => {
-                                            onChange(e.prop, newValue);
-                                        }}
-                                    />),
+                                    options={e.options ? e.options : []}
+                                    // value={Array.isArray(e.default)
+                                    //     ? e.default as Array<string>
+                                    //     : e.default as string
+                                    // }
+                                    value={e.default as string}
+                                    label={e.label}
+                                    onChange={(newValue: string | Array<string>) => {
+                                        onChange(e.prop, newValue);
+                                    }}
+                                />),
                                 checkbox: (<Checkbox
                                     className=""
                                     checked={e.default as boolean}
@@ -65,9 +67,9 @@ export default function Editor({
                             }[e.type]
                         }
                     </EditorElement>
-                )
+                );
             })}
         </EditorWrapper>
-    )
+    );
 
 }

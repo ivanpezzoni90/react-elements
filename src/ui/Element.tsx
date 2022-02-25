@@ -1,4 +1,4 @@
-import { ReactChild } from 'react';
+import React, { ReactChild } from 'react';
 import styled from 'styled-components';
 
 const ElementLabel = styled.label``;
@@ -17,34 +17,34 @@ const FlexWrapper = styled.div`
 const ChildWrapper = styled.div``;
 
 const Element = ({
-  id,
-  label,
-  labelPosition = 'vertical',
-  children
+    id,
+    label,
+    labelPosition = 'vertical',
+    children
 }: {
   id: string,
   label: string,
   labelPosition?: string,
   children: Array<ReactChild> | ReactChild
 }) => {
-  return (
-    <ElementWrapper>
-      <ElementLabel
-        htmlFor={id}
-      >
-        <FlexWrapper
-          position={labelPosition}
-        >
-          <LabelTextWrapper>
-            { label }
-          </LabelTextWrapper>
-          <ChildWrapper>
-            { children }
-          </ChildWrapper>
-        </FlexWrapper>
-      </ElementLabel>
-    </ElementWrapper>
-  );
+    return (
+        <ElementWrapper>
+            <ElementLabel
+                htmlFor={id}
+            >
+                <FlexWrapper
+                    position={labelPosition}
+                >
+                    <LabelTextWrapper>
+                        { label }
+                    </LabelTextWrapper>
+                    <ChildWrapper>
+                        { children }
+                    </ChildWrapper>
+                </FlexWrapper>
+            </ElementLabel>
+        </ElementWrapper>
+    );
 };
 
 enum LabelPositions {
