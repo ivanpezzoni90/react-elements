@@ -25,7 +25,9 @@ export default function Editor({
         <EditorWrapper>
             {json.map((e: EditorType) => {
                 return (
-                    <EditorElement>
+                    <EditorElement
+                        key={`${e.prop}_${e.label}`}
+                    >
                         {
                             {
                                 input: (<Input
@@ -42,10 +44,11 @@ export default function Editor({
                                 />),
                                 select: (<Select
                                         options={e.options ? e.options : []}
-                                        value={Array.isArray(e.default)
-                                            ? e.default as Array<string>
-                                            : e.default as string
-                                        }
+                                        // value={Array.isArray(e.default)
+                                        //     ? e.default as Array<string>
+                                        //     : e.default as string
+                                        // }
+                                        value={e.default as string}
                                         label={e.label}
                                         onChange={(newValue: string | Array<string>) => {
                                             onChange(e.prop, newValue);
