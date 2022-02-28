@@ -1,17 +1,3 @@
-export const calculateInputLength = (length: string) => ({
-    s: '8em',
-    m: '16em',
-    l: '32em',
-    full: '100%'
-}[length]);
-  
-export const calculateInnerInputLength = (length: string) => ({
-    s: '6em',
-    m: '14em',
-    l: '30em',
-    full: '100%'
-}[length]);
-
 export interface InputProps {
     locked: boolean,
     active: boolean,

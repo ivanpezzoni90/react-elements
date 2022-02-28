@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { ReactChild } from 'react';
 
-import { Fragment } from 'react';
 import Editor from './Editor';
-import Checkbox from '../ui/Checkbox';
+
 import { Editor as EditorType } from '../types';
+import { Fragment } from 'react';
+import Element, { AlignPositions, LabelPositions } from '../ui/Element';
 import { useEditorInit } from '../hooks';
 import { EditorContainer, ElementContainer } from './commons';
-import { LabelPositions, AlignPositions } from '../ui/Element';
-
+import { CheckboxElement } from '../ui/Checkbox';
 
 const editorJson: EditorType[] = [
     {
@@ -45,14 +45,41 @@ const editorJson: EditorType[] = [
             value: AlignPositions.right
         }]
     },
+    {
+        label: 'Child',
+        type: 'select',
+        default: 'checkbox',
+        prop: 'children',
+        options: [{
+            label: 'Checkbox',
+            value: 'checkbox'
+        }]
+    }
 ];
 
-export default function CheckboxEditor() {
-    return function CheckboxEditorFn () {
+const getElement = (element: string) => {
+    switch(element) {
+        case 'checkbox':
+        default:
+            return (<CheckboxElement
+                className=""
+                checked={false}
+                onChange={() => {}}
+            />);
+    }
+};
+
+export default function ElementEditor() {
+    return function ElementEditorFn () {
         const {
             onChangeProp,
-            props: checkboxProps
-        } = useEditorInit(Checkbox.defaultProps);
+            props: elementProps
+        } = useEditorInit(Element.defaultProps);
+
+        // Get child to render inside element
+        const elementToRender: ReactChild = getElement(elementProps.children);
+        // Delete children prop before spread
+        delete elementProps.children;
 
         return (
             <Fragment>
@@ -63,9 +90,11 @@ export default function CheckboxEditor() {
                     />
                 </EditorContainer>
                 <ElementContainer>
-                    <Checkbox
-                        {...checkboxProps}
-                    />
+                    <Element
+                        {...elementProps}
+                    >
+                        {elementToRender}
+                    </Element>
                 </ElementContainer>
             </Fragment>
         );

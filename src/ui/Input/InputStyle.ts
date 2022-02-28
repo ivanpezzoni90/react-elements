@@ -4,12 +4,15 @@ import {
     InputElementProps,
     InputWrapperProps,
     LabelProps,
-    calculateInnerInputLength,
-    calculateInputLength
 } from './config';
 
+import {
+    calculateInnerInputLength,
+    calculateInputLength
+} from '../../helpers';
+
 export const InputElement = styled.input<InputElementProps>`
-    width: ${(props: any) => (calculateInnerInputLength(props.length))};
+    width: ${(props) => (calculateInnerInputLength(props.length))};
     height: 2.5em;
     position: relative;
     padding: 0 1em;

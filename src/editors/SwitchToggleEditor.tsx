@@ -2,12 +2,11 @@ import React from 'react';
 
 import { Fragment } from 'react';
 import Editor from './Editor';
-import Checkbox from '../ui/Checkbox';
+import SwitchToggle from '../ui/SwitchToggle';
 import { Editor as EditorType } from '../types';
 import { useEditorInit } from '../hooks';
 import { EditorContainer, ElementContainer } from './commons';
-import { LabelPositions, AlignPositions } from '../ui/Element';
-
+import { AlignPositions, LabelPositions } from '../ui/Element';
 
 const editorJson: EditorType[] = [
     {
@@ -15,6 +14,12 @@ const editorJson: EditorType[] = [
         default: 'Label',
         label: 'Label',
         prop: 'label'
+    },
+    {
+        type: 'input',
+        default: '#ba0c2f',
+        label: 'Color',
+        prop: 'color'
     },
     {
         type: 'select',
@@ -44,15 +49,15 @@ const editorJson: EditorType[] = [
             label: 'Right',
             value: AlignPositions.right
         }]
-    },
+    }
 ];
 
-export default function CheckboxEditor() {
-    return function CheckboxEditorFn () {
+export default function SwitchToggleEditor() {
+    return function SwitchToggleEditorFn () {
         const {
             onChangeProp,
-            props: checkboxProps
-        } = useEditorInit(Checkbox.defaultProps);
+            props: switchToggleProps
+        } = useEditorInit(SwitchToggle.defaultProps);
 
         return (
             <Fragment>
@@ -63,8 +68,8 @@ export default function CheckboxEditor() {
                     />
                 </EditorContainer>
                 <ElementContainer>
-                    <Checkbox
-                        {...checkboxProps}
+                    <SwitchToggle
+                        {...switchToggleProps}
                     />
                 </ElementContainer>
             </Fragment>

@@ -14,6 +14,25 @@ const editorJson: EditorType[] = [
         default: 'Label',
         label: 'Label',
         prop: 'label'
+    },
+    {
+        label: 'Length',
+        type: 'select',
+        default: 'full',
+        prop: 'length',
+        options: [{
+            label: 'Full',
+            value: 'full'
+        }, {
+            label: 'S',
+            value: 's'
+        }, {
+            label: 'M',
+            value: 'm'
+        }, {
+            label: 'L',
+            value: 'l'
+        }]
     }
 ];
 

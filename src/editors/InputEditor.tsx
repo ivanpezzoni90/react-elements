@@ -12,28 +12,16 @@ import { EditorContainer, ElementContainer } from './commons';
 const editorJson: EditorType[] = [
     {
         type: 'input',
-        default: '',
-        label: 'Value',
-        prop: 'value'
-    },
-    {
-        type: 'input',
         default: 'Label',
         label: 'Label',
         prop: 'label'
     },
-    // {
-    //     label: 'Locked',
-    //     type: 'checkbox',
-    //     default: false,
-    //     prop: 'locked'
-    // },
-    // {
-    //     label: 'Active',
-    //     type: 'checkbox',
-    //     default: true,
-    //     prop: 'active'
-    // },
+    {
+        label: 'Locked',
+        type: 'toggle',
+        default: false,
+        prop: 'locked'
+    },
     {
         label: 'Error',
         type: 'input',
@@ -46,17 +34,17 @@ const editorJson: EditorType[] = [
         default: 'full',
         prop: 'length',
         options: [{
-            label: 'full',
+            label: 'Full',
             value: 'full'
         }, {
             label: 'S',
-            value: 'S'
+            value: 's'
         }, {
             label: 'M',
-            value: 'M'
+            value: 'm'
         }, {
             label: 'L',
-            value: 'L'
+            value: 'l'
         }]
     }
 ];

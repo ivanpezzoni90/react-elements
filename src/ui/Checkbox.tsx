@@ -1,68 +1,74 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { generateID } from '../helpers';
-import Element from './Element';
+import { generateID, mergeClasses } from '../helpers';
+import Element, { AlignPositions, LabelPositions } from './Element';
 
 const CheckboxContainer = styled.div`
-  display: inline-block;
-  vertical-align: middle;
+    display: inline-block;
+    vertical-align: middle;
+    padding-top: 0.25em;
 `;
 const Icon = styled.svg`
-  fill: none;
-  stroke: white;
-  stroke-width: 2px;
+    fill: none;
+    stroke: white;
+    stroke-width: 2px;
 `;
 const HiddenCheckbox = styled.input.attrs({ type: 'checkbox' })`
-  border: 0;
-  clip: rect(0 0 0 0);
-  clippath: inset(50%);
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  white-space: nowrap;
-  width: 1px;
+    border: 0;
+    clip: rect(0 0 0 0);
+    clippath: inset(50%);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
 `;
 
 const StyledCheckbox = styled.div`
-  display: inline-block;
-  width: 1.5em;
-  height: 1.5em;
-  background: ${({ checked }: { checked: boolean }) => (checked ? '#ba0c2f' : '#fff')};
-  border-radius: 3px;
-  border: 1px solid #666;
-  transition: all 150ms;
+    display: inline-block;
+    width: 1.5em;
+    height: 1.5em;
+    background: ${({ checked }: { checked: boolean }) => (checked ? '#ba0c2f' : '#fff')};
+    border-radius: 3px;
+    border: 1px solid #666;
+    transition: all 150ms;
 
-  ${HiddenCheckbox}:focus + & {
-    box-shadow: 0 0 0 3px #dedede;
-  }
+    ${HiddenCheckbox}:focus + & {
+        box-shadow: 0 0 0 3px #dedede;
+    }
 
-  ${Icon} {
-    visibility: ${({ checked }: { checked: boolean }) => (checked ? 'visible' : 'hidden')}
-  }
+    ${Icon} {
+        visibility: ${({ checked }: { checked: boolean }) => (checked ? 'visible' : 'hidden')}
+    }
 `;
 
-function Checkbox({
-    className,
-    checked: checkedFromProps,
-    label,
-    labelPosition,
-    onChange
-}: {
+interface CheckboxInterface {
     className: string,
     checked: boolean,
     label: string,
-    labelPosition?: string,
+    labelPosition?: LabelPositions,
+    align?: AlignPositions,
     onChange: Function
-}) {
+}
+
+interface CheckboxElementInterface {
+    className: string,
+    checked: boolean,
+    onChange: Function
+}
+
+function CheckboxElement({
+    className,
+    checked: checkedFromProps,
+    onChange
+}: CheckboxElementInterface) {
     const [
         checked, setChecked
     ]: [
         checked: boolean, setChecked: Function
     ] = useState(checkedFromProps);
-
-    const id = useRef(generateID());
 
     function onCheckboxChange() {
         setChecked(!checked);
@@ -73,27 +79,50 @@ function Checkbox({
         setChecked(checkedFromProps);
     }, [checkedFromProps]);
 
+    return (<CheckboxContainer
+        className={mergeClasses('ie-checkbox', className)}
+    >
+        <HiddenCheckbox
+            className="ie-checkbox__input"
+        />
+        <StyledCheckbox
+            className="ie-checkbox__checkbox"
+            checked={checked}
+            onClick={onCheckboxChange}
+        >
+            <Icon viewBox="0 0 24 24"
+                className="ie-checkbox__checkbox__icon"
+            >
+                <polyline points="20 6 9 17 4 12" />
+            </Icon>
+        </StyledCheckbox>
+    </CheckboxContainer>);
+}
+
+function Checkbox(props: CheckboxInterface) {
+    const {
+        className,
+        checked: checkedFromProps,
+        label,
+        labelPosition,
+        align,
+        onChange
+    } = props;
+
+    const id = useRef(generateID());
+
     return (
         <Element
             id={id.current}
+            align={align}
             label={label}
             labelPosition={labelPosition}
         >
-            <CheckboxContainer
+            <CheckboxElement
                 className={className}
-            >
-                <HiddenCheckbox
-                    checked={checked}
-                    onChange={onCheckboxChange}
-                />
-                <StyledCheckbox
-                    checked={checked}
-                >
-                    <Icon viewBox="0 0 24 24">
-                        <polyline points="20 6 9 17 4 12" />
-                    </Icon>
-                </StyledCheckbox>
-            </CheckboxContainer>
+                checked={checkedFromProps}
+                onChange={onChange}
+            />
         </Element>
     );
 }
@@ -102,8 +131,11 @@ Checkbox.defaultProps = {
     className: '',
     checked: false,
     label: 'Label',
-    labelPosition: undefined,
+    labelPosition: 'horizontal',
     onChange: () => {}
 };
 
 export default Checkbox;
+
+export { CheckboxElement };
+export type {CheckboxInterface as CheckboxProps };

@@ -12,23 +12,27 @@ const Container = styled.div`
 const Aside = styled.div`
     display: flex;
     flex-direction: column;
-    border-right: 2px solid gray;
+    border-right: 1px solid #666;
+    padding: 1em 1em 1em 0em;
 `;
 const Component = styled.div`
     display: flex;
     padding: 0.5em 2em 0.5em 2em;
     font-size: 20px;
     font-weight: semibold;
-    border-bottom: 1px solid gray;
     cursor: pointer;
-    ${({ active }: { active: boolean }) => active ? 'background: #e1e1e1' : ''}
+    &:hover {
+        ${({ active }: { active: boolean }) => !active ? 'background: #dfdede' : ''};
+    }
+    ${({ active }: { active: boolean }) => active
+        ? `background: #adadad;
+            color: #ffffff;`
+        : ''}
 `;
 const Workarea = styled.div`
     display: flex;
     flex-direction: row;
     flex: 1;
-    justify-content: center;
-    align-items: center;
 `;
 
 

@@ -16,3 +16,10 @@ export type Option = {
     label: string,
     value: string
 };
+
+export enum InputLength {
+    s = 's',
+    m = 'm',
+    l = 'l',
+    full = 'full'
+}

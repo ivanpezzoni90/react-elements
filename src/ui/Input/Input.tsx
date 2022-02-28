@@ -3,6 +3,7 @@ import { useState, useCallback, useRef, useEffect } from 'react';
 import { generateID } from '../../helpers';
 import {InputWrapper, InputElement, Label } from './InputStyle';
 import { InputProps } from './config';
+import { InputLength } from '../../types';
 
 function Input({
     locked,
@@ -72,22 +73,14 @@ function Input({
 
 Input.defaultProps = {
     locked: false,
-    active: false,
     error: '',
     value: '',
     label: 'Label',
     onBlur: () => {},
     onChange: () => {},
-    length: 'full'
+    length: InputLength.full
 };
-
-enum InputLength {
-    s = 's',
-    m = 'm',
-    l = 'l',
-    full = 'full'
-}
 
 export default Input;
 
-export type { InputProps, InputLength };
+export type { InputProps };

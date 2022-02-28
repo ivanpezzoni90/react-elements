@@ -3,17 +3,19 @@ import React from 'react';
 import styled from 'styled-components';
 import { Editor as EditorType } from '../types';
 import Checkbox from '../ui/Checkbox';
+import { LabelPositions } from '../ui/Element';
 import Input from '../ui/Input';
 import Select from '../ui/Select';
+import SwitchToggle from '../ui/SwitchToggle';
 
 const EditorWrapper = styled.div`
     display: flex;
     flex-direction: column;
-    padding: 1em;
+    flex: 1;
 `;
 
 const EditorElement = styled.div`
-    padding: 1em 0.25em 1em 0.25em;
+    padding: 0.5em 0.25em 0.5em 0.25em;
 `;
 
 export default function Editor({
@@ -42,7 +44,6 @@ export default function Editor({
                                     onChange={(newValue: string) => {
                                         onChange(e.prop, newValue);
                                     }}
-                                    length={'s'}                                    
                                 />),
                                 select: (<Select
                                     options={e.options ? e.options : []}
@@ -60,9 +61,19 @@ export default function Editor({
                                     className=""
                                     checked={e.default as boolean}
                                     label={e.label}
+                                    labelPosition={LabelPositions.vertical}
                                     onChange={(newValue: boolean) => {
                                         onChange(e.prop, newValue);
                                     }}                                
+                                />),
+                                toggle: (<SwitchToggle
+                                    checked={e.default as boolean}
+                                    label={e.label}
+                                    color="#666"
+                                    labelPosition={LabelPositions.vertical}
+                                    onChange={(newValue: boolean) => {
+                                        onChange(e.prop, newValue);
+                                    }}
                                 />)
                             }[e.type]
                         }
