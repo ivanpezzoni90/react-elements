@@ -63,11 +63,36 @@ const Switch = styled.label<Switch>`
   }
 `;
 
+function SwitchToggleElement({
+    checked,
+    onChange,
+    color = '#ba0c2f'
+}: {
+    checked: boolean,
+    color?: string,
+    onChange: Function
+}) {
+    const [toggle, setToggle] = useState(checked);
+
+    const onClickCb = useCallback(() => {
+        setToggle(!toggle);
+        onChange(!toggle);
+    }, [onChange, toggle]);
+
+    return (<Switch
+        toggle={toggle}
+        color={color}
+    >
+        <Input {...{ color }} type="checkbox" defaultChecked={toggle} />
+        <Slider {...{ toggle, color }} onClick={onClickCb} />
+    </Switch>);
+}
+
 const SwitchToggle = (props: {
     checked: boolean,
-    color: string,
-    label: string,
-    labelPosition: LabelPositions,
+    color?: string,
+    label?: string,
+    labelPosition?: LabelPositions,
     align?: AlignPositions,
     onChange: Function
 }) => {
@@ -80,13 +105,6 @@ const SwitchToggle = (props: {
         onChange
     } = props;
 
-    const [toggle, setToggle] = useState(checked);
-
-    const onClickCb = useCallback(() => {
-        setToggle(!toggle);
-        onChange(!toggle);
-    }, [onChange, toggle]);
-
     const id = useRef(generateID());
 
    
@@ -97,13 +115,11 @@ const SwitchToggle = (props: {
             label={label}
             labelPosition={labelPosition}
         >
-            <Switch
-                toggle={toggle}
+            <SwitchToggleElement
+                checked={checked}
                 color={color}
-            >
-                <Input {...{ color }} type="checkbox" defaultChecked={toggle} />
-                <Slider {...{ toggle, color }} onClick={onClickCb} />
-            </Switch>
+                onChange={onChange}
+            />
         </Element>
     );
 };
@@ -117,3 +133,5 @@ SwitchToggle.defaultProps = {
 };
 
 export default SwitchToggle;
+
+export { SwitchToggleElement };

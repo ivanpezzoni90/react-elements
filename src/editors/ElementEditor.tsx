@@ -8,6 +8,7 @@ import Element, { AlignPositions, LabelPositions } from '../ui/Element';
 import { useEditorInit } from '../hooks';
 import { EditorContainer, ElementContainer } from './commons';
 import { CheckboxElement } from '../ui/Checkbox';
+import { SwitchToggleElement } from '../ui/SwitchToggle';
 
 const editorJson: EditorType[] = [
     {
@@ -53,6 +54,9 @@ const editorJson: EditorType[] = [
         options: [{
             label: 'Checkbox',
             value: 'checkbox'
+        }, {
+            label: 'Switch Toggle',
+            value: 'switchToggle'
         }]
     }
 ];
@@ -63,6 +67,11 @@ const getElement = (element: string) => {
         default:
             return (<CheckboxElement
                 className=""
+                checked={false}
+                onChange={() => {}}
+            />);
+        case 'switchToggle':
+            return (<SwitchToggleElement
                 checked={false}
                 onChange={() => {}}
             />);
@@ -78,8 +87,6 @@ export default function ElementEditor() {
 
         // Get child to render inside element
         const elementToRender: ReactChild = getElement(elementProps.children);
-        // Delete children prop before spread
-        delete elementProps.children;
 
         return (
             <Fragment>
