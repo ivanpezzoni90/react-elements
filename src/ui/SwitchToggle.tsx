@@ -1,6 +1,7 @@
 import React, { useCallback, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { generateID } from '../helpers';
+import { ChangeElementValueType, PropsObjectInterface, SetBoolToStateType } from '../types';
 import Element, { AlignPositions, LabelPositions } from './Element';
 
 interface Slider {
@@ -63,6 +64,15 @@ const Switch = styled.label<Switch>`
   }
 `;
 
+interface SwitchToggleProps extends PropsObjectInterface {
+    checked: boolean,
+    color?: string,
+    label?: string,
+    labelPosition?: LabelPositions,
+    align?: AlignPositions,
+    onChange: ChangeElementValueType
+}
+
 function SwitchToggleElement({
     checked,
     onChange,
@@ -70,9 +80,14 @@ function SwitchToggleElement({
 }: {
     checked: boolean,
     color?: string,
-    onChange: Function
+    onChange: ChangeElementValueType
 }) {
-    const [toggle, setToggle] = useState(checked);
+    const [
+        toggle, setToggle
+    ]: [
+        toggle: boolean,
+        setToggle: SetBoolToStateType
+    ] = useState(checked);
 
     const onClickCb = useCallback(() => {
         setToggle(!toggle);
@@ -88,14 +103,7 @@ function SwitchToggleElement({
     </Switch>);
 }
 
-const SwitchToggle = (props: {
-    checked: boolean,
-    color?: string,
-    label?: string,
-    labelPosition?: LabelPositions,
-    align?: AlignPositions,
-    onChange: Function
-}) => {
+const SwitchToggle = (props: SwitchToggleProps) => {
     const {
         checked,
         color,
@@ -124,13 +132,15 @@ const SwitchToggle = (props: {
     );
 };
 
-SwitchToggle.defaultProps = {
+const defaultProps: PropsObjectInterface = {
     checked: true,
     color: '#ba0c2f',
     label: 'Label',
     labelPosition: undefined,
     onChange: () => {}
 };
+
+SwitchToggle.defaultProps = defaultProps;
 
 export default SwitchToggle;
 

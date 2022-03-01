@@ -1,8 +1,11 @@
-import { MutableRefObject } from 'react';
-import { Option as OptionType } from '../../types';
+import { ChangeElementValueType, InputLength, Option as OptionType, PropsObjectInterface, VoidFunction } from '../../types';
+
+export type ListItemClickCallbackType = (value: string) => () => void;
+
+export type SetStateDropDownZIndexType = (s: number) => void;
 
 export interface ListItemProps {
-    onClick: Function
+    onClick: VoidFunction,
     key: string
     selected: boolean
 }
@@ -21,13 +24,13 @@ export interface DropDownContainerProps {
 export interface SelectWrapperProps{
     hasValue: boolean,
     length: string,
-    ref: any
+    ref: any // TODO:
 }
 
-export interface SelectProps {
+export interface SelectProps extends PropsObjectInterface {
     options: Array<OptionType>,
     value: string,
-    onChange: Function,
+    onChange: ChangeElementValueType,
     label?: string,
-    length: string
+    length: InputLength
 }

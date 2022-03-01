@@ -1,6 +1,7 @@
 import React, { ReactChild } from 'react';
 import styled from 'styled-components';
 import { mergeClasses } from '../helpers';
+import { PropsObjectInterface } from '../types';
 
 const ElementLabel = styled.label``;
 const ElementWrapper = styled.div`
@@ -26,12 +27,12 @@ const ChildWrapper = styled.div`
         AlignPositions[align as keyof typeof AlignPositions]}
 `;
 
-interface ElementProps {
+interface ElementProps extends PropsObjectInterface {
     id: string,
     label: string,
-    labelPosition?: string,
+    labelPosition?: LabelPositions,
     className?: string,
-    align?: string,
+    align?: AlignPositions,
     children: Array<ReactChild> | ReactChild
 }
 
@@ -84,14 +85,16 @@ enum AlignPositions {
     right = 'flex-end'
 }
 
-Element.defaultProps = {
+const defaultProps: PropsObjectInterface = {
     id: '',
     label: 'Label',
-    labelPosition: 'horizontal',
+    labelPosition: LabelPositions.horizontal,
     align: AlignPositions.left,
     className: '',
     children: []
 };
+
+Element.defaultProps = defaultProps;
 
 export default Element;
 

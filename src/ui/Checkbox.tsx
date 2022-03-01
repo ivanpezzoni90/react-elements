@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { generateID, mergeClasses } from '../helpers';
 import Element, { AlignPositions, LabelPositions } from './Element';
+import { ChangeElementValueType, PropsObjectInterface, SetBoolToStateType } from '../types';
 
 const CheckboxContainer = styled.div`
     display: inline-block;
@@ -44,19 +45,19 @@ const StyledCheckbox = styled.div`
     }
 `;
 
-interface CheckboxInterface {
+interface CheckboxProps extends PropsObjectInterface{
     className: string,
     checked: boolean,
     label: string,
     labelPosition?: LabelPositions,
     align?: AlignPositions,
-    onChange: Function
+    onChange: ChangeElementValueType
 }
 
 interface CheckboxElementInterface {
     className: string,
     checked: boolean,
-    onChange: Function
+    onChange: ChangeElementValueType
 }
 
 function CheckboxElement({
@@ -67,7 +68,7 @@ function CheckboxElement({
     const [
         checked, setChecked
     ]: [
-        checked: boolean, setChecked: Function
+        checked: boolean, setChecked: SetBoolToStateType
     ] = useState(checkedFromProps);
 
     function onCheckboxChange() {
@@ -99,7 +100,7 @@ function CheckboxElement({
     </CheckboxContainer>);
 }
 
-function Checkbox(props: CheckboxInterface) {
+function Checkbox(props: CheckboxProps) {
     const {
         className,
         checked: checkedFromProps,
@@ -127,15 +128,17 @@ function Checkbox(props: CheckboxInterface) {
     );
 }
 
-Checkbox.defaultProps = {
+const defaultProps: PropsObjectInterface = {
     className: '',
     checked: false,
     label: 'Label',
-    labelPosition: 'horizontal',
+    labelPosition: LabelPositions.horizontal,
     onChange: () => {}
 };
+
+Checkbox.defaultProps = defaultProps;
 
 export default Checkbox;
 
 export { CheckboxElement };
-export type {CheckboxInterface as CheckboxProps };
+export type {CheckboxProps };

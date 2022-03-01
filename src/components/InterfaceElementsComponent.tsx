@@ -3,6 +3,7 @@ import React from 'react';
 import { useState } from 'react';
 import styled from 'styled-components';
 import { Components, getComponentByKey } from '../constants/componentsMap';
+import { SetStringToStateType } from '../types';
 
 const Container = styled.div`
     display: flex;
@@ -35,13 +36,14 @@ const Workarea = styled.div`
     flex: 1;
 `;
 
+type AsideClickCallbackType = (key: string) => void;
 
 function IEAside({
     currentComponentKey,
     onClick
 }: {
     currentComponentKey: string,
-    onClick: Function
+    onClick: AsideClickCallbackType
 }) {
     return (
         <Aside>
@@ -74,10 +76,10 @@ function IEWorkarea({
 
 export default function IEComponent() {
     const [currentKey, setCurrentKey]: [
-        currentKey: string, setCurrentKey: Function
+        currentKey: string, setCurrentKey: SetStringToStateType
     ] = useState(Components[0].key);
 
-    const onClick = (key: string) => {
+    const onClick: AsideClickCallbackType = (key: string) => {
         setCurrentKey(key);
     };
 

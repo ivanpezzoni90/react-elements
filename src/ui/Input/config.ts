@@ -1,12 +1,13 @@
-export interface InputProps {
+import { ChangeElementValueType, InputLength, PropsObjectInterface } from '../../types';
+
+export interface InputProps extends PropsObjectInterface {
     locked: boolean,
-    active: boolean,
     error: string,
     value: string,
     label: string,
-    onBlur: Function,
-    onChange: Function,
-    length: string,
+    onBlur: ChangeElementValueType,
+    onChange: ChangeElementValueType,
+    length: InputLength,
 }
 
 export interface InputWrapperProps {

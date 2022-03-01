@@ -67,6 +67,7 @@ export default function InputEditor() {
                 <ElementContainer>
                     <Input
                         {...inputProps}
+                        value={inputProps.value as string}
                     />
                 </ElementContainer>
             </Fragment>

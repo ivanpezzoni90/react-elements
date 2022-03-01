@@ -3,7 +3,7 @@ import { useState, useCallback, useRef, useEffect } from 'react';
 import { generateID } from '../../helpers';
 import {InputWrapper, InputElement, Label } from './InputStyle';
 import { InputProps } from './config';
-import { InputLength } from '../../types';
+import { InputLength, PropsObjectInterface } from '../../types';
 
 function Input({
     locked,
@@ -71,7 +71,7 @@ function Input({
     );
 }
 
-Input.defaultProps = {
+const defaultProps: PropsObjectInterface = {
     locked: false,
     error: '',
     value: '',
@@ -80,6 +80,8 @@ Input.defaultProps = {
     onChange: () => {},
     length: InputLength.full
 };
+
+Input.defaultProps = defaultProps;
 
 export default Input;
 

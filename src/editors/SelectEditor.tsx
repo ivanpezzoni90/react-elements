@@ -70,6 +70,7 @@ export default function SelectEditor() {
                 <ElementContainer>
                     <Select
                         {...selectProps}
+                        value={selectProps.value as string}
                     />
                 </ElementContainer>
             </Fragment>

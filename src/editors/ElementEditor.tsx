@@ -61,7 +61,9 @@ const editorJson: EditorType[] = [
     }
 ];
 
-const getElement = (element: string) => {
+type GetElementType = (e: string) => ReactChild;
+
+const getElement: GetElementType = (element: string) => {
     switch(element) {
         case 'checkbox':
         default:
@@ -86,7 +88,7 @@ export default function ElementEditor() {
         } = useEditorInit(Element.defaultProps);
 
         // Get child to render inside element
-        const elementToRender: ReactChild = getElement(elementProps.children);
+        const elementToRender: ReactChild = getElement(elementProps.children as string);
 
         return (
             <Fragment>

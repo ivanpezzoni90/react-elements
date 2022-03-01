@@ -1,7 +1,7 @@
 import React from 'react';
 
 import styled from 'styled-components';
-import { Editor as EditorType } from '../types';
+import { ChangeEditorPropType, ChangeElementValueType, Editor as EditorType } from '../types';
 import Checkbox from '../ui/Checkbox';
 import { LabelPositions } from '../ui/Element';
 import Input from '../ui/Input';
@@ -18,13 +18,21 @@ const EditorElement = styled.div`
     padding: 0.5em 0.25em 0.5em 0.25em;
 `;
 
+type ChangeEditorValueType = (prop: string) => ChangeElementValueType;
+
 export default function Editor({
     json,
     onChange
 }: {
     json: Array<EditorType>,
-    onChange: Function
+    onChange: ChangeEditorPropType
 }) {
+    const onChangeValue: ChangeEditorValueType = (prop) => {
+        const innerOnChange: ChangeElementValueType = (newValue) => {
+            onChange(prop, newValue);
+        };
+        return innerOnChange;
+    };
     return (
         <EditorWrapper>
             {json.map((e: EditorType) => {
@@ -35,15 +43,12 @@ export default function Editor({
                         {
                             {
                                 input: (<Input
-                                    locked={false} 
-                                    active
+                                    locked={false}
                                     error={''} 
                                     value={e.default as string}
                                     label={e.label}
                                     onBlur={() => {}} 
-                                    onChange={(newValue: string) => {
-                                        onChange(e.prop, newValue);
-                                    }}
+                                    onChange={onChangeValue(e.prop)}
                                 />),
                                 select: (<Select
                                     options={e.options ? e.options : []}
@@ -53,27 +58,21 @@ export default function Editor({
                                     // }
                                     value={e.default as string}
                                     label={e.label}
-                                    onChange={(newValue: string | Array<string>) => {
-                                        onChange(e.prop, newValue);
-                                    }}
+                                    onChange={onChangeValue(e.prop)}
                                 />),
                                 checkbox: (<Checkbox
                                     className=""
                                     checked={e.default as boolean}
                                     label={e.label}
                                     labelPosition={LabelPositions.vertical}
-                                    onChange={(newValue: boolean) => {
-                                        onChange(e.prop, newValue);
-                                    }}                                
+                                    onChange={onChangeValue(e.prop)}                               
                                 />),
                                 toggle: (<SwitchToggle
                                     checked={e.default as boolean}
                                     label={e.label}
                                     color="#666"
                                     labelPosition={LabelPositions.vertical}
-                                    onChange={(newValue: boolean) => {
-                                        onChange(e.prop, newValue);
-                                    }}
+                                    onChange={onChangeValue(e.prop)}
                                 />)
                             }[e.type]
                         }

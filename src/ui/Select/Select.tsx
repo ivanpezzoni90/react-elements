@@ -1,7 +1,7 @@
 import React from 'react';
 import { Fragment, useEffect, useRef, useState } from 'react';
 import { generateID } from '../../helpers';
-import { Option as OptionType } from '../../types';
+import { Option as OptionType, PropsObjectInterface } from '../../types';
 import Icon, {IconList} from '../../ui/Icon';
 import { InputLength } from '../../types';
 import {
@@ -15,7 +15,9 @@ import {
 } from './SelectStyle';
 
 import {
-    SelectProps
+    ListItemClickCallbackType,
+    SelectProps,
+    SetStateDropDownZIndexType
 } from './config';
 
 function Select(props: SelectProps) {
@@ -42,12 +44,13 @@ function Select(props: SelectProps) {
         setHasValue(isValidValue(selectedOption));
     }, [selectedOption]);
 
-    const onOptionClicked = (value: string) => () => {
+    const onOptionClicked: ListItemClickCallbackType = (value: string) => () => {
         setSelectedOption(value);
         onChange(value);
         setIsOpen(false);
         console.log(selectedOption);
     };
+
     const getLabelFromValue = (value: string) => (
         options.find(
             (o: OptionType) => o.value === value
@@ -55,7 +58,12 @@ function Select(props: SelectProps) {
     )?.label;
 
     const selectRef = useRef<Element>(null);
-    const [dropDownZIndex, setDropDownZIndex]: [dropDownZIndex: number | null, setDropDownZIndex: Function] = useState(null);
+    const [
+        dropDownZIndex, setDropDownZIndex
+    ]: [
+        dropDownZIndex: number,
+        setDropDownZIndex: SetStateDropDownZIndexType
+    ] = useState(0);
 
     useEffect(() => {
         if (selectRef !== null) {
@@ -113,14 +121,15 @@ function Select(props: SelectProps) {
         </Fragment>
     );
 }
-
-Select.defaultProps = {
+const defaultProps: PropsObjectInterface = {
     options: [],
-    value: null,
+    value: undefined,
     label: 'Label',
     length: InputLength.full,
     onChange: () => {}
 };
+
+Select.defaultProps = defaultProps;
 
 export default Select;
 
