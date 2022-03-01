@@ -2,6 +2,7 @@ import React, { ReactChild } from 'react';
 import styled from 'styled-components';
 import { mergeClasses } from '../helpers';
 import { PropsObjectInterface } from '../types';
+import { AlignPositions, LabelPositions } from '../types';
 
 const ElementLabel = styled.label``;
 const ElementWrapper = styled.div`
@@ -75,16 +76,6 @@ const Element = (props: ElementProps) => {
     );
 };
 
-enum LabelPositions {
-    vertical = 'vertical',
-    horizontal = 'horizontal'
-}
-enum AlignPositions {
-    left = 'flex-start',
-    center = 'center',
-    right = 'flex-end'
-}
-
 const defaultProps: PropsObjectInterface = {
     id: '',
     label: 'Label',
@@ -98,5 +89,4 @@ Element.defaultProps = defaultProps;
 
 export default Element;
 
-export { LabelPositions, AlignPositions };
 export type { ElementProps };

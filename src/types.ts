@@ -1,5 +1,4 @@
 import { ReactChild } from 'react';
-import { AlignPositions, LabelPositions } from './ui/Element';
 
 export type Component = {
     key: string,
@@ -33,6 +32,17 @@ export enum InputLength {
     m = 'm',
     l = 'l',
     full = 'full'
+}
+
+export enum LabelPositions {
+    vertical = 'vertical',
+    horizontal = 'horizontal'
+}
+
+export enum AlignPositions {
+    left = 'flex-start',
+    center = 'center',
+    right = 'flex-end'
 }
 
 export interface PropsObjectInterface {

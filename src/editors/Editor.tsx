@@ -3,7 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { ChangeEditorPropType, ChangeElementValueType, Editor as EditorType } from '../types';
 import Checkbox from '../ui/Checkbox';
-import { LabelPositions } from '../ui/Element';
+import { LabelPositions } from '../types';
 import Input from '../ui/Input';
 import Select from '../ui/Select';
 import SwitchToggle from '../ui/SwitchToggle';

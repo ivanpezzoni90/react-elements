@@ -2,7 +2,8 @@ import React, { Fragment, useCallback, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { generateID } from '../helpers';
 import { ChangeElementValueType, PropsObjectInterface, SetBoolToStateType } from '../types';
-import Element, { AlignPositions, LabelPositions } from './Element';
+import Element from './Element';
+import { AlignPositions, LabelPositions } from '../types';
 
 interface Slider {
     toggle: boolean,

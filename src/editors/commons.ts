@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Editor } from '../types';
-import { AlignPositions, LabelPositions } from '../ui/Element';
+import { AlignPositions, LabelPositions } from '../types';
 
 export const EditorContainer = styled.div`
     display: flex;

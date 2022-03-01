@@ -1,7 +1,8 @@
 import React, { Fragment, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { generateID, mergeClasses } from '../helpers';
-import Element, { AlignPositions, LabelPositions } from './Element';
+import Element from './Element';
+import { AlignPositions, LabelPositions } from '../types';
 import { ChangeElementValueType, PropsObjectInterface, SetBoolToStateType } from '../types';
 
 const CheckboxContainer = styled.div`

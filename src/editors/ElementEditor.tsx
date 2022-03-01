@@ -4,7 +4,8 @@ import Editor from './Editor';
 
 import { Editor as EditorType } from '../types';
 import { Fragment } from 'react';
-import Element, { AlignPositions, LabelPositions } from '../ui/Element';
+import Element from '../ui/Element';
+import { LabelPositions, AlignPositions } from '../types';
 import { useEditorInit } from '../hooks';
 import { EditorContainer, ElementContainer } from './commons';
 import { CheckboxElement } from '../ui/Checkbox';
