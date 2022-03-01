@@ -45,6 +45,11 @@ export enum AlignPositions {
     right = 'flex-end'
 }
 
+export enum ToggleLabelType {
+    label = 'label',
+    icon = 'icon'
+}
+
 export interface PropsObjectInterface {
     id?: string,
     className?: string,
@@ -64,5 +69,8 @@ export interface PropsObjectInterface {
     icon?: string,
     fontSize?: string,
     align?: AlignPositions,
-}
+    labelOn?: string,
+    labelOff?: string,
+    labelType?: ToggleLabelType
+};
 export type SetPropsToStateType = (props: PropsObjectInterface) => void;

@@ -1,9 +1,10 @@
 import React, { Fragment, useCallback, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { generateID } from '../helpers';
-import { ChangeElementValueType, PropsObjectInterface, SetBoolToStateType } from '../types';
+import { ChangeElementValueType, PropsObjectInterface, SetBoolToStateType, ToggleLabelType } from '../types';
 import Element from './Element';
 import { AlignPositions, LabelPositions } from '../types';
+import Icon, {IconList} from '../ui/Icon';
 
 interface Slider {
     toggle: boolean,
@@ -15,32 +16,36 @@ interface Switch {
 }
 
 const Slider = styled.span<Slider>`
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: ${({ toggle, color }) => (toggle ? color : 'white')};
-  border-radius: 15px;
-  border: 1px solid gray;
-  transition: 0.4s;
-
-  &:before {
-    content: "";
-
     position: absolute;
-    left: 1px;
-    bottom: 1px;
-
-    width: 20px;
-    height: 20px;
-    border-radius: 100%;
-
-    background-color: ${({ toggle, color }) => (toggle ? 'white' : color)};
-
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: ${({ toggle, color }) => (toggle ? color : 'white')};
+    border-radius: 15px;
+    border: 1px solid gray;
     transition: 0.4s;
-  }
+
+    display: flex;
+    align-items: center;
+    justify-content: ${({toggle}) => toggle ? 'flex-start' : 'flex-end'};
+
+    &:before {
+        content: "";
+
+        position: absolute;
+        left: 1px;
+        bottom: 1px;
+
+        width: 20px;
+        height: 20px;
+        border-radius: 100%;
+
+        background-color: ${({ toggle, color }) => (toggle ? 'white' : color)};
+
+        transition: 0.4s;
+    }
 `;
 
 const Input = styled.input`
@@ -108,6 +113,20 @@ const SwitchToggleAdvancedLabel = styled.div<LabelProps>`
     transition: 0.1s all ease-in-out;
 `;
 
+interface ToggleInnerLabelType {
+    toggle: boolean,
+    color: string,
+}
+
+const ToggleInnerLabel = styled.div<ToggleInnerLabelType>`
+    font-size: 9px;
+    font-weight: 600;
+    color: ${({ toggle, color }) => (toggle ? 'white' : color)};
+    display: flex;
+    flex: 0.5;
+    justify-content: center;
+`;
+
 interface SwitchToggleProps extends PropsObjectInterface {
     checked: boolean,
     color?: string,
@@ -115,16 +134,25 @@ interface SwitchToggleProps extends PropsObjectInterface {
     simpleElement?: boolean,
     labelPosition?: LabelPositions,
     align?: AlignPositions,
+    labelOn?: string,
+    labelOff?: string,
+    labelType?: ToggleLabelType,
     onChange: ChangeElementValueType
 }
 
 function SwitchToggleElement({
     checked,
     onChange,
-    color = '#ba0c2f'
+    color = '#ba0c2f',
+    labelOn,
+    labelOff,
+    labelType
 }: {
     checked: boolean,
     color?: string,
+    labelOn?: string,
+    labelOff?: string,
+    labelType?: ToggleLabelType
     onChange: ChangeElementValueType
 }) {
     const [
@@ -144,7 +172,25 @@ function SwitchToggleElement({
         color={color}
     >
         <Input {...{ color }} type="checkbox" defaultChecked={toggle} />
-        <Slider {...{ toggle, color }} onClick={onClickCb} />
+        <Slider {...{ toggle, color }} onClick={onClickCb}>
+            <ToggleInnerLabel
+                toggle={toggle}
+                color={color}
+            >
+                {labelType === ToggleLabelType.label
+                    ? toggle ? labelOn : labelOff
+                    : toggle
+                        ? <Icon
+                            icon={IconList.check}
+                            fontSize="14px"
+                        />
+                        : <Icon
+                            icon={IconList.close}
+                            fontSize="14px"
+                        />
+                }
+            </ToggleInnerLabel>
+        </Slider>
     </Switch>);
 }
 
@@ -156,6 +202,9 @@ const SwitchToggle = (props: SwitchToggleProps) => {
         labelPosition,
         simpleElement,
         align,
+        labelType,
+        labelOn,
+        labelOff,
         onChange
     } = props;
 
@@ -174,6 +223,9 @@ const SwitchToggle = (props: SwitchToggleProps) => {
                     <SwitchToggleElement
                         checked={checked}
                         color={color}
+                        labelOn={labelOn}
+                        labelOff={labelOff}
+                        labelType={labelType}
                         onChange={onChange}
                     />
                 </Element>
@@ -188,6 +240,9 @@ const SwitchToggle = (props: SwitchToggleProps) => {
                         <SwitchToggleElement
                             checked={checked}
                             color={color}
+                            labelOn={labelOn}
+                            labelOff={labelOff}
+                            labelType={labelType}
                             onChange={onChange}
                         />
                     </SwitchElementWrapper>
@@ -203,6 +258,9 @@ const defaultProps: PropsObjectInterface = {
     label: 'Label',
     labelPosition: undefined,
     simpleElement: false,
+    labelOn: 'YES',
+    labelOff: 'NO',
+    labelType: ToggleLabelType.label,
     onChange: () => {}
 };
 
