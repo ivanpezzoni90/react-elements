@@ -34,6 +34,16 @@ export enum InputLength {
     full = 'full'
 }
 
+export enum IconSize {
+    xxs = '12px',
+    xs = '16px',
+    s = '20px',
+    m = '24px',
+    l = '28px',
+    xl = '32px',
+    xxl = '36px'
+}
+
 export enum LabelPositions {
     vertical = 'vertical',
     horizontal = 'horizontal'
@@ -71,6 +81,7 @@ export interface PropsObjectInterface {
     align?: AlignPositions,
     labelOn?: string,
     labelOff?: string,
-    labelType?: ToggleLabelType
+    labelType?: ToggleLabelType,
+    shadow?: boolean
 };
 export type SetPropsToStateType = (props: PropsObjectInterface) => void;

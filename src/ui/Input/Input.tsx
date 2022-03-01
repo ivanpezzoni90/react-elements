@@ -10,6 +10,7 @@ function Input({
     error,
     value: valueFromProps,
     label,
+    shadow,
     onBlur,
     onChange,
     length,
@@ -46,11 +47,13 @@ function Input({
             length={length}
             active={active}
             locked={locked}
+            shadow={shadow}
         >
             <InputElement
                 error={error}
                 length={length}
                 active={active}
+                shadow={shadow}
 
                 id={id.current}
                 type="text"
@@ -78,6 +81,7 @@ const defaultProps: PropsObjectInterface = {
     label: 'Label',
     onBlur: () => {},
     onChange: () => {},
+    shadow: true,
     length: InputLength.full
 };
 

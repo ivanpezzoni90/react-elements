@@ -16,6 +16,7 @@ export interface LabelProps {
 }
 export interface SelectElementProps {
     length: string,
+    shadow?: boolean
 }
 export interface DropDownContainerProps {
     length: string,
@@ -24,6 +25,7 @@ export interface DropDownContainerProps {
 export interface SelectWrapperProps{
     hasValue: boolean,
     length: string,
+    shadow?: boolean,
     ref: any // TODO:
 }
 
@@ -32,5 +34,6 @@ export interface SelectProps extends PropsObjectInterface {
     value: string,
     onChange: ChangeElementValueType,
     label?: string,
+    shadow?: boolean,
     length: InputLength
 }

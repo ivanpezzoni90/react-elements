@@ -3,6 +3,7 @@ import SelectEditor from '../editors/SelectEditor';
 import CheckboxEditor from '../editors/CheckboxEditor';
 import ElementEditor from '../editors/ElementEditor';
 import SwitchToggleEditor from '../editors/SwitchToggleEditor';
+import IconEditor from '../editors/IconEditor';
 
 import { Component } from '../types';
 
@@ -27,6 +28,10 @@ const Components: Component[] = [{
     key: 'switchToggle',
     name: 'Switch Toggle',
     editor: SwitchToggleEditor
+},  {
+    key: 'icon',
+    name: 'Icon',
+    editor: IconEditor
 }];
 
 function getComponentByKey(key: string) {

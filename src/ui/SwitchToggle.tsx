@@ -1,7 +1,7 @@
 import React, { Fragment, useCallback, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { generateID } from '../helpers';
-import { ChangeElementValueType, PropsObjectInterface, SetBoolToStateType, ToggleLabelType } from '../types';
+import { ChangeElementValueType, IconSize, PropsObjectInterface, SetBoolToStateType, ToggleLabelType } from '../types';
 import Element from './Element';
 import { AlignPositions, LabelPositions } from '../types';
 import Icon, {IconList} from '../ui/Icon';
@@ -85,11 +85,11 @@ const SwitchToggleAdvancedWrapper = styled.div`
     border-bottom: 1px solid #666;
     transition: 0.3s background-color ease-in-out, 0.3s box-shadow ease-in-out;
     background-color: #ffffff;
-    box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2);
+    ${({shadow}: {shadow?: boolean}) => shadow ? 'box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2);' : ''}
 
     &:hover{
         background-color: rgba(255, 255, 255, 0.45);
-        box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.05);
+        ${({shadow}: {shadow?: boolean}) => shadow ? 'box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.05);' : ''}
     }
 `;
 
@@ -143,7 +143,7 @@ interface SwitchToggleProps extends PropsObjectInterface {
 function SwitchToggleElement({
     checked,
     onChange,
-    color = '#ba0c2f',
+    color = '#666',
     labelOn,
     labelOff,
     labelType
@@ -182,11 +182,11 @@ function SwitchToggleElement({
                     : toggle
                         ? <Icon
                             icon={IconList.check}
-                            fontSize="14px"
+                            fontSize={IconSize.xs}
                         />
                         : <Icon
                             icon={IconList.close}
-                            fontSize="14px"
+                            fontSize={IconSize.xs}
                         />
                 }
             </ToggleInnerLabel>
@@ -205,6 +205,7 @@ const SwitchToggle = (props: SwitchToggleProps) => {
         labelType,
         labelOn,
         labelOff,
+        shadow,
         onChange
     } = props;
 
@@ -230,7 +231,9 @@ const SwitchToggle = (props: SwitchToggleProps) => {
                     />
                 </Element>
             ): (
-                <SwitchToggleAdvancedWrapper>
+                <SwitchToggleAdvancedWrapper
+                    shadow={shadow}
+                >
                     <SwitchToggleAdvancedLabel
                         htmlFor={id.current}
                     >
@@ -254,12 +257,13 @@ const SwitchToggle = (props: SwitchToggleProps) => {
 
 const defaultProps: PropsObjectInterface = {
     checked: true,
-    color: '#ba0c2f',
+    color: '#666',
     label: 'Label',
     labelPosition: undefined,
     simpleElement: false,
     labelOn: 'YES',
     labelOff: 'NO',
+    shadow: true,
     labelType: ToggleLabelType.label,
     onChange: () => {}
 };

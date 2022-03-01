@@ -4,7 +4,7 @@ import Editor from './Editor';
 import SwitchToggle from '../ui/SwitchToggle';
 import { Editor as EditorType, PropsObjectInterface, ToggleLabelType } from '../types';
 import { useEditorInit } from '../hooks';
-import { alignPositionEditor, EditorContainer, ElementContainer, labelPositionEditor } from './commons';
+import { alignPositionEditor, EditorContainer, ElementContainer, labelPositionEditor, shadowEditor } from './commons';
 
 const getEditor = (props: PropsObjectInterface) => {
     const editorJson: EditorType[] = [
@@ -43,7 +43,10 @@ const getEditor = (props: PropsObjectInterface) => {
 
     if (props.simpleElement) {
         editorJson.push(labelPositionEditor, alignPositionEditor);
+    } else {
+        editorJson.push(shadowEditor);
     }
+
     if (props.labelType === ToggleLabelType.label) {
         editorJson.push({
             type: 'input',

@@ -6,7 +6,7 @@ import { Editor as EditorType } from '../types';
 import { Fragment } from 'react';
 import Input from '../ui/Input';
 import { useEditorInit } from '../hooks';
-import { EditorContainer, ElementContainer } from './commons';
+import { EditorContainer, ElementContainer, shadowEditor } from './commons';
 
 
 const editorJson: EditorType[] = [
@@ -46,7 +46,8 @@ const editorJson: EditorType[] = [
             label: 'L',
             value: 'l'
         }]
-    }
+    },
+    shadowEditor
 ];
 
 export default function InputEditor() {

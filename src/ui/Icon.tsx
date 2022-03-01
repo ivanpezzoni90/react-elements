@@ -3,6 +3,7 @@ import { FaCaretDown, FaCaretUp } from 'react-icons/fa';
 import { IoCloseSharp, IoCheckmarkSharp } from "react-icons/io5";
 
 import { IconType } from 'react-icons/lib';
+import { IconSize, PropsObjectInterface } from '../types';
 
 // https://react-icons.github.io/react-icons/icons?name=fa
 
@@ -23,15 +24,17 @@ const iconMap: IconInterface = {
     [IconList.check]: IoCheckmarkSharp
 };
 
+interface IconProps extends PropsObjectInterface {
+    icon: string,
+    color?: string,
+    fontSize?: IconSize | string
+}
+
 function Icon({
     icon,
     color,
     fontSize,
-}: {
-    icon: string,
-    color?: string,
-    fontSize?: string
-}) {
+}: IconProps) {
     const IconComponent = iconMap[icon];
     return (
         <IconComponent
@@ -42,6 +45,14 @@ function Icon({
         />
     );
 }
+
+const defaultProps: PropsObjectInterface = {
+    icon: undefined,
+    color: '#666',
+    fontSize: IconSize.xs
+}
+
+Icon.defaultProps = defaultProps;
 
 export default Icon;
 

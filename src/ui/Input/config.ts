@@ -5,6 +5,7 @@ export interface InputProps extends PropsObjectInterface {
     error: string,
     value: string,
     label: string,
+    shadow?: boolean,
     onBlur: ChangeElementValueType,
     onChange: ChangeElementValueType,
     length: InputLength,
@@ -13,7 +14,8 @@ export interface InputProps extends PropsObjectInterface {
 export interface InputWrapperProps {
   length: string,
   active: boolean
-  locked: boolean
+  locked: boolean,
+  shadow?: boolean
 }
 
 export interface LabelProps {
@@ -25,4 +27,5 @@ export interface InputElementProps {
   error: string,
   length: string,
   active: boolean,
+  shadow?: boolean
 }

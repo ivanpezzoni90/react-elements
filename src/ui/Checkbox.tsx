@@ -59,11 +59,11 @@ const CheckboxAdvancedWrapper = styled.div`
     border-bottom: 1px solid #666;
     transition: 0.3s background-color ease-in-out, 0.3s box-shadow ease-in-out;
     background-color: #ffffff;
-    box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2);
+    ${({shadow}: {shadow?: boolean}) => shadow ? 'box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2);' : ''}
 
     &:hover{
         background-color: rgba(255, 255, 255, 0.45);
-        box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.05);
+        ${({shadow}: {shadow?: boolean}) => shadow ? 'box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.05);' : ''}
     }
 `;
 
@@ -94,6 +94,7 @@ interface CheckboxProps extends PropsObjectInterface{
     simpleElement?: boolean,
     labelPosition?: LabelPositions,
     align?: AlignPositions,
+    shadow?: boolean,
     onChange: ChangeElementValueType
 }
 
@@ -151,6 +152,7 @@ function Checkbox(props: CheckboxProps) {
         labelPosition,
         align,
         simpleElement,
+        shadow,
         onChange
     } = props;
 
@@ -172,7 +174,9 @@ function Checkbox(props: CheckboxProps) {
                     />
                 </Element>
             ): (
-                <CheckboxAdvancedWrapper>
+                <CheckboxAdvancedWrapper
+                    shadow={shadow}
+                >
                     <CheckboxAdvancedLabel
                         htmlFor={id.current}
                     >
@@ -194,6 +198,7 @@ const defaultProps: PropsObjectInterface = {
     checked: false,
     label: 'Label',
     simpleElement: false,
+    shadow: true,
     labelPosition: LabelPositions.horizontal,
     onChange: () => {}
 };

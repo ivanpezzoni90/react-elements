@@ -45,3 +45,10 @@ export const alignPositionEditor: Editor = {
         value: AlignPositions.right
     }]
 };
+
+export const shadowEditor: Editor = {
+    label: 'Shadow',
+    type: 'toggle',
+    default: true,
+    prop: 'shadow'
+};

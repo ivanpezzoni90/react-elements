@@ -25,7 +25,7 @@ export const InputElement = styled.input<InputElementProps>`
     background-color: transparent;
     color: #666;
     outline: none;
-    box-shadow: 0px 4px 20px 0px transparent;
+    ${props => props.shadow ? 'box-shadow: 0px 4px 20px 0px transparent;' : ''}
     transition: 0.3s background-color ease-in-out, 0.3s box-shadow ease-in-out,
       0.1s padding ease-in-out;
     -webkit-appearance: none;
@@ -48,7 +48,7 @@ export const InputElement = styled.input<InputElementProps>`
     ${props => props.active
         ? 'padding: 24px 16px 8px 16px;'
         : ''
-}
+    }
 `;
 
 export const InputWrapper = styled.div<InputWrapperProps>`
@@ -60,14 +60,14 @@ export const InputWrapper = styled.div<InputWrapperProps>`
     border-bottom: 1px solid #666;
     transition: 0.3s background-color ease-in-out, 0.3s box-shadow ease-in-out;
     ${props => props.locked ? 'pointer-events: none;' : ''}
-    ${props => props.active
+    ${props => props.active && props.shadow
         ? `background-color: #ffffff;
         box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2);`
         : ''
-}
+    }
     &:hover{
       background-color: rgba(255, 255, 255, 0.45);
-      box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.05);
+      ${props => props.shadow ? 'box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.05);' : ''}
     }
 `;
 
@@ -93,5 +93,5 @@ export const Label = styled.label<LabelProps>`
         color: #666;
         font-size: 12px;`
         : ''
-}
+    }
 `;

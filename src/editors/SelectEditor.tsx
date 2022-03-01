@@ -2,7 +2,7 @@ import React from 'react';
 
 import Editor from './Editor';
 import { Fragment } from 'react';
-import { EditorContainer, ElementContainer } from './commons';
+import { EditorContainer, ElementContainer, shadowEditor } from './commons';
 
 import { Editor as EditorType } from '../types';
 import Select from '../ui/Select';
@@ -33,7 +33,8 @@ const editorJson: EditorType[] = [
             label: 'L',
             value: 'l'
         }]
-    }
+    },
+    shadowEditor
 ];
 
 export default function SelectEditor() {

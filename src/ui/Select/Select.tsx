@@ -25,6 +25,7 @@ function Select(props: SelectProps) {
         options,
         value: valueFromProps,
         label = '',
+        shadow,
         onChange,
         length
     } = props;
@@ -48,7 +49,6 @@ function Select(props: SelectProps) {
         setSelectedOption(value);
         onChange(value);
         setIsOpen(false);
-        console.log(selectedOption);
     };
 
     const getLabelFromValue = (value: string) => (
@@ -81,10 +81,12 @@ function Select(props: SelectProps) {
                 ref={selectRef}
                 hasValue={hasValue}
                 length={length}
+                shadow={shadow}
                 onClick={toggling}
             >
                 <SelectElement
                     length={length}
+                    shadow={shadow}
                 >
                     {getLabelFromValue(selectedOption)}
                 </SelectElement>
@@ -126,6 +128,7 @@ const defaultProps: PropsObjectInterface = {
     value: undefined,
     label: 'Label',
     length: InputLength.full,
+    shadow: true,
     onChange: () => {}
 };
 
