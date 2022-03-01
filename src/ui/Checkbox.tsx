@@ -1,10 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { Fragment, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { generateID, mergeClasses } from '../helpers';
 import Element, { AlignPositions, LabelPositions } from './Element';
 import { ChangeElementValueType, PropsObjectInterface, SetBoolToStateType } from '../types';
 
 const CheckboxContainer = styled.div`
+    padding-right: 1em;
+
     display: inline-block;
     vertical-align: middle;
     padding-top: 0.25em;
@@ -45,10 +47,50 @@ const StyledCheckbox = styled.div`
     }
 `;
 
+const CheckboxAdvancedWrapper = styled.div`
+    display: flex;
+    align-items: center;
+    min-width: 7em;
+    height: 3.5em;
+    position: relative;
+    background-color: rgba(255, 255, 255, 0.3);
+    border: none;
+    border-bottom: 1px solid #666;
+    transition: 0.3s background-color ease-in-out, 0.3s box-shadow ease-in-out;
+    background-color: #ffffff;
+    box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2);
+
+    &:hover{
+        background-color: rgba(255, 255, 255, 0.45);
+        box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.05);
+    }
+`;
+
+interface LabelProps {
+    htmlFor: string
+}
+
+const CheckboxAdvancedLabel = styled.div<LabelProps>`
+    display: flex;
+    justify-content: flex-start;
+    flex: 1;
+    padding: 0 1em 0 1em;
+
+    font-family: "Gotham SSm A", "Gotham SSm B", sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    color: #666;
+    opacity: 1;
+    pointer-events: none;
+    transition: 0.1s all ease-in-out;
+`;
+
 interface CheckboxProps extends PropsObjectInterface{
     className: string,
     checked: boolean,
     label: string,
+    simpleElement?: boolean,
     labelPosition?: LabelPositions,
     align?: AlignPositions,
     onChange: ChangeElementValueType
@@ -107,31 +149,50 @@ function Checkbox(props: CheckboxProps) {
         label,
         labelPosition,
         align,
+        simpleElement,
         onChange
     } = props;
 
     const id = useRef(generateID());
 
     return (
-        <Element
-            id={id.current}
-            align={align}
-            label={label}
-            labelPosition={labelPosition}
-        >
-            <CheckboxElement
-                className={className}
-                checked={checkedFromProps}
-                onChange={onChange}
-            />
-        </Element>
-    );
+        <Fragment>
+            {simpleElement ? (
+                <Element
+                    id={id.current}
+                    align={align}
+                    label={label}
+                    labelPosition={labelPosition}
+                >
+                    <CheckboxElement
+                        className={className}
+                        checked={checkedFromProps}
+                        onChange={onChange}
+                    />
+                </Element>
+            ): (
+                <CheckboxAdvancedWrapper>
+                    <CheckboxAdvancedLabel
+                        htmlFor={id.current}
+                    >
+                        {label}
+                    </CheckboxAdvancedLabel>
+                    <CheckboxElement
+                        className={className}
+                        checked={checkedFromProps}
+                        onChange={onChange}
+                    />
+                </CheckboxAdvancedWrapper>
+            )}
+        </Fragment>
+    )
 }
 
 const defaultProps: PropsObjectInterface = {
     className: '',
     checked: false,
     label: 'Label',
+    simpleElement: false,
     labelPosition: LabelPositions.horizontal,
     onChange: () => {}
 };

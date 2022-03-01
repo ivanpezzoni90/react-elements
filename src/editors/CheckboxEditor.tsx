@@ -3,49 +3,31 @@ import React from 'react';
 import { Fragment } from 'react';
 import Editor from './Editor';
 import Checkbox from '../ui/Checkbox';
-import { Editor as EditorType } from '../types';
+import { Editor as EditorType, PropsObjectInterface } from '../types';
 import { useEditorInit } from '../hooks';
-import { EditorContainer, ElementContainer } from './commons';
-import { LabelPositions, AlignPositions } from '../ui/Element';
+import { alignPositionEditor, EditorContainer, ElementContainer, labelPositionEditor } from './commons';
 
+const getEditor = (props: PropsObjectInterface) => {
+    const editorJson: EditorType[] = [
+        {
+            type: 'input',
+            default: 'Label',
+            label: 'Label',
+            prop: 'label'
+        },
+        {
+            type: 'checkbox',
+            default: false,
+            label: 'Simple Element',
+            prop: 'simpleElement'
+        },
+    ];
 
-const editorJson: EditorType[] = [
-    {
-        type: 'input',
-        default: 'Label',
-        label: 'Label',
-        prop: 'label'
-    },
-    {
-        type: 'select',
-        label: 'Label Position',
-        default: LabelPositions.horizontal,
-        prop: 'labelPosition',
-        options: [{
-            label: 'Horizontal',
-            value: LabelPositions.horizontal
-        }, {
-            label: 'Vertical',
-            value: LabelPositions.vertical
-        }]
-    },
-    {
-        type: 'select',
-        label: 'Alignment',
-        default: AlignPositions.left,
-        prop: 'align',
-        options: [{
-            label: 'Left',
-            value: AlignPositions.left
-        }, {
-            label: 'Center',
-            value: AlignPositions.center
-        }, {
-            label: 'Right',
-            value: AlignPositions.right
-        }]
-    },
-];
+    if (props.simpleElement) {
+        editorJson.push(labelPositionEditor, alignPositionEditor);
+    }
+    return editorJson;
+}
 
 export default function CheckboxEditor() {
     return function CheckboxEditorFn () {
@@ -53,6 +35,8 @@ export default function CheckboxEditor() {
             onChangeProp,
             props: checkboxProps
         } = useEditorInit(Checkbox.defaultProps);
+
+        const editorJson: EditorType[] = getEditor(checkboxProps);
 
         return (
             <Fragment>

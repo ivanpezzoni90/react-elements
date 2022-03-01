@@ -43,6 +43,7 @@ export interface PropsObjectInterface {
     value?: string | boolean | Array<string>,
     label?: string,
     length?: InputLength,
+    simpleElement?: boolean,
     onChange?: ChangeElementValueType,
     locked?: boolean,
     error?: string,
