@@ -15,6 +15,7 @@ import {
 
 export const SelectElement = styled.div<SelectElementProps>`
     width: ${(props) => (calculateInnerInputLength(props.length))};
+    display: flex;
     text-align: left;
     height: 1.75em;
     position: relative;
@@ -114,6 +115,7 @@ export const DropDownList = styled('ul')`
 `;
 
 export const ListItem = styled('li')<ListItemProps>`
+    display: flex;
     list-style: none;
     padding: 0.5em 1em 0.5em 1em;
     &:hover {
@@ -123,4 +125,8 @@ export const ListItem = styled('li')<ListItemProps>`
         ? `background: #adadad;
             color: #ffffff;`
         : ''}
+`;
+
+export const ListIcon = styled.div`
+    padding-right: 0.25em;
 `;

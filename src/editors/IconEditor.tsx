@@ -10,7 +10,8 @@ import { EditorContainer, ElementContainer } from './commons';
 const getEditor = () => {
     const iconOptions: Option[] = Object.values(IconList).map(v => ({
         label: v,
-        value: v
+        value: v,
+        icon: v
     }));
 
     const sizeOptions: Option[] = Object.entries(IconSize).map(([k,v]) => ({

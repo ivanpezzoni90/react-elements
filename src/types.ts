@@ -16,7 +16,8 @@ export type Editor = {
 
 export type Option = {
     label: string,
-    value: string
+    value: string,
+    icon?: string
 };
 
 export type  VoidFunction = () => void;

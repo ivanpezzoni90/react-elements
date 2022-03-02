@@ -1,7 +1,7 @@
 import React from 'react';
 import { Fragment, useEffect, useRef, useState } from 'react';
 import { generateID } from '../../helpers';
-import { Option as OptionType, PropsObjectInterface } from '../../types';
+import { IconSize, Option as OptionType, PropsObjectInterface } from '../../types';
 import Icon, {IconList} from '../../ui/Icon';
 import { InputLength } from '../../types';
 import {
@@ -12,6 +12,7 @@ import {
     DropDownListContainer,
     DropDownList,
     ListItem,
+    ListIcon,
 } from './SelectStyle';
 
 import {
@@ -51,11 +52,11 @@ function Select(props: SelectProps) {
         setIsOpen(false);
     };
 
-    const getLabelFromValue = (value: string) => (
+    const getOptionFromValue = (value: string) => (
         options.find(
             (o: OptionType) => o.value === value
-        )
-    )?.label;
+        ) as OptionType // TODO: Review
+    );
 
     const selectRef = useRef<Element>(null);
     const [
@@ -75,6 +76,8 @@ function Select(props: SelectProps) {
             setDropDownZIndex(1);
         }
     }, [selectRef]);
+
+    const currentOptionObject: OptionType = getOptionFromValue(selectedOption);
     return (
         <Fragment>
             <SelectWrapper
@@ -88,7 +91,15 @@ function Select(props: SelectProps) {
                     length={length}
                     shadow={shadow}
                 >
-                    {getLabelFromValue(selectedOption)}
+                    {currentOptionObject && currentOptionObject.icon ? (
+                        <ListIcon>
+                            <Icon
+                                icon={currentOptionObject.icon}
+                                fontSize={IconSize.s}
+                            />
+                        </ListIcon>
+                    ) : null}
+                    {currentOptionObject && currentOptionObject.label}
                 </SelectElement>
                 {isOpen && (
                     <DropDownListContainer
@@ -102,6 +113,15 @@ function Select(props: SelectProps) {
                                     key={o.value}
                                     selected={selectedOption === o.value}
                                 >
+                                    {o.icon ? (
+                                        <ListIcon>
+                                            <Icon
+                                                icon={o.icon}
+                                                fontSize={IconSize.s}
+                                            />
+                                        </ListIcon>
+                                    ): null}
+                                    
                                     {o.label}
                                 </ListItem>
                             ))}
