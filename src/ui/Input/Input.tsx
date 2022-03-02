@@ -14,9 +14,10 @@ function Input({
     onBlur,
     onChange,
     length,
+    active: activeFromProps
 }: InputProps) {
     // active = focused
-    const [active, setActive] = useState(valueFromProps !== '');
+    const [active, setActive] = useState(activeFromProps || (valueFromProps !== ''));
     const [value, setValue] = useState(valueFromProps);
 
     useEffect(() => {
@@ -82,7 +83,8 @@ const defaultProps: PropsObjectInterface = {
     onBlur: () => {},
     onChange: () => {},
     shadow: true,
-    length: InputLength.full
+    length: InputLength.full,
+    active: undefined
 };
 
 Input.defaultProps = defaultProps;

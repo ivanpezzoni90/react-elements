@@ -9,6 +9,7 @@ export interface InputProps extends PropsObjectInterface {
     onBlur: ChangeElementValueType,
     onChange: ChangeElementValueType,
     length: InputLength,
+    active?: boolean
 }
 
 export interface InputWrapperProps {

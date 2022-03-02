@@ -7,6 +7,7 @@ import { LabelPositions } from '../types';
 import Input from '../ui/Input';
 import Select from '../ui/Select';
 import SwitchToggle from '../ui/SwitchToggle';
+import ColorPicker from '../ui/ColorPicker';
 
 const EditorWrapper = styled.div`
     display: flex;
@@ -72,6 +73,11 @@ export default function Editor({
                                     label={e.label}
                                     color="#666"
                                     labelPosition={LabelPositions.vertical}
+                                    onChange={onChangeValue(e.prop)}
+                                />),
+                                color: (<ColorPicker
+                                    value={e.default as string}
+                                    label={e.label}
                                     onChange={onChangeValue(e.prop)}
                                 />)
                             }[e.type]

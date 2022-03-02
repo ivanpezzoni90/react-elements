@@ -8,11 +8,13 @@ import Icon, {IconList} from '../ui/Icon';
 
 interface Slider {
     toggle: boolean,
-    color: string
+    color?: string,
+    colorOff?: string
 }
 interface Switch {
     toggle: boolean,
-    color: string
+    color?: string,
+    colorOff?: string
 }
 
 const Slider = styled.span<Slider>`
@@ -22,7 +24,7 @@ const Slider = styled.span<Slider>`
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: ${({ toggle, color }) => (toggle ? color : 'white')};
+    background-color: ${({ toggle, color, colorOff }) => (toggle ? color : colorOff)};
     border-radius: 15px;
     border: 1px solid gray;
     transition: 0.4s;
@@ -42,7 +44,7 @@ const Slider = styled.span<Slider>`
         height: 20px;
         border-radius: 100%;
 
-        background-color: ${({ toggle, color }) => (toggle ? 'white' : color)};
+        background-color: ${({ toggle, color, colorOff }) => (toggle ? colorOff : color)};
 
         transition: 0.4s;
     }
@@ -63,7 +65,7 @@ const Switch = styled.label<Switch>`
   display: inline-block;
   width: 48px;
   height: 24px;
-  background-color: ${({ toggle, color }) => (toggle ? color : 'white')};
+  background-color: ${({ toggle, color, colorOff }) => (toggle ? color : colorOff)};
   border-radius: 15px;
   transition: 0.4s;
 
@@ -115,7 +117,7 @@ const SwitchToggleAdvancedLabel = styled.div<LabelProps>`
 
 interface ToggleInnerLabelType {
     toggle: boolean,
-    color: string,
+    color?: string,
 }
 
 const ToggleInnerLabel = styled.div<ToggleInnerLabelType>`
@@ -137,13 +139,19 @@ interface SwitchToggleProps extends PropsObjectInterface {
     labelOn?: string,
     labelOff?: string,
     labelType?: ToggleLabelType,
-    onChange: ChangeElementValueType
+    onChange: ChangeElementValueType,
+    colorOff?: string,
+    iconColor?: string,
+    iconOffColor?: string,
 }
 
 function SwitchToggleElement({
     checked,
     onChange,
-    color = '#666',
+    color,
+    colorOff,
+    iconColor,
+    iconOffColor,
     labelOn,
     labelOff,
     labelType
@@ -152,7 +160,10 @@ function SwitchToggleElement({
     color?: string,
     labelOn?: string,
     labelOff?: string,
-    labelType?: ToggleLabelType
+    labelType?: ToggleLabelType,
+    colorOff?: string,
+    iconColor?: string,
+    iconOffColor?: string,
     onChange: ChangeElementValueType
 }) {
     const [
@@ -172,7 +183,7 @@ function SwitchToggleElement({
         color={color}
     >
         <Input {...{ color }} type="checkbox" defaultChecked={toggle} />
-        <Slider {...{ toggle, color }} onClick={onClickCb}>
+        <Slider {...{ toggle, color, colorOff }} onClick={onClickCb}>
             <ToggleInnerLabel
                 toggle={toggle}
                 color={color}
@@ -182,10 +193,12 @@ function SwitchToggleElement({
                     : toggle
                         ? <Icon
                             icon={IconList.check}
+                            color={iconColor}
                             fontSize={IconSize.xs}
                         />
                         : <Icon
                             icon={IconList.close}
+                            color={iconOffColor}
                             fontSize={IconSize.xs}
                         />
                 }
@@ -198,6 +211,9 @@ const SwitchToggle = (props: SwitchToggleProps) => {
     const {
         checked,
         color,
+        colorOff,
+        iconColor,
+        iconOffColor,
         label,
         labelPosition,
         simpleElement,
@@ -227,6 +243,9 @@ const SwitchToggle = (props: SwitchToggleProps) => {
                         labelOn={labelOn}
                         labelOff={labelOff}
                         labelType={labelType}
+                        colorOff={colorOff}
+                        iconColor={iconColor}
+                        iconOffColor={iconOffColor}
                         onChange={onChange}
                     />
                 </Element>
@@ -246,6 +265,9 @@ const SwitchToggle = (props: SwitchToggleProps) => {
                             labelOn={labelOn}
                             labelOff={labelOff}
                             labelType={labelType}
+                            colorOff={colorOff}
+                            iconColor={iconColor}
+                            iconOffColor={iconOffColor}
                             onChange={onChange}
                         />
                     </SwitchElementWrapper>
@@ -258,6 +280,9 @@ const SwitchToggle = (props: SwitchToggleProps) => {
 const defaultProps: PropsObjectInterface = {
     checked: true,
     color: '#666',
+    colorOff: 'white',
+    iconColor: 'white',
+    iconOffColor: '#666',
     label: 'Label',
     labelPosition: undefined,
     simpleElement: false,

@@ -15,10 +15,16 @@ const getEditor = (props: PropsObjectInterface) => {
             prop: 'label'
         },
         {
-            type: 'input',
-            default: '#ba0c2f',
+            type: 'color',
+            default: '#666',
             label: 'Color',
             prop: 'color'
+        },
+        {
+            type: 'color',
+            default: 'white',
+            label: 'Off Color',
+            prop: 'colorOff'
         },
         {
             type: 'select',
@@ -59,6 +65,18 @@ const getEditor = (props: PropsObjectInterface) => {
             label: 'Label OFF',
             prop: 'labelOff'
         });
+    } else if (props.labelType === ToggleLabelType.icon) {
+        editorJson.push({
+            type: 'color',
+            default: 'white',
+            label: 'Icon Color',
+            prop: 'iconColor'
+        }, {
+            type: 'color',
+            default: '#666',
+            label: 'Icon Off Color',
+            prop: 'iconOffColor'
+        })
     }
     return editorJson;
 }

@@ -18,8 +18,8 @@ import {
 import {
     ListItemClickCallbackType,
     SelectProps,
-    SetStateDropDownZIndexType
 } from './config';
+import { useComputedZIndex } from '../../hooks';
 
 function Select(props: SelectProps) {
     const {
@@ -59,23 +59,7 @@ function Select(props: SelectProps) {
     );
 
     const selectRef = useRef<Element>(null);
-    const [
-        dropDownZIndex, setDropDownZIndex
-    ]: [
-        dropDownZIndex: number,
-        setDropDownZIndex: SetStateDropDownZIndexType
-    ] = useState(0);
-
-    useEffect(() => {
-        if (selectRef !== null) {
-            const style = window.getComputedStyle(selectRef.current as Element);
-            const computedZIndex = style.zIndex;
-            if (computedZIndex !== 'auto') {
-                setDropDownZIndex(parseInt(computedZIndex, 10) +1);
-            }
-            setDropDownZIndex(1);
-        }
-    }, [selectRef]);
+    const dropDownZIndex = useComputedZIndex(selectRef);
 
     const currentOptionObject: OptionType = getOptionFromValue(selectedOption);
     return (

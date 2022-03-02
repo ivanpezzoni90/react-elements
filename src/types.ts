@@ -83,6 +83,10 @@ export interface PropsObjectInterface {
     labelOn?: string,
     labelOff?: string,
     labelType?: ToggleLabelType,
-    shadow?: boolean
+    shadow?: boolean,
+    active?: boolean,
+    colorOff?: string,
+    iconColor?: string,
+    iconOffColor?: string,
 };
 export type SetPropsToStateType = (props: PropsObjectInterface) => void;

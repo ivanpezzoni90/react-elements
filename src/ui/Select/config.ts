@@ -2,8 +2,6 @@ import { ChangeElementValueType, InputLength, Option as OptionType, PropsObjectI
 
 export type ListItemClickCallbackType = (value: string) => () => void;
 
-export type SetStateDropDownZIndexType = (s: number) => void;
-
 export interface ListItemProps {
     onClick: VoidFunction,
     key: string
@@ -26,7 +24,7 @@ export interface SelectWrapperProps{
     hasValue: boolean,
     length: string,
     shadow?: boolean,
-    ref: any // TODO:
+    ref: any
 }
 
 export interface SelectProps extends PropsObjectInterface {

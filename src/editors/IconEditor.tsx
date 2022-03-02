@@ -28,7 +28,7 @@ const getEditor = () => {
             options: iconOptions
         },
         {
-            type: 'input',
+            type: 'color',
             default: '#666',
             label: 'Color',
             prop: 'color'
