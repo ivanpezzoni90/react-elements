@@ -76,10 +76,10 @@ const getEditor = (props: PropsObjectInterface) => {
             default: '#666',
             label: 'Icon Off Color',
             prop: 'iconOffColor'
-        })
+        });
     }
     return editorJson;
-}
+};
 
 
 export default function SwitchToggleEditor() {

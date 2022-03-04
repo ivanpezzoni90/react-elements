@@ -40,4 +40,4 @@ export const useComputedZIndex = (ref: React.RefObject<Element>) => {
     }, [ref]);
 
     return zIndex;
-}
+};

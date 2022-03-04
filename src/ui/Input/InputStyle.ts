@@ -10,6 +10,7 @@ import {
     calculateInnerInputLength,
     calculateInputLength
 } from '../../helpers';
+import { allColors } from '../../constants/colors';
 
 export const InputElement = styled.input<InputElementProps>`
     width: ${(props) => (calculateInnerInputLength(props.length))};
@@ -23,7 +24,7 @@ export const InputElement = styled.input<InputElementProps>`
     font-weight: 400;
     line-height: normal;
     background-color: transparent;
-    color: #666;
+    color: ${props => props.textColor};
     outline: none;
     ${props => props.shadow ? 'box-shadow: 0px 4px 20px 0px transparent;' : ''}
     transition: 0.3s background-color ease-in-out, 0.3s box-shadow ease-in-out,
@@ -43,12 +44,12 @@ export const InputElement = styled.input<InputElementProps>`
     :-moz-placeholder {
       color: rgba(255, 255, 255, 0.8);
     }
-    ${(props) => props.error && props.error !== '' ? 'color: #ec392f;' : ''}
+    ${(props) => props.error ? `color: ${allColors['Lava']};` : ''}
 
     ${props => props.active
         ? 'padding: 24px 16px 8px 16px;'
         : ''
-    }
+}
 `;
 
 export const InputWrapper = styled.div<InputWrapperProps>`
@@ -57,14 +58,14 @@ export const InputWrapper = styled.div<InputWrapperProps>`
     position: relative;
     background-color: rgba(255, 255, 255, 0.3);
     border: none;
-    border-bottom: 1px solid #666;
+    border-bottom: 1px solid ${props => props.borderColor};
     transition: 0.3s background-color ease-in-out, 0.3s box-shadow ease-in-out;
     ${props => props.locked ? 'pointer-events: none;' : ''}
     ${props => props.active && props.shadow
-        ? `background-color: #ffffff;
-        box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2);`
+        ? `background-color: ${allColors['White']};
+            box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2);`
         : ''
-    }
+}
     &:hover{
       background-color: rgba(255, 255, 255, 0.45);
       ${props => props.shadow ? 'box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.05);' : ''}
@@ -79,19 +80,19 @@ export const Label = styled.label<LabelProps>`
     font-size: 16px;
     font-weight: 600;
     line-height: 24px;
-    color: #666;
+    color: ${props => props.labelColor};
     opacity: 1;
     pointer-events: none;
     transition: 0.1s all ease-in-out;
 
-    ${(props) => props.error && props.error !== '' ? 'color: #ec392f;' : ''}
+    ${(props) => props.error ? `color: ${allColors['Lava']};` : ''}
 
     ${props => props.active
         ? `top: .25em;
         left: 1.5em;
         opacity: 1;
-        color: #666;
+        color: ${props.error ? allColors['Lava'] : props.labelColor};
         font-size: 12px;`
         : ''
-    }
+}
 `;

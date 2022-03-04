@@ -232,10 +232,10 @@ const SwitchToggle = (props: SwitchToggleProps) => {
         <Fragment>
             {simpleElement ? (
                 <Element
-                id={id.current}
-                align={align}
-                label={label}
-                labelPosition={labelPosition}
+                    id={id.current}
+                    align={align}
+                    label={label}
+                    labelPosition={labelPosition}
                 >
                     <SwitchToggleElement
                         checked={checked}

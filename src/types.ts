@@ -1,4 +1,5 @@
 import { ReactChild } from 'react';
+import { InputTypes } from './ui/Input/config';
 
 export type Component = {
     key: string,
@@ -8,7 +9,7 @@ export type Component = {
 
 export type Editor = {
     type: string,
-    default: string | boolean | Array<string>,
+    default: string | boolean | Array<string> | undefined,
     label: string,
     options?: Array<Option>,
     prop: string
@@ -72,7 +73,8 @@ export interface PropsObjectInterface {
     simpleElement?: boolean,
     onChange?: ChangeElementValueType,
     locked?: boolean,
-    error?: string,
+    error?: boolean,
+    errorMessage?: string,
     onBlur?: ChangeElementValueType,
     checked?: boolean,
     labelPosition?: LabelPositions,
@@ -88,5 +90,11 @@ export interface PropsObjectInterface {
     colorOff?: string,
     iconColor?: string,
     iconOffColor?: string,
-};
+    labelColor?: string,
+    textColor?: string,
+    borderColor?: string,
+    min?: number,
+    max?: number,
+    type?: InputTypes
+}
 export type SetPropsToStateType = (props: PropsObjectInterface) => void;

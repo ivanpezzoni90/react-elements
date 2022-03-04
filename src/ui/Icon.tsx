@@ -1,6 +1,6 @@
 import React from 'react';
 import { FaCaretDown, FaCaretUp } from 'react-icons/fa';
-import { IoCloseSharp, IoCheckmarkSharp } from "react-icons/io5";
+import { IoCloseSharp, IoCheckmarkSharp } from 'react-icons/io5';
 
 import { IconType } from 'react-icons/lib';
 import { IconSize, PropsObjectInterface } from '../types';
@@ -50,7 +50,7 @@ const defaultProps: PropsObjectInterface = {
     icon: undefined,
     color: '#666',
     fontSize: IconSize.xs
-}
+};
 
 Icon.defaultProps = defaultProps;
 

@@ -29,7 +29,7 @@ const getEditor = (props: PropsObjectInterface) => {
         editorJson.push(shadowEditor);
     }
     return editorJson;
-}
+};
 
 export default function CheckboxEditor() {
     return function CheckboxEditorFn () {

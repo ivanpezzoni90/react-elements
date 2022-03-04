@@ -30,7 +30,7 @@ const getEditor = (props: PropsObjectInterface) => {
         editorJson.push(shadowEditor);
     }
     return editorJson;
-}
+};
 
 export default function ColorPickerEditor() {
     return function ColorPickerEditorFn () {

@@ -1,9 +1,9 @@
-import React, { Fragment, useEffect, useMemo, useRef, useState } from 'react';
+import React, { Fragment, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { generateID, mergeClasses } from '../helpers';
 import Element from './Element';
 import { AlignPositions, LabelPositions } from '../types';
-import { ChangeElementValueType, PropsObjectInterface, SetBoolToStateType } from '../types';
+import { ChangeElementValueType, PropsObjectInterface } from '../types';
 import { useComputedZIndex } from '../hooks';
 import { ColorObject, palette, getColorNameByHex } from '../constants/colors';
 import Input from './Input';
@@ -113,7 +113,6 @@ const ColorListItem = styled.div<ColorListItemInterface>`
     display: inline-block;
     width: 1.5em;
     height: 1.5em;
-    border-radius: 3px;
     background: ${props => props.color};
     ${props => props.hovered ? `
         -webkit-box-shadow:inset 0px 0px 0px 1px #a6a8a9;
@@ -200,7 +199,7 @@ function ColorPickerElement({
             ref={ref}
             color={selectedColor}
             onClick={toggling}
-       />
+        />
         {isOpen && (
             <DropDownListContainer
                 zIndex={dropDownZIndex}
@@ -289,7 +288,7 @@ function ColorPicker(props: ColorPickerProps) {
                 </ColorPickerAdvancedWrapper>
             )}
         </Fragment>
-    )
+    );
 }
 
 const defaultProps: PropsObjectInterface = {

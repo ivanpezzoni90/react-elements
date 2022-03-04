@@ -45,7 +45,6 @@ export default function Editor({
                             {
                                 input: (<Input
                                     locked={false}
-                                    error={''} 
                                     value={e.default as string}
                                     label={e.label}
                                     onBlur={() => {}} 

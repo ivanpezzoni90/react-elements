@@ -190,7 +190,7 @@ function Checkbox(props: CheckboxProps) {
                 </CheckboxAdvancedWrapper>
             )}
         </Fragment>
-    )
+    );
 }
 
 const defaultProps: PropsObjectInterface = {
