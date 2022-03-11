@@ -12,6 +12,7 @@ export type Editor = {
     default: string | boolean | Array<string> | undefined,
     label: string,
     options?: Array<Option>,
+    inputType?: InputTypes,
     prop: string
 };
 

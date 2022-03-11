@@ -1,10 +1,128 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { generateID } from '../../helpers';
-import {InputWrapper, InputElement, Label } from './InputStyle';
-import { InputProps, InputTypes } from './config';
+import {
+    InputWrapper,
+    InputElement,
+    Label,
+    InputNumberIcons,
+    IconWrapper
+} from './InputStyle';
+import { CheckValidatorsType, InputProps, InputTypeProps, InputTypes } from './config';
 import { InputLength, PropsObjectInterface } from '../../types';
 import { allColors } from '../../constants/colors';
+import Icon, { IconList } from '../Icon';
+
+function InputComponent({
+    error,
+    setError,
+    length,
+    active,
+    shadow,
+    textColor,
+    label,
+    id,
+    type,
+    value,
+    onChange,
+    onFocus,
+    onBlur,
+    max,
+    min,
+}: InputTypeProps) {
+    const checkValidators: CheckValidatorsType = useCallback((newValue, opts = {}) => {
+        switch (type) {
+            case InputTypes.text:
+                if (max && newValue.length > max) {
+                    return false;
+                }
+                if (min && newValue.length < min) {
+                    setError(true);
+                } else {
+                    setError(false);
+                }
+                return true;
+            case InputTypes.number: {
+                const parsedValue = parseFloat(newValue);
+                if (
+                    (max !== undefined && parsedValue > max)
+                    || (min !== undefined && parsedValue < min)
+                ) {
+                    setError(true);
+                    if (opts.changeFromCaret) {
+                        return false;
+                    }
+                } else {
+                    setError(false);
+                }
+                return true;
+            }
+        }
+        return true;
+    }, [max, min, type, setError]);
+   
+    const onChangeValue = useCallback((event) => {
+        const newValue = event.target.value;
+        if (checkValidators(newValue)) {
+            onChange(newValue);
+        }
+    }, [onChange, checkValidators]);
+
+    const onBlurInput = useCallback((event) => {
+        const newValue = event.target.value;
+        if (checkValidators(newValue)) {
+            onBlur(newValue);
+        }
+    }, [onBlur, checkValidators]);
+
+    const handleNumberCaret = useCallback((type) => () => {
+        const parsedValue = parseFloat(value || '0');
+        const newValue = (type === 'up' ? (parsedValue + 1) : (parsedValue - 1)).toString();
+
+        if (checkValidators(newValue, { changeFromCaret: true })) {
+            onChange(newValue);
+        }
+    }, [checkValidators, onChange, value]);
+
+    return (
+        <Fragment>
+            <InputElement
+                error={error}
+                length={length}
+                active={active}
+                shadow={shadow}
+                textColor={textColor}
+                id={id}
+                type={type}
+                value={value}
+                placeholder={label}
+                onChange={onChangeValue}
+                onFocus={onFocus}
+                onBlur={onBlurInput}
+            />
+            {type === InputTypes.number ? (
+                <InputNumberIcons>
+                    <IconWrapper
+                        onClick={handleNumberCaret('up')}
+                    >
+                        <Icon
+                            color={textColor}
+                            icon={IconList.caretUp}
+                        />
+                    </IconWrapper>
+                    <IconWrapper
+                        onClick={handleNumberCaret('down')}
+                    >
+                        <Icon
+                            color={textColor}
+                            icon={IconList.caretDown}
+                        />
+                    </IconWrapper>
+                </InputNumberIcons>
+            ) : null}
+        </Fragment>
+    );
+}
 
 function Input({
     locked,
@@ -39,30 +157,17 @@ function Input({
 
     const id = useRef(generateID());
 
-    const checkValidators: (v: string) => boolean = useCallback((newValue) => {
-        if (max && newValue.length > max) {
-            return false;
-        }
-        if (min && newValue.length < min) {
-            setError(true);
-        }
-        return true;
-    }, [max, min]);
-   
-    const onChangeValue = useCallback((event) => {
-        const newValue = event.target.value;
-        if (checkValidators(newValue)) {
-            setValue(newValue);
-            onChange(newValue);
-        }
-    }, [onChange, checkValidators]);
-   
+    const onChangeCb = useCallback((newValue) => {
+        if (newValue !== '') setActive(true);
+        setValue(newValue);
+        onChange(newValue);
+    }, [onChange]);
+
     const onFocusCb = useCallback(() => {
         if (!locked) setActive(true);
     }, [locked]);
    
-    const onBlurCb = useCallback((event) => {
-        const newValue = event.target.value;
+    const onBlurCb = useCallback((newValue) => {
         if (newValue === '') setActive(false);
         onBlur(newValue);
     }, [onBlur]);
@@ -75,20 +180,22 @@ function Input({
             shadow={shadow}
             borderColor={borderColor}
         >
-            <InputElement
+            <InputComponent
                 error={error}
+                setError={setError}
                 length={length}
                 active={active}
                 shadow={shadow}
                 textColor={textColor}
-
+                label={label}
                 id={id.current}
                 type={type}
                 value={value}
-                placeholder={label}
-                onChange={onChangeValue}
+                onChange={onChangeCb}
                 onFocus={onFocusCb}
                 onBlur={onBlurCb}
+                max={max}
+                min={min}
             />
             <Label
                 htmlFor={id.current}

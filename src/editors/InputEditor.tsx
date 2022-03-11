@@ -44,6 +44,8 @@ const getEditor = (props: PropsObjectInterface) => {
             prop: 'error'
         }
     ];
+    
+    // Error message
     if (props.error) {
         editorJson.push({
             label: 'Error Message',
@@ -52,6 +54,23 @@ const getEditor = (props: PropsObjectInterface) => {
             prop: 'errorMessage'
         });
     }
+
+    // max/min
+    editorJson.push({
+        type: 'input',
+        inputType: props.type,
+        label: props.type === InputTypes.text ? 'Max length' : 'Max',
+        prop: 'max',
+        default: undefined
+    },
+    {
+        type: 'input',
+        label: props.type === InputTypes.text ? 'Min length' : 'Min',
+        inputType: props.type,
+        prop: 'min',
+        default: undefined
+    });
+
     editorJson.push({
         label: 'Length',
         type: 'select',
@@ -70,18 +89,6 @@ const getEditor = (props: PropsObjectInterface) => {
             label: 'L',
             value: 'l'
         }]
-    },
-    {
-        type: 'input',
-        label: 'Max length',
-        prop: 'max',
-        default: undefined
-    },
-    {
-        type: 'input',
-        label: 'Min length',
-        prop: 'min',
-        default: undefined
     },
     {
         type: 'color',
@@ -113,6 +120,12 @@ export default function InputEditor() {
             props: inputProps
         } = useEditorInit(Input.defaultProps);
 
+        const max:string = inputProps.max ? inputProps.max.toString() : '';
+        const parsedMax: number = parseFloat(max);
+    
+        const min:string = inputProps.min ? inputProps.min.toString() : '';
+        const parsedMin: number = parseFloat(min);
+
         return (
             <Fragment>
                 <EditorContainer>
@@ -124,6 +137,8 @@ export default function InputEditor() {
                 <ElementContainer>
                     <Input
                         {...inputProps}
+                        max={inputProps.max ? parsedMax : undefined}
+                        min={inputProps.min ? parsedMin : undefined}
                         value={inputProps.value as string}
                     />
                 </ElementContainer>

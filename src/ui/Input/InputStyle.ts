@@ -1,7 +1,9 @@
+/* eslint-disable indent */
 import styled from 'styled-components';
 
 import {
     InputElementProps,
+    InputTypes,
     InputWrapperProps,
     LabelProps,
 } from './config';
@@ -49,7 +51,7 @@ export const InputElement = styled.input<InputElementProps>`
     ${props => props.active
         ? 'padding: 24px 16px 8px 16px;'
         : ''
-}
+    }
 `;
 
 export const InputWrapper = styled.div<InputWrapperProps>`
@@ -96,3 +98,13 @@ export const Label = styled.label<LabelProps>`
         : ''
 }
 `;
+
+export const InputNumberIcons = styled.div`
+    position: absolute;
+    top: 0.75em;
+    right: 1em;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+`;
+export const IconWrapper = styled.div``;
