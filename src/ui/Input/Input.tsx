@@ -18,7 +18,7 @@ import { useComputedWidth } from '../../hooks';
 
 const elaborateComputedWidth = (width: string) => {
     // Subtract input padding in px to parsed computed width
-    const numWidth = parseInt(width, 10) - 16;
+    const numWidth = parseInt(width, 10) - 32;
     return `${numWidth}px`;
 };
 
@@ -174,6 +174,11 @@ function Input({
         onChange(newValue);
     }, [onChange]);
 
+    const setFocusFromDiv = useCallback(() => {
+        const inputEl = document.getElementById(id.current);
+        inputEl && inputEl.focus();
+    }, []);
+
     const onFocusCb = useCallback(() => {
         if (!locked) setActive(true);
     }, [locked]);
@@ -196,7 +201,17 @@ function Input({
             locked={locked}
             shadow={shadow}
             borderColor={borderColor}
+            onClick={setFocusFromDiv}
         >
+            <Label
+                htmlFor={id.current}
+                error={error}
+                // Type date is always "active"
+                active={active || type === InputTypes.date}
+                labelColor={labelColor}
+            >
+                {(error && errorMessage) || label}
+            </Label>
             <InputComponent
                 error={error}
                 setError={setError}
@@ -216,15 +231,6 @@ function Input({
                 min={min}
                 computedWidth={inputElementWidth}
             />
-            <Label
-                htmlFor={id.current}
-                error={error}
-                // Type date is always "active"
-                active={active || type === InputTypes.date}
-                labelColor={labelColor}
-            >
-                {(error && errorMessage) || label}
-            </Label>
         </InputWrapper>
     );
 }

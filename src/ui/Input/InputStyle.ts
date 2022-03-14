@@ -3,7 +3,6 @@ import styled from 'styled-components';
 
 import {
     InputElementProps,
-    InputTypes,
     InputWrapperProps,
     LabelProps,
 } from './config';
@@ -16,7 +15,12 @@ import { allColors } from '../../constants/colors';
 import { InputLength } from '../../types';
 
 export const InputElement = styled.input<InputElementProps>`
-    width: ${(props) => (props.length === InputLength.full ? props.computedWidth : calculateInnerInputLength(props.length))};
+    width: ${(props) => (
+        props.length === InputLength.full
+            ? props.computedWidth
+            : calculateInnerInputLength(props.length)
+        )
+    };
     height: 2.5em;
     position: relative;
     padding: 0 1em;
@@ -48,14 +52,12 @@ export const InputElement = styled.input<InputElementProps>`
       color: rgba(255, 255, 255, 0.8);
     }
     ${(props) => props.error ? `color: ${allColors['Lava']};` : ''}
-
-    ${props => props.active
-        ? 'padding: 24px 16px 8px 16px;'
-        : ''
-    }
 `;
 
 export const InputWrapper = styled.div<InputWrapperProps>`
+    display: flex;
+    flex-direction: column;
+    cursor: text;
     width: ${(props) => calculateInputLength(props.length)};
     height: 3.5em;
     position: relative;
@@ -76,9 +78,7 @@ export const InputWrapper = styled.div<InputWrapperProps>`
 `;
 
 export const Label = styled.label<LabelProps>`
-    position: absolute;
-    top: 1em;
-    left: 1em;
+    padding: 1em 1em 0 1em;
     font-family: "Gotham SSm A", "Gotham SSm B", sans-serif;
     font-size: 16px;
     font-weight: 600;
@@ -91,8 +91,7 @@ export const Label = styled.label<LabelProps>`
     ${(props) => props.error ? `color: ${allColors['Lava']};` : ''}
 
     ${props => props.active
-        ? `top: .25em;
-        left: 1.5em;
+        ? `padding: .25em 1.5em 0 1.5em;
         opacity: 1;
         color: ${props.error ? allColors['Lava'] : props.labelColor};
         font-size: 12px;`
