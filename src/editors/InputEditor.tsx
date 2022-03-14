@@ -4,7 +4,7 @@ import Editor from './Editor';
 
 import { Editor as EditorType, PropsObjectInterface } from '../types';
 import { Fragment } from 'react';
-import Input, { InputProps } from '../ui/Input';
+import Input from '../ui/Input';
 import { useEditorInit } from '../hooks';
 import { EditorContainer, ElementContainer, shadowEditor } from './commons';
 import { allColors } from '../constants/colors';
@@ -29,6 +29,9 @@ const getEditor = (props: PropsObjectInterface) => {
             }, {
                 label: 'Number',
                 value: InputTypes.number
+            }, {
+                label: 'Date',
+                value: InputTypes.date
             }]
         },
         {

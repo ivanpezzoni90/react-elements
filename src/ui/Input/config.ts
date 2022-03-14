@@ -2,7 +2,8 @@ import { ChangeElementValueType, InputLength, PropsObjectInterface } from '../..
 
 export enum InputTypes {
     text = 'text',
-    number = 'number'
+    number = 'number',
+    date = 'date'
 }
 
 export interface InputProps extends PropsObjectInterface {
@@ -44,9 +45,11 @@ export interface InputTypeProps {
     onBlur: ChangeInputHandlerType,
     max?: number,
     min?: number,
+    computedWidth: string
 }
 
 export interface InputWrapperProps {
+    ref: any,
     length: string,
     active: boolean
     locked: boolean,
@@ -59,6 +62,7 @@ export interface LabelProps {
     errorMessage?: string,
     active: boolean,
     labelColor?: string,
+    type?: InputTypes
 }
 
 export interface InputElementProps {
@@ -74,6 +78,7 @@ export interface InputElementProps {
     onChange: ChangeInputHandlerType,
     onFocus: VoidFunction,
     onBlur: ChangeInputHandlerType,
+    computedWidth: string
 }
 
 export type CheckValidatorsType = (v: string, opts?: {

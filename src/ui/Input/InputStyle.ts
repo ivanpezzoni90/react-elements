@@ -13,9 +13,10 @@ import {
     calculateInputLength
 } from '../../helpers';
 import { allColors } from '../../constants/colors';
+import { InputLength } from '../../types';
 
 export const InputElement = styled.input<InputElementProps>`
-    width: ${(props) => (calculateInnerInputLength(props.length))};
+    width: ${(props) => (props.length === InputLength.full ? props.computedWidth : calculateInnerInputLength(props.length))};
     height: 2.5em;
     position: relative;
     padding: 0 1em;
@@ -67,7 +68,7 @@ export const InputWrapper = styled.div<InputWrapperProps>`
         ? `background-color: ${allColors['White']};
             box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2);`
         : ''
-}
+    }
     &:hover{
       background-color: rgba(255, 255, 255, 0.45);
       ${props => props.shadow ? 'box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.05);' : ''}
@@ -96,7 +97,7 @@ export const Label = styled.label<LabelProps>`
         color: ${props.error ? allColors['Lava'] : props.labelColor};
         font-size: 12px;`
         : ''
-}
+    }
 `;
 
 export const InputNumberIcons = styled.div`

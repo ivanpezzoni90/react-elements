@@ -8,10 +8,19 @@ import {
     InputNumberIcons,
     IconWrapper
 } from './InputStyle';
+import './style.css';
+
 import { CheckValidatorsType, InputProps, InputTypeProps, InputTypes } from './config';
 import { InputLength, PropsObjectInterface } from '../../types';
 import { allColors } from '../../constants/colors';
 import Icon, { IconList } from '../Icon';
+import { useComputedWidth } from '../../hooks';
+
+const elaborateComputedWidth = (width: string) => {
+    // Subtract input padding in px to parsed computed width
+    const numWidth = parseInt(width, 10) - 16;
+    return `${numWidth}px`;
+};
 
 function InputComponent({
     error,
@@ -29,6 +38,7 @@ function InputComponent({
     onBlur,
     max,
     min,
+    computedWidth
 }: InputTypeProps) {
     const checkValidators: CheckValidatorsType = useCallback((newValue, opts = {}) => {
         switch (type) {
@@ -96,6 +106,7 @@ function InputComponent({
                 type={type}
                 value={value}
                 placeholder={label}
+                computedWidth={computedWidth}
                 onChange={onChangeValue}
                 onFocus={onFocus}
                 onBlur={onBlurInput}
@@ -142,7 +153,7 @@ function Input({
     min,
     type
 }: InputProps) {
-    // active = focused
+    // active = focused or with value
     const [active, setActive] = useState(activeFromProps || (valueFromProps !== ''));
     const [value, setValue] = useState(valueFromProps);
     const [error, setError] = useState(errorFromProps);
@@ -172,8 +183,14 @@ function Input({
         onBlur(newValue);
     }, [onBlur]);
 
+    const inputWrapperRef = useRef<Element>(null);
+    const inputElementWidth = elaborateComputedWidth(
+        useComputedWidth(inputWrapperRef)
+    );
+
     return (
         <InputWrapper
+            ref={inputWrapperRef}
             length={length}
             active={active}
             locked={locked}
@@ -184,7 +201,8 @@ function Input({
                 error={error}
                 setError={setError}
                 length={length}
-                active={active}
+                // Type date is always "active"
+                active={active || type === InputTypes.date}
                 shadow={shadow}
                 textColor={textColor}
                 label={label}
@@ -196,11 +214,13 @@ function Input({
                 onBlur={onBlurCb}
                 max={max}
                 min={min}
+                computedWidth={inputElementWidth}
             />
             <Label
                 htmlFor={id.current}
                 error={error}
-                active={active}
+                // Type date is always "active"
+                active={active || type === InputTypes.date}
                 labelColor={labelColor}
             >
                 {(error && errorMessage) || label}

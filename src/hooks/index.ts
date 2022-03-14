@@ -41,3 +41,22 @@ export const useComputedZIndex = (ref: React.RefObject<Element>) => {
 
     return zIndex;
 };
+
+export const useComputedWidth = (ref: React.RefObject<Element>) => {
+    const [
+        width, setWidth
+    ]: [
+        width: string,
+        setWidth: (s: string) => void
+    ] = useState('');
+
+    useEffect(() => {
+        if (ref !== null) {
+            const style = window.getComputedStyle(ref.current as Element);
+            const computedWidth = style.width;
+            setWidth(computedWidth);
+        }
+    }, [ref]);
+
+    return width;
+};

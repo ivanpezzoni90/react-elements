@@ -8,11 +8,12 @@ import Input from '../ui/Input';
 import Select from '../ui/Select';
 import SwitchToggle from '../ui/SwitchToggle';
 import ColorPicker from '../ui/ColorPicker';
+import { InputTypes } from '../ui/Input/config';
 
 const EditorWrapper = styled.div`
     display: flex;
     flex-direction: column;
-    flex: 1;
+    width: 100%;
 `;
 
 const EditorElement = styled.div`
@@ -46,6 +47,7 @@ export default function Editor({
                                 input: (<Input
                                     locked={false}
                                     value={e.default as string}
+                                    type={e.inputType || InputTypes.text}
                                     label={e.label}
                                     onBlur={() => {}} 
                                     onChange={onChangeValue(e.prop)}
