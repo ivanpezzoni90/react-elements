@@ -6,8 +6,7 @@ import { Editor as EditorType, PropsObjectInterface } from '../types';
 import { Fragment } from 'react';
 import Input from '../ui/Input';
 import { useEditorInit } from '../hooks';
-import { EditorContainer, ElementContainer, shadowEditor } from './commons';
-import { allColors } from '../constants/colors';
+import { colorEditors, EditorContainer, ElementContainer, shadowEditor } from './commons';
 import { InputTypes } from '../ui/Input/config';
 
 const getEditor = (props: PropsObjectInterface) => {
@@ -93,24 +92,7 @@ const getEditor = (props: PropsObjectInterface) => {
             value: 'l'
         }]
     },
-    {
-        type: 'color',
-        label: 'Text Color',
-        prop: 'textColor',
-        default: allColors['Dim Gray']
-    },
-    {
-        type: 'color',
-        label: 'Label Color',
-        prop: 'labelColor',
-        default: allColors['Dim Gray']
-    },
-    {
-        type: 'color',
-        label: 'Border Color',
-        prop: 'borderColor',
-        default: allColors['Dim Gray']
-    },
+    ...colorEditors,
     shadowEditor
     );
     return editorJson.filter(Boolean);

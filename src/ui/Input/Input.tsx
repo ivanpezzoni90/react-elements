@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { useState, useCallback, useRef, useEffect } from 'react';
-import { generateID } from '../../helpers';
+import { elaborateComputedWidth, generateID } from '../../helpers';
 import {
     InputWrapper,
     InputElement,
@@ -15,12 +15,6 @@ import { InputLength, PropsObjectInterface } from '../../types';
 import { allColors } from '../../constants/colors';
 import Icon, { IconList } from '../Icon';
 import { useComputedWidth } from '../../hooks';
-
-const elaborateComputedWidth = (width: string) => {
-    // Subtract input padding in px to parsed computed width
-    const numWidth = parseInt(width, 10) - 32;
-    return `${numWidth}px`;
-};
 
 function InputComponent({
     error,

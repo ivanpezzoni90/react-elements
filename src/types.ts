@@ -94,6 +94,7 @@ export interface PropsObjectInterface {
     labelColor?: string,
     textColor?: string,
     borderColor?: string,
+    optionSelectedColor?: string,
     min?: number,
     max?: number,
     type?: InputTypes

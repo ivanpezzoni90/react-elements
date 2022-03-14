@@ -5,7 +5,8 @@ import IEComponent from './components/InterfaceElementsComponent';
 
 const AppComponent = styled.div`
     text-align: left;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
 `;
 
 function App() {

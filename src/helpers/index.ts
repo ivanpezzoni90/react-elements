@@ -30,3 +30,11 @@ export const mergeClasses = (
     });
     return newClass;
 };
+
+export const elaborateComputedWidth = (width: string) => {
+    // Subtract padding in px to parsed computed width
+    const numWidth = parseInt(width, 10) - 32;
+    return `${numWidth}px`;
+};
+
+export * from './colorHelpers';

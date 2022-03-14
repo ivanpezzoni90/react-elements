@@ -1,6 +1,6 @@
 import React from 'react';
 import { Fragment, useEffect, useRef, useState } from 'react';
-import { generateID } from '../../helpers';
+import { elaborateComputedWidth, generateID, rgbFromHex } from '../../helpers';
 import { IconSize, Option as OptionType, PropsObjectInterface } from '../../types';
 import Icon, {IconList} from '../../ui/Icon';
 import { InputLength } from '../../types';
@@ -19,7 +19,8 @@ import {
     ListItemClickCallbackType,
     SelectProps,
 } from './config';
-import { useComputedZIndex } from '../../hooks';
+import { useComputedWidth, useComputedZIndex } from '../../hooks';
+import { allColors } from '../../constants/colors';
 
 function Select(props: SelectProps) {
     const {
@@ -28,7 +29,11 @@ function Select(props: SelectProps) {
         label = '',
         shadow,
         onChange,
-        length
+        length,
+        labelColor,
+        textColor,
+        borderColor,
+        optionSelectedColor
     } = props;
 
     const isValidValue = (v: string) => v !== null && v !== '';
@@ -60,8 +65,12 @@ function Select(props: SelectProps) {
 
     const selectRef = useRef<Element>(null);
     const dropDownZIndex = useComputedZIndex(selectRef);
+    const selectElementWidth = elaborateComputedWidth(
+        useComputedWidth(selectRef)
+    );
 
     const currentOptionObject: OptionType = getOptionFromValue(selectedOption);
+
     return (
         <Fragment>
             <SelectWrapper
@@ -69,11 +78,21 @@ function Select(props: SelectProps) {
                 hasValue={hasValue}
                 length={length}
                 shadow={shadow}
+                borderColor={borderColor}
                 onClick={toggling}
             >
+                <Label
+                    htmlFor={id.current}
+                    hasValue={hasValue}
+                    labelColor={labelColor}
+                >
+                    {label}
+                </Label>
                 <SelectElement
                     length={length}
                     shadow={shadow}
+                    computedWidth={selectElementWidth}
+                    textColor={textColor}
                 >
                     {currentOptionObject && currentOptionObject.icon ? (
                         <ListIcon>
@@ -96,6 +115,8 @@ function Select(props: SelectProps) {
                                     onClick={onOptionClicked(o.value)}
                                     key={o.value}
                                     selected={selectedOption === o.value}
+                                    textColor={textColor}
+                                    optionSelectedColor={optionSelectedColor}
                                 >
                                     {o.icon ? (
                                         <ListIcon>
@@ -112,12 +133,6 @@ function Select(props: SelectProps) {
                         </DropDownList>
                     </DropDownListContainer>
                 )}
-                <Label
-                    htmlFor={id.current}
-                    hasValue={hasValue}
-                >
-                    {label}
-                </Label>
                 <IconWrapper>
                     <Icon
                         icon={IconList.caretDown}
@@ -133,6 +148,10 @@ const defaultProps: PropsObjectInterface = {
     label: 'Label',
     length: InputLength.full,
     shadow: true,
+    labelColor: allColors['Dim Gray'],
+    textColor: allColors['Dim Gray'],
+    borderColor: allColors['Dim Gray'],
+    optionSelectedColor: allColors['Quick Silver'],
     onChange: () => {}
 };
 

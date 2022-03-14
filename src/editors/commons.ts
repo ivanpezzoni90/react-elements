@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { allColors } from '../constants/colors';
 import { Editor } from '../types';
 import { AlignPositions, LabelPositions } from '../types';
 
@@ -53,3 +54,24 @@ export const shadowEditor: Editor = {
     default: true,
     prop: 'shadow'
 };
+
+export const colorEditors: Editor[] = [
+    {
+        type: 'color',
+        label: 'Text Color',
+        prop: 'textColor',
+        default: allColors['Dim Gray']
+    },
+    {
+        type: 'color',
+        label: 'Label Color',
+        prop: 'labelColor',
+        default: allColors['Dim Gray']
+    },
+    {
+        type: 'color',
+        label: 'Border Color',
+        prop: 'borderColor',
+        default: allColors['Dim Gray']
+    },
+];

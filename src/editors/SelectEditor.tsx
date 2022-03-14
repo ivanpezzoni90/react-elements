@@ -2,11 +2,12 @@ import React from 'react';
 
 import Editor from './Editor';
 import { Fragment } from 'react';
-import { EditorContainer, ElementContainer, shadowEditor } from './commons';
+import { colorEditors, EditorContainer, ElementContainer, shadowEditor } from './commons';
 
 import { Editor as EditorType } from '../types';
 import Select from '../ui/Select';
 import { useEditorInit } from '../hooks';
+import { allColors } from '../constants/colors';
 
 const editorJson: EditorType[] = [
     {
@@ -33,6 +34,13 @@ const editorJson: EditorType[] = [
             label: 'L',
             value: 'l'
         }]
+    },
+    ...colorEditors,
+    {
+        type: 'color',
+        label: 'Option Selected Color',
+        prop: 'optionSelectedColor',
+        default: allColors['Quick Silver']
     },
     shadowEditor
 ];
