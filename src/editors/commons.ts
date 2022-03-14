@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { allColors } from '../constants/colors';
-import { Editor } from '../types';
+import { BorderRadius, Editor, ElementLength, ElementSize, FontWeight, Padding } from '../types';
 import { AlignPositions, LabelPositions } from '../types';
 
 export const EditorContainer = styled.div`
@@ -75,3 +75,121 @@ export const colorEditors: Editor[] = [
         default: allColors['Dim Gray']
     },
 ];
+
+export const lengthEditor: Editor = {
+    label: 'Length',
+    type: 'select',
+    default: 'full',
+    prop: 'length',
+    options: [{
+        label: 'Full',
+        value: ElementLength.full
+    }, {
+        label: 'S',
+        value: ElementLength.s
+    }, {
+        label: 'M',
+        value: ElementLength.m
+    }, {
+        label: 'L',
+        value: ElementLength.l
+    }]
+};
+
+export const paddingEditor: Editor = {
+    label: 'Padding',
+    type: 'select',
+    default: Padding.m,
+    prop: 'padding',
+    options: [{
+        label: 'S',
+        value: Padding.s
+    }, {
+        label: 'M',
+        value: Padding.m
+    }, {
+        label: 'L',
+        value: Padding.l
+    }]
+};
+
+export const fontWeightEditor: Editor = {
+    label: 'Font Weight',
+    type: 'select',
+    default: FontWeight.light,
+    prop: 'fontWeight',
+    options: [{
+        label: 'Lighter',
+        value: FontWeight.lighter
+    }, {
+        label: 'Light',
+        value: FontWeight.light
+    }, {
+        label: 'Semibold',
+        value: FontWeight.semibold
+    }, {
+        label: 'Bold',
+        value: FontWeight.bold
+    }, {
+        label: 'Bolder',
+        value: FontWeight.bolder
+    }]
+};
+
+export const borderRadiusEditor: Editor = {
+    label: 'Border Radius',
+    type: 'select',
+    default: BorderRadius.s,
+    prop: 'borderRadius',
+    options: [{
+        label: 'No',
+        value: BorderRadius.no
+    }, {
+        label: 'XS',
+        value: BorderRadius.xs
+    }, {
+        label: 'S',
+        value: BorderRadius.s
+    }, {
+        label: 'M',
+        value: BorderRadius.m
+    }, {
+        label: 'L',
+        value: BorderRadius.l
+    }, {
+        label: 'XL',
+        value: BorderRadius.xl
+    }, {
+        label: 'XXL',
+        value: BorderRadius.xxl
+    }]
+};
+
+export const fontSizeEditor: Editor = {
+    label: 'Element Size',
+    type: 'select',
+    default: ElementSize.m,
+    prop: 'fontSize',
+    options: [{
+        label: 'XXS',
+        value: ElementSize.xxs
+    }, {
+        label: 'XS',
+        value: ElementSize.xs
+    }, {
+        label: 'S',
+        value: ElementSize.s
+    }, {
+        label: 'M',
+        value: ElementSize.m
+    }, {
+        label: 'L',
+        value: ElementSize.l
+    }, {
+        label: 'XL',
+        value: ElementSize.xl
+    }, {
+        label: 'XXL',
+        value: ElementSize.xxl
+    }]
+};

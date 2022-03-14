@@ -11,7 +11,7 @@ import {
 import './style.css';
 
 import { CheckValidatorsType, InputProps, InputTypeProps, InputTypes } from './config';
-import { InputLength, PropsObjectInterface } from '../../types';
+import { ElementLength, PropsObjectInterface } from '../../types';
 import { allColors } from '../../constants/colors';
 import Icon, { IconList } from '../Icon';
 import { useComputedWidth } from '../../hooks';
@@ -238,7 +238,7 @@ const defaultProps: PropsObjectInterface = {
     onBlur: () => {},
     onChange: () => {},
     shadow: true,
-    length: InputLength.full,
+    length: ElementLength.full,
     active: undefined,
     labelColor: allColors['Dim Gray'],
     textColor: allColors['Dim Gray'],

@@ -1,4 +1,4 @@
-import { ChangeElementValueType, InputLength, PropsObjectInterface } from '../../types';
+import { ChangeElementValueType, ElementLength, PropsObjectInterface } from '../../types';
 
 export enum InputTypes {
     text = 'text',
@@ -15,7 +15,7 @@ export interface InputProps extends PropsObjectInterface {
     shadow?: boolean,
     onBlur: ChangeElementValueType,
     onChange: ChangeElementValueType,
-    length: InputLength,
+    length: ElementLength,
     active?: boolean,
     labelColor?: string,
     textColor?: string,
@@ -32,7 +32,7 @@ export type ChangeInputHandlerType = (v: string | number) => void;
 export interface InputTypeProps {
     error: boolean,
     setError: SetErrorType,
-    length: InputLength,
+    length: ElementLength,
     active?: boolean,
     shadow?: boolean,
     textColor?: string,

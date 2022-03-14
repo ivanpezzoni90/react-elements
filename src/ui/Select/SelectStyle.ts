@@ -2,13 +2,13 @@
 
 import styled from 'styled-components';
 import {
-    calculateInnerInputLength,
-    calculateInputLength,
+    calculateInnerElementLength,
+    calculateElementLength,
     darkOrLightColor,
     fontColorFromBackground,
     lightenDarkenColor
 } from '../../helpers';
-import { InputLength } from '../../types';
+import { ElementLength } from '../../types';
 
 import {
     SelectElementProps,
@@ -20,9 +20,9 @@ import {
 
 export const SelectElement = styled.div<SelectElementProps>`
     width: ${(props) => (
-        props.length === InputLength.full
+        props.length === ElementLength.full
             ? props.computedWidth
-            : calculateInnerInputLength(props.length)
+            : calculateInnerElementLength(props.length)
         )
     };   
     display: flex;
@@ -63,7 +63,7 @@ export const SelectElement = styled.div<SelectElementProps>`
 export const SelectWrapper = styled.div<SelectWrapperProps>`
     display: flex;
     flex-direction: column;
-    width: ${props => calculateInputLength(props.length)};
+    width: ${props => calculateElementLength(props.length)};
     height: 3.5em;
     position: relative;
     background-color: rgba(255, 255, 255, 0.3);
@@ -109,7 +109,7 @@ export const IconWrapper = styled.div`
 
 export const DropDownListContainer = styled('div')<DropDownContainerProps>`
     position: absolute;
-    width: ${props => calculateInputLength(props.length)};
+    width: ${props => calculateElementLength(props.length)};
     ${props => props.zIndex ? `z-index: ${props.zIndex}` : ''}
 `;
 

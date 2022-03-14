@@ -3,7 +3,7 @@ import { Fragment, useEffect, useRef, useState } from 'react';
 import { elaborateComputedWidth, generateID, rgbFromHex } from '../../helpers';
 import { IconSize, Option as OptionType, PropsObjectInterface } from '../../types';
 import Icon, {IconList} from '../../ui/Icon';
-import { InputLength } from '../../types';
+import { ElementLength } from '../../types';
 import {
     SelectElement,
     SelectWrapper,
@@ -146,7 +146,7 @@ const defaultProps: PropsObjectInterface = {
     options: [],
     value: undefined,
     label: 'Label',
-    length: InputLength.full,
+    length: ElementLength.full,
     shadow: true,
     labelColor: allColors['Dim Gray'],
     textColor: allColors['Dim Gray'],

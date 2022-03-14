@@ -8,17 +8,17 @@ import {
 } from './config';
 
 import {
-    calculateInnerInputLength,
-    calculateInputLength
+    calculateInnerElementLength,
+    calculateElementLength
 } from '../../helpers';
 import { allColors } from '../../constants/colors';
-import { InputLength } from '../../types';
+import { ElementLength } from '../../types';
 
 export const InputElement = styled.input<InputElementProps>`
     width: ${(props) => (
-        props.length === InputLength.full
+        props.length === ElementLength.full
             ? props.computedWidth
-            : calculateInnerInputLength(props.length)
+            : calculateInnerElementLength(props.length)
         )
     };
     height: 2.5em;
@@ -58,7 +58,7 @@ export const InputWrapper = styled.div<InputWrapperProps>`
     display: flex;
     flex-direction: column;
     cursor: text;
-    width: ${(props) => calculateInputLength(props.length)};
+    width: ${(props) => calculateElementLength(props.length)};
     height: 3.5em;
     position: relative;
     background-color: rgba(255, 255, 255, 0.3);

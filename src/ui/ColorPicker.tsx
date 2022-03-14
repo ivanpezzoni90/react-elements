@@ -1,6 +1,6 @@
 import React, { Fragment, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { generateID, mergeClasses } from '../helpers';
+import { fontColorFromBackground, generateID, mergeClasses } from '../helpers';
 import Element from './Element';
 import { AlignPositions, LabelPositions } from '../types';
 import { ChangeElementValueType, PropsObjectInterface } from '../types';
@@ -106,7 +106,8 @@ const ColorListRow = styled.div`
 interface ColorListItemInterface {
     color: string,
     selected: boolean,
-    hovered: boolean
+    hovered: boolean,
+    borderColor: string
 }
 
 const ColorListItem = styled.div<ColorListItemInterface>`
@@ -115,14 +116,14 @@ const ColorListItem = styled.div<ColorListItemInterface>`
     height: 1.5em;
     background: ${props => props.color};
     ${props => props.hovered ? `
-        -webkit-box-shadow:inset 0px 0px 0px 1px #a6a8a9;
-        -moz-box-shadow:inset 0px 0px 0px 10px #a6a8a9;
-        box-shadow:inset 0px 0px 0px 1px #a6a8a9;
+        -webkit-box-shadow:inset 0px 0px 0px 1px ${props.borderColor};
+        -moz-box-shadow:inset 0px 0px 0px 10px ${props.borderColor};
+        box-shadow:inset 0px 0px 0px 1px ${props.borderColor};
     ` : ''}
     ${props => props.selected ? `
-        -webkit-box-shadow:inset 0px 0px 0px 1px #484a4b;
-        -moz-box-shadow:inset 0px 0px 0px 10px #484a4b;
-        box-shadow:inset 0px 0px 0px 1px #484a4b;
+        -webkit-box-shadow:inset 0px 0px 0px 1px ${props.borderColor};
+        -moz-box-shadow:inset 0px 0px 0px 10px ${props.borderColor};
+        box-shadow:inset 0px 0px 0px 1px ${props.borderColor};
     ` : ''}
     margin-right: 1px;
     margin-bottom: 1px;
@@ -221,6 +222,7 @@ function ColorPickerElement({
                                         hovered={colorObj.hex === hoverColor.hex}
                                         onClick={onChangeColor(colorObj.hex)}
                                         onMouseEnter={onMouseEnter(colorObj)}
+                                        borderColor={fontColorFromBackground(colorObj.hex)}
                                     />
                                 ))}
                             </ColorListRow>

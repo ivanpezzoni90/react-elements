@@ -7,6 +7,7 @@ import IconEditor from '../editors/IconEditor';
 import ColorPickerEditor from '../editors/ColorPickerEditor';
 
 import { Component } from '../types';
+import ButtonEditor from '../editors/ButtonEditor';
 
 const Components: Component[] = [{
     key: 'input',
@@ -36,6 +37,10 @@ const Components: Component[] = [{
     key: 'colorPicker',
     name: 'Color Picker',
     editor: ColorPickerEditor
+}, {
+    key: 'button',
+    name: 'Button',
+    editor: ButtonEditor
 }];
 
 function getComponentByKey(key: string) {

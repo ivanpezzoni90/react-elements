@@ -30,11 +30,35 @@ export type SetBoolToStateType = (s: boolean) => void;
 export type ChangeEditorPropType = (prop: string, value: string | boolean | Array<string>) => void;
 export type ChangeElementValueType = (value: string | boolean | Array<string>) => void;
 
-export enum InputLength {
+export enum ElementLength {
     s = 's',
     m = 'm',
     l = 'l',
     full = 'full'
+}
+
+export enum Padding {
+    s = '0.5em',
+    m = '1em',
+    l = '1.5em'
+}
+
+export enum BorderRadius {
+    no = '0',
+    xs = '.25em',
+    s = '.5em',
+    m = '.75em',
+    l = '1em',
+    xl = '1.25em',
+    xxl = '1.5em'
+}
+
+export enum FontWeight {
+    lighter = '300',
+    light = '400',
+    semibold = '500',
+    bold = '600',
+    bolder = '900',
 }
 
 export enum IconSize {
@@ -45,6 +69,16 @@ export enum IconSize {
     l = '28px',
     xl = '32px',
     xxl = '36px'
+}
+
+export enum ElementSize {
+    xxs = '10px',
+    xs = '12px',
+    s = '14px',
+    m = '16px',
+    l = '18px',
+    xl = '20px',
+    xxl = '22px'
 }
 
 export enum LabelPositions {
@@ -70,7 +104,7 @@ export interface PropsObjectInterface {
     options?: Array<Option>,
     value?: string | boolean | Array<string>,
     label?: string,
-    length?: InputLength,
+    length?: ElementLength,
     simpleElement?: boolean,
     onChange?: ChangeElementValueType,
     locked?: boolean,
@@ -97,6 +131,8 @@ export interface PropsObjectInterface {
     optionSelectedColor?: string,
     min?: number,
     max?: number,
-    type?: InputTypes
+    type?: InputTypes,
+    padding?: Padding,
+    borderRadius?: BorderRadius
 }
 export type SetPropsToStateType = (props: PropsObjectInterface) => void;

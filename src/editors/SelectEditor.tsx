@@ -2,7 +2,7 @@ import React from 'react';
 
 import Editor from './Editor';
 import { Fragment } from 'react';
-import { colorEditors, EditorContainer, ElementContainer, shadowEditor } from './commons';
+import { colorEditors, EditorContainer, ElementContainer, lengthEditor, shadowEditor } from './commons';
 
 import { Editor as EditorType } from '../types';
 import Select from '../ui/Select';
@@ -16,25 +16,7 @@ const editorJson: EditorType[] = [
         label: 'Label',
         prop: 'label'
     },
-    {
-        label: 'Length',
-        type: 'select',
-        default: 'full',
-        prop: 'length',
-        options: [{
-            label: 'Full',
-            value: 'full'
-        }, {
-            label: 'S',
-            value: 's'
-        }, {
-            label: 'M',
-            value: 'm'
-        }, {
-            label: 'L',
-            value: 'l'
-        }]
-    },
+    lengthEditor,
     ...colorEditors,
     {
         type: 'color',
