@@ -17,6 +17,8 @@ const Aside = styled.div`
     flex-direction: column;
     border-right: 1px solid #666;
     padding: 1em 1em 1em 0em;
+    height: 30em;
+    overflow: auto;
 `;
 const Component = styled.div`
     display: flex;

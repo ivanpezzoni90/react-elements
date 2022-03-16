@@ -8,10 +8,12 @@ export const EditorContainer = styled.div`
     display: flex;
     padding: 0.5em 1em 0.5em 0.5em;
     border-right: 1px solid #666;
-    min-width: 17em;
-    max-width: 17em;
-    overflow-y: auto;
-    height: 100%;
+    flex-direction: column;
+
+    height: 30em;
+    overflow: auto;
+    min-width: 15em;
+    max-width: 15em;
 `;
 
 export const ElementContainer = styled.div`

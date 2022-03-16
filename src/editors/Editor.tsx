@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
 import styled from 'styled-components';
 import { ChangeEditorPropType, ChangeElementValueType, Editor as EditorType } from '../types';
@@ -9,12 +9,6 @@ import Select from '../ui/Select';
 import SwitchToggle from '../ui/SwitchToggle';
 import ColorPicker from '../ui/ColorPicker';
 import { InputTypes } from '../ui/Input/config';
-
-const EditorWrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-`;
 
 const EditorElement = styled.div`
     padding: 0.5em 0.25em 0.5em 0.25em;
@@ -36,7 +30,7 @@ export default function Editor({
         return innerOnChange;
     };
     return (
-        <EditorWrapper>
+        <Fragment>
             {json.map((e: EditorType) => {
                 return (
                     <EditorElement
@@ -86,7 +80,7 @@ export default function Editor({
                     </EditorElement>
                 );
             })}
-        </EditorWrapper>
+        </Fragment>
     );
 
 }
