@@ -5,41 +5,18 @@ import { Editor as EditorType, IconSize, Option } from '../types';
 import { Fragment } from 'react';
 import Icon, { IconList } from '../ui/Icon';
 import { useEditorInit } from '../hooks';
-import { EditorContainer, ElementContainer } from './commons';
+import { EditorContainer, ElementContainer, iconEditor, iconSizeEditor } from './commons';
 
 const getEditor = () => {
-    const iconOptions: Option[] = Object.values(IconList).map(v => ({
-        label: v,
-        value: v,
-        icon: v
-    }));
-
-    const sizeOptions: Option[] = Object.entries(IconSize).map(([k,v]) => ({
-        label: k,
-        value: v
-    }));
-
     const editorJson: EditorType[] = [
-        {
-            type: 'select',
-            default: IconList.check,
-            label: 'Icon',
-            prop: 'icon',
-            options: iconOptions
-        },
+        iconEditor,
         {
             type: 'color',
             default: '#666',
             label: 'Color',
             prop: 'color'
         },
-        {
-            label: 'Size',
-            type: 'select',
-            default: IconSize.xs,
-            prop: 'fontSize',
-            options: sizeOptions
-        },
+        iconSizeEditor
     ];
     
     return editorJson;

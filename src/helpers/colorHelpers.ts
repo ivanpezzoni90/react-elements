@@ -11,7 +11,7 @@ export const darkOrLightColor = (colorCode: string): string => {
         r, g, b
     } = rgbFromHex(colorCode);
 
-    if ((r*0.299 + g*0.587 + b*0.114) > 150) {
+    if ((r*0.299 + g*0.587 + b*0.114) > 186) {
         return 'light';
     } 
     return 'dark';

@@ -9,6 +9,8 @@ const Container = styled.div`
     display: flex;
     flex-direction: row;
     padding: 1em;
+    flex: 1;
+    text-align: left;
 `;
 const Aside = styled.div`
     display: flex;
@@ -29,11 +31,6 @@ const Component = styled.div`
         ? `background: #adadad;
             color: #ffffff;`
         : ''}
-`;
-const Workarea = styled.div`
-    display: flex;
-    flex-direction: row;
-    flex: 1;
 `;
 
 type AsideClickCallbackType = (key: string) => void;
@@ -68,9 +65,7 @@ function IEWorkarea({
     const currentComponent = getComponentByKey(currentComponentKey);
     const Editor = currentComponent?.editor();
     return (
-        <Workarea>
-            <Editor />
-        </Workarea>
+        <Editor />
     );
 }
 

@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 import { allColors } from '../constants/colors';
-import { BorderRadius, Editor, ElementLength, ElementSize, FontWeight, Padding } from '../types';
+import { BorderRadius, Editor, ElementLength, ElementSize, FontWeight, IconSize, Option, Padding } from '../types';
 import { AlignPositions, LabelPositions } from '../types';
+import { IconList } from '../ui/Icon';
 
 export const EditorContainer = styled.div`
     display: flex;
@@ -9,6 +10,8 @@ export const EditorContainer = styled.div`
     border-right: 1px solid #666;
     min-width: 17em;
     max-width: 17em;
+    overflow-y: auto;
+    height: 100%;
 `;
 
 export const ElementContainer = styled.div`
@@ -192,4 +195,32 @@ export const fontSizeEditor: Editor = {
         label: 'XXL',
         value: ElementSize.xxl
     }]
+};
+
+
+const iconOptions: Option[] = Object.values(IconList).map(v => ({
+    label: v,
+    value: v,
+    icon: v
+}));
+
+export const iconEditor: Editor = {
+    type: 'select',
+    default: IconList.check,
+    label: 'Icon',
+    prop: 'icon',
+    options: iconOptions
+};
+
+const sizeOptions: Option[] = Object.entries(IconSize).map(([k,v]) => ({
+    label: k,
+    value: v
+}));
+
+export const iconSizeEditor: Editor = {
+    label: 'Size',
+    type: 'select',
+    default: IconSize.xs,
+    prop: 'fontSize',
+    options: sizeOptions
 };

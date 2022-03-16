@@ -2,9 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 import { allColors } from '../constants/colors';
 import { calculateElementLength, lightenDarkenColor } from '../helpers';
-import { BorderRadius, ElementLength, ElementSize, FontWeight, Padding, PropsObjectInterface } from '../types';
+import { BorderRadius, ElementLength, ElementSize, FontWeight, IconPosition, IconSize, Padding, PropsObjectInterface } from '../types';
+import Icon, { IconList } from './Icon';
 
 const ButtonElement = styled.button<ButtonElementProps>`
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: ${props => calculateElementLength(props.length)};
     height: 3.5em;
     padding: ${props => props.padding};
@@ -46,8 +50,16 @@ interface ButtonProps extends PropsObjectInterface {
     label: string
     fontWeight?: FontWeight,
     length: ElementLength,
+    icon?: IconList,
+    iconColor?: string,
+    iconSize?: IconSize,
+    iconPosition?: IconPosition,
     onClick: VoidFunction
 }
+
+const LabelWrapper = styled.div`
+    padding: 0 0.25em 0 0.25em;
+`;
 
 const Button = ({
     padding,
@@ -59,8 +71,18 @@ const Button = ({
     disabled,
     label,
     length,
+    icon,
+    iconColor,
+    iconSize, // TODO:
+    iconPosition,
     onClick
 }: ButtonProps) => {
+    const IconElement = (<Icon
+        icon={icon}
+        color={iconColor}
+        fontSize={fontSize}
+    />);
+
     return (
         <ButtonElement
             padding={padding}
@@ -73,7 +95,11 @@ const Button = ({
             disabled={disabled}
             onClick={onClick}
         >
-            {label}
+            {icon && iconPosition === IconPosition.left && IconElement}
+            <LabelWrapper>
+                {label}
+            </LabelWrapper>
+            {icon && iconPosition === IconPosition.right && IconElement}
         </ButtonElement>
     );
 };
@@ -88,7 +114,11 @@ Button.defaultProps = {
     label: 'Label',
     disabled: false,
     onClick: () => {},
-    length: ElementLength.full
+    length: ElementLength.full,
+    icon: undefined,
+    iconColor: allColors['White'],
+    iconSize: IconSize.xs,
+    iconPosition: IconPosition.left
 };
 
 export default Button;

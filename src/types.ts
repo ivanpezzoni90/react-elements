@@ -1,4 +1,5 @@
 import { ReactChild } from 'react';
+import { IconList } from './ui/Icon';
 import { InputTypes } from './ui/Input/config';
 
 export type Component = {
@@ -86,6 +87,11 @@ export enum LabelPositions {
     horizontal = 'horizontal'
 }
 
+export enum IconPosition {
+    left = 'left',
+    right = 'right'
+}
+
 export enum AlignPositions {
     left = 'flex-start',
     center = 'center',
@@ -114,7 +120,7 @@ export interface PropsObjectInterface {
     checked?: boolean,
     labelPosition?: LabelPositions,
     color?: string,
-    icon?: string,
+    icon?: IconList | string,
     fontSize?: string,
     align?: AlignPositions,
     labelOn?: string,
@@ -133,6 +139,8 @@ export interface PropsObjectInterface {
     max?: number,
     type?: InputTypes,
     padding?: Padding,
-    borderRadius?: BorderRadius
+    borderRadius?: BorderRadius,
+    iconSize?: IconSize,
+    iconPosition?: IconPosition
 }
 export type SetPropsToStateType = (props: PropsObjectInterface) => void;

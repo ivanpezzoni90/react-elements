@@ -25,7 +25,7 @@ const iconMap: IconInterface = {
 };
 
 interface IconProps extends PropsObjectInterface {
-    icon: string,
+    icon: IconList | string,
     color?: string,
     fontSize?: IconSize | string
 }
