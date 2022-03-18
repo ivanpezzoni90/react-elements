@@ -1,6 +1,7 @@
-# Interface Elements
+# React Interface Components
 
-Simple (and incomplete) list of interface elements with customizable properties
+Simple (and incomplete) list of React interface components with customizable properties.
+
 ## Available Scripts
 
 In the project directory, you can run:
