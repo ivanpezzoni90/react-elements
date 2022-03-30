@@ -8,7 +8,7 @@ export const useEditorInit = (defaultProps: PropsObjectInterface) => {
         props: PropsObjectInterface, setProps: SetPropsToStateType
     ] = useState(defaultProps);
 
-    const onChangeProp: ChangeEditorPropType = (prop: string, value: string | boolean | Array<string>) => {
+    const onChangeProp: ChangeEditorPropType = (prop, value) => {
         setProps(Object.assign({}, props, {
             [prop]: value
         }));

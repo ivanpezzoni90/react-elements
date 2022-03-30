@@ -2,8 +2,25 @@ import React from 'react';
 import styled from 'styled-components';
 import { allColors } from '../constants/colors';
 import { calculateElementLength, lightenDarkenColor } from '../helpers';
-import { BorderRadius, ElementLength, ElementSize, FontWeight, IconPosition, IconSize, Padding, PropsObjectInterface } from '../types';
+import {
+    BorderRadius,
+    ButtonIconSize,
+    ElementLength,
+    ElementSize,
+    FontWeight,
+    IconPosition,
+    Padding,
+    PropsObjectInterface
+} from '../types';
 import Icon, { IconList } from './Icon';
+
+
+const calculateIconSize = (iconSize: ButtonIconSize, fontSize: ElementSize) => {
+    const parsedFontSize = parseInt(fontSize, 10);
+    const calculatedIconSize = iconSize * parsedFontSize;
+
+    return `${calculatedIconSize}px`;
+};
 
 const ButtonElement = styled.button<ButtonElementProps>`
     display: flex;
@@ -52,7 +69,7 @@ interface ButtonProps extends PropsObjectInterface {
     length: ElementLength,
     icon?: IconList,
     iconColor?: string,
-    iconSize?: IconSize,
+    buttonIconSize?: ButtonIconSize,
     iconPosition?: IconPosition,
     onClick: VoidFunction
 }
@@ -73,14 +90,19 @@ const Button = ({
     length,
     icon,
     iconColor,
-    iconSize, // TODO:
+    buttonIconSize,
     iconPosition,
     onClick
 }: ButtonProps) => {
+    const calculatedIconSize = calculateIconSize(
+        buttonIconSize as ButtonIconSize,
+        fontSize as ElementSize
+    );
+
     const IconElement = (<Icon
         icon={icon}
         color={iconColor}
-        fontSize={fontSize}
+        fontSize={calculatedIconSize}
     />);
 
     return (
@@ -117,7 +139,7 @@ Button.defaultProps = {
     length: ElementLength.full,
     icon: undefined,
     iconColor: allColors['White'],
-    iconSize: IconSize.xs,
+    buttonIconSize: ButtonIconSize.auto,
     iconPosition: IconPosition.left
 };
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { Fragment } from 'react';
 import Editor from './Editor';
 import Button from '../ui/Button';
-import { Editor as EditorType, IconPosition } from '../types';
+import { ButtonIconSize, Editor as EditorType, IconPosition } from '../types';
 import { useEditorInit } from '../hooks';
 import { borderRadiusEditor, EditorContainer, ElementContainer, fontSizeEditor, fontWeightEditor, iconEditor, iconSizeEditor, lengthEditor } from './commons';
 import { allColors } from '../constants/colors';
@@ -48,7 +48,31 @@ const getEditor = () => {
             label: 'Icon Color',
             prop: 'iconColor'
         },
-        iconSizeEditor,
+        {
+            type: 'select',
+            default: ButtonIconSize.auto,
+            label: 'Icon Size',
+            prop: 'buttonIconSize',
+            options: [{
+                label: 'Auto',
+                value: ButtonIconSize.auto
+            }, {
+                label: 'XS',
+                value: ButtonIconSize.xs
+            }, {
+                label: 'S',
+                value: ButtonIconSize.s
+            }, {
+                label: 'M',
+                value: ButtonIconSize.m
+            }, {
+                label: 'L',
+                value: ButtonIconSize.l
+            }, {
+                label: 'XL',
+                value: ButtonIconSize.xl
+            }]
+        },
         {
             type: 'select',
             default: IconPosition.left,

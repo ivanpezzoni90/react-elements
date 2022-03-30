@@ -10,7 +10,7 @@ export type Component = {
 
 export type Editor = {
     type: string,
-    default: string | boolean | Array<string> | undefined,
+    default: string | boolean | Array<string> | number | undefined,
     label: string,
     options?: Array<Option>,
     inputType?: InputTypes,
@@ -19,7 +19,7 @@ export type Editor = {
 
 export type Option = {
     label: string,
-    value: string,
+    value: string | number,
     icon?: string
 };
 
@@ -28,8 +28,8 @@ export type  VoidFunction = () => void;
 export type SetStringToStateType = (s: string) => void;
 export type SetBoolToStateType = (s: boolean) => void;
 
-export type ChangeEditorPropType = (prop: string, value: string | boolean | Array<string>) => void;
-export type ChangeElementValueType = (value: string | boolean | Array<string>) => void;
+export type ChangeEditorPropType = (prop: string, value: string | boolean | Array<string> | number) => void;
+export type ChangeElementValueType = (value: string | boolean | Array<string> | number) => void;
 
 export enum ElementLength {
     s = 's',
@@ -72,6 +72,15 @@ export enum IconSize {
     xxl = '36px'
 }
 
+export enum ButtonIconSize {
+    auto = 1,
+    xs = 0.5,
+    s = 0.8,
+    m = 1.3,
+    l = 2,
+    xl = 3
+}
+
 export enum ElementSize {
     xxs = '10px',
     xs = '12px',
@@ -108,7 +117,7 @@ export interface PropsObjectInterface {
     className?: string,
     children?: Array<ReactChild> | ReactChild
     options?: Array<Option>,
-    value?: string | boolean | Array<string>,
+    value?: string | boolean | Array<string> | number,
     label?: string,
     length?: ElementLength,
     simpleElement?: boolean,
@@ -141,6 +150,7 @@ export interface PropsObjectInterface {
     padding?: Padding,
     borderRadius?: BorderRadius,
     iconSize?: IconSize,
+    buttonIconSize?: ButtonIconSize,
     iconPosition?: IconPosition
 }
 export type SetPropsToStateType = (props: PropsObjectInterface) => void;

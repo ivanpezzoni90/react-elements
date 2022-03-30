@@ -1,6 +1,6 @@
 import React from 'react';
 import { Fragment, useEffect, useRef, useState } from 'react';
-import { elaborateComputedWidth, generateID, rgbFromHex } from '../../helpers';
+import { elaborateComputedWidth, generateID } from '../../helpers';
 import { IconSize, Option as OptionType, PropsObjectInterface } from '../../types';
 import Icon, {IconList} from '../../ui/Icon';
 import { ElementLength } from '../../types';
@@ -36,7 +36,7 @@ function Select(props: SelectProps) {
         optionSelectedColor
     } = props;
 
-    const isValidValue = (v: string) => v !== null && v !== '';
+    const isValidValue = (v: string | number) => v !== null && v !== '';
 
     const id = useRef(generateID());
 
@@ -51,13 +51,13 @@ function Select(props: SelectProps) {
         setHasValue(isValidValue(selectedOption));
     }, [selectedOption]);
 
-    const onOptionClicked: ListItemClickCallbackType = (value: string) => () => {
+    const onOptionClicked: ListItemClickCallbackType = (value) => () => {
         setSelectedOption(value);
         onChange(value);
         setIsOpen(false);
     };
 
-    const getOptionFromValue = (value: string) => (
+    const getOptionFromValue = (value: string | number) => (
         options.find(
             (o: OptionType) => o.value === value
         ) as OptionType // TODO: Review
@@ -113,7 +113,7 @@ function Select(props: SelectProps) {
                             {options.map((o: OptionType) => (
                                 <ListItem
                                     onClick={onOptionClicked(o.value)}
-                                    key={o.value}
+                                    key={o.value.toString()}
                                     selected={selectedOption === o.value}
                                     textColor={textColor}
                                     optionSelectedColor={optionSelectedColor}

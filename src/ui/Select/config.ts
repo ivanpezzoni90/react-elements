@@ -1,6 +1,6 @@
 import { ChangeElementValueType, ElementLength, Option as OptionType, PropsObjectInterface, VoidFunction } from '../../types';
 
-export type ListItemClickCallbackType = (value: string) => () => void;
+export type ListItemClickCallbackType = (value: string | number) => () => void;
 
 export interface ListItemProps {
     onClick: VoidFunction,
@@ -36,7 +36,7 @@ export interface SelectWrapperProps{
 
 export interface SelectProps extends PropsObjectInterface {
     options: Array<OptionType>,
-    value: string,
+    value: string | number,
     onChange: ChangeElementValueType,
     label?: string,
     shadow?: boolean,
