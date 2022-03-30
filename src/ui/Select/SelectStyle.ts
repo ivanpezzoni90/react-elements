@@ -92,19 +92,22 @@ export const Label = styled.div<LabelProps>`
     pointer-events: none;
     transition: 0.1s all ease-in-out;
 
-    ${props => props.hasValue
-        ? `padding: .25em 1.5em 0 1.5em;
-        opacity: 1;
-        color: ${props.labelColor};
-        font-size: 12px;`
-        : ''
-    }
+    padding: .25em 1.5em 0 1.5em;
+    opacity: 1;
+    color: ${props => props.labelColor};
+    font-size: 12px;
 `;
 
-export const IconWrapper = styled.div`
+export const CaretWrapper = styled.div`
     position: absolute;
     top: 1.5em;
     right: 0.5em;
+`;
+export const ResetWrapper = styled.div`
+    position: absolute;
+    top: 1.25em;
+    right: 2em;
+    z-index: 1;
 `;
 
 export const DropDownListContainer = styled('div')<DropDownContainerProps>`

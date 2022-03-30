@@ -14,7 +14,6 @@ import {
 } from '../types';
 import Icon, { IconList } from './Icon';
 
-
 const calculateIconSize = (iconSize: ButtonIconSize, fontSize: ElementSize) => {
     const parsedFontSize = parseInt(fontSize, 10);
     const calculatedIconSize = iconSize * parsedFontSize;

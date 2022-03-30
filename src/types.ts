@@ -28,8 +28,8 @@ export type  VoidFunction = () => void;
 export type SetStringToStateType = (s: string) => void;
 export type SetBoolToStateType = (s: boolean) => void;
 
-export type ChangeEditorPropType = (prop: string, value: string | boolean | Array<string> | number) => void;
-export type ChangeElementValueType = (value: string | boolean | Array<string> | number) => void;
+export type ChangeEditorPropType = (prop: string, value: string | boolean | Array<string> | number | null) => void;
+export type ChangeElementValueType = (value: string | boolean | Array<string> | number | null) => void;
 
 export enum ElementLength {
     s = 's',
@@ -117,7 +117,7 @@ export interface PropsObjectInterface {
     className?: string,
     children?: Array<ReactChild> | ReactChild
     options?: Array<Option>,
-    value?: string | boolean | Array<string> | number,
+    value?: string | boolean | Array<string> | number | null, 
     label?: string,
     length?: ElementLength,
     simpleElement?: boolean,
@@ -151,6 +151,7 @@ export interface PropsObjectInterface {
     borderRadius?: BorderRadius,
     iconSize?: IconSize,
     buttonIconSize?: ButtonIconSize,
-    iconPosition?: IconPosition
+    iconPosition?: IconPosition,
+    resettable?: boolean
 }
 export type SetPropsToStateType = (props: PropsObjectInterface) => void;

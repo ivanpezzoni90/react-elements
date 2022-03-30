@@ -36,7 +36,7 @@ export interface SelectWrapperProps{
 
 export interface SelectProps extends PropsObjectInterface {
     options: Array<OptionType>,
-    value: string | number,
+    value: string | number | null,
     onChange: ChangeElementValueType,
     label?: string,
     shadow?: boolean,
@@ -44,5 +44,6 @@ export interface SelectProps extends PropsObjectInterface {
     labelColor?: string,
     textColor?: string,
     borderColor?: string,
-    optionSelectedColor?: string
+    optionSelectedColor?: string,
+    resettable?: boolean
 }

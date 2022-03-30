@@ -8,11 +8,12 @@ import {
     SelectElement,
     SelectWrapper,
     Label,
-    IconWrapper,
+    CaretWrapper,
     DropDownListContainer,
     DropDownList,
     ListItem,
     ListIcon,
+    ResetWrapper,
 } from './SelectStyle';
 
 import {
@@ -26,17 +27,18 @@ function Select(props: SelectProps) {
     const {
         options,
         value: valueFromProps,
-        label = '',
+        label,
         shadow,
         onChange,
         length,
         labelColor,
         textColor,
         borderColor,
-        optionSelectedColor
+        optionSelectedColor,
+        resettable
     } = props;
 
-    const isValidValue = (v: string | number) => v !== null && v !== '';
+    const isValidValue = (v: string | number | null) => v !== null && v !== '';
 
     const id = useRef(generateID());
 
@@ -57,10 +59,17 @@ function Select(props: SelectProps) {
         setIsOpen(false);
     };
 
-    const getOptionFromValue = (value: string | number) => (
+    const onSelectReset = (e: React.MouseEvent<HTMLInputElement>) => {
+        e.stopPropagation();
+        setSelectedOption(null);
+        onChange(null);
+        setIsOpen(false);
+    };
+
+    const getOptionFromValue = (value: string | number | null) => (
         options.find(
             (o: OptionType) => o.value === value
-        ) as OptionType // TODO: Review
+        ) as OptionType // TODO: Review the "as"
     );
 
     const selectRef = useRef<Element>(null);
@@ -133,18 +142,28 @@ function Select(props: SelectProps) {
                         </DropDownList>
                     </DropDownListContainer>
                 )}
-                <IconWrapper>
+                {resettable &&
+                    <ResetWrapper
+                        onClick={onSelectReset}
+                    >
+                        <Icon
+                            icon={IconList.outlineClose}
+                            fontSize={IconSize.m}
+                        />
+                    </ResetWrapper>
+                }
+                <CaretWrapper>
                     <Icon
                         icon={IconList.caretDown}
                     />
-                </IconWrapper>
+                </CaretWrapper>
             </SelectWrapper>
         </Fragment>
     );
 }
 const defaultProps: PropsObjectInterface = {
     options: [],
-    value: undefined,
+    value: null,
     label: 'Label',
     length: ElementLength.full,
     shadow: true,
@@ -152,6 +171,7 @@ const defaultProps: PropsObjectInterface = {
     textColor: allColors['Dim Gray'],
     borderColor: allColors['Dim Gray'],
     optionSelectedColor: allColors['Quick Silver'],
+    resettable: false,
     onChange: () => {}
 };
 

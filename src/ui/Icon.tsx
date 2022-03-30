@@ -1,6 +1,7 @@
 import React from 'react';
 import { FaCaretDown, FaCaretUp } from 'react-icons/fa';
 import { IoCloseSharp, IoCheckmarkSharp } from 'react-icons/io5';
+import { AiOutlineCloseCircle } from 'react-icons/ai';
 
 import { IconType } from 'react-icons/lib';
 import { IconSize, PropsObjectInterface } from '../types';
@@ -14,14 +15,16 @@ enum IconList {
     caretDown = 'caret-down',
     caretUp = 'caret-up',
     check = 'check',
-    close = 'close'
+    close = 'close',
+    outlineClose = 'outline-close'
 }
 
 const iconMap: IconInterface = {
     [IconList.caretDown]: FaCaretDown,
     [IconList.caretUp]: FaCaretUp,
     [IconList.close]: IoCloseSharp,
-    [IconList.check]: IoCheckmarkSharp
+    [IconList.check]: IoCheckmarkSharp,
+    [IconList.outlineClose]: AiOutlineCloseCircle
 };
 
 interface IconProps extends PropsObjectInterface {

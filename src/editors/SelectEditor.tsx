@@ -24,7 +24,13 @@ const editorJson: EditorType[] = [
         prop: 'optionSelectedColor',
         default: allColors['Quick Silver']
     },
-    shadowEditor
+    shadowEditor,
+    {
+        type: 'toggle',
+        label: 'Resettable',
+        prop: 'resettable',
+        default: false
+    }
 ];
 
 export default function SelectEditor() {
