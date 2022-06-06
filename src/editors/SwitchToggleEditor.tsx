@@ -1,10 +1,10 @@
 import React from 'react';
 import { Fragment } from 'react';
-import Editor from './Editor';
+import Editor from './EditorBuilder';
 import SwitchToggle from '../ui/SwitchToggle';
-import { Editor as EditorType, PropsObjectInterface, ToggleLabelType } from '../types';
+import { Editor as EditorType, ElementLength, PropsObjectInterface, ToggleLabelType } from '../types';
 import { useEditorInit } from '../hooks';
-import { alignPositionEditor, EditorContainer, ElementContainer, labelPositionEditor, shadowEditor } from './commons';
+import { alignPositionEditor, ElementContainer, labelPositionEditor, lengthEditor, shadowEditor } from './commons';
 
 const getEditor = (props: PropsObjectInterface) => {
     const editorJson: EditorType[] = [
@@ -39,6 +39,7 @@ const getEditor = (props: PropsObjectInterface) => {
                 value: ToggleLabelType.icon
             }]
         },
+        lengthEditor(ElementLength.m),
         {
             type: 'checkbox',
             default: false,
@@ -93,17 +94,15 @@ export default function SwitchToggleEditor() {
 
         return (
             <Fragment>
-                <EditorContainer>
-                    <Editor
-                        json={editorJson}
-                        onChange={onChangeProp}
-                    />
-                </EditorContainer>
                 <ElementContainer>
                     <SwitchToggle
                         {...switchToggleProps}
                     />
                 </ElementContainer>
+                <Editor
+                    json={editorJson}
+                    onChange={onChangeProp}
+                />
             </Fragment>
         );
     };

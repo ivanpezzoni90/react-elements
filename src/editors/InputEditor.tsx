@@ -1,12 +1,12 @@
 import React from 'react';
 
-import Editor from './Editor';
+import Editor from './EditorBuilder';
 
 import { Editor as EditorType, PropsObjectInterface } from '../types';
 import { Fragment } from 'react';
 import Input from '../ui/Input';
 import { useEditorInit } from '../hooks';
-import { colorEditors, EditorContainer, ElementContainer, lengthEditor, shadowEditor } from './commons';
+import { colorEditors, ElementContainer, lengthEditor, shadowEditor } from './commons';
 import { InputTypes } from '../ui/Input/config';
 
 const getEditor = (props: PropsObjectInterface) => {
@@ -74,7 +74,7 @@ const getEditor = (props: PropsObjectInterface) => {
     });
 
     editorJson.push(
-        lengthEditor,
+        lengthEditor(),
         ...colorEditors,
         shadowEditor
     );
@@ -96,12 +96,6 @@ export default function InputEditor() {
 
         return (
             <Fragment>
-                <EditorContainer>
-                    <Editor
-                        json={getEditor(inputProps)}
-                        onChange={onChangeProp}
-                    />
-                </EditorContainer>
                 <ElementContainer>
                     <Input
                         {...inputProps}
@@ -110,6 +104,10 @@ export default function InputEditor() {
                         value={inputProps.value as string}
                     />
                 </ElementContainer>
+                <Editor
+                    json={getEditor(inputProps)}
+                    onChange={onChangeProp}
+                />
             </Fragment>
         );
     };

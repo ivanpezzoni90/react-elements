@@ -1,11 +1,11 @@
 import React from 'react';
 
-import Editor from './Editor';
-import { Editor as EditorType, IconSize, Option } from '../types';
+import Editor from './EditorBuilder';
+import { Editor as EditorType } from '../types';
 import { Fragment } from 'react';
 import Icon, { IconList } from '../ui/Icon';
 import { useEditorInit } from '../hooks';
-import { EditorContainer, ElementContainer, iconEditor, iconSizeEditor } from './commons';
+import { ElementContainer, iconEditor, iconSizeEditor } from './commons';
 
 const getEditor = () => {
     const editorJson: EditorType[] = [
@@ -36,17 +36,15 @@ export default function IconEditor() {
 
         return (
             <Fragment>
-                <EditorContainer>
-                    <Editor
-                        json={editorJson}
-                        onChange={onChangeProp}
-                    />
-                </EditorContainer>
                 <ElementContainer>
                     <Icon
                         {...iconProps}
                     />
                 </ElementContainer>
+                <Editor
+                    json={editorJson}
+                    onChange={onChangeProp}
+                />
             </Fragment>
         );
     };

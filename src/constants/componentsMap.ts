@@ -27,7 +27,7 @@ const Components: Component[] = [{
     editor: ElementEditor
 }, {
     key: 'switchToggle',
-    name: 'Switch Toggle',
+    name: 'Toggle',
     editor: SwitchToggleEditor
 },  {
     key: 'icon',
@@ -35,7 +35,7 @@ const Components: Component[] = [{
     editor: IconEditor
 }, {
     key: 'colorPicker',
-    name: 'Color Picker',
+    name: 'Color',
     editor: ColorPickerEditor
 }, {
     key: 'button',

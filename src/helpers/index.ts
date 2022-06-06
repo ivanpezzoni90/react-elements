@@ -37,4 +37,10 @@ export const elaborateComputedWidth = (width: string) => {
     return `${numWidth}px`;
 };
 
+export function splitArrayInGroups<T> (a: T[], size: number) {
+    return a.map((item, index) => 
+        index % size === 0 ? a.slice(index, index + size) : null
+    ).filter(Boolean);
+}
+
 export * from './colorHelpers';

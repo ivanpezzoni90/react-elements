@@ -1,8 +1,8 @@
 import React from 'react';
 
-import Editor from './Editor';
+import Editor from './EditorBuilder';
 import { Fragment } from 'react';
-import { colorEditors, EditorContainer, ElementContainer, lengthEditor, shadowEditor } from './commons';
+import { colorEditors, ElementContainer, lengthEditor, shadowEditor } from './commons';
 
 import { Editor as EditorType } from '../types';
 import Select from '../ui/Select';
@@ -16,7 +16,7 @@ const editorJson: EditorType[] = [
         label: 'Label',
         prop: 'label'
     },
-    lengthEditor,
+    lengthEditor(),
     ...colorEditors,
     {
         type: 'color',
@@ -58,18 +58,16 @@ export default function SelectEditor() {
 
         return (
             <Fragment>
-                <EditorContainer>
-                    <Editor
-                        json={editorJson}
-                        onChange={onChangeProp}
-                    />
-                </EditorContainer>
                 <ElementContainer>
                     <Select
                         {...selectProps}
                         value={selectProps.value as string}
                     />
                 </ElementContainer>
+                <Editor
+                    json={editorJson}
+                    onChange={onChangeProp}
+                />
             </Fragment>
         );
     };

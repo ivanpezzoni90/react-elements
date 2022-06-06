@@ -1,13 +1,13 @@
 import React, { ReactChild } from 'react';
 
-import Editor from './Editor';
+import Editor from './EditorBuilder';
 
 import { Editor as EditorType } from '../types';
 import { Fragment } from 'react';
 import Element from '../ui/Element';
 import { LabelPositions, AlignPositions } from '../types';
 import { useEditorInit } from '../hooks';
-import { EditorContainer, ElementContainer } from './commons';
+import { ElementContainer } from './commons';
 import { CheckboxElement } from '../ui/Checkbox';
 import { SwitchToggleElement } from '../ui/SwitchToggle';
 
@@ -93,12 +93,6 @@ export default function ElementEditor() {
 
         return (
             <Fragment>
-                <EditorContainer>
-                    <Editor
-                        json={editorJson}
-                        onChange={onChangeProp}
-                    />
-                </EditorContainer>
                 <ElementContainer>
                     <Element
                         {...elementProps}
@@ -106,6 +100,10 @@ export default function ElementEditor() {
                         {elementToRender}
                     </Element>
                 </ElementContainer>
+                <Editor
+                    json={editorJson}
+                    onChange={onChangeProp}
+                />
             </Fragment>
         );
     };

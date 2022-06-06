@@ -1,10 +1,10 @@
 import React from 'react';
 import { Fragment } from 'react';
-import Editor from './Editor';
+import Editor from './EditorBuilder';
 import Button from '../ui/Button';
 import { ButtonIconSize, Editor as EditorType, IconPosition } from '../types';
 import { useEditorInit } from '../hooks';
-import { borderRadiusEditor, EditorContainer, ElementContainer, fontSizeEditor, fontWeightEditor, iconEditor, iconSizeEditor, lengthEditor } from './commons';
+import { borderRadiusEditor, ElementContainer, fontSizeEditor, fontWeightEditor, iconEditor, lengthEditor } from './commons';
 import { allColors } from '../constants/colors';
 import { IconList } from '../ui/Icon';
 
@@ -28,7 +28,7 @@ const getEditor = () => {
             label: 'Text Color',
             prop: 'textColor'
         },
-        lengthEditor,
+        lengthEditor(),
         {
             type: 'toggle',
             default: false,
@@ -102,18 +102,16 @@ export default function ButtonEditor() {
 
         return (
             <Fragment>
-                <EditorContainer>
-                    <Editor
-                        json={editorJson}
-                        onChange={onChangeProp}
-                    />
-                </EditorContainer>
                 <ElementContainer>
                     <Button
                         {...buttonProps}
                         icon={buttonProps.icon as IconList}
                     />
                 </ElementContainer>
+                <Editor
+                    json={editorJson}
+                    onChange={onChangeProp}
+                />
             </Fragment>
         );
     };

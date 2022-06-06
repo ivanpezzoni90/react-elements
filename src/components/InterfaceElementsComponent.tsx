@@ -17,6 +17,16 @@ const Aside = styled.div`
     flex-direction: column;
     border-right: 1px solid #666;
     padding: 1em 1em 1em 0em;
+
+    height: 30em;
+    overflow: auto;
+`;
+const Workarea = styled.div`
+    padding: 2em;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+
     height: 30em;
     overflow: auto;
 `;
@@ -45,7 +55,9 @@ function IEAside({
     onClick: AsideClickCallbackType
 }) {
     return (
-        <Aside>
+        <Aside
+            className="ie__aside"
+        >
             {Components.map(c => (
                 <Component
                     active={currentComponentKey === c.key}
@@ -67,7 +79,11 @@ function IEWorkarea({
     const currentComponent = getComponentByKey(currentComponentKey);
     const Editor = currentComponent?.editor();
     return (
-        <Editor />
+        <Workarea
+            className="ie__workarea"
+        >
+            <Editor />
+        </Workarea>
     );
 }
 
@@ -81,7 +97,9 @@ export default function IEComponent() {
     };
 
     return (
-        <Container>
+        <Container
+            className="ie"
+        >
             <IEAside
                 currentComponentKey={currentKey}
                 onClick={onClick}

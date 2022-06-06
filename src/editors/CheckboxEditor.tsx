@@ -1,11 +1,11 @@
 import React from 'react';
 
 import { Fragment } from 'react';
-import Editor from './Editor';
+import Editor from './EditorBuilder';
 import Checkbox from '../ui/Checkbox';
-import { Editor as EditorType, PropsObjectInterface } from '../types';
+import { Editor as EditorType, ElementLength, PropsObjectInterface } from '../types';
 import { useEditorInit } from '../hooks';
-import { alignPositionEditor, EditorContainer, ElementContainer, labelPositionEditor, shadowEditor } from './commons';
+import { alignPositionEditor, ElementContainer, labelPositionEditor, lengthEditor, shadowEditor } from './commons';
 
 const getEditor = (props: PropsObjectInterface) => {
     const editorJson: EditorType[] = [
@@ -21,6 +21,7 @@ const getEditor = (props: PropsObjectInterface) => {
             label: 'Simple Element',
             prop: 'simpleElement'
         },
+        lengthEditor(ElementLength.m)
     ];
 
     if (props.simpleElement) {
@@ -42,17 +43,15 @@ export default function CheckboxEditor() {
 
         return (
             <Fragment>
-                <EditorContainer>
-                    <Editor
-                        json={editorJson}
-                        onChange={onChangeProp}
-                    />
-                </EditorContainer>
                 <ElementContainer>
                     <Checkbox
                         {...checkboxProps}
                     />
                 </ElementContainer>
+                <Editor
+                    json={editorJson}
+                    onChange={onChangeProp}
+                />
             </Fragment>
         );
     };

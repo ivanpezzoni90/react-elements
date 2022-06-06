@@ -4,22 +4,19 @@ import { BorderRadius, Editor, ElementLength, ElementSize, FontWeight, IconSize,
 import { AlignPositions, LabelPositions } from '../types';
 import { IconList } from '../ui/Icon';
 
-export const EditorContainer = styled.div`
+export const EditorContainer = styled.div.attrs({
+    className: 'ie__workarea__editor'
+})`
     display: flex;
     padding: 0.5em 1em 0.5em 0.5em;
-    border-right: 1px solid #666;
     flex-direction: column;
-
-    height: 30em;
-    overflow: auto;
-    min-width: 15em;
-    max-width: 15em;
 `;
 
-export const ElementContainer = styled.div`
-    display: flex;
-    padding: 3em;
-    flex: 1;
+export const ElementContainer = styled.div.attrs({
+    className: 'ie__workarea__element'
+})`
+    padding: 1em 1em 2em 1em;
+    border-bottom: 1px solid #c3c3c3
 `;
 
 export const labelPositionEditor: Editor = {
@@ -81,10 +78,10 @@ export const colorEditors: Editor[] = [
     },
 ];
 
-export const lengthEditor: Editor = {
+export const lengthEditor = (def = ElementLength.full): Editor => ({
     label: 'Length',
     type: 'select',
-    default: 'full',
+    default: def,
     prop: 'length',
     options: [{
         label: 'Full',
@@ -99,7 +96,7 @@ export const lengthEditor: Editor = {
         label: 'L',
         value: ElementLength.l
     }]
-};
+});
 
 export const paddingEditor: Editor = {
     label: 'Padding',

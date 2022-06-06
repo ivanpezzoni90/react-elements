@@ -1,8 +1,8 @@
 import React, { Fragment, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { generateID, mergeClasses } from '../helpers';
+import { calculateElementLength, generateID, mergeClasses } from '../helpers';
 import Element from './Element';
-import { AlignPositions, LabelPositions } from '../types';
+import { AlignPositions, ElementLength, LabelPositions } from '../types';
 import { ChangeElementValueType, PropsObjectInterface, SetBoolToStateType } from '../types';
 
 const CheckboxContainer = styled.div`
@@ -48,10 +48,16 @@ const StyledCheckbox = styled.div`
     }
 `;
 
-const CheckboxAdvancedWrapper = styled.div`
+interface CheckboxAdvancedWrapperInterface {
+    length: ElementLength,
+    shadow?: boolean
+}
+
+const CheckboxAdvancedWrapper = styled.div<CheckboxAdvancedWrapperInterface>`
     display: flex;
     align-items: center;
     min-width: 7em;
+    width: ${props => calculateElementLength(props.length)};
     height: 3.5em;
     position: relative;
     background-color: rgba(255, 255, 255, 0.3);
@@ -59,11 +65,11 @@ const CheckboxAdvancedWrapper = styled.div`
     border-bottom: 1px solid #666;
     transition: 0.3s background-color ease-in-out, 0.3s box-shadow ease-in-out;
     background-color: #ffffff;
-    ${({shadow}: {shadow?: boolean}) => shadow ? 'box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2);' : ''}
+    ${({shadow}) => shadow ? 'box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2);' : ''}
 
     &:hover{
         background-color: rgba(255, 255, 255, 0.45);
-        ${({shadow}: {shadow?: boolean}) => shadow ? 'box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.05);' : ''}
+        ${({shadow}) => shadow ? 'box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.05);' : ''}
     }
 `;
 
@@ -95,6 +101,7 @@ interface CheckboxProps extends PropsObjectInterface{
     labelPosition?: LabelPositions,
     align?: AlignPositions,
     shadow?: boolean,
+    length: ElementLength,
     onChange: ChangeElementValueType
 }
 
@@ -153,6 +160,7 @@ function Checkbox(props: CheckboxProps) {
         align,
         simpleElement,
         shadow,
+        length,
         onChange
     } = props;
 
@@ -176,6 +184,7 @@ function Checkbox(props: CheckboxProps) {
             ): (
                 <CheckboxAdvancedWrapper
                     shadow={shadow}
+                    length={length}
                 >
                     <CheckboxAdvancedLabel
                         htmlFor={id.current}
@@ -200,6 +209,7 @@ const defaultProps: PropsObjectInterface = {
     simpleElement: false,
     shadow: true,
     labelPosition: LabelPositions.horizontal,
+    length: ElementLength.m,
     onChange: () => {}
 };
 
