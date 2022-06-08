@@ -3,7 +3,6 @@
 import styled from 'styled-components';
 import {
     calculateInnerElementLength,
-    calculateElementLength,
     darkOrLightColor,
     fontColorFromBackground,
     lightenDarkenColor
@@ -63,7 +62,7 @@ export const SelectElement = styled.div<SelectElementProps>`
 export const SelectWrapper = styled.div<SelectWrapperProps>`
     display: flex;
     flex-direction: column;
-    width: ${props => calculateElementLength(props.length)};
+    width: ${props => props.length};
     height: 3.5em;
     position: relative;
     background-color: rgba(255, 255, 255, 0.3);
@@ -112,7 +111,7 @@ export const ResetWrapper = styled.div`
 
 export const DropDownListContainer = styled('div')<DropDownContainerProps>`
     position: absolute;
-    width: ${props => calculateElementLength(props.length)};
+    width: ${props => props.length};
     ${props => props.zIndex ? `z-index: ${props.zIndex}` : ''}
 `;
 

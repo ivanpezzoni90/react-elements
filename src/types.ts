@@ -24,7 +24,6 @@ export type Option = {
 };
 
 export type  VoidFunction = () => void;
-
 export type SetStringToStateType = (s: string) => void;
 export type SetBoolToStateType = (s: boolean) => void;
 
@@ -32,10 +31,10 @@ export type ChangeEditorPropType = (prop: string, value: string | boolean | Arra
 export type ChangeElementValueType = (value: string | boolean | Array<string> | number | null) => void;
 
 export enum ElementLength {
-    s = 's',
-    m = 'm',
-    l = 'l',
-    full = 'full'
+    s = '8em',
+    m = '16em',
+    l = '32em',
+    full ='100%'
 }
 
 export enum Padding {

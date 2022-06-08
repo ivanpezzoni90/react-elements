@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { allColors } from '../constants/colors';
-import { calculateElementLength, lightenDarkenColor } from '../helpers';
+import { lightenDarkenColor } from '../helpers';
 import {
     BorderRadius,
     ButtonIconSize,
@@ -25,7 +25,7 @@ const ButtonElement = styled.button<ButtonElementProps>`
     display: flex;
     align-items: center;
     justify-content: center;
-    width: ${props => calculateElementLength(props.length)};
+    width: ${props => props.length};
     height: 3.5em;
     padding: ${props => props.padding};
     border-radius: ${props => props.borderRadius};

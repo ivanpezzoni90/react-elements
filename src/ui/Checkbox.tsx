@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { calculateElementLength, generateID, mergeClasses } from '../helpers';
+import { generateID, mergeClasses } from '../helpers';
 import Element from './Element';
 import { AlignPositions, ElementLength, LabelPositions } from '../types';
 import { ChangeElementValueType, PropsObjectInterface, SetBoolToStateType } from '../types';
@@ -57,7 +57,7 @@ const CheckboxAdvancedWrapper = styled.div<CheckboxAdvancedWrapperInterface>`
     display: flex;
     align-items: center;
     min-width: 7em;
-    width: ${props => calculateElementLength(props.length)};
+    width: ${props => props.length};
     height: 3.5em;
     position: relative;
     background-color: rgba(255, 255, 255, 0.3);

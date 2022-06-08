@@ -1,6 +1,6 @@
 import React, { Fragment, useCallback, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { calculateElementLength, generateID } from '../helpers';
+import { generateID } from '../helpers';
 import { ChangeElementValueType, ElementLength, IconSize, PropsObjectInterface, SetBoolToStateType, ToggleLabelType } from '../types';
 import Element from './Element';
 import { AlignPositions, LabelPositions } from '../types';
@@ -84,7 +84,7 @@ const SwitchToggleAdvancedWrapper = styled.div<SwitchToggleAdvancedWrapperInterf
     display: flex;
     align-items: center;
     min-width: 7em;
-    width: ${props => calculateElementLength(props.length)};
+    width: ${props => props.length};
     height: 3.5em;
     position: relative;
     background-color: rgba(255, 255, 255, 0.3);

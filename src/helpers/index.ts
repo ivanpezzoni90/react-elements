@@ -1,13 +1,6 @@
 export const generateID = () => {
     return Math.random().toString(36).slice(2);
 };
-
-export const calculateElementLength = (length: string) => ({
-    s: '8em',
-    m: '16em',
-    l: '32em',
-    full: '100%'
-}[length]);
   
 export const calculateInnerElementLength = (length: string) => ({
     s: '6em',

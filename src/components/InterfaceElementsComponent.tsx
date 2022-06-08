@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
 import { useState } from 'react';
 import styled from 'styled-components';
 import { Components, getComponentByKey } from '../constants/componentsMap';
 import { SetStringToStateType } from '../types';
+import AsideCaret from './AsideCaret';
 
 const Container = styled.div`
     display: flex;
@@ -20,8 +21,15 @@ const Aside = styled.div`
 
     height: 30em;
     overflow: auto;
+
+    transition: width 1s, opacity 1s;
+    width: 12em;
+    opacity: 1;
+
+    ${({open}: {open: boolean}) => open ? '' : 'width:0; opacity:0;'}
 `;
 const Workarea = styled.div`
+    position: relative;
     padding: 2em;
     display: flex;
     flex: 1;
@@ -49,14 +57,17 @@ type AsideClickCallbackType = (key: string) => void;
 
 function IEAside({
     currentComponentKey,
+    open,
     onClick
 }: {
     currentComponentKey: string,
-    onClick: AsideClickCallbackType
+    onClick: AsideClickCallbackType,
+    open: boolean
 }) {
     return (
         <Aside
             className="ie__aside"
+            open={open}
         >
             {Components.map(c => (
                 <Component
@@ -72,16 +83,22 @@ function IEAside({
 }
 
 function IEWorkarea({
-    currentComponentKey
+    currentComponentKey,
+    getOpen
 }: {
-    currentComponentKey: string
+    currentComponentKey: string,
+    getOpen: (open: boolean) => void
 }) {
     const currentComponent = getComponentByKey(currentComponentKey);
     const Editor = currentComponent?.editor();
+
     return (
         <Workarea
             className="ie__workarea"
         >
+            <AsideCaret
+                getOpen={getOpen}
+            />
             <Editor />
         </Workarea>
     );
@@ -92,8 +109,14 @@ export default function IEComponent() {
         currentKey: string, setCurrentKey: SetStringToStateType
     ] = useState(Components[0].key);
 
+    const [open, setOpen] = useState(true);
+
     const onClick: AsideClickCallbackType = (key: string) => {
         setCurrentKey(key);
+    };
+
+    const getOpen = (open: boolean) => {
+        setOpen(open);
     };
 
     return (
@@ -103,9 +126,11 @@ export default function IEComponent() {
             <IEAside
                 currentComponentKey={currentKey}
                 onClick={onClick}
+                open={open}
             />
             <IEWorkarea
                 currentComponentKey={currentKey}
+                getOpen={getOpen}
             />
         </Container>
     );

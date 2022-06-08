@@ -9,7 +9,6 @@ import {
 
 import {
     calculateInnerElementLength,
-    calculateElementLength
 } from '../../helpers';
 import { allColors } from '../../constants/colors';
 import { ElementLength } from '../../types';
@@ -58,7 +57,7 @@ export const InputWrapper = styled.div<InputWrapperProps>`
     display: flex;
     flex-direction: column;
     cursor: text;
-    width: ${(props) => calculateElementLength(props.length)};
+    width: ${(props) => props.length};
     height: 3.5em;
     position: relative;
     background-color: rgba(255, 255, 255, 0.3);
