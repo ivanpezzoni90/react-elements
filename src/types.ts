@@ -13,13 +13,13 @@ export type Editor = {
     default: string | boolean | Array<string> | number | undefined,
     label: string,
     options?: Array<Option>,
-    inputType?: InputTypes,
+    inputType?: InputTypes | RadioTypes,
     prop: string
 };
 
 export type Option = {
     label: string,
-    value: string | number,
+    value: string | number | boolean,
     icon?: string
 };
 
@@ -31,10 +31,11 @@ export type ChangeEditorPropType = (prop: string, value: string | boolean | Arra
 export type ChangeElementValueType = (value: string | boolean | Array<string> | number | null) => void;
 
 export enum ElementLength {
+    squared = '4em',
     s = '8em',
     m = '16em',
     l = '32em',
-    full ='100%'
+    full = '100%'
 }
 
 export enum Padding {
@@ -95,6 +96,11 @@ export enum LabelPositions {
     horizontal = 'horizontal'
 }
 
+export enum Positions {
+    vertical = 'vertical',
+    horizontal = 'horizontal'
+}
+
 export enum IconPosition {
     left = 'left',
     right = 'right'
@@ -109,6 +115,12 @@ export enum AlignPositions {
 export enum ToggleLabelType {
     label = 'label',
     icon = 'icon'
+}
+
+export enum RadioTypes {
+    checkbox = 'checkbox',
+    toggle = 'toggle',
+    button = 'button'
 }
 
 export interface PropsObjectInterface {
@@ -127,6 +139,7 @@ export interface PropsObjectInterface {
     onBlur?: ChangeElementValueType,
     checked?: boolean,
     labelPosition?: LabelPositions,
+    position?: Positions,
     color?: string,
     icon?: IconList | string,
     fontSize?: string,
@@ -145,7 +158,7 @@ export interface PropsObjectInterface {
     optionSelectedColor?: string,
     min?: number,
     max?: number,
-    type?: InputTypes,
+    type?: InputTypes | RadioTypes,
     padding?: Padding,
     borderRadius?: BorderRadius,
     iconSize?: IconSize,

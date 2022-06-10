@@ -94,6 +94,7 @@ function Select(props: SelectProps) {
                     htmlFor={id.current}
                     hasValue={hasValue}
                     labelColor={labelColor}
+                    length={length}
                 >
                     {label}
                 </Label>
@@ -121,7 +122,7 @@ function Select(props: SelectProps) {
                         <DropDownList>
                             {options.map((o: OptionType) => (
                                 <ListItem
-                                    onClick={onOptionClicked(o.value)}
+                                    onClick={onOptionClicked(o.value as string | number)}
                                     key={o.value.toString()}
                                     selected={selectedOption === o.value}
                                     textColor={textColor}

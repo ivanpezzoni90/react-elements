@@ -6,6 +6,7 @@ import Checkbox from '../ui/Checkbox';
 import { Editor as EditorType, ElementLength, PropsObjectInterface } from '../types';
 import { useEditorInit } from '../hooks';
 import { alignPositionEditor, ElementContainer, labelPositionEditor, lengthEditor, shadowEditor } from './commons';
+import { allColors } from '../constants/colors';
 
 const getEditor = (props: PropsObjectInterface) => {
     const editorJson: EditorType[] = [
@@ -14,6 +15,18 @@ const getEditor = (props: PropsObjectInterface) => {
             default: 'Label',
             label: 'Label',
             prop: 'label'
+        },
+        {
+            type: 'color',
+            default: allColors['Dim Gray'],
+            label: 'Color',
+            prop: 'color'
+        },
+        {
+            type: 'color',
+            default: allColors['White'],
+            label: 'Off Color',
+            prop: 'colorOff'
         },
         {
             type: 'checkbox',

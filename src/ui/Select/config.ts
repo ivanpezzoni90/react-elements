@@ -14,6 +14,7 @@ export interface LabelProps {
     htmlFor: string,
     hasValue: boolean,
     labelColor?: string,
+    length?: ElementLength
 }
 export interface SelectElementProps {
     length: string,

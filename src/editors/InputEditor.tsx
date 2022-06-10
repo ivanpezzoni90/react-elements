@@ -99,6 +99,7 @@ export default function InputEditor() {
                 <ElementContainer>
                     <Input
                         {...inputProps}
+                        type={inputProps.type as InputTypes}
                         max={inputProps.max ? parsedMax : undefined}
                         min={inputProps.min ? parsedMin : undefined}
                         value={inputProps.value as string}

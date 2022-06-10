@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { allColors } from '../constants/colors';
-import { BorderRadius, Editor, ElementLength, ElementSize, FontWeight, IconSize, Option, Padding } from '../types';
+import { BorderRadius, Editor, ElementLength, ElementSize, FontWeight, IconSize, Option, Padding, Positions } from '../types';
 import { AlignPositions, LabelPositions } from '../types';
 import { IconList } from '../ui/Icon';
 
@@ -30,6 +30,20 @@ export const labelPositionEditor: Editor = {
     }, {
         label: 'Vertical',
         value: LabelPositions.vertical
+    }]
+};
+
+export const positionEditor: Editor = {
+    type: 'select',
+    label: 'Position',
+    default: Positions.vertical,
+    prop: 'position',
+    options: [{
+        label: 'Horizontal',
+        value: Positions.horizontal
+    }, {
+        label: 'Vertical',
+        value: Positions.vertical
     }]
 };
 
@@ -95,6 +109,9 @@ export const lengthEditor = (def = ElementLength.full): Editor => ({
     }, {
         label: 'L',
         value: ElementLength.l
+    }, {
+        label: 'Squared',
+        value: ElementLength.squared
     }]
 });
 

@@ -95,6 +95,11 @@ export const Label = styled.div<LabelProps>`
     opacity: 1;
     color: ${props => props.labelColor};
     font-size: 12px;
+
+    max-width: ${({length}) => length};
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 `;
 
 export const CaretWrapper = styled.div`

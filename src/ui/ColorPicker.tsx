@@ -5,15 +5,16 @@ import Element from './Element';
 import { AlignPositions, ElementLength, LabelPositions } from '../types';
 import { ChangeElementValueType, PropsObjectInterface } from '../types';
 import { useComputedZIndex } from '../hooks';
-import { ColorObject, palette, getColorNameByHex } from '../constants/colors';
+import { ColorObject, palette, getColorNameByHex, allColors } from '../constants/colors';
 import Input from './Input';
 
 const ColorPickerContainer = styled.div`
     padding-right: 1em;
 
-    display: inline-block;
     vertical-align: middle;
-    padding-top: 0.25em;
+    padding: 0.25em 1em 0 0.25em;
+
+    display: flex;
 `;
 
 interface StyledColorPickerInterface {
@@ -56,7 +57,8 @@ const ColorPickerAdvancedWrapper = styled.div<ColorPickerAdvancedWrapperInterfac
 `;
 
 interface LabelProps {
-    htmlFor: string
+    htmlFor: string,
+    length: ElementLength
 }
 interface DropDownContainerProps {
     zIndex: number | null
@@ -76,11 +78,17 @@ const ColorPickerAdvancedLabel = styled.div<LabelProps>`
     opacity: 1;
     pointer-events: none;
     transition: 0.1s all ease-in-out;
+
+    max-width: ${({length}) => length};
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 `;
 
 const DropDownListContainer = styled('div')<DropDownContainerProps>`
     position: absolute;
-    ${props => props.zIndex ? `z-index: ${props.zIndex}` : ''}
+    ${props => props.zIndex ? `z-index: ${props.zIndex}` : ''};
+    margin-top: 2em;
 `;
 
 const DropDownList = styled.div`
@@ -138,6 +146,17 @@ const ColorListItem = styled.div<ColorListItemInterface>`
 const ColorListFooter = styled.div`
     display: flex;
     padding-top: 1em;
+`;
+const ColorPickerInfoContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    font-size: 10px;
+    color: ${allColors['Dim Gray']};
+    padding-right: 0.5em;
+`;
+const SelectedColor = styled.div`
+`;
+const SelectedColorLabel = styled.div`
 `;
 
 interface ColorPickerProps extends PropsObjectInterface{
@@ -202,6 +221,14 @@ function ColorPickerElement({
     return (<ColorPickerContainer
         className={mergeClasses('ie-color-picker', className)}
     >
+        <ColorPickerInfoContainer>
+            <SelectedColor>
+                {selectedColor}
+            </SelectedColor>
+            <SelectedColorLabel>
+                {selectedColorLabel}
+            </SelectedColorLabel>
+        </ColorPickerInfoContainer>
         <StyledColorPicker
             className="ie-color-picker__picker"
             ref={ref}
@@ -288,6 +315,7 @@ function ColorPicker(props: ColorPickerProps) {
                 >
                     <ColorPickerAdvancedLabel
                         htmlFor={id.current}
+                        length={length}
                     >
                         {label}
                     </ColorPickerAdvancedLabel>

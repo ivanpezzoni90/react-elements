@@ -62,6 +62,7 @@ export interface LabelProps {
     errorMessage?: string,
     active: boolean,
     labelColor?: string,
+    length: ElementLength,
     type?: InputTypes
 }
 

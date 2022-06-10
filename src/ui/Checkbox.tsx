@@ -4,17 +4,16 @@ import { generateID, mergeClasses } from '../helpers';
 import Element from './Element';
 import { AlignPositions, ElementLength, LabelPositions } from '../types';
 import { ChangeElementValueType, PropsObjectInterface, SetBoolToStateType } from '../types';
+import { allColors } from '../constants/colors';
 
 const CheckboxContainer = styled.div`
-    padding-right: 1em;
-
     display: inline-block;
     vertical-align: middle;
-    padding-top: 0.25em;
+    padding: 0.25em 1em 0 0.25em;
 `;
 const Icon = styled.svg`
     fill: none;
-    stroke: white;
+    stroke: ${({colorOff}: {colorOff:string}) => colorOff};
     stroke-width: 2px;
 `;
 const HiddenCheckbox = styled.input.attrs({ type: 'checkbox' })`
@@ -30,11 +29,17 @@ const HiddenCheckbox = styled.input.attrs({ type: 'checkbox' })`
     width: 1px;
 `;
 
-const StyledCheckbox = styled.div`
+interface StyledCheckboxInterface {
+    checked: boolean,
+    color: string,
+    colorOff: string
+}
+
+const StyledCheckbox = styled.div<StyledCheckboxInterface>`
     display: inline-block;
     width: 1.5em;
     height: 1.5em;
-    background: ${({ checked }: { checked: boolean }) => (checked ? '#ba0c2f' : '#fff')};
+    background: ${({ checked, color, colorOff }) => (checked ? color : colorOff)};
     border-radius: 3px;
     border: 1px solid #666;
     transition: all 150ms;
@@ -44,7 +49,7 @@ const StyledCheckbox = styled.div`
     }
 
     ${Icon} {
-        visibility: ${({ checked }: { checked: boolean }) => (checked ? 'visible' : 'hidden')}
+        visibility: ${({ checked }) => (checked ? 'visible' : 'hidden')}
     }
 `;
 
@@ -74,10 +79,11 @@ const CheckboxAdvancedWrapper = styled.div<CheckboxAdvancedWrapperInterface>`
 `;
 
 interface LabelProps {
-    htmlFor: string
+    htmlFor: string,
+    length: ElementLength
 }
 
-const CheckboxAdvancedLabel = styled.div<LabelProps>`
+const CheckboxAdvancedLabel = styled.label<LabelProps>`
     display: flex;
     justify-content: flex-start;
     flex: 1;
@@ -91,11 +97,18 @@ const CheckboxAdvancedLabel = styled.div<LabelProps>`
     opacity: 1;
     pointer-events: none;
     transition: 0.1s all ease-in-out;
+
+    max-width: ${({length}) => length};
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 `;
 
 interface CheckboxProps extends PropsObjectInterface{
     className: string,
     checked: boolean,
+    color: string,
+    colorOff: string,
     label: string,
     simpleElement?: boolean,
     labelPosition?: LabelPositions,
@@ -108,12 +121,16 @@ interface CheckboxProps extends PropsObjectInterface{
 interface CheckboxElementInterface {
     className: string,
     checked: boolean,
+    color: string,
+    colorOff: string,
     onChange: ChangeElementValueType
 }
 
 function CheckboxElement({
     className,
     checked: checkedFromProps,
+    color,
+    colorOff,
     onChange
 }: CheckboxElementInterface) {
     const [
@@ -140,10 +157,14 @@ function CheckboxElement({
         <StyledCheckbox
             className="ie-checkbox__checkbox"
             checked={checked}
+            color={color}
+            colorOff={colorOff}
             onClick={onCheckboxChange}
         >
-            <Icon viewBox="0 0 24 24"
+            <Icon
+                viewBox="0 0 24 24"
                 className="ie-checkbox__checkbox__icon"
+                colorOff={colorOff}
             >
                 <polyline points="20 6 9 17 4 12" />
             </Icon>
@@ -161,6 +182,8 @@ function Checkbox(props: CheckboxProps) {
         simpleElement,
         shadow,
         length,
+        color,
+        colorOff,
         onChange
     } = props;
 
@@ -178,6 +201,8 @@ function Checkbox(props: CheckboxProps) {
                     <CheckboxElement
                         className={className}
                         checked={checkedFromProps}
+                        color={color}
+                        colorOff={colorOff}
                         onChange={onChange}
                     />
                 </Element>
@@ -188,12 +213,15 @@ function Checkbox(props: CheckboxProps) {
                 >
                     <CheckboxAdvancedLabel
                         htmlFor={id.current}
+                        length={length}
                     >
                         {label}
                     </CheckboxAdvancedLabel>
                     <CheckboxElement
                         className={className}
                         checked={checkedFromProps}
+                        color={color}
+                        colorOff={colorOff}
                         onChange={onChange}
                     />
                 </CheckboxAdvancedWrapper>
@@ -205,6 +233,8 @@ function Checkbox(props: CheckboxProps) {
 const defaultProps: PropsObjectInterface = {
     className: '',
     checked: false,
+    color: allColors['Dim Gray'],
+    colorOff: allColors['White'],
     label: 'Label',
     simpleElement: false,
     shadow: true,
@@ -214,6 +244,7 @@ const defaultProps: PropsObjectInterface = {
 };
 
 Checkbox.defaultProps = defaultProps;
+CheckboxElement.defaultProps = defaultProps;
 
 export default Checkbox;
 

@@ -1,10 +1,11 @@
-import React, { Fragment, useCallback, useRef, useState } from 'react';
+import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { generateID } from '../helpers';
+import { generateID, mergeClasses } from '../helpers';
 import { ChangeElementValueType, ElementLength, IconSize, PropsObjectInterface, SetBoolToStateType, ToggleLabelType } from '../types';
 import Element from './Element';
 import { AlignPositions, LabelPositions } from '../types';
 import Icon, {IconList} from '../ui/Icon';
+import { allColors } from '../constants/colors';
 
 interface Slider {
     toggle: boolean,
@@ -57,23 +58,23 @@ const Input = styled.input`
 `;
 
 const SwitchElementWrapper = styled.div`
-    padding-right: 1em;
+    padding: 0 1em 0 0.25em;
 `;
 
 const Switch = styled.label<Switch>`
-  position: relative;
-  display: inline-block;
-  width: 48px;
-  height: 24px;
-  background-color: ${({ toggle, color, colorOff }) => (toggle ? color : colorOff)};
-  border-radius: 15px;
-  transition: 0.4s;
+    position: relative;
+    display: inline-block;
+    width: 48px;
+    height: 24px;
+    background-color: ${({ toggle, color, colorOff }) => (toggle ? color : colorOff)};
+    border-radius: 15px;
+    transition: 0.4s;
 
-  & ${Input} {
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
+    & ${Input} {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
 `;
 
 interface SwitchToggleAdvancedWrapperInterface {
@@ -102,6 +103,7 @@ const SwitchToggleAdvancedWrapper = styled.div<SwitchToggleAdvancedWrapperInterf
 
 interface LabelProps {
     htmlFor: string
+    length: ElementLength
 }
 
 const SwitchToggleAdvancedLabel = styled.div<LabelProps>`
@@ -118,6 +120,11 @@ const SwitchToggleAdvancedLabel = styled.div<LabelProps>`
     opacity: 1;
     pointer-events: none;
     transition: 0.1s all ease-in-out;
+
+    max-width: ${({length}) => length};
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 `;
 
 interface ToggleInnerLabelType {
@@ -136,6 +143,7 @@ const ToggleInnerLabel = styled.div<ToggleInnerLabelType>`
 
 interface SwitchToggleProps extends PropsObjectInterface {
     checked: boolean,
+    className: string,
     color?: string,
     label?: string,
     simpleElement?: boolean,
@@ -184,37 +192,59 @@ function SwitchToggleElement({
         onChange(!toggle);
     }, [onChange, toggle]);
 
-    return (<Switch
-        toggle={toggle}
-        color={color}
-    >
-        <Input {...{ color }} type="checkbox" defaultChecked={toggle} />
-        <Slider {...{ toggle, color, colorOff }} onClick={onClickCb}>
-            <ToggleInnerLabel
+    useEffect(() => {
+        setToggle(checked);
+    }, [checked]);
+
+    return (
+        <SwitchElementWrapper
+            className="ie-radio__element-wrapper"
+        >
+            <Switch
+                className="ie-radio__element"
                 toggle={toggle}
                 color={color}
             >
-                {labelType === ToggleLabelType.label
-                    ? toggle ? labelOn : labelOff
-                    : toggle
-                        ? <Icon
-                            icon={IconList.check}
-                            color={iconColor}
-                            fontSize={IconSize.xs}
-                        />
-                        : <Icon
-                            icon={IconList.close}
-                            color={iconOffColor}
-                            fontSize={IconSize.xs}
-                        />
-                }
-            </ToggleInnerLabel>
-        </Slider>
-    </Switch>);
+                <Input
+                    {...{ color }}
+                    className="ie-radio__element__input"
+                    type="checkbox"
+                    checked={toggle}
+                />
+                <Slider
+                    {...{ toggle, color, colorOff }}
+                    className="ie-radio__element__slider"
+                    onClick={onClickCb}
+                >
+                    <ToggleInnerLabel
+                        toggle={toggle}
+                        color={color}
+                        className="ie-radio__element__slider__label"
+                    >
+                        {labelType === ToggleLabelType.label
+                            ? toggle ? labelOn : labelOff
+                            : toggle
+                                ? <Icon
+                                    icon={IconList.check}
+                                    color={iconColor}
+                                    fontSize={IconSize.xs}
+                                />
+                                : <Icon
+                                    icon={IconList.close}
+                                    color={iconOffColor}
+                                    fontSize={IconSize.xs}
+                                />
+                        }
+                    </ToggleInnerLabel>
+                </Slider>
+            </Switch>
+        </SwitchElementWrapper>
+    );
 }
 
 const SwitchToggle = (props: SwitchToggleProps) => {
     const {
+        className,
         checked,
         color,
         colorOff,
@@ -239,6 +269,7 @@ const SwitchToggle = (props: SwitchToggleProps) => {
         <Fragment>
             {simpleElement ? (
                 <Element
+                    className={mergeClasses('ie-radio', className)}
                     id={id.current}
                     align={align}
                     label={label}
@@ -260,25 +291,26 @@ const SwitchToggle = (props: SwitchToggleProps) => {
                 <SwitchToggleAdvancedWrapper
                     shadow={shadow}
                     length={length}
+                    className={mergeClasses('ie-radio', className)}
                 >
                     <SwitchToggleAdvancedLabel
+                        className="ie-radio__label"
                         htmlFor={id.current}
+                        length={length}
                     >
                         {label}
                     </SwitchToggleAdvancedLabel>
-                    <SwitchElementWrapper>
-                        <SwitchToggleElement
-                            checked={checked}
-                            color={color}
-                            labelOn={labelOn}
-                            labelOff={labelOff}
-                            labelType={labelType}
-                            colorOff={colorOff}
-                            iconColor={iconColor}
-                            iconOffColor={iconOffColor}
-                            onChange={onChange}
-                        />
-                    </SwitchElementWrapper>
+                    <SwitchToggleElement
+                        checked={checked}
+                        color={color}
+                        labelOn={labelOn}
+                        labelOff={labelOff}
+                        labelType={labelType}
+                        colorOff={colorOff}
+                        iconColor={iconColor}
+                        iconOffColor={iconOffColor}
+                        onChange={onChange}
+                    />
                 </SwitchToggleAdvancedWrapper>
             )}
         </Fragment>
@@ -287,10 +319,11 @@ const SwitchToggle = (props: SwitchToggleProps) => {
 
 const defaultProps: PropsObjectInterface = {
     checked: true,
-    color: '#666',
-    colorOff: 'white',
-    iconColor: 'white',
-    iconOffColor: '#666',
+    className: '',
+    color: allColors['Dim Gray'],
+    colorOff: allColors['White'],
+    iconColor: allColors['White'],
+    iconOffColor: allColors['Dim Gray'],
     label: 'Label',
     labelPosition: undefined,
     simpleElement: false,
@@ -303,6 +336,7 @@ const defaultProps: PropsObjectInterface = {
 };
 
 SwitchToggle.defaultProps = defaultProps;
+SwitchToggleElement.defaultProps = defaultProps;
 
 export default SwitchToggle;
 

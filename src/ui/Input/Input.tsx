@@ -200,6 +200,7 @@ function Input({
             <Label
                 htmlFor={id.current}
                 error={error}
+                length={length}
                 // Type date is always "active"
                 active={active || type === InputTypes.date}
                 labelColor={labelColor}

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import styled from 'styled-components';
-import { ChangeEditorPropType, ChangeElementValueType, Editor as EditorType } from '../types';
+import { ChangeEditorPropType, ChangeElementValueType, Editor as EditorType, ElementLength } from '../types';
 import Checkbox from '../ui/Checkbox';
 import { LabelPositions } from '../types';
 import Input from '../ui/Input';
@@ -66,9 +66,10 @@ export default function Editor({
                                                 input: (<Input
                                                     locked={false}
                                                     value={e.default as string}
-                                                    type={e.inputType || InputTypes.text}
+                                                    type={e.inputType as InputTypes || InputTypes.text}
                                                     label={e.label}
                                                     onBlur={() => {}} 
+                                                    length={ElementLength.full}
                                                     onChange={onChangeValue(e.prop)}
                                                 />),
                                                 select: (<Select
@@ -79,12 +80,14 @@ export default function Editor({
                                                     // }
                                                     value={e.default as string}
                                                     label={e.label}
+                                                    length={ElementLength.full}
                                                     onChange={onChangeValue(e.prop)}
                                                 />),
                                                 checkbox: (<Checkbox
                                                     className=""
                                                     checked={e.default as boolean}
                                                     label={e.label}
+                                                    length={ElementLength.full}
                                                     labelPosition={LabelPositions.vertical}
                                                     onChange={onChangeValue(e.prop)}                               
                                                 />),
@@ -92,12 +95,14 @@ export default function Editor({
                                                     checked={e.default as boolean}
                                                     label={e.label}
                                                     color="#666"
+                                                    length={ElementLength.full}
                                                     labelPosition={LabelPositions.vertical}
                                                     onChange={onChangeValue(e.prop)}
                                                 />),
                                                 color: (<ColorPicker
                                                     value={e.default as string}
                                                     label={e.label}
+                                                    length={ElementLength.full}
                                                     onChange={onChangeValue(e.prop)}
                                                 />)
                                             }[e.type]

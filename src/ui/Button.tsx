@@ -75,6 +75,10 @@ interface ButtonProps extends PropsObjectInterface {
 
 const LabelWrapper = styled.div`
     padding: 0 0.25em 0 0.25em;
+    max-width: ${({length}: {length: ElementLength}) => length};
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 `;
 
 const Button = ({
@@ -117,7 +121,9 @@ const Button = ({
             onClick={onClick}
         >
             {icon && iconPosition === IconPosition.left && IconElement}
-            <LabelWrapper>
+            <LabelWrapper
+                length={length}
+            >
                 {label}
             </LabelWrapper>
             {icon && iconPosition === IconPosition.right && IconElement}

@@ -96,6 +96,13 @@ export const Label = styled.label<LabelProps>`
         font-size: 12px;`
         : ''
     }
+
+    ${props => !props.active ? 'height: 3em;' : ''}
+
+    max-width: ${({length}) => length};
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 `;
 
 export const InputNumberIcons = styled.div`
