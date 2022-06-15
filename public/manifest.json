@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Interface Elements",
+  "name": "React Interface Elements style guide",
   "icons": [
     {
       "src": "favicon.ico",
