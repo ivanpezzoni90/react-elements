@@ -164,6 +164,11 @@ export interface PropsObjectInterface {
     iconSize?: IconSize,
     buttonIconSize?: ButtonIconSize,
     iconPosition?: IconPosition,
-    resettable?: boolean
+    resettable?: boolean,
+    step?: number,
+    steps?: string[] | number[],
+    showValue?: boolean
+    showTooltip?: boolean,
+    cursorColor?: string
 }
 export type SetPropsToStateType = (props: PropsObjectInterface) => void;

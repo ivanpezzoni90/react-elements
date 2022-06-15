@@ -36,4 +36,8 @@ export function splitArrayInGroups<T> (a: T[], size: number) {
     ).filter(Boolean);
 }
 
+export function round(num: number): number {
+    return Math.round((num + Number.EPSILON) * 100) / 100;
+}
+
 export * from './colorHelpers';

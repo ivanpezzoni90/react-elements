@@ -88,10 +88,10 @@ export default function InputEditor() {
             props: inputProps
         } = useEditorInit(Input.defaultProps);
 
-        const max:string = inputProps.max ? inputProps.max.toString() : '';
+        const max:string = inputProps.max || inputProps.max === 0 ? inputProps.max.toString() : '';
         const parsedMax: number = parseFloat(max);
     
-        const min:string = inputProps.min ? inputProps.min.toString() : '';
+        const min:string = inputProps.min || inputProps.min === 0 ? inputProps.min.toString() : '';
         const parsedMin: number = parseFloat(min);
 
         return (

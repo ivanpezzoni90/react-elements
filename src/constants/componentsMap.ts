@@ -5,10 +5,11 @@ import ElementEditor from '../editors/ElementEditor';
 import SwitchToggleEditor from '../editors/SwitchToggleEditor';
 import IconEditor from '../editors/IconEditor';
 import ColorPickerEditor from '../editors/ColorPickerEditor';
+import ButtonEditor from '../editors/ButtonEditor';
 import RadioEditor from '../editors/RadioEditor';
+import SliderEditor from '../editors/SliderEditor';
 
 import { Component } from '../types';
-import ButtonEditor from '../editors/ButtonEditor';
 
 const Components: Component[] = [{
     key: 'input',
@@ -46,6 +47,10 @@ const Components: Component[] = [{
     key: 'radio',
     name: 'Radio',
     editor: RadioEditor
+}, {
+    key: 'slider',
+    name: 'Slider',
+    editor: SliderEditor
 }];
 
 function getComponentByKey(key: string) {

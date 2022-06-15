@@ -667,6 +667,25 @@ const allColors: AllColorsType = colorArray.reduce((acc, arr) => {
 
 const getColorNameByHex = (hex: string) => Object.keys(allColors).find((k) => allColors[k] === hex);
 
+const allObjectColors = colorArray.reduce((acc, arr) => {
+    const newAcc: {[key: string]: {rgb: string, hex: string}} = {};
+    arr.forEach((c) => {
+        newAcc[c.name] = {
+            rgb: c.rgb.join(),
+            hex: c.hex
+        };
+    });
+    return Object.assign({}, acc, newAcc);
+}, {});
+
+const allRgbColors: AllColorsType = colorArray.reduce((acc, arr) => {
+    const newAcc: {[key: string]: string} = {};
+    arr.forEach((c) => {
+        newAcc[c.name] = c.rgb.join();
+    });
+    return Object.assign({}, acc, newAcc);
+}, {});
+
 export type ColorObject = {
     name: string,
     hex: string,
@@ -686,4 +705,5 @@ const palette: ColorPaletteType = {
     brown: brownExtArray,
     black: blackExtArray,
 };
-export { palette, allColors, getColorNameByHex };
+
+export { palette, allColors, allRgbColors, allObjectColors, getColorNameByHex };

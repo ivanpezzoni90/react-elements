@@ -210,6 +210,7 @@ function SwitchToggleElement({
                     className="ie-radio__element__input"
                     type="checkbox"
                     checked={toggle}
+                    readOnly
                 />
                 <Slider
                     {...{ toggle, color, colorOff }}
