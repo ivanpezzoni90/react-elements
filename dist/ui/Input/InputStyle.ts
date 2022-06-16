@@ -13,7 +13,7 @@ import {
 import { allColors } from '../../constants/colors';
 import { ElementLength } from '../../types';
 
-export const InputElement = styled.input<InputElementProps>`
+export const InputElementStyle = styled.input<InputElementProps>`
     width: ${(props) => (
         props.length === ElementLength.full
             ? props.computedWidth

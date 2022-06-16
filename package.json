@@ -1,7 +1,19 @@
 {
   "name": "react-interface-elements",
+  "description": "React interface elements",
+  "author": "ivanpezzoni90",
+  "keywords": ["react", "elements", "ui", "component", "interface"],
+  "private": false,
+  "main": "dist/index.ts",
+  "module": "dist/index.ts",
+  "files": [ "dist", "README.md" ],
+  "repository": {
+      "type": "git",
+      "url": "git+https://github.com/ivanpezzoni90/react-elements"
+  },
   "version": "1.0.0",
   "dependencies": {
+    "@babel/polyfill": "^7.12.1",
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.3",
     "@testing-library/user-event": "^13.5.0",
@@ -23,6 +35,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "build-dist": "rm -rf dist && NODE_ENV=production babel src/lib --out-dir dist --copy-files",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lintfix": "eslint --fix --ext .js,.jsx,.ts,.tsx ."
@@ -40,6 +53,9 @@
     ]
   },
   "devDependencies": {
+    "@babel/cli": "^7.17.10",
+    "@babel/core": "^7.18.5",
+    "@babel/preset-env": "^7.18.2",
     "@types/styled-components": "^5.1.23",
     "@types/throttle-debounce": "^2.1.0",
     "@typescript-eslint/eslint-plugin": "^5.12.1",
