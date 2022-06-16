@@ -3,7 +3,7 @@ import { useState, useCallback, useRef, useEffect } from 'react';
 import { elaborateComputedWidth, generateID } from '../../helpers';
 import {
     InputWrapper,
-    InputElement,
+    InputElementStyle,
     Label,
     InputNumberIcons,
     IconWrapper
@@ -16,7 +16,7 @@ import { allColors } from '../../constants/colors';
 import Icon, { IconList } from '../Icon';
 import { useComputedWidth } from '../../hooks';
 
-function InputComponent({
+function InputElement({
     error,
     setError,
     length,
@@ -90,7 +90,7 @@ function InputComponent({
 
     return (
         <Fragment>
-            <InputElement
+            <InputElementStyle
                 error={error}
                 length={length}
                 active={active}
@@ -207,7 +207,7 @@ function Input({
             >
                 {(error && errorMessage) || label}
             </Label>
-            <InputComponent
+            <InputElement
                 error={error}
                 setError={setError}
                 length={length}
@@ -252,5 +252,6 @@ const defaultProps: PropsObjectInterface = {
 Input.defaultProps = defaultProps;
 
 export default Input;
+export { InputElement };
 
 export type { InputProps };
