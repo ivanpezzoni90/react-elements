@@ -21,7 +21,7 @@
     "type": "git",
     "url": "git+https://github.com/ivanpezzoni90/react-elements"
   },
-  "version": "1.0.4",
+  "version": "1.0.5",
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
     "@testing-library/jest-dom": "^5.16.2",
