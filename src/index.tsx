@@ -2,7 +2,21 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
+
+import Input from './ui/Input';
+import { InputElement } from './ui/Input';
+import Select from './ui/Select';
+import Button from './ui/Button';
+import Checkbox from './ui/Checkbox';
+import { CheckboxElement } from './ui/Checkbox';
+import ColorPicker from './ui/ColorPicker';
+import { ColorPickerElement } from './ui/ColorPicker';
+import Icon from './ui/Icon';
+import Radio from './ui/Radio';
+import SwitchToggle from './ui/SwitchToggle';
+import { SwitchToggleElement } from './ui/SwitchToggle';
+import Slider from './ui/Slider';
+import { SliderElement } from './ui/Slider';
 
 ReactDOM.render(
     <React.StrictMode>
@@ -11,7 +25,19 @@ ReactDOM.render(
     document.getElementById('root')
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+export {
+    Input,
+    InputElement,
+    Select,
+    Button,
+    Checkbox,
+    ColorPicker,
+    Icon,
+    Radio,
+    Slider,
+    CheckboxElement,
+    ColorPickerElement,
+    SwitchToggle,
+    SwitchToggleElement,
+    SliderElement,
+};

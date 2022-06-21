@@ -45,7 +45,9 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "build-dist": "npx babel src/lib --out-dir dist --extensions .ts,.tsx",
+    "clean": "rm -rf dist",
+    "pack": "npm run clean && tsc && cp package.json README.md ./dist",
+    "build-dist": "babel src/lib --out-dir dist --extensions .ts,.tsx",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lintfix": "eslint --fix --ext .js,.jsx,.ts,.tsx ."
