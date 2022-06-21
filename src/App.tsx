@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import IEComponent from './lib/components/InterfaceElementsComponent';
+import IEComponent from './components/InterfaceElementsComponent';
 
 
 function App() {
