@@ -150,35 +150,39 @@ function ColorPickerElement(_ref4) {
     return setHoverColor(emptyColorObj);
   };
 
-  return <ColorPickerContainer className={(0, _helpers.mergeClasses)('ie-color-picker', className)}>
-        <ColorPickerInfoContainer>
-            <SelectedColor>
-                {selectedColor}
-            </SelectedColor>
-            <SelectedColorLabel>
-                {selectedColorLabel}
-            </SelectedColorLabel>
-        </ColorPickerInfoContainer>
-        <StyledColorPicker className="ie-color-picker__picker" ref={ref} color={selectedColor} onClick={toggling} />
-        {isOpen && <DropDownListContainer zIndex={dropDownZIndex}>
-                <DropDownList>
-                    <ColorListColumn // Reset hoverColor when leaving palette div
-        onMouseLeave={onMouseLeave}>
-                        {Object.values(_colors.palette).map(function (colorArray) {
-            return <ColorListRow key={Math.random()}>
-                                {colorArray.map(function (colorObj) {
-                return <ColorListItem key={"".concat(colorObj.name, "_").concat(colorObj.hex)} color={colorObj.hex} selected={colorObj.hex === selectedColor} hovered={colorObj.hex === hoverColor.hex} onClick={onChangeColor(colorObj.hex)} onMouseEnter={onMouseEnter(colorObj)} borderColor={(0, _helpers.fontColorFromBackground)(colorObj.hex)} />;
-              })}
-                            </ColorListRow>;
-          })}
-                    </ColorListColumn>
-                    <ColorListFooter>
-                        <_Input.default active shadow={false} value={hoverColor.hex !== '' ? hoverColor.hex : selectedColor} label={hoverColor.name !== '' ? hoverColor.name : selectedColorLabel || ''} onChange={onCustomColorChange} />
-
-                    </ColorListFooter>
-                </DropDownList>
-            </DropDownListContainer>}
-    </ColorPickerContainer>;
+  return /*#__PURE__*/_react.default.createElement(ColorPickerContainer, {
+    className: (0, _helpers.mergeClasses)('ie-color-picker', className)
+  }, /*#__PURE__*/_react.default.createElement(ColorPickerInfoContainer, null, /*#__PURE__*/_react.default.createElement(SelectedColor, null, selectedColor), /*#__PURE__*/_react.default.createElement(SelectedColorLabel, null, selectedColorLabel)), /*#__PURE__*/_react.default.createElement(StyledColorPicker, {
+    className: "ie-color-picker__picker",
+    ref: ref,
+    color: selectedColor,
+    onClick: toggling
+  }), isOpen && /*#__PURE__*/_react.default.createElement(DropDownListContainer, {
+    zIndex: dropDownZIndex
+  }, /*#__PURE__*/_react.default.createElement(DropDownList, null, /*#__PURE__*/_react.default.createElement(ColorListColumn // Reset hoverColor when leaving palette div
+  , {
+    onMouseLeave: onMouseLeave
+  }, Object.values(_colors.palette).map(function (colorArray) {
+    return /*#__PURE__*/_react.default.createElement(ColorListRow, {
+      key: Math.random()
+    }, colorArray.map(function (colorObj) {
+      return /*#__PURE__*/_react.default.createElement(ColorListItem, {
+        key: "".concat(colorObj.name, "_").concat(colorObj.hex),
+        color: colorObj.hex,
+        selected: colorObj.hex === selectedColor,
+        hovered: colorObj.hex === hoverColor.hex,
+        onClick: onChangeColor(colorObj.hex),
+        onMouseEnter: onMouseEnter(colorObj),
+        borderColor: (0, _helpers.fontColorFromBackground)(colorObj.hex)
+      });
+    }));
+  })), /*#__PURE__*/_react.default.createElement(ColorListFooter, null, /*#__PURE__*/_react.default.createElement(_Input.default, {
+    active: true,
+    shadow: false,
+    value: hoverColor.hex !== '' ? hoverColor.hex : selectedColor,
+    label: hoverColor.name !== '' ? hoverColor.name : selectedColorLabel || '',
+    onChange: onCustomColorChange
+  })))));
 }
 
 function ColorPicker(props) {
@@ -192,16 +196,26 @@ function ColorPicker(props) {
       length = props.length,
       onChange = props.onChange;
   var id = (0, _react.useRef)((0, _helpers.generateID)());
-  return <_react.Fragment>
-            {simpleElement ? <_Element.default id={id.current} align={align} label={label} labelPosition={labelPosition}>
-                    <ColorPickerElement className={className} valueFromProps={valueFromProps} onChange={onChange} />
-                </_Element.default> : <ColorPickerAdvancedWrapper shadow={shadow} length={length}>
-                    <ColorPickerAdvancedLabel htmlFor={id.current} length={length}>
-                        {label}
-                    </ColorPickerAdvancedLabel>
-                    <ColorPickerElement className={className} valueFromProps={valueFromProps} onChange={onChange} />
-                </ColorPickerAdvancedWrapper>}
-        </_react.Fragment>;
+  return /*#__PURE__*/_react.default.createElement(_react.Fragment, null, simpleElement ? /*#__PURE__*/_react.default.createElement(_Element.default, {
+    id: id.current,
+    align: align,
+    label: label,
+    labelPosition: labelPosition
+  }, /*#__PURE__*/_react.default.createElement(ColorPickerElement, {
+    className: className,
+    valueFromProps: valueFromProps,
+    onChange: onChange
+  })) : /*#__PURE__*/_react.default.createElement(ColorPickerAdvancedWrapper, {
+    shadow: shadow,
+    length: length
+  }, /*#__PURE__*/_react.default.createElement(ColorPickerAdvancedLabel, {
+    htmlFor: id.current,
+    length: length
+  }, label), /*#__PURE__*/_react.default.createElement(ColorPickerElement, {
+    className: className,
+    valueFromProps: valueFromProps,
+    onChange: onChange
+  })));
 }
 
 var defaultProps = {

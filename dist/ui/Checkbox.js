@@ -98,14 +98,23 @@ function CheckboxElement(_ref7) {
   (0, _react.useEffect)(function () {
     setChecked(checkedFromProps);
   }, [checkedFromProps]);
-  return <CheckboxContainer className={(0, _helpers.mergeClasses)('ie-checkbox', className)}>
-        <HiddenCheckbox className="ie-checkbox__input" />
-        <StyledCheckbox className="ie-checkbox__checkbox" checked={checked} color={color} colorOff={colorOff} onClick={onCheckboxChange}>
-            <Icon viewBox="0 0 24 24" className="ie-checkbox__checkbox__icon" colorOff={colorOff}>
-                <polyline points="20 6 9 17 4 12" />
-            </Icon>
-        </StyledCheckbox>
-    </CheckboxContainer>;
+  return /*#__PURE__*/_react.default.createElement(CheckboxContainer, {
+    className: (0, _helpers.mergeClasses)('ie-checkbox', className)
+  }, /*#__PURE__*/_react.default.createElement(HiddenCheckbox, {
+    className: "ie-checkbox__input"
+  }), /*#__PURE__*/_react.default.createElement(StyledCheckbox, {
+    className: "ie-checkbox__checkbox",
+    checked: checked,
+    color: color,
+    colorOff: colorOff,
+    onClick: onCheckboxChange
+  }, /*#__PURE__*/_react.default.createElement(Icon, {
+    viewBox: "0 0 24 24",
+    className: "ie-checkbox__checkbox__icon",
+    colorOff: colorOff
+  }, /*#__PURE__*/_react.default.createElement("polyline", {
+    points: "20 6 9 17 4 12"
+  }))));
 }
 
 function Checkbox(props) {
@@ -121,16 +130,30 @@ function Checkbox(props) {
       colorOff = props.colorOff,
       onChange = props.onChange;
   var id = (0, _react.useRef)((0, _helpers.generateID)());
-  return <_react.Fragment>
-            {simpleElement ? <_Element.default id={id.current} align={align} label={label} labelPosition={labelPosition}>
-                    <CheckboxElement className={className} checked={checkedFromProps} color={color} colorOff={colorOff} onChange={onChange} />
-                </_Element.default> : <CheckboxAdvancedWrapper shadow={shadow} length={length}>
-                    <CheckboxAdvancedLabel htmlFor={id.current} length={length}>
-                        {label}
-                    </CheckboxAdvancedLabel>
-                    <CheckboxElement className={className} checked={checkedFromProps} color={color} colorOff={colorOff} onChange={onChange} />
-                </CheckboxAdvancedWrapper>}
-        </_react.Fragment>;
+  return /*#__PURE__*/_react.default.createElement(_react.Fragment, null, simpleElement ? /*#__PURE__*/_react.default.createElement(_Element.default, {
+    id: id.current,
+    align: align,
+    label: label,
+    labelPosition: labelPosition
+  }, /*#__PURE__*/_react.default.createElement(CheckboxElement, {
+    className: className,
+    checked: checkedFromProps,
+    color: color,
+    colorOff: colorOff,
+    onChange: onChange
+  })) : /*#__PURE__*/_react.default.createElement(CheckboxAdvancedWrapper, {
+    shadow: shadow,
+    length: length
+  }, /*#__PURE__*/_react.default.createElement(CheckboxAdvancedLabel, {
+    htmlFor: id.current,
+    length: length
+  }, label), /*#__PURE__*/_react.default.createElement(CheckboxElement, {
+    className: className,
+    checked: checkedFromProps,
+    color: color,
+    colorOff: colorOff,
+    onChange: onChange
+  })));
 }
 
 var defaultProps = {

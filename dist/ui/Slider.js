@@ -200,24 +200,35 @@ function SliderElement(_ref12) {
       nOfSteps = _calculateSteps2[0],
       width = _calculateSteps2[1];
 
-  return <SliderContainer className={(0, _helpers.mergeClasses)('ie-slider', className)}>
-        {showValue && <SliderValue className="ie-slider__value" length={length}>
-                {value}
-            </SliderValue>}
-        <SliderElementContainer className="ie-slider__element">
-            <SliderInputWrapper className="ie-slider__element__input">
-                <SliderInput className="ie-slider__element__input__element" color={cursorColor} type="range" step={newStep} min={newMin} max={newMax} value={value} onChange={onSliderChange} />
-                {showTooltip && <SliderTooltip percentage={calculateTooltipPosition(newMin, newMax, value)}>
-                        {value}
-                    </SliderTooltip>}
-                <SliderInputStepWrapper className="ie-slider__element__input__steps">
-                    {Array.from(Array(nOfSteps)).map(function (e, i) {
-            return <SliderInputStep key={i} last={i === nOfSteps - 1} width={width} />;
-          })}
-                </SliderInputStepWrapper>
-            </SliderInputWrapper>
-        </SliderElementContainer>
-    </SliderContainer>;
+  return /*#__PURE__*/_react.default.createElement(SliderContainer, {
+    className: (0, _helpers.mergeClasses)('ie-slider', className)
+  }, showValue && /*#__PURE__*/_react.default.createElement(SliderValue, {
+    className: "ie-slider__value",
+    length: length
+  }, value), /*#__PURE__*/_react.default.createElement(SliderElementContainer, {
+    className: "ie-slider__element"
+  }, /*#__PURE__*/_react.default.createElement(SliderInputWrapper, {
+    className: "ie-slider__element__input"
+  }, /*#__PURE__*/_react.default.createElement(SliderInput, {
+    className: "ie-slider__element__input__element",
+    color: cursorColor,
+    type: "range",
+    step: newStep,
+    min: newMin,
+    max: newMax,
+    value: value,
+    onChange: onSliderChange
+  }), showTooltip && /*#__PURE__*/_react.default.createElement(SliderTooltip, {
+    percentage: calculateTooltipPosition(newMin, newMax, value)
+  }, value), /*#__PURE__*/_react.default.createElement(SliderInputStepWrapper, {
+    className: "ie-slider__element__input__steps"
+  }, Array.from(Array(nOfSteps)).map(function (e, i) {
+    return /*#__PURE__*/_react.default.createElement(SliderInputStep, {
+      key: i,
+      last: i === nOfSteps - 1,
+      width: width
+    });
+  })))));
 }
 
 function Slider(props) {
@@ -237,16 +248,41 @@ function Slider(props) {
       showTooltip = props.showTooltip,
       onChange = props.onChange;
   var id = (0, _react.useRef)((0, _helpers.generateID)());
-  return <_react.Fragment>
-            {simpleElement ? <_Element.default id={id.current} label={label} labelPosition={labelPosition}>
-                    <SliderElement className={className} value={value} cursorColor={cursorColor} min={min} max={max} step={step} steps={steps} showValue={showValue} showTooltip={showTooltip} length={length} onChange={onChange} />
-                </_Element.default> : <SliderAdvancedWrapper shadow={shadow} length={length}>
-                    <SliderAdvancedLabel htmlFor={id.current} length={length}>
-                        {label}
-                    </SliderAdvancedLabel>
-                    <SliderElement className={className} value={value} cursorColor={cursorColor} min={min} max={max} step={step} steps={steps} showValue={showValue} showTooltip={showTooltip} length={length} onChange={onChange} />
-                </SliderAdvancedWrapper>}
-        </_react.Fragment>;
+  return /*#__PURE__*/_react.default.createElement(_react.Fragment, null, simpleElement ? /*#__PURE__*/_react.default.createElement(_Element.default, {
+    id: id.current,
+    label: label,
+    labelPosition: labelPosition
+  }, /*#__PURE__*/_react.default.createElement(SliderElement, {
+    className: className,
+    value: value,
+    cursorColor: cursorColor,
+    min: min,
+    max: max,
+    step: step,
+    steps: steps,
+    showValue: showValue,
+    showTooltip: showTooltip,
+    length: length,
+    onChange: onChange
+  })) : /*#__PURE__*/_react.default.createElement(SliderAdvancedWrapper, {
+    shadow: shadow,
+    length: length
+  }, /*#__PURE__*/_react.default.createElement(SliderAdvancedLabel, {
+    htmlFor: id.current,
+    length: length
+  }, label), /*#__PURE__*/_react.default.createElement(SliderElement, {
+    className: className,
+    value: value,
+    cursorColor: cursorColor,
+    min: min,
+    max: max,
+    step: step,
+    steps: steps,
+    showValue: showValue,
+    showTooltip: showTooltip,
+    length: length,
+    onChange: onChange
+  })));
 }
 
 var defaultProps = {

@@ -58,7 +58,14 @@ function AsideCaret(_ref2) {
     // Send open status 
     getOpen(open);
   }, [open, getOpen]);
-  return <AsideCaretContainer onClick={toggleOpen} open={open}>
-            {open ? <_Icon.default icon={_Icon.IconList.caretLeft} fontSize={_types.IconSize.s} /> : <_Icon.default icon={_Icon.IconList.caretRight} fontSize={_types.IconSize.s} />}
-        </AsideCaretContainer>;
+  return /*#__PURE__*/_react.default.createElement(AsideCaretContainer, {
+    onClick: toggleOpen,
+    open: open
+  }, open ? /*#__PURE__*/_react.default.createElement(_Icon.default, {
+    icon: _Icon.IconList.caretLeft,
+    fontSize: _types.IconSize.s
+  }) : /*#__PURE__*/_react.default.createElement(_Icon.default, {
+    icon: _Icon.IconList.caretRight,
+    fontSize: _types.IconSize.s
+  }));
 }

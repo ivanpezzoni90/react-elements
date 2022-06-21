@@ -66,11 +66,9 @@ function CheckboxEditor() {
         checkboxProps = _useEditorInit.props;
 
     var editorJson = getEditor(checkboxProps);
-    return <_react.Fragment>
-                <_commons.ElementContainer>
-                    <_Checkbox.default {...checkboxProps} />
-                </_commons.ElementContainer>
-                <_EditorBuilder.default json={editorJson} onChange={onChangeProp} />
-            </_react.Fragment>;
+    return /*#__PURE__*/_react.default.createElement(_react.Fragment, null, /*#__PURE__*/_react.default.createElement(_commons.ElementContainer, null, /*#__PURE__*/_react.default.createElement(_Checkbox.default, checkboxProps)), /*#__PURE__*/_react.default.createElement(_EditorBuilder.default, {
+      json: editorJson,
+      onChange: onChangeProp
+    }));
   };
 }

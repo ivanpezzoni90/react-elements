@@ -65,37 +65,54 @@ var RadioElement = _styledComponents.default.div(_templateObject4 || (_templateO
 var RadioLabel = _styledComponents.default.div(_templateObject5 || (_templateObject5 = _taggedTemplateLiteral(["\n    padding: 0 1em 0 0;\n    font-family: \"Gotham SSm A\", \"Gotham SSm B\", sans-serif;\n    font-size: 14px;\n    font-weight: 400;\n    line-height: 24px;\n    color: #666;\n\n    display: flex;\n    flex: 1;\n\n    max-width: 6em;\n    text-overflow: ellipsis;\n    white-space: nowrap;\n    overflow: hidden;\n"])));
 
 var getRadioElement = function getRadioElement(o, type, value, onRadioChange) {
-  var element = <div></div>;
+  var element = /*#__PURE__*/_react.default.createElement("div", null);
 
   switch (type) {
     case _types.RadioTypes.checkbox:
-      element = <_Checkbox.CheckboxElement className={'ie-radio__element__checkbox'} checked={value === o.value} onChange={function () {
-        onRadioChange(o.value);
-      }} />;
+      element = /*#__PURE__*/_react.default.createElement(_Checkbox.CheckboxElement, {
+        className: 'ie-radio__element__checkbox',
+        checked: value === o.value,
+        onChange: function onChange() {
+          onRadioChange(o.value);
+        }
+      });
       break;
 
     case _types.RadioTypes.toggle:
-      element = <_SwitchToggle.SwitchToggleElement checked={value === o.value} onChange={function () {
-        onRadioChange(o.value);
-      }} />;
+      element = /*#__PURE__*/_react.default.createElement(_SwitchToggle.SwitchToggleElement, {
+        checked: value === o.value,
+        onChange: function onChange() {
+          onRadioChange(o.value);
+        }
+      });
       break;
 
     case _types.RadioTypes.button:
-      element = <_Button.default label="" icon={o.icon} borderRadius={_types.BorderRadius.m} length={_types.ElementLength.squared} fontSize={_types.ElementSize.xxs} buttonIconSize={_types.ButtonIconSize.xl} color={value === o.value ? _colors.allColors['Gray Web'] : _colors.allColors['Quick Silver']} onClick={function () {
-        onRadioChange(o.value);
-      }} />;
+      element = /*#__PURE__*/_react.default.createElement(_Button.default, {
+        label: "",
+        icon: o.icon,
+        borderRadius: _types.BorderRadius.m,
+        length: _types.ElementLength.squared,
+        fontSize: _types.ElementSize.xxs,
+        buttonIconSize: _types.ButtonIconSize.xl,
+        color: value === o.value ? _colors.allColors['Gray Web'] : _colors.allColors['Quick Silver'],
+        onClick: function onClick() {
+          onRadioChange(o.value);
+        }
+      });
       break;
 
     default:
       break;
   }
 
-  return <RadioElement key={"key_".concat(o.value)} type={type} className="ie-radio__element">
-        <RadioLabel className="ie-radio__element__label">
-            {o.label}
-        </RadioLabel>
-        {element}
-    </RadioElement>;
+  return /*#__PURE__*/_react.default.createElement(RadioElement, {
+    key: "key_".concat(o.value),
+    type: type,
+    className: "ie-radio__element"
+  }, /*#__PURE__*/_react.default.createElement(RadioLabel, {
+    className: "ie-radio__element__label"
+  }, o.label), element);
 };
 
 function Radio(props) {
@@ -118,16 +135,17 @@ function Radio(props) {
     onChange(newValue);
   };
 
-  return <RadioWrapper className={(0, _helpers.mergeClasses)('ie-radio', className)}>
-            <Label className="ie-radio__label" htmlFor={id.current}>
-                {label}
-            </Label>
-            <RadioContainer className="ie-radio__container" position={position}>
-                {options.map(function (o) {
-        return getRadioElement(o, type, value, onRadioChange);
-      })}
-            </RadioContainer>
-        </RadioWrapper>;
+  return /*#__PURE__*/_react.default.createElement(RadioWrapper, {
+    className: (0, _helpers.mergeClasses)('ie-radio', className)
+  }, /*#__PURE__*/_react.default.createElement(Label, {
+    className: "ie-radio__label",
+    htmlFor: id.current
+  }, label), /*#__PURE__*/_react.default.createElement(RadioContainer, {
+    className: "ie-radio__container",
+    position: position
+  }, options.map(function (o) {
+    return getRadioElement(o, type, value, onRadioChange);
+  })));
 }
 
 var defaultProps = {

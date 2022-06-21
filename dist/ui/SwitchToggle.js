@@ -114,22 +114,37 @@ function SwitchToggleElement(_ref9) {
   (0, _react.useEffect)(function () {
     setToggle(checked);
   }, [checked]);
-  return <SwitchElementWrapper className="ie-radio__element-wrapper">
-            <Switch className="ie-radio__element" toggle={toggle} color={color}>
-                <Input {...{
-        color: color
-      }} className="ie-radio__element__input" type="checkbox" checked={toggle} readOnly />
-                <Slider {...{
-        toggle: toggle,
-        color: color,
-        colorOff: colorOff
-      }} className="ie-radio__element__slider" onClick={onClickCb}>
-                    <ToggleInnerLabel toggle={toggle} color={color} className="ie-radio__element__slider__label">
-                        {labelType === _types.ToggleLabelType.label ? toggle ? labelOn : labelOff : toggle ? <_Icon.default icon={_Icon.IconList.check} color={iconColor} fontSize={_types.IconSize.xs} /> : <_Icon.default icon={_Icon.IconList.close} color={iconOffColor} fontSize={_types.IconSize.xs} />}
-                    </ToggleInnerLabel>
-                </Slider>
-            </Switch>
-        </SwitchElementWrapper>;
+  return /*#__PURE__*/_react.default.createElement(SwitchElementWrapper, {
+    className: "ie-radio__element-wrapper"
+  }, /*#__PURE__*/_react.default.createElement(Switch, {
+    className: "ie-radio__element",
+    toggle: toggle,
+    color: color
+  }, /*#__PURE__*/_react.default.createElement(Input, {
+    color: color,
+    className: "ie-radio__element__input",
+    type: "checkbox",
+    checked: toggle,
+    readOnly: true
+  }), /*#__PURE__*/_react.default.createElement(Slider, {
+    toggle: toggle,
+    color: color,
+    colorOff: colorOff,
+    className: "ie-radio__element__slider",
+    onClick: onClickCb
+  }, /*#__PURE__*/_react.default.createElement(ToggleInnerLabel, {
+    toggle: toggle,
+    color: color,
+    className: "ie-radio__element__slider__label"
+  }, labelType === _types.ToggleLabelType.label ? toggle ? labelOn : labelOff : toggle ? /*#__PURE__*/_react.default.createElement(_Icon.default, {
+    icon: _Icon.IconList.check,
+    color: iconColor,
+    fontSize: _types.IconSize.xs
+  }) : /*#__PURE__*/_react.default.createElement(_Icon.default, {
+    icon: _Icon.IconList.close,
+    color: iconOffColor,
+    fontSize: _types.IconSize.xs
+  })))));
 }
 
 var SwitchToggle = function SwitchToggle(props) {
@@ -150,16 +165,41 @@ var SwitchToggle = function SwitchToggle(props) {
       length = props.length,
       onChange = props.onChange;
   var id = (0, _react.useRef)((0, _helpers.generateID)());
-  return <_react.Fragment>
-            {simpleElement ? <_Element.default className={(0, _helpers.mergeClasses)('ie-radio', className)} id={id.current} align={align} label={label} labelPosition={labelPosition}>
-                    <SwitchToggleElement checked={checked} color={color} labelOn={labelOn} labelOff={labelOff} labelType={labelType} colorOff={colorOff} iconColor={iconColor} iconOffColor={iconOffColor} onChange={onChange} />
-                </_Element.default> : <SwitchToggleAdvancedWrapper shadow={shadow} length={length} className={(0, _helpers.mergeClasses)('ie-radio', className)}>
-                    <SwitchToggleAdvancedLabel className="ie-radio__label" htmlFor={id.current} length={length}>
-                        {label}
-                    </SwitchToggleAdvancedLabel>
-                    <SwitchToggleElement checked={checked} color={color} labelOn={labelOn} labelOff={labelOff} labelType={labelType} colorOff={colorOff} iconColor={iconColor} iconOffColor={iconOffColor} onChange={onChange} />
-                </SwitchToggleAdvancedWrapper>}
-        </_react.Fragment>;
+  return /*#__PURE__*/_react.default.createElement(_react.Fragment, null, simpleElement ? /*#__PURE__*/_react.default.createElement(_Element.default, {
+    className: (0, _helpers.mergeClasses)('ie-radio', className),
+    id: id.current,
+    align: align,
+    label: label,
+    labelPosition: labelPosition
+  }, /*#__PURE__*/_react.default.createElement(SwitchToggleElement, {
+    checked: checked,
+    color: color,
+    labelOn: labelOn,
+    labelOff: labelOff,
+    labelType: labelType,
+    colorOff: colorOff,
+    iconColor: iconColor,
+    iconOffColor: iconOffColor,
+    onChange: onChange
+  })) : /*#__PURE__*/_react.default.createElement(SwitchToggleAdvancedWrapper, {
+    shadow: shadow,
+    length: length,
+    className: (0, _helpers.mergeClasses)('ie-radio', className)
+  }, /*#__PURE__*/_react.default.createElement(SwitchToggleAdvancedLabel, {
+    className: "ie-radio__label",
+    htmlFor: id.current,
+    length: length
+  }, label), /*#__PURE__*/_react.default.createElement(SwitchToggleElement, {
+    checked: checked,
+    color: color,
+    labelOn: labelOn,
+    labelOff: labelOff,
+    labelType: labelType,
+    colorOff: colorOff,
+    iconColor: iconColor,
+    iconOffColor: iconOffColor,
+    onChange: onChange
+  })));
 };
 
 var defaultProps = {

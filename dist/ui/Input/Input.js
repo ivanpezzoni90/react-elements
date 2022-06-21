@@ -122,17 +122,31 @@ function InputElement(_ref) {
       }
     };
   }, [checkValidators, onChange, value]);
-  return <_react.Fragment>
-            <_InputStyle.InputElementStyle error={error} length={length} active={active} shadow={shadow} textColor={textColor} id={id} type={type} value={value} placeholder={label} computedWidth={computedWidth} onChange={onChangeValue} onFocus={onFocus} onBlur={onBlurInput} />
-            {type === _config.InputTypes.number ? <_InputStyle.InputNumberIcons>
-                    <_InputStyle.IconWrapper onClick={handleNumberCaret('up')}>
-                        <_Icon.default color={textColor} icon={_Icon.IconList.caretUp} />
-                    </_InputStyle.IconWrapper>
-                    <_InputStyle.IconWrapper onClick={handleNumberCaret('down')}>
-                        <_Icon.default color={textColor} icon={_Icon.IconList.caretDown} />
-                    </_InputStyle.IconWrapper>
-                </_InputStyle.InputNumberIcons> : null}
-        </_react.Fragment>;
+  return /*#__PURE__*/_react.default.createElement(_react.Fragment, null, /*#__PURE__*/_react.default.createElement(_InputStyle.InputElementStyle, {
+    error: error,
+    length: length,
+    active: active,
+    shadow: shadow,
+    textColor: textColor,
+    id: id,
+    type: type,
+    value: value,
+    placeholder: label,
+    computedWidth: computedWidth,
+    onChange: onChangeValue,
+    onFocus: onFocus,
+    onBlur: onBlurInput
+  }), type === _config.InputTypes.number ? /*#__PURE__*/_react.default.createElement(_InputStyle.InputNumberIcons, null, /*#__PURE__*/_react.default.createElement(_InputStyle.IconWrapper, {
+    onClick: handleNumberCaret('up')
+  }, /*#__PURE__*/_react.default.createElement(_Icon.default, {
+    color: textColor,
+    icon: _Icon.IconList.caretUp
+  })), /*#__PURE__*/_react.default.createElement(_InputStyle.IconWrapper, {
+    onClick: handleNumberCaret('down')
+  }, /*#__PURE__*/_react.default.createElement(_Icon.default, {
+    color: textColor,
+    icon: _Icon.IconList.caretDown
+  }))) : null);
 }
 
 function Input(_ref2) {
@@ -194,14 +208,40 @@ function Input(_ref2) {
   }, [onBlur]);
   var inputWrapperRef = (0, _react.useRef)(null);
   var inputElementWidth = (0, _helpers.elaborateComputedWidth)((0, _hooks.useComputedWidth)(inputWrapperRef));
-  return <_InputStyle.InputWrapper ref={inputWrapperRef} length={length} active={active} locked={locked} shadow={shadow} borderColor={borderColor} onClick={setFocusFromDiv}>
-            <_InputStyle.Label htmlFor={id.current} error={error} length={length} // Type date is always "active"
-    active={active || type === _config.InputTypes.date} labelColor={labelColor}>
-                {error && errorMessage || label}
-            </_InputStyle.Label>
-            <InputElement error={error} setError={setError} length={length} // Type date is always "active"
-    active={active || type === _config.InputTypes.date} shadow={shadow} textColor={textColor} label={label} id={id.current} type={type} value={value} onChange={onChangeCb} onFocus={onFocusCb} onBlur={onBlurCb} max={max} min={min} computedWidth={inputElementWidth} />
-        </_InputStyle.InputWrapper>;
+  return /*#__PURE__*/_react.default.createElement(_InputStyle.InputWrapper, {
+    ref: inputWrapperRef,
+    length: length,
+    active: active,
+    locked: locked,
+    shadow: shadow,
+    borderColor: borderColor,
+    onClick: setFocusFromDiv
+  }, /*#__PURE__*/_react.default.createElement(_InputStyle.Label, {
+    htmlFor: id.current,
+    error: error,
+    length: length // Type date is always "active"
+    ,
+    active: active || type === _config.InputTypes.date,
+    labelColor: labelColor
+  }, error && errorMessage || label), /*#__PURE__*/_react.default.createElement(InputElement, {
+    error: error,
+    setError: setError,
+    length: length // Type date is always "active"
+    ,
+    active: active || type === _config.InputTypes.date,
+    shadow: shadow,
+    textColor: textColor,
+    label: label,
+    id: id.current,
+    type: type,
+    value: value,
+    onChange: onChangeCb,
+    onFocus: onFocusCb,
+    onBlur: onBlurCb,
+    max: max,
+    min: min,
+    computedWidth: inputElementWidth
+  }));
 }
 
 var defaultProps = {

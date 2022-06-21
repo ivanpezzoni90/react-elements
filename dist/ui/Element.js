@@ -48,18 +48,20 @@ var Element = function Element(props) {
       _props$className = props.className,
       className = _props$className === void 0 ? '' : _props$className,
       children = props.children;
-  return <ElementWrapper className={(0, _helpers.mergeClasses)('ie-element', className)}>
-            <ElementLabel className="ie-element__label" htmlFor={id}>
-                <FlexWrapper position={labelPosition}>
-                    <LabelTextWrapper className="ie-element__label__text" position={labelPosition}>
-                        {label}
-                    </LabelTextWrapper>
-                    <ChildWrapper className="ie-element__label__child" align={align}>
-                        {children}
-                    </ChildWrapper>
-                </FlexWrapper>
-            </ElementLabel>
-        </ElementWrapper>;
+  return /*#__PURE__*/_react.default.createElement(ElementWrapper, {
+    className: (0, _helpers.mergeClasses)('ie-element', className)
+  }, /*#__PURE__*/_react.default.createElement(ElementLabel, {
+    className: "ie-element__label",
+    htmlFor: id
+  }, /*#__PURE__*/_react.default.createElement(FlexWrapper, {
+    position: labelPosition
+  }, /*#__PURE__*/_react.default.createElement(LabelTextWrapper, {
+    className: "ie-element__label__text",
+    position: labelPosition
+  }, label), /*#__PURE__*/_react.default.createElement(ChildWrapper, {
+    className: "ie-element__label__child",
+    align: align
+  }, children))));
 };
 
 var defaultProps = {

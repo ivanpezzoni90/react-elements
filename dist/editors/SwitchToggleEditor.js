@@ -102,11 +102,9 @@ function SwitchToggleEditor() {
         switchToggleProps = _useEditorInit.props;
 
     var editorJson = getEditor(switchToggleProps);
-    return <_react.Fragment>
-                <_commons.ElementContainer>
-                    <_SwitchToggle.default {...switchToggleProps} />
-                </_commons.ElementContainer>
-                <_EditorBuilder.default json={editorJson} onChange={onChangeProp} />
-            </_react.Fragment>;
+    return /*#__PURE__*/_react.default.createElement(_react.Fragment, null, /*#__PURE__*/_react.default.createElement(_commons.ElementContainer, null, /*#__PURE__*/_react.default.createElement(_SwitchToggle.default, switchToggleProps)), /*#__PURE__*/_react.default.createElement(_EditorBuilder.default, {
+      json: editorJson,
+      onChange: onChangeProp
+    }));
   };
 }

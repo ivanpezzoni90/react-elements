@@ -105,38 +105,48 @@ function Select(props) {
   var dropDownZIndex = (0, _hooks.useComputedZIndex)(selectRef);
   var selectElementWidth = (0, _helpers.elaborateComputedWidth)((0, _hooks.useComputedWidth)(selectRef));
   var currentOptionObject = getOptionFromValue(selectedOption);
-  return <_react.Fragment>
-            <_SelectStyle.SelectWrapper ref={selectRef} hasValue={hasValue} length={length} shadow={shadow} borderColor={borderColor} onClick={toggling}>
-                <_SelectStyle.Label htmlFor={id.current} hasValue={hasValue} labelColor={labelColor} length={length}>
-                    {label}
-                </_SelectStyle.Label>
-                <_SelectStyle.SelectElement length={length} shadow={shadow} computedWidth={selectElementWidth} textColor={textColor}>
-                    {currentOptionObject && currentOptionObject.icon ? <_SelectStyle.ListIcon>
-                            <_Icon.default icon={currentOptionObject.icon} fontSize={_types.IconSize.s} />
-                        </_SelectStyle.ListIcon> : null}
-                    {currentOptionObject && currentOptionObject.label}
-                </_SelectStyle.SelectElement>
-                {isOpen && <_SelectStyle.DropDownListContainer zIndex={dropDownZIndex} length={length}>
-                        <_SelectStyle.DropDownList>
-                            {options.map(function (o) {
-            return <_SelectStyle.ListItem onClick={onOptionClicked(o.value)} key={o.value.toString()} selected={selectedOption === o.value} textColor={textColor} optionSelectedColor={optionSelectedColor}>
-                                    {o.icon ? <_SelectStyle.ListIcon>
-                                            <_Icon.default icon={o.icon} fontSize={_types.IconSize.s} />
-                                        </_SelectStyle.ListIcon> : null}
-                                    
-                                    {o.label}
-                                </_SelectStyle.ListItem>;
-          })}
-                        </_SelectStyle.DropDownList>
-                    </_SelectStyle.DropDownListContainer>}
-                {resettable && <_SelectStyle.ResetWrapper onClick={onSelectReset}>
-                        <_Icon.default icon={_Icon.IconList.outlineClose} fontSize={_types.IconSize.m} />
-                    </_SelectStyle.ResetWrapper>}
-                <_SelectStyle.CaretWrapper>
-                    <_Icon.default icon={_Icon.IconList.caretDown} />
-                </_SelectStyle.CaretWrapper>
-            </_SelectStyle.SelectWrapper>
-        </_react.Fragment>;
+  return /*#__PURE__*/_react.default.createElement(_react.Fragment, null, /*#__PURE__*/_react.default.createElement(_SelectStyle.SelectWrapper, {
+    ref: selectRef,
+    hasValue: hasValue,
+    length: length,
+    shadow: shadow,
+    borderColor: borderColor,
+    onClick: toggling
+  }, /*#__PURE__*/_react.default.createElement(_SelectStyle.Label, {
+    htmlFor: id.current,
+    hasValue: hasValue,
+    labelColor: labelColor,
+    length: length
+  }, label), /*#__PURE__*/_react.default.createElement(_SelectStyle.SelectElement, {
+    length: length,
+    shadow: shadow,
+    computedWidth: selectElementWidth,
+    textColor: textColor
+  }, currentOptionObject && currentOptionObject.icon ? /*#__PURE__*/_react.default.createElement(_SelectStyle.ListIcon, null, /*#__PURE__*/_react.default.createElement(_Icon.default, {
+    icon: currentOptionObject.icon,
+    fontSize: _types.IconSize.s
+  })) : null, currentOptionObject && currentOptionObject.label), isOpen && /*#__PURE__*/_react.default.createElement(_SelectStyle.DropDownListContainer, {
+    zIndex: dropDownZIndex,
+    length: length
+  }, /*#__PURE__*/_react.default.createElement(_SelectStyle.DropDownList, null, options.map(function (o) {
+    return /*#__PURE__*/_react.default.createElement(_SelectStyle.ListItem, {
+      onClick: onOptionClicked(o.value),
+      key: o.value.toString(),
+      selected: selectedOption === o.value,
+      textColor: textColor,
+      optionSelectedColor: optionSelectedColor
+    }, o.icon ? /*#__PURE__*/_react.default.createElement(_SelectStyle.ListIcon, null, /*#__PURE__*/_react.default.createElement(_Icon.default, {
+      icon: o.icon,
+      fontSize: _types.IconSize.s
+    })) : null, o.label);
+  }))), resettable && /*#__PURE__*/_react.default.createElement(_SelectStyle.ResetWrapper, {
+    onClick: onSelectReset
+  }, /*#__PURE__*/_react.default.createElement(_Icon.default, {
+    icon: _Icon.IconList.outlineClose,
+    fontSize: _types.IconSize.m
+  })), /*#__PURE__*/_react.default.createElement(_SelectStyle.CaretWrapper, null, /*#__PURE__*/_react.default.createElement(_Icon.default, {
+    icon: _Icon.IconList.caretDown
+  }))));
 }
 
 var defaultProps = {

@@ -79,10 +79,17 @@ var getElement = function getElement(element) {
   switch (element) {
     case 'checkbox':
     default:
-      return <_Checkbox.CheckboxElement className="" checked={false} onChange={function () {}} />;
+      return /*#__PURE__*/_react.default.createElement(_Checkbox.CheckboxElement, {
+        className: "",
+        checked: false,
+        onChange: function onChange() {}
+      });
 
     case 'switchToggle':
-      return <_SwitchToggle.SwitchToggleElement checked={false} onChange={function () {}} />;
+      return /*#__PURE__*/_react.default.createElement(_SwitchToggle.SwitchToggleElement, {
+        checked: false,
+        onChange: function onChange() {}
+      });
   }
 };
 
@@ -94,13 +101,9 @@ function ElementEditor() {
 
 
     var elementToRender = getElement(elementProps.children);
-    return <_react.Fragment>
-                <_commons.ElementContainer>
-                    <_Element.default {...elementProps}>
-                        {elementToRender}
-                    </_Element.default>
-                </_commons.ElementContainer>
-                <_EditorBuilder.default json={editorJson} onChange={onChangeProp} />
-            </_react.Fragment>;
+    return /*#__PURE__*/_react.default.createElement(_react.Fragment, null, /*#__PURE__*/_react.default.createElement(_commons.ElementContainer, null, /*#__PURE__*/_react.default.createElement(_Element.default, elementProps, elementToRender)), /*#__PURE__*/_react.default.createElement(_EditorBuilder.default, {
+      json: editorJson,
+      onChange: onChangeProp
+    }));
   };
 }

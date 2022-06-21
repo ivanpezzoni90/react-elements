@@ -43,11 +43,9 @@ function IconEditor() {
       icon: _Icon.IconList.check
     });
     var editorJson = getEditor();
-    return <_react.Fragment>
-                <_commons.ElementContainer>
-                    <_Icon.default {...iconProps} />
-                </_commons.ElementContainer>
-                <_EditorBuilder.default json={editorJson} onChange={onChangeProp} />
-            </_react.Fragment>;
+    return /*#__PURE__*/_react.default.createElement(_react.Fragment, null, /*#__PURE__*/_react.default.createElement(_commons.ElementContainer, null, /*#__PURE__*/_react.default.createElement(_Icon.default, iconProps)), /*#__PURE__*/_react.default.createElement(_EditorBuilder.default, {
+      json: editorJson,
+      onChange: onChangeProp
+    }));
   };
 }

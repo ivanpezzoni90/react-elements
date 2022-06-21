@@ -41,10 +41,12 @@ function Icon(_ref) {
       color = _ref.color,
       fontSize = _ref.fontSize;
   var IconComponent = iconMap[icon];
-  return <IconComponent style={{
-    color: color,
-    fontSize: fontSize
-  }} />;
+  return /*#__PURE__*/_react.default.createElement(IconComponent, {
+    style: {
+      color: color,
+      fontSize: fontSize
+    }
+  });
 }
 
 var defaultProps = {

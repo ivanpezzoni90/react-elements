@@ -53,27 +53,61 @@ function Editor(_ref2) {
   };
 
   var editorGroups = (0, _helpers.splitArrayInGroups)(json, 4);
-  return <_commons.EditorContainer>
-            {editorGroups.map(function (group, i) {
-      if (group) {
-        return <EditorRow className="ie__workarea__editor__row" key={"group_".concat(i)}>
-                            {group.map(function (e) {
-            return <EditorElement className="ie__workarea__editor__element" key={"".concat(e.prop, "_").concat(e.label)} group={group.length}>
-                                        {{
-                input: <_Input.default locked={false} value={e.default} type={e.inputType || _config.InputTypes.text} label={e.label} onBlur={function () {}} length={_types.ElementLength.full} onChange={onChangeValue(e.prop)} />,
-                select: <_Select.default options={e.options ? e.options : []} // value={Array.isArray(e.default)
-                //     ? e.default as Array<string>
-                //     : e.default as string
-                // }
-                value={e.default} label={e.label} length={_types.ElementLength.full} onChange={onChangeValue(e.prop)} />,
-                checkbox: <_Checkbox.default className="" checked={e.default} label={e.label} length={_types.ElementLength.full} labelPosition={_types.LabelPositions.vertical} onChange={onChangeValue(e.prop)} />,
-                toggle: <_SwitchToggle.default checked={e.default} label={e.label} color="#666" length={_types.ElementLength.full} labelPosition={_types.LabelPositions.vertical} onChange={onChangeValue(e.prop)} />,
-                color: <_ColorPicker.default value={e.default} label={e.label} length={_types.ElementLength.full} onChange={onChangeValue(e.prop)} />
-              }[e.type]}
-                                    </EditorElement>;
-          })}
-                        </EditorRow>;
-      }
-    })}
-        </_commons.EditorContainer>;
+  return /*#__PURE__*/_react.default.createElement(_commons.EditorContainer, null, editorGroups.map(function (group, i) {
+    if (group) {
+      return /*#__PURE__*/_react.default.createElement(EditorRow, {
+        className: "ie__workarea__editor__row",
+        key: "group_".concat(i)
+      }, group.map(function (e) {
+        return /*#__PURE__*/_react.default.createElement(EditorElement, {
+          className: "ie__workarea__editor__element",
+          key: "".concat(e.prop, "_").concat(e.label),
+          group: group.length
+        }, {
+          input: /*#__PURE__*/_react.default.createElement(_Input.default, {
+            locked: false,
+            value: e.default,
+            type: e.inputType || _config.InputTypes.text,
+            label: e.label,
+            onBlur: function onBlur() {},
+            length: _types.ElementLength.full,
+            onChange: onChangeValue(e.prop)
+          }),
+          select: /*#__PURE__*/_react.default.createElement(_Select.default, {
+            options: e.options ? e.options : [] // value={Array.isArray(e.default)
+            //     ? e.default as Array<string>
+            //     : e.default as string
+            // }
+            ,
+            value: e.default,
+            label: e.label,
+            length: _types.ElementLength.full,
+            onChange: onChangeValue(e.prop)
+          }),
+          checkbox: /*#__PURE__*/_react.default.createElement(_Checkbox.default, {
+            className: "",
+            checked: e.default,
+            label: e.label,
+            length: _types.ElementLength.full,
+            labelPosition: _types.LabelPositions.vertical,
+            onChange: onChangeValue(e.prop)
+          }),
+          toggle: /*#__PURE__*/_react.default.createElement(_SwitchToggle.default, {
+            checked: e.default,
+            label: e.label,
+            color: "#666",
+            length: _types.ElementLength.full,
+            labelPosition: _types.LabelPositions.vertical,
+            onChange: onChangeValue(e.prop)
+          }),
+          color: /*#__PURE__*/_react.default.createElement(_ColorPicker.default, {
+            value: e.default,
+            label: e.label,
+            length: _types.ElementLength.full,
+            onChange: onChangeValue(e.prop)
+          })
+        }[e.type]);
+      }));
+    }
+  }));
 }

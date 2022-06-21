@@ -70,14 +70,26 @@ var Button = function Button(_ref2) {
       iconPosition = _ref2.iconPosition,
       onClick = _ref2.onClick;
   var calculatedIconSize = calculateIconSize(buttonIconSize, fontSize);
-  var IconElement = <_Icon.default icon={icon} color={iconColor} fontSize={calculatedIconSize} />;
-  return <ButtonElement padding={padding} borderRadius={borderRadius} color={color} textColor={textColor} fontSize={fontSize} fontWeight={fontWeight} length={length} disabled={disabled} onClick={onClick}>
-            {icon && iconPosition === _types.IconPosition.left && IconElement}
-            <LabelWrapper length={length}>
-                {label}
-            </LabelWrapper>
-            {icon && iconPosition === _types.IconPosition.right && IconElement}
-        </ButtonElement>;
+
+  var IconElement = /*#__PURE__*/_react.default.createElement(_Icon.default, {
+    icon: icon,
+    color: iconColor,
+    fontSize: calculatedIconSize
+  });
+
+  return /*#__PURE__*/_react.default.createElement(ButtonElement, {
+    padding: padding,
+    borderRadius: borderRadius,
+    color: color,
+    textColor: textColor,
+    fontSize: fontSize,
+    fontWeight: fontWeight,
+    length: length,
+    disabled: disabled,
+    onClick: onClick
+  }, icon && iconPosition === _types.IconPosition.left && IconElement, /*#__PURE__*/_react.default.createElement(LabelWrapper, {
+    length: length
+  }, label), icon && iconPosition === _types.IconPosition.right && IconElement);
 };
 
 Button.defaultProps = {

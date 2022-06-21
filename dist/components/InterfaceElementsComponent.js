@@ -57,16 +57,19 @@ var Component = _styledComponents.default.div(_templateObject4 || (_templateObje
 function IEAside(_ref4) {
   var currentComponentKey = _ref4.currentComponentKey,
       open = _ref4.open,
-      onClick = _ref4.onClick;
-  return <Aside className="ie__aside" open={open}>
-            {_componentsMap.Components.map(function (c) {
-      return <Component active={currentComponentKey === c.key} key={"".concat(c.key, "_").concat(c.name)} onClick={function () {
-        return onClick(c.key);
-      }}>
-                    {c.name}
-                </Component>;
-    })}
-        </Aside>;
+      _onClick = _ref4.onClick;
+  return /*#__PURE__*/_react.default.createElement(Aside, {
+    className: "ie__aside",
+    open: open
+  }, _componentsMap.Components.map(function (c) {
+    return /*#__PURE__*/_react.default.createElement(Component, {
+      active: currentComponentKey === c.key,
+      key: "".concat(c.key, "_").concat(c.name),
+      onClick: function onClick() {
+        return _onClick(c.key);
+      }
+    }, c.name);
+  }));
 }
 
 function IEWorkarea(_ref5) {
@@ -74,10 +77,11 @@ function IEWorkarea(_ref5) {
       getOpen = _ref5.getOpen;
   var currentComponent = (0, _componentsMap.getComponentByKey)(currentComponentKey);
   var Editor = currentComponent === null || currentComponent === void 0 ? void 0 : currentComponent.editor();
-  return <Workarea className="ie__workarea">
-            <_AsideCaret.default getOpen={getOpen} />
-            <Editor />
-        </Workarea>;
+  return /*#__PURE__*/_react.default.createElement(Workarea, {
+    className: "ie__workarea"
+  }, /*#__PURE__*/_react.default.createElement(_AsideCaret.default, {
+    getOpen: getOpen
+  }), /*#__PURE__*/_react.default.createElement(Editor, null));
 }
 
 function IEComponent() {
@@ -99,8 +103,14 @@ function IEComponent() {
     setOpen(open);
   };
 
-  return <Container className="ie">
-            <IEAside currentComponentKey={currentKey} onClick={onClick} open={open} />
-            <IEWorkarea currentComponentKey={currentKey} getOpen={getOpen} />
-        </Container>;
+  return /*#__PURE__*/_react.default.createElement(Container, {
+    className: "ie"
+  }, /*#__PURE__*/_react.default.createElement(IEAside, {
+    currentComponentKey: currentKey,
+    onClick: onClick,
+    open: open
+  }), /*#__PURE__*/_react.default.createElement(IEWorkarea, {
+    currentComponentKey: currentKey,
+    getOpen: getOpen
+  }));
 }
