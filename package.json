@@ -9,9 +9,10 @@
     "component",
     "interface"
   ],
+  "type": "module",
   "private": false,
-  "main": "dist/index.ts",
-  "module": "dist/index.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
   "files": [
     "dist",
     "README.md"
@@ -20,7 +21,7 @@
     "type": "git",
     "url": "git+https://github.com/ivanpezzoni90/react-elements"
   },
-  "version": "1.0.2",
+  "version": "1.0.3",
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
     "@testing-library/jest-dom": "^5.16.2",
@@ -44,7 +45,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "build-dist": "npx babel src --out-dir dist --extensions .ts,.tsx",
+    "build-dist": "npx babel src/lib --out-dir dist --extensions .ts,.tsx",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lintfix": "eslint --fix --ext .js,.jsx,.ts,.tsx ."
