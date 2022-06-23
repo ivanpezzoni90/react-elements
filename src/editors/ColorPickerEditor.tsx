@@ -2,11 +2,11 @@ import React from 'react';
 
 import { Fragment } from 'react';
 import Editor from './EditorBuilder';
-import ColorPicker from '../ui/ColorPicker';
-import { Editor as EditorType, ElementLength, PropsObjectInterface } from '../types';
-import { useEditorInit } from '../hooks';
+import {ColorPicker} from '../lib/ColorPicker';
+import { Editor as EditorType, ElementLength, PropsObjectInterface } from '../lib/types';
+import { useEditorInit } from '../lib/hooks';
 import { alignPositionEditor, ElementContainer, labelPositionEditor, lengthEditor, shadowEditor } from './commons';
-import { allColors } from '../constants/colors';
+import { allColors } from '../lib/constants/colors';
 
 const getEditor = (props: PropsObjectInterface) => {
     const editorJson: EditorType[] = [

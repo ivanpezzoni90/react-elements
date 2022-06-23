@@ -1,10 +1,10 @@
 import React from 'react';
 
 import Editor from './EditorBuilder';
-import { Editor as EditorType } from '../types';
+import { Editor as EditorType } from '../lib/types';
 import { Fragment } from 'react';
-import Icon, { IconList } from '../ui/Icon';
-import { useEditorInit } from '../hooks';
+import { IconList, Icon } from '../lib/Icon';
+import { useEditorInit } from '../lib/hooks';
 import { ElementContainer, iconEditor, iconSizeEditor } from './commons';
 
 const getEditor = () => {

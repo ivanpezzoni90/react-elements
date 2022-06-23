@@ -2,8 +2,8 @@ import React from 'react';
 
 import { useState } from 'react';
 import styled from 'styled-components';
-import { Components, getComponentByKey } from '../constants/componentsMap';
-import { SetStringToStateType } from '../types';
+import { Components, getComponentByKey } from './componentsMap';
+import { SetStringToStateType } from '../lib/types';
 import AsideCaret from './AsideCaret';
 
 const Container = styled.div`

@@ -1,10 +1,10 @@
 import React, { Fragment, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { generateID, mergeClasses } from '../helpers';
-import Element from './Element';
-import { AlignPositions, ElementLength, LabelPositions } from '../types';
-import { ChangeElementValueType, PropsObjectInterface, SetBoolToStateType } from '../types';
-import { allColors } from '../constants/colors';
+import { generateID, mergeClasses } from './helpers';
+import { Element } from './Element';
+import { AlignPositions, ElementLength, LabelPositions } from './types';
+import { ChangeElementValueType, PropsObjectInterface, SetBoolToStateType } from './types';
+import { allColors } from './constants/colors';
 
 const CheckboxContainer = styled.div`
     display: inline-block;
@@ -246,7 +246,5 @@ const defaultProps: PropsObjectInterface = {
 Checkbox.defaultProps = defaultProps;
 CheckboxElement.defaultProps = defaultProps;
 
-export default Checkbox;
-
-export { CheckboxElement };
+export { CheckboxElement, Checkbox };
 export type {CheckboxProps };

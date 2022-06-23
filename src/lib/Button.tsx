@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { allColors } from '../constants/colors';
-import { lightenDarkenColor } from '../helpers';
+import { allColors } from './constants/colors';
+import { lightenDarkenColor } from './helpers';
 import {
     BorderRadius,
     ButtonIconSize,
@@ -11,8 +11,8 @@ import {
     IconPosition,
     Padding,
     PropsObjectInterface
-} from '../types';
-import Icon, { IconList } from './Icon';
+} from './types';
+import { IconList, Icon } from './Icon';
 
 const calculateIconSize = (iconSize: ButtonIconSize, fontSize: ElementSize) => {
     const parsedFontSize = parseInt(fontSize, 10);
@@ -148,4 +148,4 @@ Button.defaultProps = {
     iconPosition: IconPosition.left
 };
 
-export default Button;
+export { Button };

@@ -1,11 +1,11 @@
 import React from 'react';
 import { Fragment, useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { generateID, lightenDarkenColor, mergeClasses, rgbFromHex, round } from '../helpers';
-import Element from './Element';
-import { ElementLength, LabelPositions } from '../types';
-import { ChangeElementValueType, PropsObjectInterface } from '../types';
-import { allColors } from '../constants/colors';
+import { generateID, lightenDarkenColor, mergeClasses, rgbFromHex, round } from './helpers';
+import { Element } from './Element';
+import { ElementLength, LabelPositions } from './types';
+import { ChangeElementValueType, PropsObjectInterface } from './types';
+import { allColors } from './constants/colors';
 
 const SliderContainer = styled.div`
     display: flex;
@@ -65,7 +65,6 @@ const SliderAdvancedLabel = styled.label<LabelProps>`
     overflow: hidden;
 `;
 
-// TODO: REMOVE ANY
 const getSliderCursorStyles = (color: string) => (`
     width: 1em;
     height: 2em;
@@ -313,7 +312,7 @@ function SliderElement({
     const defaultValue = getDefaultValue(valueFromProps, min, steps);
     const [value, setValue] = useState(defaultValue);
 
-    const onSliderChange = useCallback((event) => {
+    const onSliderChange = useCallback((event: any) => {
         const newValue = event.target.value;
         setValue(newValue);
         onChange(newValue);
@@ -475,7 +474,5 @@ const defaultProps: PropsObjectInterface = {
 Slider.defaultProps = defaultProps;
 SliderElement.defaultProps = defaultProps;
 
-export default Slider;
-
-export { SliderElement };
+export { SliderElement, Slider };
 export type { SliderProps };

@@ -1,6 +1,6 @@
 import { ReactChild } from 'react';
-import { IconList } from './ui/Icon';
-import { InputTypes } from './ui/Input/config';
+import { IconList } from './Icon';
+import { InputTypes } from './Input/config';
 
 export type Component = {
     key: string,

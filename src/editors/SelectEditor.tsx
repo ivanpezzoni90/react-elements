@@ -4,10 +4,10 @@ import Editor from './EditorBuilder';
 import { Fragment } from 'react';
 import { colorEditors, ElementContainer, lengthEditor, shadowEditor } from './commons';
 
-import { Editor as EditorType } from '../types';
-import Select from '../ui/Select';
-import { useEditorInit } from '../hooks';
-import { allColors } from '../constants/colors';
+import { Editor as EditorType } from '../lib/types';
+import { Select } from '../lib/Select';
+import { useEditorInit } from '../lib/hooks';
+import { allColors } from '../lib/constants/colors';
 
 const editorJson: EditorType[] = [
     {

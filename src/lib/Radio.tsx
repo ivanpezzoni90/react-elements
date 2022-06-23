@@ -1,14 +1,21 @@
-import React, { Fragment, ReactElement, useEffect, useRef, useState } from 'react';
+import React, { ReactElement, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { generateID, mergeClasses } from '../helpers';
-import Element from './Element';
-import { AlignPositions, BorderRadius, ButtonIconSize, ElementLength, ElementSize, LabelPositions, Option, Positions, RadioTypes } from '../types';
-import { ChangeElementValueType, PropsObjectInterface, SetBoolToStateType } from '../types';
+import { generateID, mergeClasses } from './helpers';
+import {
+    BorderRadius,
+    ButtonIconSize,
+    ElementLength,
+    ElementSize,
+    Option,
+    Positions,
+    RadioTypes
+} from './types';
+import { ChangeElementValueType, PropsObjectInterface } from './types';
 import { CheckboxElement } from './Checkbox';
 import { SwitchToggleElement } from './SwitchToggle';
-import Button from './Button';
+import { Button } from './Button';
 import { IconList } from './Icon';
-import { allColors } from '../constants/colors';
+import { allColors } from './constants/colors';
 
 interface LabelProps {
     htmlFor: string
@@ -207,6 +214,6 @@ const defaultProps: PropsObjectInterface = {
 
 Radio.defaultProps = defaultProps;
 
-export default Radio;
+export { Radio };
 
 export type { RadioProps };

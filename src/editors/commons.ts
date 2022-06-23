@@ -1,8 +1,18 @@
 import styled from 'styled-components';
-import { allColors } from '../constants/colors';
-import { BorderRadius, Editor, ElementLength, ElementSize, FontWeight, IconSize, Option, Padding, Positions } from '../types';
-import { AlignPositions, LabelPositions } from '../types';
-import { IconList } from '../ui/Icon';
+import { allColors } from '../lib/constants/colors';
+import {
+    BorderRadius,
+    Editor,
+    ElementLength,
+    ElementSize,
+    FontWeight,
+    IconSize,
+    Option,
+    Padding,
+    Positions
+} from '../lib/types';
+import { AlignPositions, LabelPositions } from '../lib/types';
+import { IconList } from '../lib/Icon';
 
 export const EditorContainer = styled.div.attrs({
     className: 'ie__workarea__editor'

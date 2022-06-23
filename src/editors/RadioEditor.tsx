@@ -2,13 +2,13 @@ import React from 'react';
 
 import Editor from './EditorBuilder';
 
-import { Editor as EditorType, PropsObjectInterface, RadioTypes } from '../types';
+import { Editor as EditorType, PropsObjectInterface, RadioTypes } from '../lib/types';
 import { Fragment } from 'react';
-import { useEditorInit } from '../hooks';
-import { colorEditors, ElementContainer, lengthEditor, positionEditor, shadowEditor } from './commons';
-import { InputTypes } from '../ui/Input/config';
-import Radio from '../ui/Radio';
-import { IconList } from '../ui/Icon';
+import { useEditorInit } from '../lib/hooks';
+import { ElementContainer, positionEditor } from './commons';
+import { InputTypes } from '../lib/Input/config';
+import { Radio } from '../lib/Radio';
+import { IconList } from '../lib/Icon';
 
 const defaultOptions = [{
     label: 'Option 1',

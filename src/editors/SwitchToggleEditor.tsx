@@ -1,9 +1,9 @@
 import React from 'react';
 import { Fragment } from 'react';
 import Editor from './EditorBuilder';
-import SwitchToggle from '../ui/SwitchToggle';
-import { Editor as EditorType, ElementLength, PropsObjectInterface, ToggleLabelType } from '../types';
-import { useEditorInit } from '../hooks';
+import { SwitchToggle } from '../lib/SwitchToggle';
+import { Editor as EditorType, ElementLength, PropsObjectInterface, ToggleLabelType } from '../lib/types';
+import { useEditorInit } from '../lib/hooks';
 import { alignPositionEditor, ElementContainer, labelPositionEditor, lengthEditor, shadowEditor } from './commons';
 
 const getEditor = (props: PropsObjectInterface) => {

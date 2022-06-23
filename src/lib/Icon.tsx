@@ -4,7 +4,7 @@ import { IoCloseSharp, IoCheckmarkSharp } from 'react-icons/io5';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 
 import { IconType } from 'react-icons/lib';
-import { IconSize, PropsObjectInterface } from '../types';
+import { IconSize, PropsObjectInterface } from './types';
 
 // https://react-icons.github.io/react-icons/icons?name=fa
 
@@ -61,6 +61,4 @@ const defaultProps: PropsObjectInterface = {
 
 Icon.defaultProps = defaultProps;
 
-export default Icon;
-
-export { IconList };
+export { IconList, Icon};

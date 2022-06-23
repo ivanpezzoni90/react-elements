@@ -6,8 +6,8 @@ import {
     darkOrLightColor,
     fontColorFromBackground,
     lightenDarkenColor
-} from '../../helpers';
-import { ElementLength } from '../../types';
+} from '../helpers';
+import { ElementLength } from '../types';
 
 import {
     SelectElementProps,

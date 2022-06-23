@@ -9,7 +9,7 @@ import ButtonEditor from '../editors/ButtonEditor';
 import RadioEditor from '../editors/RadioEditor';
 import SliderEditor from '../editors/SliderEditor';
 
-import { Component } from '../types';
+import { Component } from '../lib/types';
 
 const Components: Component[] = [{
     key: 'input',

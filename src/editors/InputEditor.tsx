@@ -2,12 +2,12 @@ import React from 'react';
 
 import Editor from './EditorBuilder';
 
-import { Editor as EditorType, PropsObjectInterface } from '../types';
+import { Editor as EditorType, PropsObjectInterface } from '../lib/types';
 import { Fragment } from 'react';
-import Input from '../ui/Input';
-import { useEditorInit } from '../hooks';
+import { Input } from '../lib/Input';
+import { useEditorInit } from '../lib/hooks';
 import { colorEditors, ElementContainer, lengthEditor, shadowEditor } from './commons';
-import { InputTypes } from '../ui/Input/config';
+import { InputTypes } from '../lib/Input/config';
 
 const getEditor = (props: PropsObjectInterface) => {
     const editorJson: EditorType[] = [

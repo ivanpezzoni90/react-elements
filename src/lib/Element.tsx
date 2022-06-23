@@ -1,8 +1,8 @@
 import React, { ReactChild } from 'react';
 import styled from 'styled-components';
-import { mergeClasses } from '../helpers';
-import { PropsObjectInterface } from '../types';
-import { AlignPositions, LabelPositions } from '../types';
+import { mergeClasses } from './helpers';
+import { PropsObjectInterface } from './types';
+import { AlignPositions, LabelPositions } from './types';
 
 const ElementLabel = styled.label``;
 const ElementWrapper = styled.div`
@@ -87,6 +87,5 @@ const defaultProps: PropsObjectInterface = {
 
 Element.defaultProps = defaultProps;
 
-export default Element;
-
+export { Element };
 export type { ElementProps };

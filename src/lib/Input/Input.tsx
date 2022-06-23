@@ -1,6 +1,5 @@
-import React, { Fragment } from 'react';
-import { useState, useCallback, useRef, useEffect } from 'react';
-import { elaborateComputedWidth, generateID } from '../../helpers';
+import React, { Fragment, useState, useCallback, useRef, useEffect } from 'react';
+import { elaborateComputedWidth, generateID } from '../helpers';
 import {
     InputWrapper,
     InputElementStyle,
@@ -8,13 +7,12 @@ import {
     InputNumberIcons,
     IconWrapper
 } from './InputStyle';
-import './style.css';
 
 import { CheckValidatorsType, InputProps, InputTypeProps, InputTypes } from './config';
-import { ElementLength, PropsObjectInterface } from '../../types';
-import { allColors } from '../../constants/colors';
-import Icon, { IconList } from '../Icon';
-import { useComputedWidth } from '../../hooks';
+import { ElementLength, PropsObjectInterface } from '../types';
+import { allColors } from '../constants/colors';
+import { IconList, Icon } from '../Icon';
+import { useComputedWidth } from '../hooks';
 
 function InputElement({
     error,
@@ -65,21 +63,21 @@ function InputElement({
         return true;
     }, [max, min, type, setError]);
    
-    const onChangeValue = useCallback((event) => {
+    const onChangeValue = useCallback((event: any) => {
         const newValue = event.target.value;
         if (checkValidators(newValue)) {
             onChange(newValue);
         }
     }, [onChange, checkValidators]);
 
-    const onBlurInput = useCallback((event) => {
+    const onBlurInput = useCallback((event: any) => {
         const newValue = event.target.value;
         if (checkValidators(newValue)) {
             onBlur(newValue);
         }
     }, [onBlur, checkValidators]);
 
-    const handleNumberCaret = useCallback((type) => () => {
+    const handleNumberCaret = useCallback((type: 'up'|'down') => () => {
         const parsedValue = parseFloat(value || '0');
         const newValue = (type === 'up' ? (parsedValue + 1) : (parsedValue - 1)).toString();
 
@@ -162,9 +160,9 @@ function Input({
 
     const id = useRef(generateID());
 
-    const onChangeCb = useCallback((newValue) => {
+    const onChangeCb = useCallback((newValue: string | number) => {
         if (newValue !== '') setActive(true);
-        setValue(newValue);
+        setValue(newValue as string);
         onChange(newValue);
     }, [onChange]);
 
@@ -177,7 +175,7 @@ function Input({
         if (!locked) setActive(true);
     }, [locked]);
    
-    const onBlurCb = useCallback((newValue) => {
+    const onBlurCb = useCallback((newValue: string | number) => {
         if (newValue === '') setActive(false);
         onBlur(newValue);
     }, [onBlur]);

@@ -1,4 +1,4 @@
-import { ChangeElementValueType, ElementLength, PropsObjectInterface } from '../../types';
+import { ChangeElementValueType, ElementLength, PropsObjectInterface } from '../types';
 
 export enum InputTypes {
     text = 'text',

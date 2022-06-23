@@ -1,12 +1,17 @@
 import React, { Fragment, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { fontColorFromBackground, generateID, mergeClasses } from '../helpers';
-import Element from './Element';
-import { AlignPositions, ElementLength, LabelPositions } from '../types';
-import { ChangeElementValueType, PropsObjectInterface } from '../types';
-import { useComputedZIndex } from '../hooks';
-import { ColorObject, palette, getColorNameByHex, allColors } from '../constants/colors';
-import Input from './Input';
+import { fontColorFromBackground, generateID, mergeClasses } from './helpers';
+import { Element } from './Element';
+import {
+    AlignPositions,
+    ElementLength,
+    LabelPositions,
+    ChangeElementValueType,
+    PropsObjectInterface
+} from './types';
+import { useComputedZIndex } from './hooks';
+import { ColorObject, palette, getColorNameByHex, allColors } from './constants/colors';
+import { Input } from './Input';
 
 const ColorPickerContainer = styled.div`
     padding-right: 1em;
@@ -343,7 +348,5 @@ const defaultProps: PropsObjectInterface = {
 
 ColorPicker.defaultProps = defaultProps;
 
-export default ColorPicker;
-
-export { ColorPickerElement };
+export { ColorPickerElement, ColorPicker };
 export type {ColorPickerProps };

@@ -1,12 +1,12 @@
 import React from 'react';
 import { Fragment } from 'react';
 import Editor from './EditorBuilder';
-import Button from '../ui/Button';
-import { ButtonIconSize, Editor as EditorType, IconPosition } from '../types';
-import { useEditorInit } from '../hooks';
+import {Button} from '../lib/Button';
+import { ButtonIconSize, Editor as EditorType, IconPosition } from '../lib/types';
+import { useEditorInit } from '../lib/hooks';
 import { borderRadiusEditor, ElementContainer, fontSizeEditor, fontWeightEditor, iconEditor, lengthEditor } from './commons';
-import { allColors } from '../constants/colors';
-import { IconList } from '../ui/Icon';
+import { allColors } from '../lib/constants/colors';
+import { IconList } from '../lib/Icon';
 
 const getEditor = () => {
     const editorJson: EditorType[] = [

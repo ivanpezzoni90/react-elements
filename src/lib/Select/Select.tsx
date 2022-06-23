@@ -1,9 +1,9 @@
 import React from 'react';
 import { Fragment, useEffect, useRef, useState } from 'react';
-import { elaborateComputedWidth, generateID } from '../../helpers';
-import { IconSize, Option as OptionType, PropsObjectInterface } from '../../types';
-import Icon, {IconList} from '../../ui/Icon';
-import { ElementLength } from '../../types';
+import { elaborateComputedWidth, generateID } from '../helpers';
+import { IconSize, Option as OptionType, PropsObjectInterface } from '../types';
+import { IconList, Icon } from '../Icon';
+import { ElementLength } from '../types';
 import {
     SelectElement,
     SelectWrapper,
@@ -20,8 +20,8 @@ import {
     ListItemClickCallbackType,
     SelectProps,
 } from './config';
-import { useComputedWidth, useComputedZIndex } from '../../hooks';
-import { allColors } from '../../constants/colors';
+import { useComputedWidth, useComputedZIndex } from '../hooks';
+import { allColors } from '../constants/colors';
 
 function Select(props: SelectProps) {
     const {

@@ -1,16 +1,16 @@
 import React from 'react';
 
 import styled from 'styled-components';
-import { ChangeEditorPropType, ChangeElementValueType, Editor as EditorType, ElementLength } from '../types';
-import Checkbox from '../ui/Checkbox';
-import { LabelPositions } from '../types';
-import Input from '../ui/Input';
-import Select from '../ui/Select';
-import SwitchToggle from '../ui/SwitchToggle';
-import ColorPicker from '../ui/ColorPicker';
-import { InputTypes } from '../ui/Input/config';
+import { ChangeEditorPropType, ChangeElementValueType, Editor as EditorType, ElementLength } from '../lib/types';
+import { Checkbox } from '../lib/Checkbox';
+import { LabelPositions } from '../lib/types';
+import { Input } from '../lib/Input';
+import { Select } from '../lib/Select';
+import { SwitchToggle } from '../lib/SwitchToggle';
+import { ColorPicker } from '../lib/ColorPicker';
+import { InputTypes } from '../lib/Input/config';
 import { EditorContainer } from './commons';
-import { splitArrayInGroups } from '../helpers';
+import { splitArrayInGroups } from '../lib/helpers';
 
 interface EditorElementInterface {
     className: string,

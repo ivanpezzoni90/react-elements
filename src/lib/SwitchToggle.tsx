@@ -1,11 +1,18 @@
 import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { generateID, mergeClasses } from '../helpers';
-import { ChangeElementValueType, ElementLength, IconSize, PropsObjectInterface, SetBoolToStateType, ToggleLabelType } from '../types';
-import Element from './Element';
-import { AlignPositions, LabelPositions } from '../types';
-import Icon, {IconList} from '../ui/Icon';
-import { allColors } from '../constants/colors';
+import { generateID, mergeClasses } from './helpers';
+import {
+    ChangeElementValueType,
+    ElementLength, 
+    IconSize,
+    PropsObjectInterface,
+    SetBoolToStateType,
+    ToggleLabelType
+} from './types';
+import { Element } from './Element';
+import { AlignPositions, LabelPositions } from './types';
+import {IconList, Icon} from './Icon';
+import { allColors } from './constants/colors';
 
 interface Slider {
     toggle: boolean,
@@ -339,6 +346,4 @@ const defaultProps: PropsObjectInterface = {
 SwitchToggle.defaultProps = defaultProps;
 SwitchToggleElement.defaultProps = defaultProps;
 
-export default SwitchToggle;
-
-export { SwitchToggleElement };
+export { SwitchToggleElement, SwitchToggle };

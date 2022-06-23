@@ -2,14 +2,14 @@ import React, { ReactChild } from 'react';
 
 import Editor from './EditorBuilder';
 
-import { Editor as EditorType } from '../types';
+import { Editor as EditorType } from '../lib/types';
 import { Fragment } from 'react';
-import Element from '../ui/Element';
-import { LabelPositions, AlignPositions } from '../types';
-import { useEditorInit } from '../hooks';
+import { Element } from '../lib/Element';
+import { LabelPositions, AlignPositions } from '../lib/types';
+import { useEditorInit } from '../lib/hooks';
 import { ElementContainer } from './commons';
-import { CheckboxElement } from '../ui/Checkbox';
-import { SwitchToggleElement } from '../ui/SwitchToggle';
+import { CheckboxElement } from '../lib/Checkbox';
+import { SwitchToggleElement } from '../lib/SwitchToggle';
 
 const editorJson: EditorType[] = [
     {

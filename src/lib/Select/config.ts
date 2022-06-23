@@ -1,4 +1,10 @@
-import { ChangeElementValueType, ElementLength, Option as OptionType, PropsObjectInterface, VoidFunction } from '../../types';
+import {
+    ChangeElementValueType,
+    ElementLength,
+    Option as OptionType,
+    PropsObjectInterface,
+    VoidFunction
+} from '../types';
 
 export type ListItemClickCallbackType = (value: string | number) => () => void;
 

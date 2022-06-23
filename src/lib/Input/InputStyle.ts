@@ -3,15 +3,16 @@ import styled from 'styled-components';
 
 import {
     InputElementProps,
+    InputTypes,
     InputWrapperProps,
     LabelProps,
 } from './config';
 
 import {
     calculateInnerElementLength,
-} from '../../helpers';
-import { allColors } from '../../constants/colors';
-import { ElementLength } from '../../types';
+} from '../helpers';
+import { allColors } from '../constants/colors';
+import { ElementLength } from '../types';
 
 export const InputElementStyle = styled.input<InputElementProps>`
     width: ${(props) => (
@@ -51,6 +52,22 @@ export const InputElementStyle = styled.input<InputElementProps>`
       color: rgba(255, 255, 255, 0.8);
     }
     ${(props) => props.error ? `color: ${allColors['Lava']};` : ''}
+
+    ${({type}) => type === InputTypes.number ? `
+        ::-webkit-inner-spin-button,
+        ::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            margin: 0;
+        }
+    ` : ''}
+    ${({type}) => type === InputTypes.date ? `
+        ::-webkit-calendar-picker-indicator {
+            padding: 0px;
+            margin: 0px;
+        }
+    ` : ''}
 `;
 
 export const InputWrapper = styled.div<InputWrapperProps>`
