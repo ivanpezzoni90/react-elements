@@ -1,4 +1,3 @@
-export { Counter } from './Counter';
 export { Input, InputElement } from './Input';
 export { Select } from './Select';
 export { Button } from './Button';

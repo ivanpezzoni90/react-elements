@@ -14,7 +14,8 @@ export type Editor = {
     label: string,
     options?: Array<Option>,
     inputType?: InputTypes | RadioTypes,
-    prop: string
+    prop: string,
+    resettable?: boolean
 };
 
 export type Option = {

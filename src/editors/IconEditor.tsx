@@ -42,6 +42,8 @@ export default function IconEditor() {
                     />
                 </ElementContainer>
                 <Editor
+                    element="Icon"
+                    defaultProps={Icon.defaultProps}
                     json={editorJson}
                     onChange={onChangeProp}
                 />

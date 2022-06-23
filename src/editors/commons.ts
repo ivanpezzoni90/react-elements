@@ -235,7 +235,8 @@ export const iconEditor: Editor = {
     default: IconList.check,
     label: 'Icon',
     prop: 'icon',
-    options: iconOptions
+    options: iconOptions,
+    resettable: true
 };
 
 const sizeOptions: Option[] = Object.entries(IconSize).map(([k,v]) => ({

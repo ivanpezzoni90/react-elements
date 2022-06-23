@@ -100,6 +100,8 @@ export default function SwitchToggleEditor() {
                     />
                 </ElementContainer>
                 <Editor
+                    element="SwitchToggle"
+                    defaultProps={SwitchToggle.defaultProps}
                     json={editorJson}
                     onChange={onChangeProp}
                 />

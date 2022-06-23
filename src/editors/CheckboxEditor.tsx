@@ -62,6 +62,8 @@ export default function CheckboxEditor() {
                     />
                 </ElementContainer>
                 <Editor
+                    element="Checkbox"
+                    defaultProps={Checkbox.defaultProps}
                     json={editorJson}
                     onChange={onChangeProp}
                 />

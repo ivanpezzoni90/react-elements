@@ -51,6 +51,8 @@ export default function ColorPickerEditor() {
                     />
                 </ElementContainer>
                 <Editor
+                    element="ColorPicker"
+                    defaultProps={ColorPicker.defaultProps}
                     json={editorJson}
                     onChange={onChangeProp}
                 />

@@ -102,6 +102,8 @@ export default function CheckboxEditor() {
                     />
                 </ElementContainer>
                 <Editor
+                    element="Slider"
+                    defaultProps={Slider.defaultProps}
                     json={editorJson}
                     onChange={onChangeProp}
                 />

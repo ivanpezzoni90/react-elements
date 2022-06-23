@@ -109,6 +109,9 @@ export default function ButtonEditor() {
                     />
                 </ElementContainer>
                 <Editor
+                    element="Button"
+                    defaultProps={Button.defaultProps}
+
                     json={editorJson}
                     onChange={onChangeProp}
                 />

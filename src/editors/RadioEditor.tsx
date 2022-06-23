@@ -94,6 +94,8 @@ export default function RadioEditor() {
                     />
                 </ElementContainer>
                 <Editor
+                    element="Radio"
+                    defaultProps={Radio.defaultProps}
                     json={getEditor(radioProps)}
                     onChange={onChangeProp}
                 />

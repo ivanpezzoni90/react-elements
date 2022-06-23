@@ -65,6 +65,8 @@ export default function SelectEditor() {
                     />
                 </ElementContainer>
                 <Editor
+                    element="Select"
+                    defaultProps={Select.defaultProps}
                     json={editorJson}
                     onChange={onChangeProp}
                 />

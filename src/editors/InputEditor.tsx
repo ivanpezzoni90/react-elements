@@ -106,6 +106,8 @@ export default function InputEditor() {
                     />
                 </ElementContainer>
                 <Editor
+                    element="Input"
+                    defaultProps={Input.defaultProps}
                     json={getEditor(inputProps)}
                     onChange={onChangeProp}
                 />
