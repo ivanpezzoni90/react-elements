@@ -56,5 +56,6 @@ export interface SelectProps extends PropsObjectInterface {
     borderColor?: string,
     optionSelectedColor?: string,
     resettable?: boolean,
-    multiple?: boolean
+    multiple?: boolean,
+    className: string
 }

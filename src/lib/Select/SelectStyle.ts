@@ -171,7 +171,7 @@ export const ListIcon = styled.div`
 
 export const SelectChip = styled.div`
     box-sizing: border-box;
-    background-color: ${allColors['Platinum']};
+    background-color: ${({color}) => color};
     border-radius: 5px;
     display: flex;
     align-items: center;
@@ -181,4 +181,16 @@ export const SelectChip = styled.div`
 
 export const ChipText = styled.div`
     padding-right: 0.5em;
+`;
+
+export const ChipsWrapper = styled.div`
+    display: flex;
+`;
+
+export const ChipIconWrapper = styled.div`
+    &:hover {
+        background-color: ${({color}) => color};
+        border-radius: 5px;
+    }
+    border-left: 1px solid ${allColors['Silver Sand']};
 `;

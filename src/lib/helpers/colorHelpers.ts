@@ -35,6 +35,16 @@ export const rgbFromHex: RgbFromHexType = (colorCode) => {
     };
 };
 
+/**
+ * Lighten or darken the given color by a specified amount
+ * 
+ * Use amount positive to lighten color, negative to darken
+ * 
+ * @param {String} colorCode The color to transform
+ * @param {Number} amount Higher (positive) the amount, lighter the result color,
+ * Higher (negative) the amount, darker the result color
+ * @returns {String} The color lighter or darker
+ */
 export function lightenDarkenColor(colorCode: string, amount: number) {
     const code = colorCode.slice(1);
  

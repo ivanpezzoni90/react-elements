@@ -1,6 +1,6 @@
 import React from 'react';
 import { Fragment, useEffect, useRef, useState } from 'react';
-import { elaborateComputedWidth, generateID } from '../helpers';
+import { checkEventTargetContainsClass, elaborateComputedWidth, generateID, lightenDarkenColor, mergeClasses } from '../helpers';
 import { IconSize, Option as OptionType, PropsObjectInterface } from '../types';
 import { IconList, Icon } from '../Icon';
 import { ElementLength } from '../types';
@@ -15,7 +15,9 @@ import {
     ListIcon,
     ResetWrapper,
     SelectChip,
-    ChipText
+    ChipText,
+    ChipsWrapper,
+    ChipIconWrapper
 } from './SelectStyle';
 
 import {
@@ -37,6 +39,7 @@ const isOptionSelected = (value: string | string[], optionValue: string) =>
 function Select(props: SelectProps) {
     const {
         options,
+        className,
         value: valueFromProps,
         label,
         shadow,
@@ -54,8 +57,11 @@ function Select(props: SelectProps) {
 
     const [isOpen, setIsOpen] = useState(false);
     
-    const toggleOpen = () => {
-        setIsOpen(!isOpen);
+    const toggleOpen = (e: any) => {
+        // Exclude event trigger for icon elements
+        if (!checkEventTargetContainsClass(e, 'ie-icon')) {
+            setIsOpen(!isOpen);
+        }
     };
 
     const [selectedOption, setSelectedOption] = useState(valueFromProps);
@@ -126,6 +132,7 @@ function Select(props: SelectProps) {
     return (
         <Fragment>
             <SelectWrapper
+                className={mergeClasses('ie-select', className)}
                 ref={selectRef}
                 hasValue={hasValue}
                 length={length}
@@ -134,6 +141,7 @@ function Select(props: SelectProps) {
                 onClick={toggleOpen}
             >
                 <Label
+                    className="ie-select__label"
                     htmlFor={id.current}
                     hasValue={hasValue}
                     labelColor={labelColor}
@@ -142,27 +150,38 @@ function Select(props: SelectProps) {
                     {label}
                 </Label>
                 <SelectElement
+                    className="ie-select__element"
                     length={length}
                     shadow={shadow}
                     computedWidth={selectElementWidth}
                     multiple={multiple}
                     textColor={textColor}
                 >
-                    {currentOptionsList.map((currentOptionObject: OptionType, i) => {
-                        if (multiple) {
-                            return (
-                                <SelectChip
-                                    key={`${currentOptionObject.label}_${i}`}
-                                >
-                                    {getChip(currentOptionObject)}
-                                    <Icon
-                                        icon={IconList.close}
-                                    />
-                                </SelectChip>
-                            );
-                        }
-                        return getChip(currentOptionObject);
-                    })}
+                    <ChipsWrapper>
+                        {currentOptionsList.map((currentOptionObject: OptionType, i) => {
+                            if (multiple) {
+                                return (
+                                    <SelectChip
+                                        color={optionSelectedColor}
+                                        className="ie-select__element__chip"
+                                        key={`${currentOptionObject.label}_${i}`}
+                                    >
+                                        {getChip(currentOptionObject)}
+                                        <ChipIconWrapper
+                                            color={lightenDarkenColor(optionSelectedColor as string, -30)}
+                                        >
+                                            <Icon
+                                                icon={IconList.close}
+                                                color={textColor}
+                                                onClick={onOptionClicked(currentOptionObject.value as string)}
+                                            />
+                                        </ChipIconWrapper>
+                                    </SelectChip>
+                                );
+                            }
+                            return getChip(currentOptionObject);
+                        })}
+                    </ChipsWrapper>
                 </SelectElement>
                 {resettable &&
                     <ResetWrapper
@@ -201,6 +220,8 @@ function Select(props: SelectProps) {
                             >
                                 {multiple ? (
                                     <CheckboxElement
+                                        color={optionSelectedColor}
+                                        colorOff={textColor}
                                         checked={isOptionSelected(
                                             selectedOption as string | string[],
                                             o.value as string
@@ -212,9 +233,6 @@ function Select(props: SelectProps) {
                                         <Icon
                                             icon={o.icon}
                                             fontSize={IconSize.s}
-                                            onClick={() => {
-                                                onOptionClicked(o.value as string);
-                                            }}
                                         />
                                     </ListIcon>
                                 ): null}
@@ -230,6 +248,7 @@ function Select(props: SelectProps) {
 }
 const defaultProps: PropsObjectInterface = {
     options: [],
+    className: '',
     value: null,
     label: 'Label',
     length: ElementLength.full,
@@ -237,7 +256,7 @@ const defaultProps: PropsObjectInterface = {
     labelColor: allColors['Dim Gray'],
     textColor: allColors['Dim Gray'],
     borderColor: allColors['Dim Gray'],
-    optionSelectedColor: allColors['Quick Silver'],
+    optionSelectedColor: allColors['Platinum'],
     resettable: false,
     multiple: false,
     onChange: () => {}

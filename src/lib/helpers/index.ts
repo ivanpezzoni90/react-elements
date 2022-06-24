@@ -40,4 +40,10 @@ export function round(num: number): number {
     return Math.round((num + Number.EPSILON) * 100) / 100;
 }
 
+export function checkEventTargetContainsClass(e: any, className: string) {
+    return e.target.classList.contains(className)
+        || e.target.parentElement.classList.contains(className)
+        || e.target.parentElement.parentElement.classList.contains(className);
+}
+
 export * from './colorHelpers';

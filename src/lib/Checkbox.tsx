@@ -39,7 +39,7 @@ const StyledCheckbox = styled.div<StyledCheckboxInterface>`
     display: inline-block;
     width: 1.5em;
     height: 1.5em;
-    background: ${({ checked, color, colorOff }) => (checked ? color : colorOff)};
+    background: ${({ checked, color }) => (checked ? color : allColors['White'])};
     border-radius: 3px;
     border: 1px solid #666;
     transition: all 150ms;

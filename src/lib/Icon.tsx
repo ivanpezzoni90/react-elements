@@ -54,7 +54,8 @@ function Icon({
     const IconComponent = iconMap[icon];
     return (
         <IconWrapper
-            onClick={onClick}
+            className='ie-icon'
+            onClick={(onClick)}
         >
             <IconComponent
                 style={{

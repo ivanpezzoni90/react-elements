@@ -25,7 +25,7 @@ const getEditor = (props: PropsObjectInterface) => {
         {
             type: 'color',
             default: allColors['White'],
-            label: 'Off Color',
+            label: 'Icon Color',
             prop: 'colorOff'
         },
         {
