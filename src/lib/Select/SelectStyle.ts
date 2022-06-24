@@ -1,6 +1,7 @@
 /* eslint-disable indent */
 
 import styled from 'styled-components';
+import { allColors } from '../constants/colors';
 import {
     calculateInnerElementLength,
     darkOrLightColor,
@@ -28,7 +29,6 @@ export const SelectElement = styled.div<SelectElementProps>`
     text-align: left;
     height: 1.75em;
     position: relative;
-    padding: 0 1em;
     border: none;
     border-radius: 4px;
     font-family: "Gotham SSm A", "Gotham SSm B", sans-serif;
@@ -56,7 +56,8 @@ export const SelectElement = styled.div<SelectElementProps>`
     :-moz-placeholder {
         color: rgba(255, 255, 255, 0.8);
     }
-    padding: 0.5em 1em 0 1em;
+    padding: 0 1em;
+    ${({multiple}) => multiple ? 'padding-bottom: 0.25em;' : ''}
 `;
 
 export const SelectWrapper = styled.div<SelectWrapperProps>`
@@ -116,15 +117,20 @@ export const ResetWrapper = styled.div`
 
 export const DropDownListContainer = styled('div')<DropDownContainerProps>`
     position: absolute;
-    width: ${props => props.length};
+    width: ${(props) => (
+        props.length === ElementLength.full
+            ? props.computedWidth
+            : props.length
+        )
+    };   
     ${props => props.zIndex ? `z-index: ${props.zIndex}` : ''}
 `;
 
 export const DropDownList = styled('ul')`
-    margin: 3.75em 0 0 0;
+    margin-top: 0;
     padding: 0;
     background-color: #ffffff;
-    box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 4px 20px 0px  rgba(0, 0, 0, 0.2);
     box-sizing: border-box;
     color: #666;
     font-size: 1em;
@@ -134,11 +140,12 @@ export const DropDownList = styled('ul')`
 
 export const ListItem = styled('li')<ListItemProps>`
     display: flex;
+    align-items: center;
     list-style: none;
-    padding: 0.5em 1em 0.5em 1em;
+    padding: ${props => props.multiple ? '0.125em 1em 0.125em 1em' : '0.5em 1em 0.5em 1em'};
     color: ${props => props.textColor};
     &:hover {
-        ${props => !props.selected
+        ${props => !props.selected || props.multiple
             ? `background: ${lightenDarkenColor(
                 // Color
                 props.optionSelectedColor as string,
@@ -151,7 +158,7 @@ export const ListItem = styled('li')<ListItemProps>`
             : ''
         };
     }
-    ${props => props.selected
+    ${props => props.selected && !props.multiple
         ? `background: ${props.optionSelectedColor};
             color: ${fontColorFromBackground(props.optionSelectedColor as string)};`
         : ''
@@ -160,4 +167,18 @@ export const ListItem = styled('li')<ListItemProps>`
 
 export const ListIcon = styled.div`
     padding-right: 0.25em;
+`;
+
+export const SelectChip = styled.div`
+    box-sizing: border-box;
+    background-color: ${allColors['Platinum']};
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    padding: 0.25em;
+    margin-right: 0.5em;
+`;
+
+export const ChipText = styled.div`
+    padding-right: 0.5em;
 `;

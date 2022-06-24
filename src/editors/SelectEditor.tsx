@@ -30,6 +30,12 @@ const editorJson: EditorType[] = [
         label: 'Resettable',
         prop: 'resettable',
         default: false
+    },
+    {
+        type: 'toggle',
+        label: 'Multiple',
+        prop: 'multiple',
+        default: false
     }
 ];
 

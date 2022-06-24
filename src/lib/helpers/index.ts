@@ -24,9 +24,9 @@ export const mergeClasses = (
     return newClass;
 };
 
-export const elaborateComputedWidth = (width: string) => {
+export const elaborateComputedWidth = (width: string, padding = 32) => {
     // Subtract padding in px to parsed computed width
-    const numWidth = parseInt(width, 10) - 32;
+    const numWidth = parseInt(width, 10) - padding;
     return `${numWidth}px`;
 };
 

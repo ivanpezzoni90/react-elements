@@ -129,7 +129,7 @@ export interface PropsObjectInterface {
     className?: string,
     children?: Array<ReactChild> | ReactChild
     options?: Array<Option>,
-    value?: string | boolean | Array<string> | number | null, 
+    value?: string | boolean | number | string[] | number[] | null, 
     label?: string,
     length?: ElementLength,
     simpleElement?: boolean,
@@ -170,6 +170,7 @@ export interface PropsObjectInterface {
     steps?: string[] | number[],
     showValue?: boolean
     showTooltip?: boolean,
-    cursorColor?: string
+    cursorColor?: string,
+    multiple?: boolean
 }
 export type SetPropsToStateType = (props: PropsObjectInterface) => void;

@@ -6,14 +6,15 @@ import {
     VoidFunction
 } from '../types';
 
-export type ListItemClickCallbackType = (value: string | number) => () => void;
+export type ListItemClickCallbackType = (value: string) => () => void;
 
 export interface ListItemProps {
     onClick: VoidFunction,
     key: string
     selected: boolean,
     textColor?: string,
-    optionSelectedColor?: string
+    optionSelectedColor?: string,
+    multiple?: boolean
 }
 
 export interface LabelProps {
@@ -27,10 +28,12 @@ export interface SelectElementProps {
     shadow?: boolean,
     computedWidth: string,
     textColor?: string,
+    multiple?: boolean
 }
 
 export interface DropDownContainerProps {
     length: string,
+    computedWidth: string,
     zIndex: number | null
 }
 export interface SelectWrapperProps{
@@ -43,7 +46,7 @@ export interface SelectWrapperProps{
 
 export interface SelectProps extends PropsObjectInterface {
     options: Array<OptionType>,
-    value: string | number | null,
+    value: string | string[] | null,
     onChange: ChangeElementValueType,
     label?: string,
     shadow?: boolean,
@@ -52,5 +55,6 @@ export interface SelectProps extends PropsObjectInterface {
     textColor?: string,
     borderColor?: string,
     optionSelectedColor?: string,
-    resettable?: boolean
+    resettable?: boolean,
+    multiple?: boolean
 }
