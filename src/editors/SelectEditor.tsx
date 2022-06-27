@@ -2,9 +2,9 @@ import React from 'react';
 
 import Editor from './EditorBuilder';
 import { Fragment } from 'react';
-import { bordersEditor, colorEditors, ElementContainer, lengthEditor, shadowEditor } from './commons';
+import { borderRadiusEditor, bordersEditor, colorEditors, ElementContainer, lengthEditor, shadowEditor } from './commons';
 
-import { Editor as EditorType } from '../lib/types';
+import { BorderRadius, Editor as EditorType } from '../lib/types';
 import { Select } from '../lib/Select';
 import { useEditorInit } from '../lib/hooks';
 import { allColors } from '../lib/constants/colors';
@@ -37,7 +37,9 @@ const editorJson: EditorType[] = [
         prop: 'multiple',
         default: false
     },
-    ...bordersEditor
+    ...bordersEditor,
+    borderRadiusEditor(BorderRadius.no),
+    borderRadiusEditor(BorderRadius.xs, 'Chip Border Radius', 'chipBorderRadius'),
 ];
 
 export default function SelectEditor() {

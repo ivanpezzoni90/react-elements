@@ -173,6 +173,7 @@ export interface PropsObjectInterface {
     cursorColor?: string,
     multiple?: boolean,
     showBorders?: boolean,
-    hideBottomBorder?: boolean
+    hideBottomBorder?: boolean,
+    chipBorderRadius?: BorderRadius
 }
 export type SetPropsToStateType = (props: PropsObjectInterface) => void;

@@ -1,4 +1,4 @@
-import { ChangeElementValueType, ElementLength, PropsObjectInterface } from '../types';
+import { BorderRadius, ChangeElementValueType, ElementLength, PropsObjectInterface } from '../types';
 
 export enum InputTypes {
     text = 'text',
@@ -47,7 +47,8 @@ export interface InputTypeProps {
     min?: number,
     computedWidth: string,
     showBorders?: boolean,
-    hideBottomBorder?: boolean
+    hideBottomBorder?: boolean,
+    borderRadius?: BorderRadius
 }
 
 export interface InputWrapperProps {
@@ -58,7 +59,8 @@ export interface InputWrapperProps {
     shadow?: boolean,
     borderColor?: string,
     showBorders?: boolean,
-    hideBottomBorder?: boolean
+    hideBottomBorder?: boolean,
+    borderRadius?: BorderRadius
 }
 
 export interface LabelProps {

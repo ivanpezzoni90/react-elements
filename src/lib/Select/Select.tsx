@@ -1,7 +1,7 @@
 import React from 'react';
 import { Fragment, useEffect, useRef, useState } from 'react';
 import { checkEventTargetContainsClass, elaborateComputedWidth, generateID, lightenDarkenColor, mergeClasses } from '../helpers';
-import { IconSize, Option as OptionType, PropsObjectInterface } from '../types';
+import { BorderRadius, IconSize, Option as OptionType, PropsObjectInterface } from '../types';
 import { IconList, Icon } from '../Icon';
 import { ElementLength } from '../types';
 import {
@@ -17,7 +17,9 @@ import {
     SelectChip,
     ChipText,
     ChipsWrapper,
-    ChipIconWrapper
+    ChipIconWrapper,
+    RelativeDropDownContainer,
+    SelectContainer
 } from './SelectStyle';
 
 import {
@@ -53,6 +55,8 @@ function Select(props: SelectProps) {
         multiple,
         showBorders,
         hideBottomBorder,
+        borderRadius,
+        chipBorderRadius
     } = props;
 
     const id = useRef(generateID());
@@ -132,7 +136,7 @@ function Select(props: SelectProps) {
     </>);
 
     return (
-        <Fragment>
+        <SelectContainer>
             <SelectWrapper
                 className={mergeClasses('ie-select', className)}
                 ref={selectRef}
@@ -142,6 +146,7 @@ function Select(props: SelectProps) {
                 borderColor={borderColor}
                 showBorders={showBorders}
                 hideBottomBorder={hideBottomBorder}
+                borderRadius={borderRadius}
                 onClick={toggleOpen}
             >
                 <Label
@@ -168,11 +173,13 @@ function Select(props: SelectProps) {
                                     <SelectChip
                                         color={optionSelectedColor}
                                         className="ie-select__element__chip"
+                                        borderRadius={chipBorderRadius}
                                         key={`${currentOptionObject.label}_${i}`}
                                     >
                                         {getChip(currentOptionObject)}
                                         <ChipIconWrapper
                                             color={lightenDarkenColor(optionSelectedColor as string, -30)}
+                                            borderRadius={chipBorderRadius}
                                         >
                                             <Icon
                                                 icon={IconList.close}
@@ -204,50 +211,52 @@ function Select(props: SelectProps) {
                 </CaretWrapper>
             </SelectWrapper>
             {isOpen && (
-                <DropDownListContainer
-                    computedWidth={selectWrapperWidth}
-                    zIndex={dropDownZIndex}
-                    length={length}
-                >
-                    <DropDownList>
-                        {options.map((o: OptionType) => (
-                            <ListItem
-                                onClick={onOptionClicked(o.value as string)}
-                                key={o.value.toString()}
-                                selected={isOptionSelected(
-                                    selectedOption as string | string[],
-                                    o.value as string
-                                )}
-                                textColor={textColor}
-                                optionSelectedColor={optionSelectedColor}
-                                multiple={multiple}
-                            >
-                                {multiple ? (
-                                    <CheckboxElement
-                                        color={optionSelectedColor}
-                                        colorOff={textColor}
-                                        checked={isOptionSelected(
-                                            selectedOption as string | string[],
-                                            o.value as string
-                                        )}
-                                    />
-                                ): null}
-                                {o.icon ? (
-                                    <ListIcon>
-                                        <Icon
-                                            icon={o.icon}
-                                            fontSize={IconSize.s}
+                <RelativeDropDownContainer>
+                    <DropDownListContainer
+                        computedWidth={selectWrapperWidth}
+                        zIndex={dropDownZIndex}
+                        length={length}
+                    >
+                        <DropDownList>
+                            {options.map((o: OptionType) => (
+                                <ListItem
+                                    onClick={onOptionClicked(o.value as string)}
+                                    key={o.value.toString()}
+                                    selected={isOptionSelected(
+                                        selectedOption as string | string[],
+                                        o.value as string
+                                    )}
+                                    textColor={textColor}
+                                    optionSelectedColor={optionSelectedColor}
+                                    multiple={multiple}
+                                >
+                                    {multiple ? (
+                                        <CheckboxElement
+                                            color={optionSelectedColor}
+                                            colorOff={textColor}
+                                            checked={isOptionSelected(
+                                                selectedOption as string | string[],
+                                                o.value as string
+                                            )}
                                         />
-                                    </ListIcon>
-                                ): null}
-                                
-                                {o.label}
-                            </ListItem>
-                        ))}
-                    </DropDownList>
-                </DropDownListContainer>
+                                    ): null}
+                                    {o.icon ? (
+                                        <ListIcon>
+                                            <Icon
+                                                icon={o.icon}
+                                                fontSize={IconSize.s}
+                                            />
+                                        </ListIcon>
+                                    ): null}
+                                    
+                                    {o.label}
+                                </ListItem>
+                            ))}
+                        </DropDownList>
+                    </DropDownListContainer>
+                </RelativeDropDownContainer>
             )}
-        </Fragment>
+        </SelectContainer>
     );
 }
 const defaultProps: PropsObjectInterface = {
@@ -265,6 +274,8 @@ const defaultProps: PropsObjectInterface = {
     multiple: false,
     showBorders: false,
     hideBottomBorder: false,
+    borderRadius: BorderRadius.no,
+    chipBorderRadius: BorderRadius.xs,
     onChange: () => {}
 };
 

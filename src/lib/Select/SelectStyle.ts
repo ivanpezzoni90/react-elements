@@ -8,7 +8,7 @@ import {
     fontColorFromBackground,
     lightenDarkenColor
 } from '../helpers';
-import { ElementLength } from '../types';
+import { BorderRadius, ElementLength } from '../types';
 
 import {
     SelectElementProps,
@@ -17,6 +17,17 @@ import {
     ListItemProps,
     DropDownContainerProps,
 } from './config';
+
+
+export const SelectContainer = styled.div`
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+`;
+
+export const RelativeDropDownContainer = styled.div`
+    position: relative
+`;
 
 export const SelectElement = styled.div<SelectElementProps>`
     width: ${(props) => (
@@ -67,6 +78,7 @@ export const SelectWrapper = styled.div<SelectWrapperProps>`
     height: 3.5em;
     position: relative;
     background-color: rgba(255, 255, 255, 0.3);
+    border-radius: ${props => props.borderRadius};
     ${(props) => props.hideBottomBorder ? '' : `border-bottom: 1px solid ${props.borderColor};`}
     ${(props) => props.showBorders ? `border: 1px solid ${props.borderColor}` : ''};
     transition: 0.3s background-color ease-in-out, 0.3s box-shadow ease-in-out;
@@ -169,10 +181,14 @@ export const ListIcon = styled.div`
     padding-right: 0.25em;
 `;
 
-export const SelectChip = styled.div`
+interface SelectChipInterface {
+    color?: string,
+    borderRadius?: BorderRadius
+}
+export const SelectChip = styled.div<SelectChipInterface>`
     box-sizing: border-box;
     background-color: ${({color}) => color};
-    border-radius: 5px;
+    border-radius: ${({borderRadius}) => borderRadius};
     display: flex;
     align-items: center;
     padding: 0.25em;
@@ -187,10 +203,13 @@ export const ChipsWrapper = styled.div`
     display: flex;
 `;
 
-export const ChipIconWrapper = styled.div`
+interface ChipIconWrapperInterface {
+    borderRadius?: BorderRadius
+}
+export const ChipIconWrapper = styled.div<ChipIconWrapperInterface>`
     &:hover {
         background-color: ${({color}) => color};
-        border-radius: 5px;
+        border-radius: ${({borderRadius}) => borderRadius};
     }
     border-left: 1px solid ${allColors['Silver Sand']};
 `;

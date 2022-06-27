@@ -1,4 +1,5 @@
 import {
+    BorderRadius,
     ChangeElementValueType,
     ElementLength,
     Option as OptionType,
@@ -43,7 +44,8 @@ export interface SelectWrapperProps{
     borderColor?: string,
     showBorders?: boolean,
     hideBottomBorder?: boolean,
-    ref: any
+    ref: any,
+    borderRadius?: BorderRadius
 }
 
 export interface SelectProps extends PropsObjectInterface {
@@ -61,5 +63,7 @@ export interface SelectProps extends PropsObjectInterface {
     multiple?: boolean,
     className: string,
     showBorders?: boolean,
-    hideBottomBorder?: boolean
+    hideBottomBorder?: boolean,
+    borderRadius?: BorderRadius
+    chipBorderRadius?: BorderRadius
 }

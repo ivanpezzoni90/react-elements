@@ -2,11 +2,11 @@ import React from 'react';
 
 import Editor from './EditorBuilder';
 
-import { Editor as EditorType, PropsObjectInterface } from '../lib/types';
+import { BorderRadius, Editor as EditorType, PropsObjectInterface } from '../lib/types';
 import { Fragment } from 'react';
 import { Input } from '../lib/Input';
 import { useEditorInit } from '../lib/hooks';
-import { bordersEditor, colorEditors, ElementContainer, lengthEditor, shadowEditor } from './commons';
+import { borderRadiusEditor, bordersEditor, colorEditors, ElementContainer, lengthEditor, shadowEditor } from './commons';
 import { InputTypes } from '../lib/Input/config';
 
 const getEditor = (props: PropsObjectInterface) => {
@@ -77,7 +77,8 @@ const getEditor = (props: PropsObjectInterface) => {
         lengthEditor(),
         ...colorEditors,
         shadowEditor,
-        ...bordersEditor
+        ...bordersEditor,
+        borderRadiusEditor(BorderRadius.no)
     );
     return editorJson.filter(Boolean);
 };
