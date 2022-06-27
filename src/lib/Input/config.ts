@@ -45,7 +45,9 @@ export interface InputTypeProps {
     onBlur: ChangeInputHandlerType,
     max?: number,
     min?: number,
-    computedWidth: string
+    computedWidth: string,
+    showBorders?: boolean,
+    hideBottomBorder?: boolean
 }
 
 export interface InputWrapperProps {
@@ -54,7 +56,9 @@ export interface InputWrapperProps {
     active: boolean
     locked: boolean,
     shadow?: boolean,
-    borderColor?: string
+    borderColor?: string,
+    showBorders?: boolean,
+    hideBottomBorder?: boolean
 }
 
 export interface LabelProps {

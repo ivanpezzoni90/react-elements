@@ -79,7 +79,8 @@ export const InputWrapper = styled.div<InputWrapperProps>`
     position: relative;
     background-color: rgba(255, 255, 255, 0.3);
     border: none;
-    border-bottom: 1px solid ${props => props.borderColor};
+    ${(props) => props.hideBottomBorder ? '' : `border-bottom: 1px solid ${props.borderColor};`}
+    ${(props) => props.showBorders ? `border: 1px solid ${props.borderColor}` : ''};
     transition: 0.3s background-color ease-in-out, 0.3s box-shadow ease-in-out;
     ${props => props.locked ? 'pointer-events: none;' : ''}
     ${props => props.active && props.shadow

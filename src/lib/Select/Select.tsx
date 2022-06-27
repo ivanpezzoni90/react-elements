@@ -50,7 +50,9 @@ function Select(props: SelectProps) {
         borderColor,
         optionSelectedColor,
         resettable,
-        multiple
+        multiple,
+        showBorders,
+        hideBottomBorder,
     } = props;
 
     const id = useRef(generateID());
@@ -138,6 +140,8 @@ function Select(props: SelectProps) {
                 length={length}
                 shadow={shadow}
                 borderColor={borderColor}
+                showBorders={showBorders}
+                hideBottomBorder={hideBottomBorder}
                 onClick={toggleOpen}
             >
                 <Label
@@ -255,10 +259,12 @@ const defaultProps: PropsObjectInterface = {
     shadow: true,
     labelColor: allColors['Dim Gray'],
     textColor: allColors['Dim Gray'],
-    borderColor: allColors['Dim Gray'],
+    borderColor: allColors['Silver Sand'],
     optionSelectedColor: allColors['Platinum'],
     resettable: false,
     multiple: false,
+    showBorders: false,
+    hideBottomBorder: false,
     onChange: () => {}
 };
 

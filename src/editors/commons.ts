@@ -251,3 +251,18 @@ export const iconSizeEditor: Editor = {
     prop: 'fontSize',
     options: sizeOptions
 };
+
+export const bordersEditor: Editor[] = [
+    {
+        label: 'Show all borders',
+        type: 'toggle',
+        default: false,
+        prop: 'showBorders'
+    },
+    {
+        label: 'Hide bottom border',
+        type: 'toggle',
+        default: false,
+        prop: 'hideBottomBorder'
+    }
+]

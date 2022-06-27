@@ -41,6 +41,8 @@ export interface SelectWrapperProps{
     length: string,
     shadow?: boolean,
     borderColor?: string,
+    showBorders?: boolean,
+    hideBottomBorder?: boolean,
     ref: any
 }
 
@@ -57,5 +59,7 @@ export interface SelectProps extends PropsObjectInterface {
     optionSelectedColor?: string,
     resettable?: boolean,
     multiple?: boolean,
-    className: string
+    className: string,
+    showBorders?: boolean,
+    hideBottomBorder?: boolean
 }
