@@ -6,7 +6,7 @@ import { Editor as EditorType, PropsObjectInterface } from '../lib/types';
 import { Fragment } from 'react';
 import { Input } from '../lib/Input';
 import { useEditorInit } from '../lib/hooks';
-import { colorEditors, ElementContainer, lengthEditor, shadowEditor } from './commons';
+import { bordersEditor, colorEditors, ElementContainer, lengthEditor, shadowEditor } from './commons';
 import { InputTypes } from '../lib/Input/config';
 
 const getEditor = (props: PropsObjectInterface) => {
@@ -76,7 +76,8 @@ const getEditor = (props: PropsObjectInterface) => {
     editorJson.push(
         lengthEditor(),
         ...colorEditors,
-        shadowEditor
+        shadowEditor,
+        ...bordersEditor
     );
     return editorJson.filter(Boolean);
 };

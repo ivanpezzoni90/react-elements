@@ -171,6 +171,8 @@ export interface PropsObjectInterface {
     showValue?: boolean
     showTooltip?: boolean,
     cursorColor?: string,
-    multiple?: boolean
+    multiple?: boolean,
+    showBorders?: boolean,
+    hideBottomBorder?: boolean
 }
 export type SetPropsToStateType = (props: PropsObjectInterface) => void;

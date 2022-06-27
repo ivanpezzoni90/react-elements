@@ -2,7 +2,7 @@ import React from 'react';
 
 import Editor from './EditorBuilder';
 import { Fragment } from 'react';
-import { colorEditors, ElementContainer, lengthEditor, shadowEditor } from './commons';
+import { bordersEditor, colorEditors, ElementContainer, lengthEditor, shadowEditor } from './commons';
 
 import { Editor as EditorType } from '../lib/types';
 import { Select } from '../lib/Select';
@@ -36,7 +36,8 @@ const editorJson: EditorType[] = [
         label: 'Multiple',
         prop: 'multiple',
         default: false
-    }
+    },
+    ...bordersEditor
 ];
 
 export default function SelectEditor() {
