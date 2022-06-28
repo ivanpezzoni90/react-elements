@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 
 import styled from 'styled-components';
 import { ChangeEditorPropType, ChangeElementValueType, Editor as EditorType, ElementLength } from '../lib/types';
@@ -68,17 +68,20 @@ export default function Editor({
     element?: string,
     defaultProps?: any
 }) {
-    const changedProps = useRef(defaultChangedProps);
+    const [changedProps, setChangedProps] = useState(defaultChangedProps);
+
     const onChangeValue: ChangeEditorValueType = (prop) => {
         const innerOnChange: ChangeElementValueType = (newValue) => {
             onChange(prop, newValue);
             // Update changedProps obj
-            changedProps.current[prop] = newValue;
+            setChangedProps(Object.assign({}, changedProps, {
+                [prop]: newValue
+            }));
         };
         return innerOnChange;
     };
 
-    const outputJsx = buildOutputJsx(changedProps.current, element, defaultProps);
+    const outputJsx = buildOutputJsx(changedProps, element, defaultProps);
     const editorGroups = splitArrayInGroups<EditorType>(json, 4);
 
     return (
@@ -109,11 +112,10 @@ export default function Editor({
                                                     onChange={onChangeValue(e.prop)} />),
                                                 select: (<Select
                                                     options={e.options ? e.options : []}
-                                                    // value={Array.isArray(e.default)
-                                                    //     ? e.default as Array<string>
-                                                    //     : e.default as string
-                                                    // }
-                                                    value={e.default as string}
+                                                    value={Array.isArray(e.default)
+                                                        ? e.default as Array<string>
+                                                        : e.default as string
+                                                    }
                                                     label={e.label}
                                                     length={ElementLength.full}
                                                     resettable={e.resettable}

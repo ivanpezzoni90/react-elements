@@ -70,6 +70,11 @@ const getEditor = (props: PropsObjectInterface) => {
         label: 'Show step values',
         prop: 'showStepValue',
         default: false
+    }, {
+        type: 'toggle',
+        label: 'Show steps',
+        prop: 'showSteps',
+        default: true
     });
 
     if (props.simpleElement) {
