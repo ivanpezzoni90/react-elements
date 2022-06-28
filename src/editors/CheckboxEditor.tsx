@@ -3,9 +3,9 @@ import React from 'react';
 import { Fragment } from 'react';
 import Editor from './EditorBuilder';
 import {Checkbox} from '../lib/Checkbox';
-import { Editor as EditorType, ElementLength, PropsObjectInterface } from '../lib/types';
+import { BorderRadius, Editor as EditorType, ElementLength, PropsObjectInterface } from '../lib/types';
 import { useEditorInit } from '../lib/hooks';
-import { alignPositionEditor, ElementContainer, labelPositionEditor, lengthEditor, shadowEditor } from './commons';
+import { alignPositionEditor, borderRadiusEditor, bordersEditor, ElementContainer, labelPositionEditor, lengthEditor, shadowEditor } from './commons';
 import { allColors } from '../lib/constants/colors';
 
 const getEditor = (props: PropsObjectInterface) => {
@@ -25,7 +25,7 @@ const getEditor = (props: PropsObjectInterface) => {
         {
             type: 'color',
             default: allColors['White'],
-            label: 'Off Color',
+            label: 'Icon Color',
             prop: 'colorOff'
         },
         {
@@ -40,7 +40,17 @@ const getEditor = (props: PropsObjectInterface) => {
     if (props.simpleElement) {
         editorJson.push(labelPositionEditor, alignPositionEditor);
     } else {
-        editorJson.push(shadowEditor);
+        editorJson.push(
+            shadowEditor,
+            {
+                type: 'color',
+                label: 'Border Color',
+                prop: 'borderColor',
+                default: allColors['Silver Sand']
+            },
+            ...bordersEditor,
+            borderRadiusEditor(BorderRadius.no)
+        );
     }
     return editorJson;
 };

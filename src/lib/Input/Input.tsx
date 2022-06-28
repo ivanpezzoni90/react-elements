@@ -9,7 +9,7 @@ import {
 } from './InputStyle';
 
 import { CheckValidatorsType, InputProps, InputTypeProps, InputTypes } from './config';
-import { ElementLength, PropsObjectInterface } from '../types';
+import { BorderRadius, ElementLength, PropsObjectInterface } from '../types';
 import { allColors } from '../constants/colors';
 import { IconList, Icon } from '../Icon';
 import { useComputedWidth } from '../hooks';
@@ -143,7 +143,10 @@ function Input({
     borderColor,
     max,
     min,
-    type
+    type,
+    showBorders,
+    hideBottomBorder,
+    borderRadius
 }: InputProps) {
     // active = focused or with value
     const [active, setActive] = useState(activeFromProps || (valueFromProps !== ''));
@@ -193,6 +196,9 @@ function Input({
             locked={locked}
             shadow={shadow}
             borderColor={borderColor}
+            showBorders={showBorders}
+            hideBottomBorder={hideBottomBorder}
+            borderRadius={borderRadius}
             onClick={setFocusFromDiv}
         >
             <Label
@@ -241,10 +247,13 @@ const defaultProps: PropsObjectInterface = {
     active: undefined,
     labelColor: allColors['Dim Gray'],
     textColor: allColors['Dim Gray'],
-    borderColor: allColors['Dim Gray'],
+    borderColor: allColors['Silver Sand'],
     min: undefined,
     max: undefined,
-    type: InputTypes.text
+    type: InputTypes.text,
+    showBorders: false,
+    hideBottomBorder: false,
+    borderRadius: BorderRadius.no,
 };
 
 Input.defaultProps = defaultProps;

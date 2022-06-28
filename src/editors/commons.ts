@@ -98,7 +98,7 @@ export const colorEditors: Editor[] = [
         type: 'color',
         label: 'Border Color',
         prop: 'borderColor',
-        default: allColors['Dim Gray']
+        default: allColors['Silver Sand']
     },
 ];
 
@@ -165,11 +165,18 @@ export const fontWeightEditor: Editor = {
     }]
 };
 
-export const borderRadiusEditor: Editor = {
-    label: 'Border Radius',
+type borderRadiusEditorType = (
+    _default: BorderRadius,
+    label?: string,
+    prop?: string
+) => Editor
+
+export const borderRadiusEditor: borderRadiusEditorType =
+(_default: BorderRadius, label = 'Border Radius', prop = 'borderRadius') => ({
+    label,
     type: 'select',
-    default: BorderRadius.s,
-    prop: 'borderRadius',
+    default: _default,
+    prop,
     options: [{
         label: 'No',
         value: BorderRadius.no
@@ -192,7 +199,7 @@ export const borderRadiusEditor: Editor = {
         label: 'XXL',
         value: BorderRadius.xxl
     }]
-};
+} as Editor);
 
 export const fontSizeEditor: Editor = {
     label: 'Element Size',
@@ -251,3 +258,18 @@ export const iconSizeEditor: Editor = {
     prop: 'fontSize',
     options: sizeOptions
 };
+
+export const bordersEditor: Editor[] = [
+    {
+        label: 'Show all borders',
+        type: 'toggle',
+        default: false,
+        prop: 'showBorders'
+    },
+    {
+        label: 'Hide bottom border',
+        type: 'toggle',
+        default: false,
+        prop: 'hideBottomBorder'
+    }
+]

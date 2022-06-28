@@ -2,6 +2,7 @@ import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react
 import styled from 'styled-components';
 import { generateID, mergeClasses } from './helpers';
 import {
+    BorderRadius,
     ChangeElementValueType,
     ElementLength, 
     IconSize,
@@ -86,7 +87,11 @@ const Switch = styled.label<Switch>`
 
 interface SwitchToggleAdvancedWrapperInterface {
     length: ElementLength,
-    shadow?: boolean
+    shadow?: boolean,
+    borderColor?: string,
+    showBorders?: boolean,
+    hideBottomBorder?: boolean,
+    borderRadius?: BorderRadius
 }
 const SwitchToggleAdvancedWrapper = styled.div<SwitchToggleAdvancedWrapperInterface>`
     display: flex;
@@ -96,8 +101,9 @@ const SwitchToggleAdvancedWrapper = styled.div<SwitchToggleAdvancedWrapperInterf
     height: 3.5em;
     position: relative;
     background-color: rgba(255, 255, 255, 0.3);
-    border: none;
-    border-bottom: 1px solid #666;
+    border-radius: ${props => props.borderRadius};
+    ${(props) => props.hideBottomBorder ? '' : `border-bottom: 1px solid ${props.borderColor};`}
+    ${(props) => props.showBorders ? `border: 1px solid ${props.borderColor}` : ''};
     transition: 0.3s background-color ease-in-out, 0.3s box-shadow ease-in-out;
     background-color: #ffffff;
     ${({shadow}) => shadow ? 'box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2);' : ''}
@@ -164,6 +170,10 @@ interface SwitchToggleProps extends PropsObjectInterface {
     iconColor?: string,
     iconOffColor?: string,
     length: ElementLength,
+    borderColor?: string,
+    showBorders?: boolean,
+    hideBottomBorder?: boolean,
+    borderRadius?: BorderRadius
 }
 
 function SwitchToggleElement({
@@ -267,6 +277,10 @@ const SwitchToggle = (props: SwitchToggleProps) => {
         labelOff,
         shadow,
         length,
+        borderColor,
+        showBorders,
+        hideBottomBorder,
+        borderRadius,
         onChange
     } = props;
 
@@ -299,6 +313,10 @@ const SwitchToggle = (props: SwitchToggleProps) => {
                 <SwitchToggleAdvancedWrapper
                     shadow={shadow}
                     length={length}
+                    borderColor={borderColor}
+                    showBorders={showBorders}
+                    hideBottomBorder={hideBottomBorder}
+                    borderRadius={borderRadius}
                     className={mergeClasses('ie-radio', className)}
                 >
                     <SwitchToggleAdvancedLabel
@@ -340,6 +358,10 @@ const defaultProps: PropsObjectInterface = {
     shadow: true,
     labelType: ToggleLabelType.label,
     length: ElementLength.m,
+    borderColor: allColors['Silver Sand'],
+    showBorders: false,
+    hideBottomBorder: false,
+    borderRadius: BorderRadius.no,
     onChange: () => {}
 };
 

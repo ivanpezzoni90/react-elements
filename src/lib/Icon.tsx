@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 import { FaCaretDown, FaCaretUp, FaCaretLeft, FaCaretRight } from 'react-icons/fa';
 import { IoCloseSharp, IoCheckmarkSharp } from 'react-icons/io5';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
@@ -7,6 +8,12 @@ import { IconType } from 'react-icons/lib';
 import { IconSize, PropsObjectInterface } from './types';
 
 // https://react-icons.github.io/react-icons/icons?name=fa
+
+const IconWrapper = styled.div`
+    align-items: center;
+    justify-content: center;
+    display: flex;
+`;
 
 interface IconInterface {
     [key: string]: IconType
@@ -34,22 +41,29 @@ const iconMap: IconInterface = {
 interface IconProps extends PropsObjectInterface {
     icon: IconList | string,
     color?: string,
-    fontSize?: IconSize | string
+    fontSize?: IconSize | string,
+    onClick?: () => void
 }
 
 function Icon({
     icon,
     color,
     fontSize,
+    onClick
 }: IconProps) {
     const IconComponent = iconMap[icon];
     return (
-        <IconComponent
-            style={{
-                color,
-                fontSize
-            }} 
-        />
+        <IconWrapper
+            className='ie-icon'
+            onClick={(onClick)}
+        >
+            <IconComponent
+                style={{
+                    color,
+                    fontSize
+                }} 
+            />
+        </IconWrapper>
     );
 }
 

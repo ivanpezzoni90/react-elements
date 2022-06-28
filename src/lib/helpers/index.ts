@@ -24,9 +24,9 @@ export const mergeClasses = (
     return newClass;
 };
 
-export const elaborateComputedWidth = (width: string) => {
+export const elaborateComputedWidth = (width: string, padding = 32) => {
     // Subtract padding in px to parsed computed width
-    const numWidth = parseInt(width, 10) - 32;
+    const numWidth = parseInt(width, 10) - padding;
     return `${numWidth}px`;
 };
 
@@ -38,6 +38,12 @@ export function splitArrayInGroups<T> (a: T[], size: number) {
 
 export function round(num: number): number {
     return Math.round((num + Number.EPSILON) * 100) / 100;
+}
+
+export function checkEventTargetContainsClass(e: any, className: string) {
+    return e.target.classList.contains(className)
+        || e.target.parentElement.classList.contains(className)
+        || e.target.parentElement.parentElement.classList.contains(className);
 }
 
 export * from './colorHelpers';

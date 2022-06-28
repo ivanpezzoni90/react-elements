@@ -2,9 +2,9 @@ import React from 'react';
 
 import Editor from './EditorBuilder';
 import { Fragment } from 'react';
-import { colorEditors, ElementContainer, lengthEditor, shadowEditor } from './commons';
+import { borderRadiusEditor, bordersEditor, colorEditors, ElementContainer, lengthEditor, shadowEditor } from './commons';
 
-import { Editor as EditorType } from '../lib/types';
+import { BorderRadius, Editor as EditorType } from '../lib/types';
 import { Select } from '../lib/Select';
 import { useEditorInit } from '../lib/hooks';
 import { allColors } from '../lib/constants/colors';
@@ -30,7 +30,16 @@ const editorJson: EditorType[] = [
         label: 'Resettable',
         prop: 'resettable',
         default: false
-    }
+    },
+    {
+        type: 'toggle',
+        label: 'Multiple',
+        prop: 'multiple',
+        default: false
+    },
+    ...bordersEditor,
+    borderRadiusEditor(BorderRadius.no),
+    borderRadiusEditor(BorderRadius.xs, 'Chip Border Radius', 'chipBorderRadius'),
 ];
 
 export default function SelectEditor() {

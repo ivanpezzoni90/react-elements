@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { generateID, mergeClasses } from './helpers';
 import { Element } from './Element';
-import { AlignPositions, ElementLength, LabelPositions } from './types';
+import { AlignPositions, BorderRadius, ElementLength, LabelPositions } from './types';
 import { ChangeElementValueType, PropsObjectInterface, SetBoolToStateType } from './types';
 import { allColors } from './constants/colors';
 
@@ -39,7 +39,7 @@ const StyledCheckbox = styled.div<StyledCheckboxInterface>`
     display: inline-block;
     width: 1.5em;
     height: 1.5em;
-    background: ${({ checked, color, colorOff }) => (checked ? color : colorOff)};
+    background: ${({ checked, color }) => (checked ? color : allColors['White'])};
     border-radius: 3px;
     border: 1px solid #666;
     transition: all 150ms;
@@ -56,6 +56,10 @@ const StyledCheckbox = styled.div<StyledCheckboxInterface>`
 interface CheckboxAdvancedWrapperInterface {
     length: ElementLength,
     shadow?: boolean
+    borderColor?: string,
+    showBorders?: boolean,
+    hideBottomBorder?: boolean,
+    borderRadius?: BorderRadius
 }
 
 const CheckboxAdvancedWrapper = styled.div<CheckboxAdvancedWrapperInterface>`
@@ -66,8 +70,9 @@ const CheckboxAdvancedWrapper = styled.div<CheckboxAdvancedWrapperInterface>`
     height: 3.5em;
     position: relative;
     background-color: rgba(255, 255, 255, 0.3);
-    border: none;
-    border-bottom: 1px solid #666;
+    border-radius: ${props => props.borderRadius};
+    ${(props) => props.hideBottomBorder ? '' : `border-bottom: 1px solid ${props.borderColor};`}
+    ${(props) => props.showBorders ? `border: 1px solid ${props.borderColor}` : ''};
     transition: 0.3s background-color ease-in-out, 0.3s box-shadow ease-in-out;
     background-color: #ffffff;
     ${({shadow}) => shadow ? 'box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2);' : ''}
@@ -115,6 +120,10 @@ interface CheckboxProps extends PropsObjectInterface{
     align?: AlignPositions,
     shadow?: boolean,
     length: ElementLength,
+    borderColor?: string,
+    showBorders?: boolean,
+    hideBottomBorder?: boolean,
+    borderRadius?: BorderRadius
     onChange: ChangeElementValueType
 }
 
@@ -184,6 +193,10 @@ function Checkbox(props: CheckboxProps) {
         length,
         color,
         colorOff,
+        borderColor,
+        showBorders,
+        hideBottomBorder,
+        borderRadius,
         onChange
     } = props;
 
@@ -210,6 +223,10 @@ function Checkbox(props: CheckboxProps) {
                 <CheckboxAdvancedWrapper
                     shadow={shadow}
                     length={length}
+                    borderColor={borderColor}
+                    showBorders={showBorders}
+                    hideBottomBorder={hideBottomBorder}
+                    borderRadius={borderRadius}
                 >
                     <CheckboxAdvancedLabel
                         htmlFor={id.current}
@@ -240,6 +257,10 @@ const defaultProps: PropsObjectInterface = {
     shadow: true,
     labelPosition: LabelPositions.horizontal,
     length: ElementLength.m,
+    borderColor: allColors['Silver Sand'],
+    showBorders: false,
+    hideBottomBorder: false,
+    borderRadius: BorderRadius.no,
     onChange: () => {}
 };
 

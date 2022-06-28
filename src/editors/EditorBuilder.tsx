@@ -40,8 +40,17 @@ const buildOutputJsx = (
     let p = `<${element}>`;
     Object.entries(changedProps).forEach(([k,v]) => {
         if (defaultProps[k] !== v && v !== null) {
+            let value;
+            // Convert true and false values to JSX syntax
+            if (v === true) {
+                value = '';
+            } else if (v === false) {
+                value = '={false}';
+            } else {
+                value = `="${v}"`;
+            }
             p = `${p}
-            ${k}="${v}"`;
+            ${k}${value}`;
         }
     });
     return `${p}

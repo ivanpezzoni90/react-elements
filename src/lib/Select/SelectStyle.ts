@@ -1,13 +1,14 @@
 /* eslint-disable indent */
 
 import styled from 'styled-components';
+import { allColors } from '../constants/colors';
 import {
     calculateInnerElementLength,
     darkOrLightColor,
     fontColorFromBackground,
     lightenDarkenColor
 } from '../helpers';
-import { ElementLength } from '../types';
+import { BorderRadius, ElementLength } from '../types';
 
 import {
     SelectElementProps,
@@ -16,6 +17,17 @@ import {
     ListItemProps,
     DropDownContainerProps,
 } from './config';
+
+
+export const SelectContainer = styled.div`
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+`;
+
+export const RelativeDropDownContainer = styled.div`
+    position: relative
+`;
 
 export const SelectElement = styled.div<SelectElementProps>`
     width: ${(props) => (
@@ -28,7 +40,6 @@ export const SelectElement = styled.div<SelectElementProps>`
     text-align: left;
     height: 1.75em;
     position: relative;
-    padding: 0 1em;
     border: none;
     border-radius: 4px;
     font-family: "Gotham SSm A", "Gotham SSm B", sans-serif;
@@ -56,7 +67,8 @@ export const SelectElement = styled.div<SelectElementProps>`
     :-moz-placeholder {
         color: rgba(255, 255, 255, 0.8);
     }
-    padding: 0.5em 1em 0 1em;
+    padding: 0 1em;
+    ${({multiple}) => multiple ? 'padding-bottom: 0.25em;' : ''}
 `;
 
 export const SelectWrapper = styled.div<SelectWrapperProps>`
@@ -66,8 +78,9 @@ export const SelectWrapper = styled.div<SelectWrapperProps>`
     height: 3.5em;
     position: relative;
     background-color: rgba(255, 255, 255, 0.3);
-    border: none;
-    border-bottom: 1px solid ${props => props.borderColor};
+    border-radius: ${props => props.borderRadius};
+    ${(props) => props.hideBottomBorder ? '' : `border-bottom: 1px solid ${props.borderColor};`}
+    ${(props) => props.showBorders ? `border: 1px solid ${props.borderColor}` : ''};
     transition: 0.3s background-color ease-in-out, 0.3s box-shadow ease-in-out;
     ${props => props.hasValue && props.shadow
         ? `background-color: #ffffff;
@@ -116,15 +129,20 @@ export const ResetWrapper = styled.div`
 
 export const DropDownListContainer = styled('div')<DropDownContainerProps>`
     position: absolute;
-    width: ${props => props.length};
+    width: ${(props) => (
+        props.length === ElementLength.full
+            ? props.computedWidth
+            : props.length
+        )
+    };   
     ${props => props.zIndex ? `z-index: ${props.zIndex}` : ''}
 `;
 
 export const DropDownList = styled('ul')`
-    margin: 3.75em 0 0 0;
+    margin-top: 0;
     padding: 0;
     background-color: #ffffff;
-    box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 4px 20px 0px  rgba(0, 0, 0, 0.2);
     box-sizing: border-box;
     color: #666;
     font-size: 1em;
@@ -134,11 +152,12 @@ export const DropDownList = styled('ul')`
 
 export const ListItem = styled('li')<ListItemProps>`
     display: flex;
+    align-items: center;
     list-style: none;
-    padding: 0.5em 1em 0.5em 1em;
+    padding: ${props => props.multiple ? '0.125em 1em 0.125em 1em' : '0.5em 1em 0.5em 1em'};
     color: ${props => props.textColor};
     &:hover {
-        ${props => !props.selected
+        ${props => !props.selected || props.multiple
             ? `background: ${lightenDarkenColor(
                 // Color
                 props.optionSelectedColor as string,
@@ -151,7 +170,7 @@ export const ListItem = styled('li')<ListItemProps>`
             : ''
         };
     }
-    ${props => props.selected
+    ${props => props.selected && !props.multiple
         ? `background: ${props.optionSelectedColor};
             color: ${fontColorFromBackground(props.optionSelectedColor as string)};`
         : ''
@@ -160,4 +179,37 @@ export const ListItem = styled('li')<ListItemProps>`
 
 export const ListIcon = styled.div`
     padding-right: 0.25em;
+`;
+
+interface SelectChipInterface {
+    color?: string,
+    borderRadius?: BorderRadius
+}
+export const SelectChip = styled.div<SelectChipInterface>`
+    box-sizing: border-box;
+    background-color: ${({color}) => color};
+    border-radius: ${({borderRadius}) => borderRadius};
+    display: flex;
+    align-items: center;
+    padding: 0.25em;
+    margin-right: 0.5em;
+`;
+
+export const ChipText = styled.div`
+    padding-right: 0.5em;
+`;
+
+export const ChipsWrapper = styled.div`
+    display: flex;
+`;
+
+interface ChipIconWrapperInterface {
+    borderRadius?: BorderRadius
+}
+export const ChipIconWrapper = styled.div<ChipIconWrapperInterface>`
+    &:hover {
+        background-color: ${({color}) => color};
+        border-radius: ${({borderRadius}) => borderRadius};
+    }
+    border-left: 1px solid ${allColors['Silver Sand']};
 `;

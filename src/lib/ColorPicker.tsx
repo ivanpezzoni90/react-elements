@@ -7,7 +7,8 @@ import {
     ElementLength,
     LabelPositions,
     ChangeElementValueType,
-    PropsObjectInterface
+    PropsObjectInterface,
+    BorderRadius
 } from './types';
 import { useComputedZIndex } from './hooks';
 import { ColorObject, palette, getColorNameByHex, allColors } from './constants/colors';
@@ -38,7 +39,11 @@ const StyledColorPicker = styled.div<StyledColorPickerInterface>`
 
 interface ColorPickerAdvancedWrapperInterface {
     length: ElementLength,
-    shadow?: boolean
+    shadow?: boolean,
+    borderColor?: string,
+    showBorders?: boolean,
+    hideBottomBorder?: boolean,
+    borderRadius?: BorderRadius
 }
 
 const ColorPickerAdvancedWrapper = styled.div<ColorPickerAdvancedWrapperInterface>`
@@ -49,8 +54,9 @@ const ColorPickerAdvancedWrapper = styled.div<ColorPickerAdvancedWrapperInterfac
     height: 3.5em;
     position: relative;
     background-color: rgba(255, 255, 255, 0.3);
-    border: none;
-    border-bottom: 1px solid #666;
+    border-radius: ${props => props.borderRadius};
+    ${(props) => props.hideBottomBorder ? '' : `border-bottom: 1px solid ${props.borderColor};`}
+    ${(props) => props.showBorders ? `border: 1px solid ${props.borderColor}` : ''};
     transition: 0.3s background-color ease-in-out, 0.3s box-shadow ease-in-out;
     background-color: #ffffff;
     ${({shadow}) => shadow ? 'box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2);' : ''}
@@ -173,7 +179,11 @@ interface ColorPickerProps extends PropsObjectInterface{
     align?: AlignPositions,
     shadow?: boolean,
     length: ElementLength,
-    onChange: ChangeElementValueType
+    onChange: ChangeElementValueType,
+    borderColor?: string,
+    showBorders?: boolean,
+    hideBottomBorder?: boolean,
+    borderRadius?: BorderRadius
 }
 
 interface ColorPickerElementInterface {
@@ -293,6 +303,10 @@ function ColorPicker(props: ColorPickerProps) {
         simpleElement,
         shadow,
         length,
+        borderColor,
+        showBorders,
+        hideBottomBorder,
+        borderRadius,
         onChange
     } = props;
 
@@ -317,6 +331,10 @@ function ColorPicker(props: ColorPickerProps) {
                 <ColorPickerAdvancedWrapper
                     shadow={shadow}
                     length={length}
+                    borderColor={borderColor}
+                    showBorders={showBorders}
+                    hideBottomBorder={hideBottomBorder}
+                    borderRadius={borderRadius}
                 >
                     <ColorPickerAdvancedLabel
                         htmlFor={id.current}
@@ -343,6 +361,10 @@ const defaultProps: PropsObjectInterface = {
     shadow: true,
     labelPosition: LabelPositions.horizontal,
     length: ElementLength.m,
+    borderColor: allColors['Silver Sand'],
+    showBorders: false,
+    hideBottomBorder: false,
+    borderRadius: BorderRadius.no,
     onChange: () => {}
 };
 

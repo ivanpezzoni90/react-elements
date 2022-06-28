@@ -2,9 +2,10 @@ import React from 'react';
 import { Fragment } from 'react';
 import Editor from './EditorBuilder';
 import { SwitchToggle } from '../lib/SwitchToggle';
-import { Editor as EditorType, ElementLength, PropsObjectInterface, ToggleLabelType } from '../lib/types';
+import { BorderRadius, Editor as EditorType, ElementLength, PropsObjectInterface, ToggleLabelType } from '../lib/types';
 import { useEditorInit } from '../lib/hooks';
-import { alignPositionEditor, ElementContainer, labelPositionEditor, lengthEditor, shadowEditor } from './commons';
+import { alignPositionEditor, borderRadiusEditor, bordersEditor, ElementContainer, labelPositionEditor, lengthEditor, shadowEditor } from './commons';
+import { allColors } from '../lib/constants/colors';
 
 const getEditor = (props: PropsObjectInterface) => {
     const editorJson: EditorType[] = [
@@ -45,13 +46,23 @@ const getEditor = (props: PropsObjectInterface) => {
             default: false,
             label: 'Simple Element',
             prop: 'simpleElement'
-        },
+        }
     ];
 
     if (props.simpleElement) {
         editorJson.push(labelPositionEditor, alignPositionEditor);
     } else {
-        editorJson.push(shadowEditor);
+        editorJson.push(
+            shadowEditor,
+            {
+                type: 'color',
+                label: 'Border Color',
+                prop: 'borderColor',
+                default: allColors['Silver Sand']
+            },
+            ...bordersEditor,
+            borderRadiusEditor(BorderRadius.no)
+        );
     }
 
     if (props.labelType === ToggleLabelType.label) {

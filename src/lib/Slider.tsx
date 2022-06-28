@@ -3,7 +3,7 @@ import { Fragment, useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { generateID, lightenDarkenColor, mergeClasses, rgbFromHex, round } from './helpers';
 import { Element } from './Element';
-import { ElementLength, LabelPositions } from './types';
+import { BorderRadius, ElementLength, LabelPositions } from './types';
 import { ChangeElementValueType, PropsObjectInterface } from './types';
 import { allColors } from './constants/colors';
 
@@ -16,7 +16,11 @@ const SliderContainer = styled.div`
 
 interface SliderAdvancedWrapperInterface {
     length: ElementLength,
-    shadow?: boolean
+    shadow?: boolean,
+    borderColor?: string,
+    showBorders?: boolean,
+    hideBottomBorder?: boolean,
+    borderRadius?: BorderRadius
 }
 
 const SliderAdvancedWrapper = styled.div<SliderAdvancedWrapperInterface>`
@@ -27,8 +31,9 @@ const SliderAdvancedWrapper = styled.div<SliderAdvancedWrapperInterface>`
     height: 3.5em;
     position: relative;
     background-color: rgba(255, 255, 255, 0.3);
-    border: none;
-    border-bottom: 1px solid #666;
+    border-radius: ${props => props.borderRadius};
+    ${(props) => props.hideBottomBorder ? '' : `border-bottom: 1px solid ${props.borderColor};`}
+    ${(props) => props.showBorders ? `border: 1px solid ${props.borderColor}` : ''};
     transition: 0.3s background-color ease-in-out, 0.3s box-shadow ease-in-out;
     background-color: #ffffff;
     ${({shadow}) => shadow ? 'box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2);' : ''}
@@ -210,6 +215,10 @@ interface SliderProps extends PropsObjectInterface{
     steps: string[] | number[],
     showValue: boolean,
     showTooltip: boolean,
+    borderColor?: string,
+    showBorders?: boolean,
+    hideBottomBorder?: boolean,
+    borderRadius?: BorderRadius
     onChange: ChangeElementValueType
 }
 
@@ -396,6 +405,10 @@ function Slider(props: SliderProps) {
         steps,
         showValue,
         showTooltip,
+        borderColor,
+        showBorders,
+        hideBottomBorder,
+        borderRadius,
         onChange
     } = props;
 
@@ -427,6 +440,10 @@ function Slider(props: SliderProps) {
                 <SliderAdvancedWrapper
                     shadow={shadow}
                     length={length}
+                    borderColor={borderColor}
+                    showBorders={showBorders}
+                    hideBottomBorder={hideBottomBorder}
+                    borderRadius={borderRadius}
                 >
                     <SliderAdvancedLabel
                         htmlFor={id.current}
@@ -468,6 +485,10 @@ const defaultProps: PropsObjectInterface = {
     length: ElementLength.l,
     showValue: true,
     showTooltip: true,
+    borderColor: allColors['Silver Sand'],
+    showBorders: false,
+    hideBottomBorder: false,
+    borderRadius: BorderRadius.no,
     onChange: () => {}
 };
 

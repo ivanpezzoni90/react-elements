@@ -2,7 +2,7 @@ import React from 'react';
 import { Fragment } from 'react';
 import Editor from './EditorBuilder';
 import {Button} from '../lib/Button';
-import { ButtonIconSize, Editor as EditorType, IconPosition } from '../lib/types';
+import { BorderRadius, ButtonIconSize, Editor as EditorType, IconPosition } from '../lib/types';
 import { useEditorInit } from '../lib/hooks';
 import { borderRadiusEditor, ElementContainer, fontSizeEditor, fontWeightEditor, iconEditor, lengthEditor } from './commons';
 import { allColors } from '../lib/constants/colors';
@@ -35,7 +35,7 @@ const getEditor = () => {
             label: 'Disabled',
             prop: 'disabled'
         },
-        borderRadiusEditor,
+        borderRadiusEditor(BorderRadius.s),
         fontWeightEditor,
         fontSizeEditor,
     ];
