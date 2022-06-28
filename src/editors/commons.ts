@@ -3,6 +3,8 @@ import { allColors } from '../lib/constants/colors';
 import {
     BorderRadius,
     Editor,
+    EditorSection,
+    EditorSectionTypes,
     ElementLength,
     ElementSize,
     FontWeight,
@@ -14,19 +16,10 @@ import {
 import { AlignPositions, LabelPositions } from '../lib/types';
 import { IconList } from '../lib/Icon';
 
-export const EditorContainer = styled.div.attrs({
-    className: 'ie__workarea__editor'
-})`
-    display: flex;
-    padding: 0.5em 1em 0.5em 0.5em;
-    flex-direction: column;
-`;
-
 export const ElementContainer = styled.div.attrs({
     className: 'ie__workarea__element'
 })`
     padding: 1em 1em 2em 1em;
-    border-bottom: 1px solid #c3c3c3
 `;
 
 export const labelPositionEditor: Editor = {
@@ -272,4 +265,47 @@ export const bordersEditor: Editor[] = [
         default: false,
         prop: 'hideBottomBorder'
     }
-]
+];
+
+export const bordersAndShadowSection = (simpleElement?: boolean): EditorSection => ({
+    type: EditorSectionTypes.section,
+    label: 'Borders and Shadow',
+    editors: !simpleElement ? [
+        shadowEditor,
+        {
+            type: 'color',
+            label: 'Border Color',
+            prop: 'borderColor',
+            default: allColors['Silver Sand']
+        },
+        ...bordersEditor,
+        borderRadiusEditor(BorderRadius.no)
+    ] : []
+});
+
+export const simpleElementSection = (simpleElement?: boolean): EditorSection => ({
+    type: EditorSectionTypes.section,
+    label: 'Simple Element',
+    editors: [
+        {
+            type: 'checkbox',
+            default: false,
+            label: 'Simple Element',
+            prop: 'simpleElement'
+        },
+        ...simpleElement ? [labelPositionEditor, alignPositionEditor] : [],
+    ]
+});
+
+export const labelSection = (): EditorSection => ({
+    type: EditorSectionTypes.section,
+    label: 'Label',
+    editors: [
+        {
+            type: 'input',
+            default: 'Label',
+            label: 'Label',
+            prop: 'label'
+        }
+    ]
+});

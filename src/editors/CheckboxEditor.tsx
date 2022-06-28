@@ -3,55 +3,44 @@ import React from 'react';
 import { Fragment } from 'react';
 import Editor from './EditorBuilder';
 import {Checkbox} from '../lib/Checkbox';
-import { BorderRadius, Editor as EditorType, ElementLength, PropsObjectInterface } from '../lib/types';
+import { EditorSection, EditorSectionTypes, ElementLength, PropsObjectInterface } from '../lib/types';
 import { useEditorInit } from '../lib/hooks';
-import { alignPositionEditor, borderRadiusEditor, bordersEditor, ElementContainer, labelPositionEditor, lengthEditor, shadowEditor } from './commons';
+import { bordersAndShadowSection, ElementContainer, labelSection, lengthEditor, simpleElementSection } from './commons';
 import { allColors } from '../lib/constants/colors';
 
 const getEditor = (props: PropsObjectInterface) => {
-    const editorJson: EditorType[] = [
+
+    const editorJson: EditorSection[] = [
+        labelSection(),
         {
-            type: 'input',
-            default: 'Label',
-            label: 'Label',
-            prop: 'label'
+            type: EditorSectionTypes.section,
+            label: 'Colors',
+            editors: [
+                {
+                    type: 'color',
+                    default: allColors['Dim Gray'],
+                    label: 'Color',
+                    prop: 'color'
+                },
+                {
+                    type: 'color',
+                    default: allColors['White'],
+                    label: 'Icon Color',
+                    prop: 'colorOff'
+                },
+            ]
         },
+        simpleElementSection(props.simpleElement),
+        bordersAndShadowSection(props.simpleElement),
         {
-            type: 'color',
-            default: allColors['Dim Gray'],
-            label: 'Color',
-            prop: 'color'
-        },
-        {
-            type: 'color',
-            default: allColors['White'],
-            label: 'Icon Color',
-            prop: 'colorOff'
-        },
-        {
-            type: 'checkbox',
-            default: false,
-            label: 'Simple Element',
-            prop: 'simpleElement'
-        },
-        lengthEditor(ElementLength.m)
+            type: EditorSectionTypes.section,
+            label: 'Size',
+            editors: [
+                lengthEditor(ElementLength.m)
+            ]
+        }
     ];
 
-    if (props.simpleElement) {
-        editorJson.push(labelPositionEditor, alignPositionEditor);
-    } else {
-        editorJson.push(
-            shadowEditor,
-            {
-                type: 'color',
-                label: 'Border Color',
-                prop: 'borderColor',
-                default: allColors['Silver Sand']
-            },
-            ...bordersEditor,
-            borderRadiusEditor(BorderRadius.no)
-        );
-    }
     return editorJson;
 };
 
@@ -62,7 +51,7 @@ export default function CheckboxEditor() {
             props: checkboxProps
         } = useEditorInit(Checkbox.defaultProps);
 
-        const editorJson: EditorType[] = getEditor(checkboxProps);
+        const editorJson: EditorSection[] = getEditor(checkboxProps);
 
         return (
             <Fragment>

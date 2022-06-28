@@ -2,45 +2,64 @@ import React from 'react';
 
 import Editor from './EditorBuilder';
 import { Fragment } from 'react';
-import { borderRadiusEditor, bordersEditor, colorEditors, ElementContainer, lengthEditor, shadowEditor } from './commons';
+import { borderRadiusEditor, bordersAndShadowSection, colorEditors, ElementContainer, labelSection, lengthEditor } from './commons';
 
-import { BorderRadius, Editor as EditorType } from '../lib/types';
+import { BorderRadius, EditorSection, EditorSectionTypes, PropsObjectInterface } from '../lib/types';
 import { Select } from '../lib/Select';
 import { useEditorInit } from '../lib/hooks';
 import { allColors } from '../lib/constants/colors';
 
-const editorJson: EditorType[] = [
+const getEditor = (props: PropsObjectInterface): EditorSection[] => ([
+    labelSection(),
     {
-        type: 'input',
-        default: 'Label',
-        label: 'Label',
-        prop: 'label'
-    },
-    lengthEditor(),
-    ...colorEditors,
-    {
-        type: 'color',
-        label: 'Option Selected Color',
-        prop: 'optionSelectedColor',
-        default: allColors['Quick Silver']
-    },
-    shadowEditor,
-    {
-        type: 'toggle',
-        label: 'Resettable',
-        prop: 'resettable',
-        default: false
-    },
-    {
-        type: 'toggle',
+        type: EditorSectionTypes.section,
         label: 'Multiple',
-        prop: 'multiple',
-        default: false
+        editors: [
+            {
+                type: 'toggle',
+                label: 'Multiple',
+                prop: 'multiple',
+                default: false
+            },
+            ... props.multiple ? [
+                borderRadiusEditor(BorderRadius.xs, 'Chip Border Radius', 'chipBorderRadius'),
+            ]: []
+        ]
     },
-    ...bordersEditor,
-    borderRadiusEditor(BorderRadius.no),
-    borderRadiusEditor(BorderRadius.xs, 'Chip Border Radius', 'chipBorderRadius'),
-];
+    {
+        type: EditorSectionTypes.section,
+        label: 'Colors',
+        editors: [
+            ...colorEditors,
+            {
+                type: 'color',
+                label: 'Option Selected Color',
+                prop: 'optionSelectedColor',
+                default: allColors['Quick Silver']
+            },
+        ]
+    },
+    {
+        type: EditorSectionTypes.section,
+        label: 'Size',
+        editors: [
+            lengthEditor()
+        ]
+    },
+    bordersAndShadowSection(false),
+    {
+        type: EditorSectionTypes.section,
+        label: 'Others',
+        editors: [
+            {
+                type: 'toggle',
+                label: 'Resettable',
+                prop: 'resettable',
+                default: false
+            },
+        ]
+    },
+]);
 
 export default function SelectEditor() {
     return function SelectEditorFn () {
@@ -64,6 +83,8 @@ export default function SelectEditor() {
             onChangeProp,
             props: selectProps
         } = useEditorInit(extendedProps);
+
+        const editorJson: EditorSection[] = getEditor(selectProps);
 
         return (
             <Fragment>
