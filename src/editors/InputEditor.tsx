@@ -2,85 +2,92 @@ import React from 'react';
 
 import Editor from './EditorBuilder';
 
-import { BorderRadius, Editor as EditorType, PropsObjectInterface } from '../lib/types';
+import { EditorSection, EditorSectionTypes, PropsObjectInterface } from '../lib/types';
 import { Fragment } from 'react';
 import { Input } from '../lib/Input';
 import { useEditorInit } from '../lib/hooks';
-import { borderRadiusEditor, bordersEditor, colorEditors, ElementContainer, lengthEditor, shadowEditor } from './commons';
+import { bordersAndShadowSection, ElementContainer, labelSection, lengthEditor } from './commons';
 import { InputTypes } from '../lib/Input/config';
 
 const getEditor = (props: PropsObjectInterface) => {
-    const editorJson: EditorType[] = [
+    const editorJson: EditorSection[] = [
+        labelSection(),
         {
-            type: 'input',
-            default: 'Label',
-            label: 'Label',
-            prop: 'label'
-        },
-        {
-            type: 'select',
-            default: InputTypes.text,
+            type: EditorSectionTypes.section,
             label: 'Type',
-            prop: 'type',
-            options: [{
-                label: 'Text',
-                value: InputTypes.text
-            }, {
-                label: 'Number',
-                value: InputTypes.number
-            }, {
-                label: 'Date',
-                value: InputTypes.date
-            }]
+            editors: [
+                {
+                    type: 'select',
+                    default: InputTypes.text,
+                    label: 'Type',
+                    prop: 'type',
+                    options: [{
+                        label: 'Text',
+                        value: InputTypes.text
+                    }, {
+                        label: 'Number',
+                        value: InputTypes.number
+                    }, {
+                        label: 'Date',
+                        value: InputTypes.date
+                    }]
+                },
+                {
+                    type: 'input',
+                    inputType: props.type,
+                    label: props.type === InputTypes.text ? 'Max length' : 'Max',
+                    prop: 'max',
+                    default: undefined
+                },
+                {
+                    type: 'input',
+                    label: props.type === InputTypes.text ? 'Min length' : 'Min',
+                    inputType: props.type,
+                    prop: 'min',
+                    default: undefined
+                }
+            ]
         },
         {
-            label: 'Locked',
-            type: 'toggle',
-            default: false,
-            prop: 'locked'
-        },
-        {
+            type: EditorSectionTypes.section,
             label: 'Error',
-            type: 'toggle',
-            default: false,
-            prop: 'error'
-        }
+            editors: [
+                {
+                    label: 'Error',
+                    type: 'toggle',
+                    default: false,
+                    prop: 'error'
+                },
+                ... props.error ? [{
+                    label: 'Error Message',
+                    type: 'input',
+                    default: '',
+                    prop: 'errorMessage'
+                }] : []
+            ]
+        },
+        {
+            type: EditorSectionTypes.section,
+            label: 'Size',
+            editors: [
+                lengthEditor(),
+            ]
+        },
+        bordersAndShadowSection(false),
+        {
+            type: EditorSectionTypes.section,
+            label: 'Others',
+            editors: [
+                {
+                    label: 'Locked',
+                    type: 'toggle',
+                    default: false,
+                    prop: 'locked'
+                },
+            ]
+        },
     ];
-    
-    // Error message
-    if (props.error) {
-        editorJson.push({
-            label: 'Error Message',
-            type: 'input',
-            default: '',
-            prop: 'errorMessage'
-        });
-    }
-
-    // max/min
-    editorJson.push({
-        type: 'input',
-        inputType: props.type,
-        label: props.type === InputTypes.text ? 'Max length' : 'Max',
-        prop: 'max',
-        default: undefined
-    },
-    {
-        type: 'input',
-        label: props.type === InputTypes.text ? 'Min length' : 'Min',
-        inputType: props.type,
-        prop: 'min',
-        default: undefined
-    });
-
-    editorJson.push(
-        lengthEditor(),
-        ...colorEditors,
-        shadowEditor,
-        ...bordersEditor,
-        borderRadiusEditor(BorderRadius.no)
-    );
-    return editorJson.filter(Boolean);
+    return editorJson;
 };
 
 export default function InputEditor() {

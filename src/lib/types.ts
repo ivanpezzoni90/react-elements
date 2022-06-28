@@ -18,6 +18,16 @@ export type Editor = {
     resettable?: boolean
 };
 
+export enum EditorSectionTypes {
+    section = 'section'
+}
+
+export type EditorSection = {
+    type: EditorSectionTypes,
+    label: string,
+    editors: Editor[]
+}
+
 export type Option = {
     label: string,
     value: string | number | boolean,

@@ -34,9 +34,6 @@ const Workarea = styled.div`
     display: flex;
     flex: 1;
     flex-direction: column;
-
-    height: 30em;
-    overflow: auto;
 `;
 const Component = styled.div`
     display: flex;

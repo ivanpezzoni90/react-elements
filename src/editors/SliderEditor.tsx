@@ -3,96 +3,92 @@ import React from 'react';
 import { Fragment } from 'react';
 import Editor from './EditorBuilder';
 import { Slider } from '../lib/Slider';
-import { BorderRadius, Editor as EditorType, ElementLength, PropsObjectInterface } from '../lib/types';
+import { EditorSection, EditorSectionTypes, ElementLength, PropsObjectInterface } from '../lib/types';
 import { useEditorInit } from '../lib/hooks';
-import { alignPositionEditor, borderRadiusEditor, bordersEditor, ElementContainer, labelPositionEditor, lengthEditor, shadowEditor } from './commons';
+import { bordersAndShadowSection, ElementContainer, labelSection, lengthEditor, simpleElementSection } from './commons';
 import { allColors } from '../lib/constants/colors';
 import { InputTypes } from '../lib/Input/config';
 
 const getEditor = (props: PropsObjectInterface) => {
-    const editorJson: EditorType[] = [
+    const editorJSON: EditorSection[] = [
+        labelSection(),
         {
-            type: 'input',
-            default: 'Label',
-            label: 'Label',
-            prop: 'label'
+            type: EditorSectionTypes.section,
+            label: 'Show/Hide',
+            editors: [
+                {
+                    type: 'toggle',
+                    label: 'Show value',
+                    prop: 'showValue',
+                    default: true
+                }, {
+                    type: 'toggle',
+                    label: 'Show value tooltip',
+                    prop: 'showTooltip',
+                    default: true
+                }, {
+                    type: 'toggle',
+                    label: 'Show step values',
+                    prop: 'showStepValue',
+                    default: false
+                }, {
+                    type: 'toggle',
+                    label: 'Show steps',
+                    prop: 'showSteps',
+                    default: true
+                }
+            ]
         },
         {
-            type: 'color',
-            default: allColors['Dim Gray'],
-            label: 'Color',
-            prop: 'cursorColor'
+            type: EditorSectionTypes.section,
+            label: 'Values',
+            editors: [
+                {
+                    type: 'input',
+                    inputType: InputTypes.number,
+                    label: 'Max',
+                    prop: 'max',
+                    default: 100
+                },
+                {
+                    type: 'input',
+                    label: 'Min',
+                    inputType: InputTypes.number,
+                    prop: 'min',
+                    default: 0
+                },  {
+                    type: 'input',
+                    label: 'Step',
+                    inputType: InputTypes.number,
+                    prop: 'step',
+                    default: 20
+                }
+            ]
         },
+        simpleElementSection(props.simpleElement),
         {
-            type: 'checkbox',
-            default: false,
-            label: 'Simple Element',
-            prop: 'simpleElement'
+            type: EditorSectionTypes.section,
+            label: 'Size',
+            editors: [
+                lengthEditor(ElementLength.l),
+            ]
         },
-        lengthEditor(ElementLength.l),
+        bordersAndShadowSection(props.simpleElement),
+        {
+            type: EditorSectionTypes.section,
+            label: 'Colors',
+            editors: [
+                {
+                    type: 'color',
+                    default: allColors['Dim Gray'],
+                    label: 'Color',
+                    prop: 'cursorColor'
+                },
+            ]
+        }
     ];
 
-    // max/min
-    editorJson.push({
-        type: 'input',
-        inputType: InputTypes.number,
-        label: 'Max',
-        prop: 'max',
-        default: 100
-    },
-    {
-        type: 'input',
-        label: 'Min',
-        inputType: InputTypes.number,
-        prop: 'min',
-        default: 0
-    },  {
-        type: 'input',
-        label: 'Step',
-        inputType: InputTypes.number,
-        prop: 'step',
-        default: 20
-    });
-
-    // Values
-    editorJson.push({
-        type: 'toggle',
-        label: 'Show value',
-        prop: 'showValue',
-        default: true
-    }, {
-        type: 'toggle',
-        label: 'Show value tooltip',
-        prop: 'showTooltip',
-        default: true
-    }, {
-        type: 'toggle',
-        label: 'Show step values',
-        prop: 'showStepValue',
-        default: false
-    }, {
-        type: 'toggle',
-        label: 'Show steps',
-        prop: 'showSteps',
-        default: true
-    });
-
-    if (props.simpleElement) {
-        editorJson.push(labelPositionEditor, alignPositionEditor);
-    } else {
-        editorJson.push(
-            shadowEditor,
-            {
-                type: 'color',
-                label: 'Border Color',
-                prop: 'borderColor',
-                default: allColors['Silver Sand']
-            },
-            ...bordersEditor,
-            borderRadiusEditor(BorderRadius.no)
-        );
-    }
-    return editorJson;
+    return editorJSON;
 };
 
 export default function CheckboxEditor() {
@@ -102,7 +98,7 @@ export default function CheckboxEditor() {
             props: sliderProps
         } = useEditorInit(Slider.defaultProps);
 
-        const editorJson: EditorType[] = getEditor(sliderProps);
+        const editorJson: EditorSection[] = getEditor(sliderProps);
 
         const max:string = sliderProps.max || sliderProps.max === 0 ? sliderProps.max.toString() : '0';
         const parsedMax: number = parseFloat(max);

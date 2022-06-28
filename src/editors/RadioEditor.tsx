@@ -2,10 +2,10 @@ import React from 'react';
 
 import Editor from './EditorBuilder';
 
-import { Editor as EditorType, PropsObjectInterface, RadioTypes } from '../lib/types';
+import { EditorSection, EditorSectionTypes, PropsObjectInterface, RadioTypes } from '../lib/types';
 import { Fragment } from 'react';
 import { useEditorInit } from '../lib/hooks';
-import { ElementContainer, positionEditor } from './commons';
+import { ElementContainer, labelSection, positionEditor } from './commons';
 import { InputTypes } from '../lib/Input/config';
 import { Radio } from '../lib/Radio';
 import { IconList } from '../lib/Icon';
@@ -21,41 +21,48 @@ const defaultOptions = [{
 }];
 
 const getEditor = (props: PropsObjectInterface) => {
-    const editorJson: EditorType[] = [
+    const editorJson: EditorSection[] = [
+        labelSection(),
         {
-            type: 'input',
-            default: 'Label',
-            label: 'Label',
-            prop: 'label'
-        },
-        {
-            type: 'select',
-            default: RadioTypes.checkbox,
+            type: EditorSectionTypes.section,
             label: 'Type',
-            prop: 'type',
-            options: [{
-                label: 'Checkbox',
-                value: RadioTypes.checkbox
-            }, {
-                label: 'Toggle',
-                value: RadioTypes.toggle
-            }, {
-                label: 'Button',
-                value: RadioTypes.button
-            }]
+            editors: [
+                {
+                    type: 'select',
+                    default: RadioTypes.checkbox,
+                    label: 'Type',
+                    prop: 'type',
+                    options: [{
+                        label: 'Checkbox',
+                        value: RadioTypes.checkbox
+                    }, {
+                        label: 'Toggle',
+                        value: RadioTypes.toggle
+                    }, {
+                        label: 'Button',
+                        value: RadioTypes.button
+                    }]
+                },
+            ]
         },
-        positionEditor,
-        // Workaround to change number of options using value prop
         {
-            type: 'input',
-            inputType: InputTypes.number,
-            default: 2,
-            label: 'Number of elements',
-            prop: 'value'
-        }
+            type: EditorSectionTypes.section,
+            label: 'Others',
+            editors: [
+                positionEditor,
+                // Workaround to change number of options using value prop
+                {
+                    type: 'input',
+                    inputType: InputTypes.number,
+                    default: 2,
+                    label: 'Number of elements',
+                    prop: 'value'
+                }
+            ]
+        },
     ];
 
-    return editorJson.filter(Boolean);
+    return editorJson;
 };
 
 const generateOptions = (n: string) => {
