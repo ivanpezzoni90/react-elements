@@ -167,13 +167,14 @@ export interface PropsObjectInterface {
     iconPosition?: IconPosition,
     resettable?: boolean,
     step?: number,
-    steps?: string[] | number[],
     showValue?: boolean
     showTooltip?: boolean,
     cursorColor?: string,
     multiple?: boolean,
     showBorders?: boolean,
     hideBottomBorder?: boolean,
-    chipBorderRadius?: BorderRadius
+    chipBorderRadius?: BorderRadius,
+    showStepValue?: boolean,
+    showSteps?: boolean
 }
 export type SetPropsToStateType = (props: PropsObjectInterface) => void;

@@ -52,7 +52,10 @@ const getEditor = (props: PropsObjectInterface) => {
         inputType: InputTypes.number,
         prop: 'step',
         default: 20
-    }, {
+    });
+
+    // Values
+    editorJson.push({
         type: 'toggle',
         label: 'Show value',
         prop: 'showValue',
@@ -61,6 +64,16 @@ const getEditor = (props: PropsObjectInterface) => {
         type: 'toggle',
         label: 'Show value tooltip',
         prop: 'showTooltip',
+        default: true
+    }, {
+        type: 'toggle',
+        label: 'Show step values',
+        prop: 'showStepValue',
+        default: false
+    }, {
+        type: 'toggle',
+        label: 'Show steps',
+        prop: 'showSteps',
         default: true
     });
 
