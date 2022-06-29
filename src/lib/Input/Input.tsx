@@ -133,6 +133,7 @@ function Input({
     errorMessage,
     value: valueFromProps,
     label,
+    hideLabel,
     shadow,
     onBlur,
     onChange,
@@ -201,16 +202,18 @@ function Input({
             borderRadius={borderRadius}
             onClick={setFocusFromDiv}
         >
-            <Label
-                htmlFor={id.current}
-                error={error}
-                length={length}
-                // Type date is always "active"
-                active={active || type === InputTypes.date}
-                labelColor={labelColor}
-            >
-                {(error && errorMessage) || label}
-            </Label>
+            {hideLabel ? null : (
+                <Label
+                    htmlFor={id.current}
+                    error={error}
+                    length={length}
+                    // Type date is always "active"
+                    active={active || type === InputTypes.date}
+                    labelColor={labelColor}
+                >
+                    {(error && errorMessage) || label}
+                </Label>
+            )}
             <InputElement
                 error={error}
                 setError={setError}
@@ -254,6 +257,7 @@ const defaultProps: PropsObjectInterface = {
     showBorders: false,
     hideBottomBorder: false,
     borderRadius: BorderRadius.no,
+    hideLabel: false,
 };
 
 Input.defaultProps = defaultProps;

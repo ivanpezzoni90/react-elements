@@ -44,6 +44,7 @@ function Select(props: SelectProps) {
         className,
         value: valueFromProps,
         label,
+        hideLabel,
         shadow,
         onChange,
         length,
@@ -149,15 +150,17 @@ function Select(props: SelectProps) {
                 borderRadius={borderRadius}
                 onClick={toggleOpen}
             >
-                <Label
-                    className="ie-select__label"
-                    htmlFor={id.current}
-                    hasValue={hasValue}
-                    labelColor={labelColor}
-                    length={length}
-                >
-                    {label}
-                </Label>
+                {hideLabel ? null : (
+                    <Label
+                        className="ie-select__label"
+                        htmlFor={id.current}
+                        hasValue={hasValue}
+                        labelColor={labelColor}
+                        length={length}
+                    >
+                        {label}
+                    </Label>
+                )}
                 <SelectElement
                     className="ie-select__element"
                     length={length}
@@ -276,6 +279,7 @@ const defaultProps: PropsObjectInterface = {
     hideBottomBorder: false,
     borderRadius: BorderRadius.no,
     chipBorderRadius: BorderRadius.xs,
+    hideLabel: false,
     onChange: () => {}
 };
 

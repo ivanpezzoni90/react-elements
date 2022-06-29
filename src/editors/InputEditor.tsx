@@ -6,7 +6,7 @@ import { EditorSection, EditorSectionTypes, PropsObjectInterface } from '../lib/
 import { Fragment } from 'react';
 import { Input } from '../lib/Input';
 import { useEditorInit } from '../lib/hooks';
-import { bordersAndShadowSection, ElementContainer, labelSection, lengthEditor } from './commons';
+import { bordersAndShadowSection, colorEditors, ElementContainer, labelSection, lengthEditor } from './commons';
 import { InputTypes } from '../lib/Input/config';
 
 const getEditor = (props: PropsObjectInterface) => {
@@ -46,6 +46,13 @@ const getEditor = (props: PropsObjectInterface) => {
                     prop: 'min',
                     default: undefined
                 }
+            ]
+        },
+        {
+            type: EditorSectionTypes.section,
+            label: 'Colors',
+            editors: [
+                ...colorEditors,
             ]
         },
         {

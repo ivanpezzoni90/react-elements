@@ -85,7 +85,8 @@ const CheckboxAdvancedWrapper = styled.div<CheckboxAdvancedWrapperInterface>`
 
 interface LabelProps {
     htmlFor: string,
-    length: ElementLength
+    length: ElementLength,
+    labelColor?: string
 }
 
 const CheckboxAdvancedLabel = styled.label<LabelProps>`
@@ -98,7 +99,7 @@ const CheckboxAdvancedLabel = styled.label<LabelProps>`
     font-size: 16px;
     font-weight: 600;
     line-height: 24px;
-    color: #666;
+    color: ${props => props.labelColor};
     opacity: 1;
     pointer-events: none;
     transition: 0.1s all ease-in-out;
@@ -123,7 +124,9 @@ interface CheckboxProps extends PropsObjectInterface{
     borderColor?: string,
     showBorders?: boolean,
     hideBottomBorder?: boolean,
-    borderRadius?: BorderRadius
+    borderRadius?: BorderRadius,
+    labelColor?: string,
+    hideLabel?: boolean,
     onChange: ChangeElementValueType
 }
 
@@ -197,6 +200,8 @@ function Checkbox(props: CheckboxProps) {
         showBorders,
         hideBottomBorder,
         borderRadius,
+        hideLabel,
+        labelColor,
         onChange
     } = props;
 
@@ -228,12 +233,15 @@ function Checkbox(props: CheckboxProps) {
                     hideBottomBorder={hideBottomBorder}
                     borderRadius={borderRadius}
                 >
-                    <CheckboxAdvancedLabel
-                        htmlFor={id.current}
-                        length={length}
-                    >
-                        {label}
-                    </CheckboxAdvancedLabel>
+                    {hideLabel ? null : (
+                        <CheckboxAdvancedLabel
+                            htmlFor={id.current}
+                            length={length}
+                            labelColor={labelColor}
+                        >
+                            {label}
+                        </CheckboxAdvancedLabel>
+                    )}
                     <CheckboxElement
                         className={className}
                         checked={checkedFromProps}
@@ -261,6 +269,8 @@ const defaultProps: PropsObjectInterface = {
     showBorders: false,
     hideBottomBorder: false,
     borderRadius: BorderRadius.no,
+    labelColor: allColors['Dim Gray'],
+    hideLabel: false,
     onChange: () => {}
 };
 

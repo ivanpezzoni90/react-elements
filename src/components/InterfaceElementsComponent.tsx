@@ -19,7 +19,7 @@ const Aside = styled.div`
     border-right: 1px solid #666;
     padding: 1em 1em 1em 0em;
 
-    height: 30em;
+    height: 90vh;
     overflow: auto;
 
     transition: width 1s, opacity 1s;

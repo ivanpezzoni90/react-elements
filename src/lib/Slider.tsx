@@ -46,7 +46,8 @@ const SliderAdvancedWrapper = styled.div<SliderAdvancedWrapperInterface>`
 
 interface LabelProps {
     htmlFor: string,
-    length: ElementLength
+    length: ElementLength,
+    labelColor?: string
 }
 
 const SliderAdvancedLabel = styled.label<LabelProps>`
@@ -59,7 +60,7 @@ const SliderAdvancedLabel = styled.label<LabelProps>`
     font-size: 16px;
     font-weight: 600;
     line-height: 24px;
-    color: #666;
+    color: ${props => props.labelColor};
     opacity: 1;
     pointer-events: none;
     transition: 0.1s all ease-in-out;
@@ -229,7 +230,9 @@ interface SliderProps extends PropsObjectInterface{
     borderColor?: string,
     showBorders?: boolean,
     hideBottomBorder?: boolean,
-    borderRadius?: BorderRadius
+    borderRadius?: BorderRadius,
+    labelColor?: string,
+    hideLabel?: boolean,
     onChange: ChangeElementValueType
 }
 
@@ -436,6 +439,8 @@ function Slider(props: SliderProps) {
         borderRadius,
         showStepValue,
         showSteps,
+        labelColor,
+        hideLabel,
         onChange
     } = props;
 
@@ -475,12 +480,15 @@ function Slider(props: SliderProps) {
                     hideBottomBorder={hideBottomBorder}
                     borderRadius={borderRadius}
                 >
-                    <SliderAdvancedLabel
-                        htmlFor={id.current}
-                        length={length}
-                    >
-                        {label}
-                    </SliderAdvancedLabel>
+                    {hideLabel ? null : (
+                        <SliderAdvancedLabel
+                            htmlFor={id.current}
+                            length={length}
+                            labelColor={labelColor}
+                        >
+                            {label}
+                        </SliderAdvancedLabel>
+                    )}
                     <SliderElement
                         className={className}
                         value={value}
@@ -524,6 +532,8 @@ const defaultProps: PropsObjectInterface = {
     borderRadius: BorderRadius.no,
     showStepValue: false,
     showSteps: true,
+    labelColor: allColors['Dim Gray'],
+    hideLabel: false,
     onChange: () => {}
 };
 

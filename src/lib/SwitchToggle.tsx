@@ -116,7 +116,8 @@ const SwitchToggleAdvancedWrapper = styled.div<SwitchToggleAdvancedWrapperInterf
 
 interface LabelProps {
     htmlFor: string
-    length: ElementLength
+    length: ElementLength,
+    labelColor?: string
 }
 
 const SwitchToggleAdvancedLabel = styled.div<LabelProps>`
@@ -129,7 +130,7 @@ const SwitchToggleAdvancedLabel = styled.div<LabelProps>`
     font-size: 16px;
     font-weight: 600;
     line-height: 24px;
-    color: #666;
+    color: ${props => props.labelColor};
     opacity: 1;
     pointer-events: none;
     transition: 0.1s all ease-in-out;
@@ -173,6 +174,8 @@ interface SwitchToggleProps extends PropsObjectInterface {
     borderColor?: string,
     showBorders?: boolean,
     hideBottomBorder?: boolean,
+    labelColor?: string,
+    hideLabel?: boolean,
     borderRadius?: BorderRadius
 }
 
@@ -281,6 +284,8 @@ const SwitchToggle = (props: SwitchToggleProps) => {
         showBorders,
         hideBottomBorder,
         borderRadius,
+        labelColor,
+        hideLabel,
         onChange
     } = props;
 
@@ -319,13 +324,16 @@ const SwitchToggle = (props: SwitchToggleProps) => {
                     borderRadius={borderRadius}
                     className={mergeClasses('ie-radio', className)}
                 >
-                    <SwitchToggleAdvancedLabel
-                        className="ie-radio__label"
-                        htmlFor={id.current}
-                        length={length}
-                    >
-                        {label}
-                    </SwitchToggleAdvancedLabel>
+                    {hideLabel ? null : (
+                        <SwitchToggleAdvancedLabel
+                            className="ie-radio__label"
+                            htmlFor={id.current}
+                            length={length}
+                            labelColor={labelColor}
+                        >
+                            {label}
+                        </SwitchToggleAdvancedLabel>
+                    )}
                     <SwitchToggleElement
                         checked={checked}
                         color={color}
@@ -362,6 +370,8 @@ const defaultProps: PropsObjectInterface = {
     showBorders: false,
     hideBottomBorder: false,
     borderRadius: BorderRadius.no,
+    labelColor: allColors['Dim Gray'],
+    hideLabel: false,
     onChange: () => {}
 };
 

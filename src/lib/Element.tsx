@@ -1,5 +1,6 @@
 import React, { ReactChild } from 'react';
 import styled from 'styled-components';
+import { allColors } from './constants/colors';
 import { mergeClasses } from './helpers';
 import { PropsObjectInterface } from './types';
 import { AlignPositions, LabelPositions } from './types';
@@ -8,10 +9,16 @@ const ElementLabel = styled.label``;
 const ElementWrapper = styled.div`
   padding: 0.5em;
 `;
-const LabelTextWrapper = styled.div`
+
+interface LabelTextWrapperInterface {
+    position?: LabelPositions
+    labelColor?: string
+}
+const LabelTextWrapper = styled.div<LabelTextWrapperInterface>`
     display: flex;
     align-items: center;
-    ${({ position }: { position: string }) => position === 'vertical'
+    color: ${props => props.labelColor};
+    ${({ position }) => position === 'vertical'
         ? 'padding-bottom: 0.25em;'
         : 'padding-right: 0.5em;'}
 `;
@@ -34,6 +41,8 @@ interface ElementProps extends PropsObjectInterface {
     labelPosition?: LabelPositions,
     className?: string,
     align?: AlignPositions,
+    labelColor?: string,
+    hideLabel?: boolean,
     children: Array<ReactChild> | ReactChild
 }
 
@@ -44,6 +53,8 @@ const Element = (props: ElementProps) => {
         labelPosition = LabelPositions.horizontal,
         align = AlignPositions.left,
         className = '',
+        labelColor,
+        hideLabel,
         children
     } = props;
 
@@ -58,12 +69,15 @@ const Element = (props: ElementProps) => {
                 <FlexWrapper
                     position={labelPosition}
                 >
-                    <LabelTextWrapper
-                        className="ie-element__label__text"
-                        position={labelPosition}
-                    >
-                        { label }
-                    </LabelTextWrapper>
+                    {hideLabel ? null : (
+                        <LabelTextWrapper
+                            className="ie-element__label__text"
+                            position={labelPosition}
+                            labelColor={labelColor}
+                        >
+                            { label }
+                        </LabelTextWrapper>
+                    )}
                     <ChildWrapper
                         className="ie-element__label__child"
                         align={align}
@@ -82,6 +96,8 @@ const defaultProps: PropsObjectInterface = {
     labelPosition: LabelPositions.horizontal,
     align: AlignPositions.left,
     className: '',
+    labelColor: allColors['Dim Gray'],
+    hideLabel: false,
     children: []
 };
 

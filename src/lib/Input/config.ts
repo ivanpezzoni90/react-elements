@@ -22,7 +22,8 @@ export interface InputProps extends PropsObjectInterface {
     borderColor?: string,
     min?: number,
     max?: number,
-    type?: InputTypes
+    type?: InputTypes,
+    hideLabel?: boolean
 }
 
 export type SetErrorType = (e: boolean) => void;

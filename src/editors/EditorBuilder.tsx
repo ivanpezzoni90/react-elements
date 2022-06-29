@@ -56,10 +56,11 @@ const Separator = styled.div`
     flex: 1;
 `;
 const SectionsWrapper = styled.div`
+    padding-top: 2em;
     display: flex;
     flex-direction: column;
 
-    height: 30em;
+    height: 70vh;
     overflow: auto;
 `;
 

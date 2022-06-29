@@ -64,6 +64,7 @@ export interface SelectProps extends PropsObjectInterface {
     className: string,
     showBorders?: boolean,
     hideBottomBorder?: boolean,
-    borderRadius?: BorderRadius
-    chipBorderRadius?: BorderRadius
+    borderRadius?: BorderRadius,
+    chipBorderRadius?: BorderRadius,
+    hideLabel?: boolean
 }

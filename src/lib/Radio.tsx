@@ -18,7 +18,8 @@ import { IconList } from './Icon';
 import { allColors } from './constants/colors';
 
 interface LabelProps {
-    htmlFor: string
+    htmlFor: string,
+    labelColor?: string
 }
 
 const Label = styled.div<LabelProps>`
@@ -31,7 +32,7 @@ const Label = styled.div<LabelProps>`
     font-size: 16px;
     font-weight: 600;
     line-height: 24px;
-    color: #666;
+    color: ${props => props.labelColor};
     opacity: 1;
     pointer-events: none;
     transition: 0.1s all ease-in-out;
@@ -171,6 +172,8 @@ function Radio(props: RadioProps) {
         value: valueFromProps,
         type,
         options,
+        hideLabel,
+        labelColor,
         onChange
     } = props;
 
@@ -186,12 +189,15 @@ function Radio(props: RadioProps) {
         <RadioWrapper
             className={mergeClasses('ie-radio', className)}
         >
-            <Label
-                className="ie-radio__label"
-                htmlFor={id.current}
-            >
-                {label}
-            </Label>
+            {hideLabel ? null : (
+                <Label
+                    className="ie-radio__label"
+                    htmlFor={id.current}
+                    labelColor={labelColor}
+                >
+                    {label}
+                </Label>
+            )}
             <RadioContainer
                 className="ie-radio__container"
                 position={position}
@@ -209,6 +215,8 @@ const defaultProps: PropsObjectInterface = {
     value: '',
     type: RadioTypes.checkbox,
     options: [],
+    labelColor: allColors['Dim Gray'],
+    hideLabel: false,
     onChange: () => {}
 };
 

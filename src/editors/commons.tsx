@@ -1,3 +1,4 @@
+import React, { ReactElement } from 'react';
 import styled from 'styled-components';
 import { allColors } from '../lib/constants/colors';
 import {
@@ -16,11 +17,28 @@ import {
 import { AlignPositions, LabelPositions } from '../lib/types';
 import { IconList } from '../lib/Icon';
 
-export const ElementContainer = styled.div.attrs({
-    className: 'ie__workarea__element'
-})`
+export const Container = styled.div`
     padding: 1em 1em 2em 1em;
+    border-bottom: 1px solid ${allColors['Dim Gray']};
+    display: flex;
+    justify-content: center;
 `;
+
+export const Wrapper = styled.div`
+    width: 40em;
+`;
+
+export const ElementContainer = ({children}: {children: ReactElement}) => (
+    <Container
+        className="ie__workarea__element"
+    >
+        <Wrapper
+            className="ie__workarea__element__wrapper"
+        >
+            {children}
+        </Wrapper>
+    </Container>
+);
 
 export const labelPositionEditor: Editor = {
     type: 'select',
@@ -83,17 +101,18 @@ export const colorEditors: Editor[] = [
     },
     {
         type: 'color',
-        label: 'Label Color',
-        prop: 'labelColor',
-        default: allColors['Dim Gray']
-    },
-    {
-        type: 'color',
         label: 'Border Color',
         prop: 'borderColor',
         default: allColors['Silver Sand']
     },
 ];
+
+export const labelColorEditor: Editor =  {
+    type: 'color',
+    label: 'Label Color',
+    prop: 'labelColor',
+    default: allColors['Dim Gray']
+};
 
 export const lengthEditor = (def = ElementLength.full): Editor => ({
     label: 'Length',
@@ -306,6 +325,13 @@ export const labelSection = (): EditorSection => ({
             default: 'Label',
             label: 'Label',
             prop: 'label'
-        }
+        },
+        {
+            type: 'toggle',
+            default: false,
+            label: 'Hide label',
+            prop: 'hideLabel'
+        },
+        labelColorEditor,
     ]
 });
