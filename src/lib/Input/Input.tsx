@@ -202,18 +202,18 @@ function Input({
             borderRadius={borderRadius}
             onClick={setFocusFromDiv}
         >
-            {hideLabel ? null : (
-                <Label
-                    htmlFor={id.current}
-                    error={error}
-                    length={length}
-                    // Type date is always "active"
-                    active={active || type === InputTypes.date}
-                    labelColor={labelColor}
-                >
-                    {(error && errorMessage) || label}
-                </Label>
-            )}
+            <Label
+                htmlFor={id.current}
+                error={error}
+                length={length}
+                // Type date is always "active"
+                active={active || type === InputTypes.date}
+                labelColor={labelColor}
+                hideLabel={hideLabel}
+                label={label}
+            >
+                {hideLabel ? '' : (error && errorMessage) || label}
+            </Label>
             <InputElement
                 error={error}
                 setError={setError}

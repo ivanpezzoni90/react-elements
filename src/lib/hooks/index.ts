@@ -61,3 +61,15 @@ export const useComputedWidth = (ref: React.RefObject<Element>) => {
 
     return width;
 };
+
+
+export const useBodyFontSize = () => {
+    const bodyEl = document.getElementsByTagName('body').item(0);
+    if (bodyEl) {
+        const fontSize = window.getComputedStyle(bodyEl, null).getPropertyValue('font-size');
+        const parsedFontSize = parseFloat(fontSize);
+        return parsedFontSize;
+    }
+    // Fallback to default font size
+    return 16;
+};

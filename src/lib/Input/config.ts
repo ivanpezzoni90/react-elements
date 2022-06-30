@@ -70,7 +70,9 @@ export interface LabelProps {
     active: boolean,
     labelColor?: string,
     length: ElementLength,
-    type?: InputTypes
+    type?: InputTypes,
+    label: string,
+    hideLabel?: boolean
 }
 
 export interface InputElementProps {

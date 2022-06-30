@@ -22,7 +22,9 @@ export interface LabelProps {
     htmlFor: string,
     hasValue: boolean,
     labelColor?: string,
-    length?: ElementLength
+    length?: ElementLength,
+    label?: string,
+    hideLabel?: boolean
 }
 export interface SelectElementProps {
     length: string,

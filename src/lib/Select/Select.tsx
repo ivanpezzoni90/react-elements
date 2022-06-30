@@ -150,17 +150,17 @@ function Select(props: SelectProps) {
                 borderRadius={borderRadius}
                 onClick={toggleOpen}
             >
-                {hideLabel ? null : (
-                    <Label
-                        className="ie-select__label"
-                        htmlFor={id.current}
-                        hasValue={hasValue}
-                        labelColor={labelColor}
-                        length={length}
-                    >
-                        {label}
-                    </Label>
-                )}
+                <Label
+                    className="ie-select__label"
+                    htmlFor={id.current}
+                    hasValue={hasValue}
+                    labelColor={labelColor}
+                    length={length}
+                    hideLabel={hideLabel}
+                    label={label}
+                >
+                    {hideLabel ? '' : label}
+                </Label>
                 <SelectElement
                     className="ie-select__element"
                     length={length}

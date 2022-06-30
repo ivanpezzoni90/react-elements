@@ -109,6 +109,8 @@ export const Label = styled.div<LabelProps>`
     color: ${props => props.labelColor};
     font-size: 12px;
 
+    ${props => props.hideLabel || props.label === '' ? 'height: 2em;' : ''}
+
     max-width: ${({length}) => length};
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -192,11 +194,12 @@ export const SelectChip = styled.div<SelectChipInterface>`
     display: flex;
     align-items: center;
     padding: 0.25em;
-    margin-right: 0.5em;
+    margin-right: 0.75em;
+    font-size: 14px;
 `;
 
 export const ChipText = styled.div`
-    padding-right: 0.5em;
+    padding: 0 0.5em;
 `;
 
 export const ChipsWrapper = styled.div`
@@ -212,4 +215,5 @@ export const ChipIconWrapper = styled.div<ChipIconWrapperInterface>`
         border-radius: ${({borderRadius}) => borderRadius};
     }
     border-left: 1px solid ${allColors['Silver Sand']};
+    padding: 0.25em;
 `;

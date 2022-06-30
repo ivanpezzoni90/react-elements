@@ -117,6 +117,8 @@ export const Label = styled.label<LabelProps>`
 
     ${props => !props.active ? 'height: 3em;' : ''}
 
+    ${props => props.hideLabel || props.label === '' ? 'height: 1.5em;' : ''}
+
     max-width: ${({length}) => length};
     text-overflow: ellipsis;
     white-space: nowrap;
