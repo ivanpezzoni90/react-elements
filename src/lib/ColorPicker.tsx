@@ -10,9 +10,11 @@ import {
     PropsObjectInterface,
     BorderRadius
 } from './types';
-import { useComputedZIndex } from './hooks';
+import { useClickOutside, useComputedZIndex } from './hooks';
 import { ColorObject, palette, getColorNameByHex, allColors } from './constants/colors';
 import { Input } from './Input';
+
+const doNothing = () => {};
 
 const ColorPickerContainer = styled.div`
     padding-right: 1em;
@@ -188,18 +190,21 @@ interface ColorPickerProps extends PropsObjectInterface{
     hideBottomBorder?: boolean,
     labelColor?: string,
     hideLabel?: boolean,
+    closeOnClickOutside?: boolean
     borderRadius?: BorderRadius
 }
 
 interface ColorPickerElementInterface {
     className: string,
     valueFromProps: string,
+    closeOnClickOutside?: boolean,
     onChange: ChangeElementValueType
 }
 
 function ColorPickerElement({
     className,
     valueFromProps,
+    closeOnClickOutside,
     onChange
 }: ColorPickerElementInterface) {
     const [selectedColor, setSelectedColor] = useState(valueFromProps);
@@ -238,6 +243,13 @@ function ColorPickerElement({
     const onMouseEnter = (color: ColorObject) => () => setHoverColor(color);
     const onMouseLeave = () => setHoverColor(emptyColorObj);
 
+    const dropDownRef = useRef<HTMLDivElement>(null);
+    // Set close dropdown callback on click outside when enabled
+    useClickOutside(dropDownRef, closeOnClickOutside
+        ? () => setIsOpen(false)
+        : doNothing
+    );
+
     return (
         <>
             <ColorPickerContainer
@@ -259,6 +271,7 @@ function ColorPickerElement({
                 />
                 {isOpen && (
                     <DropDownListContainer
+                        ref={dropDownRef}
                         zIndex={dropDownZIndex}
                     >
                         <DropDownList>
@@ -318,6 +331,7 @@ function ColorPicker(props: ColorPickerProps) {
         borderRadius,
         hideLabel,
         labelColor,
+        closeOnClickOutside,
         onChange
     } = props;
 
@@ -335,6 +349,7 @@ function ColorPicker(props: ColorPickerProps) {
                     <ColorPickerElement
                         className={className}
                         valueFromProps={valueFromProps}
+                        closeOnClickOutside={closeOnClickOutside}
                         onChange={onChange}
                     />
                 </Element>
@@ -359,6 +374,7 @@ function ColorPicker(props: ColorPickerProps) {
                     <ColorPickerElement
                         className={className}
                         valueFromProps={valueFromProps}
+                        closeOnClickOutside={closeOnClickOutside}
                         onChange={onChange}
                     />
                 </ColorPickerAdvancedWrapper>
@@ -381,6 +397,7 @@ const defaultProps: PropsObjectInterface = {
     borderRadius: BorderRadius.no,
     labelColor: allColors['Dim Gray'],
     hideLabel: false,
+    closeOnClickOutside: true,
     onChange: () => {}
 };
 

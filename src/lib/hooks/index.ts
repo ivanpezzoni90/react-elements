@@ -73,3 +73,19 @@ export const useBodyFontSize = () => {
     // Fallback to default font size
     return 16;
 };
+
+export const useClickOutside = (ref: any, cb: VoidFunction) => {
+    useEffect(() => {
+        function handleClickOutside(event: any) {
+            if (ref.current && !ref.current.contains(event.target)) {
+                cb();
+            }
+        }
+        // Bind the event listener
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            // Unbind the event listener on clean up
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [ref, cb]);
+};

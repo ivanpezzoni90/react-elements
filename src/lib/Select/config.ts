@@ -68,5 +68,6 @@ export interface SelectProps extends PropsObjectInterface {
     hideBottomBorder?: boolean,
     borderRadius?: BorderRadius,
     chipBorderRadius?: BorderRadius,
-    hideLabel?: boolean
+    hideLabel?: boolean,
+    closeOnClickOutside?: boolean
 }

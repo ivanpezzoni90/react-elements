@@ -26,9 +26,11 @@ import {
     ListItemClickCallbackType,
     SelectProps,
 } from './config';
-import { useComputedWidth, useComputedZIndex } from '../hooks';
+import { useClickOutside, useComputedWidth, useComputedZIndex } from '../hooks';
 import { allColors } from '../constants/colors';
 import { CheckboxElement } from '../Checkbox';
+
+const doNothing = () => {};
 
 // Valid value when is not null and not empty string or empty array
 const isValidValue = (
@@ -57,7 +59,8 @@ function Select(props: SelectProps) {
         showBorders,
         hideBottomBorder,
         borderRadius,
-        chipBorderRadius
+        chipBorderRadius,
+        closeOnClickOutside
     } = props;
 
     const id = useRef(generateID());
@@ -119,6 +122,13 @@ function Select(props: SelectProps) {
         useComputedWidth(selectRef)
     );
     const selectWrapperWidth = useComputedWidth(selectRef);
+
+    const dropDownRef = useRef<HTMLDivElement>(null);
+    // Set close dropdown callback on click outside when enabled
+    useClickOutside(dropDownRef, closeOnClickOutside
+        ? () => setIsOpen(false)
+        : doNothing
+    );
 
     const currentOptionsList: OptionType[] = getOptionsFromValue(selectedOption);
 
@@ -216,6 +226,7 @@ function Select(props: SelectProps) {
             {isOpen && (
                 <RelativeDropDownContainer>
                     <DropDownListContainer
+                        ref={dropDownRef}
                         computedWidth={selectWrapperWidth}
                         zIndex={dropDownZIndex}
                         length={length}
@@ -280,6 +291,7 @@ const defaultProps: PropsObjectInterface = {
     borderRadius: BorderRadius.no,
     chipBorderRadius: BorderRadius.xs,
     hideLabel: false,
+    closeOnClickOutside: true,
     onChange: () => {}
 };
 

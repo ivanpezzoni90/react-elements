@@ -19,6 +19,18 @@ const getEditor = (props: PropsObjectInterface) => {
             editors: [
                 lengthEditor(ElementLength.m),
             ]
+        },
+        {
+            type: EditorSectionTypes.section,
+            label: 'Others',
+            editors: [
+                {
+                    type: 'toggle',
+                    label: 'Close dropdown on click outside',
+                    prop: 'closeOnClickOutside',
+                    default: true
+                }
+            ]
         }
     ];
     return editorJson;

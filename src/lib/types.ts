@@ -186,6 +186,7 @@ export interface PropsObjectInterface {
     chipBorderRadius?: BorderRadius,
     showStepValue?: boolean,
     showSteps?: boolean,
-    hideLabel?: boolean
+    hideLabel?: boolean,
+    closeOnClickOutside?: boolean
 }
 export type SetPropsToStateType = (props: PropsObjectInterface) => void;

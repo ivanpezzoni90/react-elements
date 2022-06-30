@@ -57,6 +57,12 @@ const getEditor = (props: PropsObjectInterface): EditorSection[] => ([
                 prop: 'resettable',
                 default: false
             },
+            {
+                type: 'toggle',
+                label: 'Close dropdown on click outside',
+                prop: 'closeOnClickOutside',
+                default: true
+            }
         ]
     },
 ]);
