@@ -14,11 +14,13 @@ import { Element } from './Element';
 import { AlignPositions, LabelPositions } from './types';
 import {IconList, Icon} from './Icon';
 import { allColors } from './constants/colors';
+import { useBodyFontSize } from './hooks';
 
 interface Slider {
     toggle: boolean,
     color?: string,
-    colorOff?: string
+    colorOff?: string,
+    bodyFontSize: number
 }
 interface Switch {
     toggle: boolean,
@@ -46,11 +48,11 @@ const Slider = styled.span<Slider>`
         content: "";
 
         position: absolute;
-        left: 1px;
+        left: ${({toggle}) => toggle ? '8px' : '2px'};
         bottom: 1px;
 
-        width: 20px;
-        height: 20px;
+        width: ${({bodyFontSize}) => (bodyFontSize * 2) - 4}px;
+        height: ${({bodyFontSize}) => (bodyFontSize * 2) - 4}px;
         border-radius: 100%;
 
         background-color: ${({ toggle, color, colorOff }) => (toggle ? colorOff : color)};
@@ -72,8 +74,8 @@ const SwitchElementWrapper = styled.div`
 const Switch = styled.label<Switch>`
     position: relative;
     display: inline-block;
-    width: 48px;
-    height: 24px;
+    width: 4em;
+    height: 2em;
     background-color: ${({ toggle, color, colorOff }) => (toggle ? color : colorOff)};
     border-radius: 15px;
     transition: 0.4s;
@@ -153,6 +155,7 @@ const ToggleInnerLabel = styled.div<ToggleInnerLabelType>`
     display: flex;
     flex: 0.5;
     justify-content: center;
+    padding-${({toggle}) => toggle ? 'left' : 'right'}: 0.5em;
 `;
 
 interface SwitchToggleProps extends PropsObjectInterface {
@@ -216,6 +219,8 @@ function SwitchToggleElement({
         setToggle(checked);
     }, [checked]);
 
+    const bodyFontSize = useBodyFontSize();
+
     return (
         <SwitchElementWrapper
             className="ie-radio__element-wrapper"
@@ -236,6 +241,7 @@ function SwitchToggleElement({
                     {...{ toggle, color, colorOff }}
                     className="ie-radio__element__slider"
                     onClick={onClickCb}
+                    bodyFontSize={bodyFontSize}
                 >
                     <ToggleInnerLabel
                         toggle={toggle}
