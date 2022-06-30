@@ -179,7 +179,7 @@ function Input({
         onBlur(newValue);
     }, [onBlur]);
 
-    const inputWrapperRef = useRef<Element>(null);
+    const inputWrapperRef = useRef<HTMLDivElement>(null);
     const inputElementWidth = elaborateComputedWidth(
         useComputedWidth(inputWrapperRef)
     );

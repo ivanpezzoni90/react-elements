@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { MouseEvent } from 'react';
 import { Fragment, useEffect, useRef, useState } from 'react';
 import { checkEventTargetContainsClass, elaborateComputedWidth, generateID, lightenDarkenColor, mergeClasses } from '../helpers';
 import { BorderRadius, IconSize, Option as OptionType, PropsObjectInterface } from '../types';
@@ -67,7 +67,7 @@ function Select(props: SelectProps) {
 
     const [isOpen, setIsOpen] = useState(false);
     
-    const toggleOpen = (e: any) => {
+    const toggleOpen = (e: MouseEvent<HTMLDivElement>) => {
         // Exclude event trigger for icon elements
         if (!checkEventTargetContainsClass(e, 'ie-icon')) {
             setIsOpen(!isOpen);

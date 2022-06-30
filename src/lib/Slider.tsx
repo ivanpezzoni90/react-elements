@@ -322,7 +322,7 @@ function SliderElement({
     const defaultValue = getDefaultValue(valueFromProps, min, options);
     const [value, setValue] = useState(defaultValue);
 
-    const onSliderChange = useCallback((event: any) => {
+    const onSliderChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
         const newValue = event.target.value;
         setValue(newValue);
         onChange(newValue);

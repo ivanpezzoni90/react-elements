@@ -74,18 +74,18 @@ export const useBodyFontSize = () => {
     return 16;
 };
 
-export const useClickOutside = (ref: any, cb: VoidFunction) => {
+export const useClickOutside = (ref: React.RefObject<HTMLDivElement>, cb: VoidFunction) => {
     useEffect(() => {
-        function handleClickOutside(event: any) {
-            if (ref.current && !ref.current.contains(event.target)) {
+        function handleClickOutside(event: CustomEvent) {
+            if (ref.current && !ref.current.contains(event.target as Node)) {
                 cb();
             }
         }
         // Bind the event listener
-        document.addEventListener('mousedown', handleClickOutside);
+        document.addEventListener('mousedown', handleClickOutside as EventListener);
         return () => {
             // Unbind the event listener on clean up
-            document.removeEventListener('mousedown', handleClickOutside);
+            document.removeEventListener('mousedown', handleClickOutside as EventListener);
         };
     }, [ref, cb]);
 };

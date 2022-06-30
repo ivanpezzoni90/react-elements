@@ -54,7 +54,7 @@ export interface InputTypeProps {
 }
 
 export interface InputWrapperProps {
-    ref: any,
+    ref: React.RefObject<HTMLDivElement>,
     length: string,
     active: boolean
     locked: boolean,

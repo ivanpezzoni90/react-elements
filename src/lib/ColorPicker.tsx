@@ -27,7 +27,7 @@ const ColorPickerContainer = styled.div`
 
 interface StyledColorPickerInterface {
     color: string,
-    ref: any // TODO:
+    ref: React.RefObject<HTMLDivElement>
 }
 
 const StyledColorPicker = styled.div<StyledColorPickerInterface>`
@@ -214,7 +214,7 @@ function ColorPickerElement({
 
     const toggling = () => setIsOpen(!isOpen);
 
-    const ref = useRef<Element>(null);
+    const ref = useRef<HTMLDivElement>(null);
     const dropDownZIndex = useComputedZIndex(ref);
 
     const onChangeColor = (newColor: string) => () => {
