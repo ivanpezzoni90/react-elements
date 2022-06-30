@@ -1,3 +1,4 @@
+import { throttle } from 'throttle-debounce';
 import { BorderRadius, ChangeElementValueType, ElementLength, PropsObjectInterface } from '../types';
 
 export enum InputTypes {
@@ -40,7 +41,7 @@ export interface InputTypeProps {
     label: string,
     id: string,
     type?: InputTypes,
-    value: string,
+    defaultValue: string,
     onChange: ChangeInputHandlerType,
     onFocus: VoidFunction,
     onBlur: ChangeInputHandlerType,
@@ -84,10 +85,10 @@ export interface InputElementProps {
     type?: InputTypes,
     placeholder: string,
     id: string,
-    value: string,
-    onChange: ChangeInputHandlerType,
+    defaultValue: string,
+    onChange: throttle<(event: React.ChangeEvent<HTMLInputElement>) => void>,
     onFocus: VoidFunction,
-    onBlur: ChangeInputHandlerType,
+    onBlur: (event: React.ChangeEvent<HTMLInputElement>) => void,
     computedWidth: string
 }
 

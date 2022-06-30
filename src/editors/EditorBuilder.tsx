@@ -122,11 +122,13 @@ export default function EditorFunction({
 
     return (
         <SectionsWrapper>
-            {json.map((s) => {
+            {json.map((s, i) => {
                 if (s.type === 'section') {
                     const editorGroups = splitArrayInGroups<Editor>(s.editors, 4);
 
-                    return (<Section>
+                    return (<Section
+                        key={`${s.type}_${i}`}
+                    >
                         <SectionTitle>
                             <Title>
                                 {s.label}
