@@ -132,7 +132,7 @@ function Select(props: SelectProps) {
 
     const currentOptionsList: OptionType[] = getOptionsFromValue(selectedOption);
 
-    const getChip = (currentOptionObject: OptionType) => (<>
+    const getChip = (currentOptionObject: OptionType, multiple: boolean) => (<>
         {currentOptionObject && currentOptionObject.icon ? (
             <ListIcon>
                 <Icon
@@ -141,7 +141,9 @@ function Select(props: SelectProps) {
                 />
             </ListIcon>
         ) : null}
-        <ChipText>
+        <ChipText
+            multiple={multiple}
+        >
             {currentOptionObject && currentOptionObject.label}
         </ChipText>
     </>);
@@ -189,7 +191,7 @@ function Select(props: SelectProps) {
                                         borderRadius={chipBorderRadius}
                                         key={`${currentOptionObject.label}_${i}`}
                                     >
-                                        {getChip(currentOptionObject)}
+                                        {getChip(currentOptionObject, true)}
                                         <ChipIconWrapper
                                             color={lightenDarkenColor(optionSelectedColor as string, -30)}
                                             borderRadius={chipBorderRadius}
@@ -203,7 +205,7 @@ function Select(props: SelectProps) {
                                     </SelectChip>
                                 );
                             }
-                            return getChip(currentOptionObject);
+                            return getChip(currentOptionObject, false);
                         })}
                     </ChipsWrapper>
                 </SelectElement>

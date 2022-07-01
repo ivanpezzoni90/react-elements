@@ -5,7 +5,7 @@ import Editor from './EditorBuilder';
 import { Slider } from '../lib/Slider';
 import { EditorSection, EditorSectionTypes, ElementLength, PropsObjectInterface } from '../lib/types';
 import { useEditorInit } from '../lib/hooks';
-import { bordersAndShadowSection, ElementContainer, labelSection, lengthEditor, simpleElementSection } from './commons';
+import { alignPositionEditor, bordersAndShadowSection, ElementContainer, labelSection, lengthEditor } from './commons';
 import { allColors } from '../lib/constants/colors';
 import { InputTypes } from '../lib/Input/config';
 
@@ -65,14 +65,6 @@ const getEditor = (props: PropsObjectInterface) => {
                 }
             ]
         },
-        simpleElementSection(props.simpleElement),
-        {
-            type: EditorSectionTypes.section,
-            label: 'Size',
-            editors: [
-                lengthEditor(ElementLength.l),
-            ]
-        },
         bordersAndShadowSection(props.simpleElement),
         {
             type: EditorSectionTypes.section,
@@ -85,7 +77,15 @@ const getEditor = (props: PropsObjectInterface) => {
                     prop: 'cursorColor'
                 },
             ]
-        }
+        },
+        {
+            type: EditorSectionTypes.section,
+            label: 'Others',
+            editors: [
+                lengthEditor(ElementLength.l),
+                alignPositionEditor
+            ]
+        },
     ];
 
     return editorJSON;

@@ -6,6 +6,8 @@ import {
     ButtonIconSize,
     ElementLength,
     ElementSize,
+    LabelLength,
+    LabelPositions,
     Option,
     Positions,
     RadioTypes
@@ -19,14 +21,20 @@ import { allColors } from './constants/colors';
 
 interface LabelProps {
     htmlFor: string,
-    labelColor?: string
+    labelColor?: string,
+    labelPosition?: LabelPositions,
+    labelLength?: LabelLength
 }
 
 const Label = styled.div<LabelProps>`
     display: flex;
     justify-content: flex-start;
-    flex: 1;
+    ${props => props.labelPosition === LabelPositions.vertical ? 'flex: 1;' : 'align-items: center;'}
     padding: 0 1em 0 1em;
+    max-width: ${props => props.labelLength};
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 
     font-family: "Gotham SSm A", "Gotham SSm B", sans-serif;
     font-size: 16px;
@@ -37,15 +45,17 @@ const Label = styled.div<LabelProps>`
     pointer-events: none;
     transition: 0.1s all ease-in-out;
 `;
-
-const RadioWrapper = styled.div`
+interface RadioWrapperInterface {
+    labelPosition?: LabelPositions,
+}
+const RadioWrapper = styled.div<RadioWrapperInterface>`
     display: flex;
-    flex-direction: column;
+    flex-direction: ${props => props.labelPosition === LabelPositions.horizontal ? 'row' : 'column'};
     padding: 0.5em;
 `;
 
 interface RadioContainerInterface {
-    position: Positions
+    position: Positions,
 }
 const RadioContainer = styled.div<RadioContainerInterface>`
     display: flex;
@@ -98,6 +108,8 @@ interface RadioProps extends PropsObjectInterface{
     value: string | number | boolean,
     type: RadioTypes,
     options: Array<Option>,
+    labelPosition?: LabelPositions,
+    labelLength?: LabelLength,
     onChange: ChangeElementValueType
 }
 
@@ -168,12 +180,14 @@ function Radio(props: RadioProps) {
     const {
         className,
         label,
+        labelPosition,
         position,
         value: valueFromProps,
         type,
         options,
         hideLabel,
         labelColor,
+        labelLength,
         onChange
     } = props;
 
@@ -187,13 +201,16 @@ function Radio(props: RadioProps) {
 
     return (
         <RadioWrapper
+            labelPosition={labelPosition}
             className={mergeClasses('ie-radio', className)}
         >
             {hideLabel ? null : (
                 <Label
+                    labelPosition={labelPosition}
                     className="ie-radio__label"
                     htmlFor={id.current}
                     labelColor={labelColor}
+                    labelLength={labelLength}
                 >
                     {label}
                 </Label>
@@ -212,6 +229,8 @@ const defaultProps: PropsObjectInterface = {
     className: '',
     label: 'Label',
     position: Positions.vertical,
+    labelPosition: LabelPositions.vertical,
+    labelLength: LabelLength.auto,
     value: '',
     type: RadioTypes.checkbox,
     options: [],

@@ -42,10 +42,14 @@ export type ChangeEditorPropType = (prop: string, value: string | boolean | Arra
 export type ChangeElementValueType = (value: string | boolean | Array<string> | number | null) => void;
 
 export enum ElementLength {
-    squared = '4em',
+    squared = '3.5em',
+    xxs = '2em',
+    xs = '6em',
     s = '8em',
-    m = '16em',
-    l = '32em',
+    m = '14em',
+    l = '18em',
+    xl = '26em',
+    xxl = '32em',
     full = '100%'
 }
 
@@ -123,6 +127,17 @@ export enum AlignPositions {
     right = 'flex-end'
 }
 
+export enum LabelLength {
+    xxs = '2em',
+    xs = '4em',
+    s = '6em',
+    m = '8em',
+    l = '10em',
+    xl = '12em',
+    xxl = '14em',
+    auto = 'auto'
+}
+
 export enum ToggleLabelType {
     label = 'label',
     icon = 'icon'
@@ -187,6 +202,7 @@ export interface PropsObjectInterface {
     showStepValue?: boolean,
     showSteps?: boolean,
     hideLabel?: boolean,
-    closeOnClickOutside?: boolean
+    closeOnClickOutside?: boolean,
+    labelLength?: LabelLength
 }
 export type SetPropsToStateType = (props: PropsObjectInterface) => void;

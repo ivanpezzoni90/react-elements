@@ -199,7 +199,7 @@ export const SelectChip = styled.div<SelectChipInterface>`
 `;
 
 export const ChipText = styled.div`
-    padding: 0 0.5em;
+    padding: 0 0.5em 0 ${({multiple}: {multiple: boolean}) => multiple ? '0.5em' : '0'};
 `;
 
 export const ChipsWrapper = styled.div`

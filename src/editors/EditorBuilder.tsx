@@ -174,14 +174,12 @@ export default function EditorFunction({
                                                                 checked={e.default as boolean}
                                                                 label={e.label}
                                                                 length={ElementLength.full}
-                                                                labelPosition={LabelPositions.vertical}
                                                                 onChange={onChangeValue(e.prop)} />),
                                                             toggle: (<SwitchToggle
                                                                 checked={e.default as boolean}
                                                                 label={e.label}
                                                                 color="#666"
                                                                 length={ElementLength.full}
-                                                                labelPosition={LabelPositions.vertical}
                                                                 onChange={onChangeValue(e.prop)} />),
                                                             color: (<ColorPicker
                                                                 value={e.default as string}

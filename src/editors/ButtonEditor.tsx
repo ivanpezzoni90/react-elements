@@ -4,14 +4,25 @@ import Editor from './EditorBuilder';
 import {Button} from '../lib/Button';
 import { BorderRadius, ButtonIconSize, EditorSection, EditorSectionTypes, IconPosition } from '../lib/types';
 import { useEditorInit } from '../lib/hooks';
-import { borderRadiusEditor, ElementContainer, fontSizeEditor, fontWeightEditor, iconEditor, labelSection, lengthEditor } from './commons';
+import { borderRadiusEditor, ElementContainer, fontSizeEditor, fontWeightEditor, iconEditor, lengthEditor } from './commons';
 import { allColors } from '../lib/constants/colors';
 import { IconList } from '../lib/Icon';
 
 const getEditor = () => {
 
     const editorJson: EditorSection[] = [
-        labelSection(),
+        {
+            type: EditorSectionTypes.section,
+            label: 'Label',
+            editors: [
+                {
+                    type: 'input',
+                    default: 'Label',
+                    label: 'Label',
+                    prop: 'label'
+                }
+            ]
+        },
         {
             type: EditorSectionTypes.section,
             label: 'Size and Weight',

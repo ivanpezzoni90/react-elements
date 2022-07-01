@@ -1,14 +1,14 @@
 import React, { Fragment, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { fontColorFromBackground, generateID, mergeClasses } from './helpers';
-import { Element } from './Element';
 import {
     AlignPositions,
     ElementLength,
     LabelPositions,
     ChangeElementValueType,
     PropsObjectInterface,
-    BorderRadius
+    BorderRadius,
+    LabelLength
 } from './types';
 import { useClickOutside, useComputedZIndex } from './hooks';
 import { ColorObject, palette, getColorNameByHex, allColors } from './constants/colors';
@@ -45,12 +45,23 @@ interface ColorPickerAdvancedWrapperInterface {
     borderColor?: string,
     showBorders?: boolean,
     hideBottomBorder?: boolean,
+    align?: AlignPositions,
+    labelPosition?: LabelPositions,
     borderRadius?: BorderRadius
 }
 
 const ColorPickerAdvancedWrapper = styled.div<ColorPickerAdvancedWrapperInterface>`
     display: flex;
-    align-items: center;
+    ${props => props.labelPosition === LabelPositions.vertical ? `
+        flex-direction: column;
+        padding-left: 0.5em;
+        align-items: ${props.align};
+        justify-content: center;
+    ` :`
+        flex-direction: row;
+        justify-content: ${props.align};
+        align-items: center;
+    `}
     min-width: 7em;
     width: ${props => props.length};
     height: 3.5em;
@@ -72,7 +83,9 @@ const ColorPickerAdvancedWrapper = styled.div<ColorPickerAdvancedWrapperInterfac
 interface LabelProps {
     htmlFor: string,
     length: ElementLength,
-    labelColor?: string
+    labelColor?: string,
+    labelPosition?: LabelPositions,
+    labelLength?: LabelLength
 }
 interface DropDownContainerProps {
     zIndex: number | null
@@ -82,7 +95,7 @@ const ColorPickerAdvancedLabel = styled.div<LabelProps>`
     display: flex;
     justify-content: flex-start;
     flex: 1;
-    padding: 0 1em 0 1em;
+    padding: 0 1em 0 ${props => props.labelPosition === LabelPositions.horizontal ? '1em' : '0'};
 
     font-family: "Gotham SSm A", "Gotham SSm B", sans-serif;
     font-size: 16px;
@@ -93,7 +106,9 @@ const ColorPickerAdvancedLabel = styled.div<LabelProps>`
     pointer-events: none;
     transition: 0.1s all ease-in-out;
 
-    max-width: ${({length}) => length};
+    max-width: ${props => props.labelLength === LabelLength.auto
+        ? props.length
+        : props.labelLength};
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
@@ -179,7 +194,6 @@ interface ColorPickerProps extends PropsObjectInterface{
     className: string,
     value: string,
     label: string,
-    simpleElement?: boolean,
     labelPosition?: LabelPositions,
     align?: AlignPositions,
     shadow?: boolean,
@@ -190,19 +204,18 @@ interface ColorPickerProps extends PropsObjectInterface{
     hideBottomBorder?: boolean,
     labelColor?: string,
     hideLabel?: boolean,
-    closeOnClickOutside?: boolean
+    closeOnClickOutside?: boolean,
+    labelLength?: LabelLength,
     borderRadius?: BorderRadius
 }
 
 interface ColorPickerElementInterface {
-    className: string,
     valueFromProps: string,
     closeOnClickOutside?: boolean,
     onChange: ChangeElementValueType
 }
 
 function ColorPickerElement({
-    className,
     valueFromProps,
     closeOnClickOutside,
     onChange
@@ -253,7 +266,7 @@ function ColorPickerElement({
     return (
         <>
             <ColorPickerContainer
-                className={mergeClasses('ie-color-picker', className)}
+                className="ie-color-picker__element"
             >
                 <ColorPickerInfoContainer>
                     <SelectedColor>
@@ -264,7 +277,7 @@ function ColorPickerElement({
                     </SelectedColorLabel>
                 </ColorPickerInfoContainer>
                 <StyledColorPicker
-                    className="ie-color-picker__picker"
+                    className="ie-color-picker__element__picker"
                     ref={ref}
                     color={selectedColor}
                     onClick={toggling}
@@ -321,8 +334,8 @@ function ColorPicker(props: ColorPickerProps) {
         value: valueFromProps,
         label,
         labelPosition,
+        labelLength,
         align,
-        simpleElement,
         shadow,
         length,
         borderColor,
@@ -338,48 +351,34 @@ function ColorPicker(props: ColorPickerProps) {
     const id = useRef(generateID());
 
     return (
-        <Fragment>
-            {simpleElement ? (
-                <Element
-                    id={id.current}
-                    align={align}
-                    label={label}
-                    labelPosition={labelPosition}
-                >
-                    <ColorPickerElement
-                        className={className}
-                        valueFromProps={valueFromProps}
-                        closeOnClickOutside={closeOnClickOutside}
-                        onChange={onChange}
-                    />
-                </Element>
-            ): (
-                <ColorPickerAdvancedWrapper
-                    shadow={shadow}
+        <ColorPickerAdvancedWrapper
+            align={align}
+            shadow={shadow}
+            length={length}
+            labelPosition={labelPosition}
+            borderColor={borderColor}
+            showBorders={showBorders}
+            hideBottomBorder={hideBottomBorder}
+            borderRadius={borderRadius}
+            className={mergeClasses('ie-color-picker', className)}
+        >
+            {hideLabel ? null : (
+                <ColorPickerAdvancedLabel
+                    htmlFor={id.current}
                     length={length}
-                    borderColor={borderColor}
-                    showBorders={showBorders}
-                    hideBottomBorder={hideBottomBorder}
-                    borderRadius={borderRadius}
+                    labelColor={labelColor}
+                    labelPosition={labelPosition}
+                    labelLength={labelLength}
                 >
-                    {hideLabel ? null : (
-                        <ColorPickerAdvancedLabel
-                            htmlFor={id.current}
-                            length={length}
-                            labelColor={labelColor}
-                        >
-                            {label}
-                        </ColorPickerAdvancedLabel>
-                    )}
-                    <ColorPickerElement
-                        className={className}
-                        valueFromProps={valueFromProps}
-                        closeOnClickOutside={closeOnClickOutside}
-                        onChange={onChange}
-                    />
-                </ColorPickerAdvancedWrapper>
+                    {label}
+                </ColorPickerAdvancedLabel>
             )}
-        </Fragment>
+            <ColorPickerElement
+                valueFromProps={valueFromProps}
+                closeOnClickOutside={closeOnClickOutside}
+                onChange={onChange}
+            />
+        </ColorPickerAdvancedWrapper>
     );
 }
 
@@ -387,9 +386,10 @@ const defaultProps: PropsObjectInterface = {
     className: '',
     value: '',
     label: 'Label',
-    simpleElement: false,
     shadow: true,
     labelPosition: LabelPositions.horizontal,
+    labelLength: LabelLength.auto,
+    align: AlignPositions.center,
     length: ElementLength.m,
     borderColor: allColors['Silver Sand'],
     showBorders: false,

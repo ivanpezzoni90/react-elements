@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { generateID, mergeClasses } from './helpers';
 import {
@@ -6,11 +6,11 @@ import {
     ChangeElementValueType,
     ElementLength, 
     IconSize,
+    LabelLength,
     PropsObjectInterface,
     SetBoolToStateType,
     ToggleLabelType
 } from './types';
-import { Element } from './Element';
 import { AlignPositions, LabelPositions } from './types';
 import {IconList, Icon} from './Icon';
 import { allColors } from './constants/colors';
@@ -93,14 +93,26 @@ interface SwitchToggleAdvancedWrapperInterface {
     borderColor?: string,
     showBorders?: boolean,
     hideBottomBorder?: boolean,
-    borderRadius?: BorderRadius
+    align?: AlignPositions,
+    borderRadius?: BorderRadius,
+    labelPosition?: LabelPositions,
 }
 const SwitchToggleAdvancedWrapper = styled.div<SwitchToggleAdvancedWrapperInterface>`
     display: flex;
-    align-items: center;
+    ${props => props.labelPosition === LabelPositions.vertical ? `
+        flex-direction: column;
+        padding-left: 0.5em;
+        padding-bottom: 0.25em;
+        align-items: ${props.align};
+        justify-content: center;
+    ` :`
+        flex-direction: row;
+        justify-content: ${props.align};
+        align-items: center;
+    `}
     min-width: 7em;
     width: ${props => props.length};
-    height: 3.5em;
+    height: ${props => props.labelPosition === LabelPositions.vertical ? '4em' : '3.5em'};
     position: relative;
     background-color: rgba(255, 255, 255, 0.3);
     border-radius: ${props => props.borderRadius};
@@ -112,21 +124,23 @@ const SwitchToggleAdvancedWrapper = styled.div<SwitchToggleAdvancedWrapperInterf
 
     &:hover{
         background-color: rgba(255, 255, 255, 0.45);
-        ${({shadow}) => shadow ? 'box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.05);' : ''}
+        ${({shadow}) => shadow ? 'box-shadow: 0px 4px 20px 0px  rgba(0, 0, 0, 0.05);' : ''}
     }
 `;
 
 interface LabelProps {
     htmlFor: string
     length: ElementLength,
-    labelColor?: string
+    labelColor?: string,
+    labelPosition?: LabelPositions,
+    labelLength?: LabelLength
 }
 
 const SwitchToggleAdvancedLabel = styled.div<LabelProps>`
     display: flex;
     justify-content: flex-start;
     flex: 1;
-    padding: 0 1em 0 1em;
+    padding: 0 1em 0 ${props => props.labelPosition === LabelPositions.horizontal ? '1em' : '0'};
 
     font-family: "Gotham SSm A", "Gotham SSm B", sans-serif;
     font-size: 16px;
@@ -137,7 +151,9 @@ const SwitchToggleAdvancedLabel = styled.div<LabelProps>`
     pointer-events: none;
     transition: 0.1s all ease-in-out;
 
-    max-width: ${({length}) => length};
+    max-width: ${props => props.labelLength === LabelLength.auto
+        ? props.length
+        : props.labelLength};
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
@@ -163,7 +179,6 @@ interface SwitchToggleProps extends PropsObjectInterface {
     className: string,
     color?: string,
     label?: string,
-    simpleElement?: boolean,
     labelPosition?: LabelPositions,
     align?: AlignPositions,
     labelOn?: string,
@@ -179,7 +194,8 @@ interface SwitchToggleProps extends PropsObjectInterface {
     hideBottomBorder?: boolean,
     labelColor?: string,
     hideLabel?: boolean,
-    borderRadius?: BorderRadius
+    borderRadius?: BorderRadius,
+    labelLength?: LabelLength
 }
 
 function SwitchToggleElement({
@@ -279,7 +295,7 @@ const SwitchToggle = (props: SwitchToggleProps) => {
         iconOffColor,
         label,
         labelPosition,
-        simpleElement,
+        labelLength,
         align,
         labelType,
         labelOn,
@@ -297,63 +313,42 @@ const SwitchToggle = (props: SwitchToggleProps) => {
 
     const id = useRef(generateID());
 
-   
     return (
-        <Fragment>
-            {simpleElement ? (
-                <Element
-                    className={mergeClasses('ie-radio', className)}
-                    id={id.current}
-                    align={align}
-                    label={label}
-                    labelPosition={labelPosition}
-                >
-                    <SwitchToggleElement
-                        checked={checked}
-                        color={color}
-                        labelOn={labelOn}
-                        labelOff={labelOff}
-                        labelType={labelType}
-                        colorOff={colorOff}
-                        iconColor={iconColor}
-                        iconOffColor={iconOffColor}
-                        onChange={onChange}
-                    />
-                </Element>
-            ): (
-                <SwitchToggleAdvancedWrapper
-                    shadow={shadow}
+        <SwitchToggleAdvancedWrapper
+            align={align}
+            shadow={shadow}
+            length={length}
+            borderColor={borderColor}
+            showBorders={showBorders}
+            hideBottomBorder={hideBottomBorder}
+            borderRadius={borderRadius}
+            labelPosition={labelPosition}
+            className={mergeClasses('ie-radio', className)}
+        >
+            {hideLabel ? null : (
+                <SwitchToggleAdvancedLabel
+                    className="ie-radio__label"
+                    htmlFor={id.current}
                     length={length}
-                    borderColor={borderColor}
-                    showBorders={showBorders}
-                    hideBottomBorder={hideBottomBorder}
-                    borderRadius={borderRadius}
-                    className={mergeClasses('ie-radio', className)}
+                    labelColor={labelColor}
+                    labelPosition={labelPosition}
+                    labelLength={labelLength}
                 >
-                    {hideLabel ? null : (
-                        <SwitchToggleAdvancedLabel
-                            className="ie-radio__label"
-                            htmlFor={id.current}
-                            length={length}
-                            labelColor={labelColor}
-                        >
-                            {label}
-                        </SwitchToggleAdvancedLabel>
-                    )}
-                    <SwitchToggleElement
-                        checked={checked}
-                        color={color}
-                        labelOn={labelOn}
-                        labelOff={labelOff}
-                        labelType={labelType}
-                        colorOff={colorOff}
-                        iconColor={iconColor}
-                        iconOffColor={iconOffColor}
-                        onChange={onChange}
-                    />
-                </SwitchToggleAdvancedWrapper>
+                    {label}
+                </SwitchToggleAdvancedLabel>
             )}
-        </Fragment>
+            <SwitchToggleElement
+                checked={checked}
+                color={color}
+                labelOn={labelOn}
+                labelOff={labelOff}
+                labelType={labelType}
+                colorOff={colorOff}
+                iconColor={iconColor}
+                iconOffColor={iconOffColor}
+                onChange={onChange}
+            />
+        </SwitchToggleAdvancedWrapper>
     );
 };
 
@@ -365,12 +360,12 @@ const defaultProps: PropsObjectInterface = {
     iconColor: allColors['White'],
     iconOffColor: allColors['Dim Gray'],
     label: 'Label',
-    labelPosition: undefined,
-    simpleElement: false,
+    labelPosition: LabelPositions.horizontal,
     labelOn: 'YES',
     labelOff: 'NO',
     shadow: true,
     labelType: ToggleLabelType.label,
+    align: AlignPositions.center,
     length: ElementLength.m,
     borderColor: allColors['Silver Sand'],
     showBorders: false,
@@ -378,6 +373,7 @@ const defaultProps: PropsObjectInterface = {
     borderRadius: BorderRadius.no,
     labelColor: allColors['Dim Gray'],
     hideLabel: false,
+    labelLength: LabelLength.auto,
     onChange: () => {}
 };
 

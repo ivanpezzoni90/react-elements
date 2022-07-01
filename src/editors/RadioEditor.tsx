@@ -2,7 +2,7 @@ import React from 'react';
 
 import Editor from './EditorBuilder';
 
-import { EditorSection, EditorSectionTypes, PropsObjectInterface, RadioTypes } from '../lib/types';
+import { EditorSection, EditorSectionTypes, LabelPositions, PropsObjectInterface, RadioTypes } from '../lib/types';
 import { Fragment } from 'react';
 import { useEditorInit } from '../lib/hooks';
 import { ElementContainer, labelSection, positionEditor } from './commons';
@@ -22,7 +22,7 @@ const defaultOptions = [{
 
 const getEditor = (props: PropsObjectInterface) => {
     const editorJson: EditorSection[] = [
-        labelSection(),
+        labelSection(LabelPositions.vertical),
         {
             type: EditorSectionTypes.section,
             label: 'Type',

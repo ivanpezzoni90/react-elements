@@ -1,8 +1,7 @@
-import React, { Fragment, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { generateID, mergeClasses } from './helpers';
-import { Element } from './Element';
-import { AlignPositions, BorderRadius, ElementLength, LabelPositions } from './types';
+import { AlignPositions, BorderRadius, ElementLength, LabelLength, LabelPositions } from './types';
 import { ChangeElementValueType, PropsObjectInterface, SetBoolToStateType } from './types';
 import { allColors } from './constants/colors';
 
@@ -59,12 +58,23 @@ interface CheckboxAdvancedWrapperInterface {
     borderColor?: string,
     showBorders?: boolean,
     hideBottomBorder?: boolean,
-    borderRadius?: BorderRadius
+    borderRadius?: BorderRadius,
+    align?: AlignPositions,
+    labelPosition?: LabelPositions
 }
 
 const CheckboxAdvancedWrapper = styled.div<CheckboxAdvancedWrapperInterface>`
     display: flex;
-    align-items: center;
+    ${props => props.labelPosition === LabelPositions.vertical ? `
+        flex-direction: column;
+        padding-left: 0.5em;
+        align-items: ${props.align};
+        justify-content: center;
+    ` :`
+        flex-direction: row;
+        justify-content: ${props.align};
+        align-items: center;
+    `}
     min-width: 7em;
     width: ${props => props.length};
     height: 3.5em;
@@ -86,14 +96,16 @@ const CheckboxAdvancedWrapper = styled.div<CheckboxAdvancedWrapperInterface>`
 interface LabelProps {
     htmlFor: string,
     length: ElementLength,
-    labelColor?: string
+    labelColor?: string,
+    labelPosition?: LabelPositions,
+    labelLength?: LabelLength
 }
 
 const CheckboxAdvancedLabel = styled.label<LabelProps>`
     display: flex;
     justify-content: flex-start;
     flex: 1;
-    padding: 0 1em 0 1em;
+    padding: 0 1em 0 ${props => props.labelPosition === LabelPositions.horizontal ? '1em' : '0'};
 
     font-family: "Gotham SSm A", "Gotham SSm B", sans-serif;
     font-size: 16px;
@@ -104,7 +116,9 @@ const CheckboxAdvancedLabel = styled.label<LabelProps>`
     pointer-events: none;
     transition: 0.1s all ease-in-out;
 
-    max-width: ${({length}) => length};
+    max-width: ${props => props.labelLength === LabelLength.auto
+        ? props.length
+        : props.labelLength};
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
@@ -116,7 +130,6 @@ interface CheckboxProps extends PropsObjectInterface{
     color: string,
     colorOff: string,
     label: string,
-    simpleElement?: boolean,
     labelPosition?: LabelPositions,
     align?: AlignPositions,
     shadow?: boolean,
@@ -127,6 +140,7 @@ interface CheckboxProps extends PropsObjectInterface{
     borderRadius?: BorderRadius,
     labelColor?: string,
     hideLabel?: boolean,
+    labelLength?: LabelLength,
     onChange: ChangeElementValueType
 }
 
@@ -191,7 +205,6 @@ function Checkbox(props: CheckboxProps) {
         label,
         labelPosition,
         align,
-        simpleElement,
         shadow,
         length,
         color,
@@ -202,56 +215,42 @@ function Checkbox(props: CheckboxProps) {
         borderRadius,
         hideLabel,
         labelColor,
+        labelLength,
         onChange
     } = props;
 
     const id = useRef(generateID());
 
     return (
-        <Fragment>
-            {simpleElement ? (
-                <Element
-                    id={id.current}
-                    align={align}
-                    label={label}
-                    labelPosition={labelPosition}
-                >
-                    <CheckboxElement
-                        className={className}
-                        checked={checkedFromProps}
-                        color={color}
-                        colorOff={colorOff}
-                        onChange={onChange}
-                    />
-                </Element>
-            ): (
-                <CheckboxAdvancedWrapper
-                    shadow={shadow}
+        <CheckboxAdvancedWrapper
+            shadow={shadow}
+            length={length}
+            align={align}
+            labelPosition={labelPosition}
+            borderColor={borderColor}
+            showBorders={showBorders}
+            hideBottomBorder={hideBottomBorder}
+            borderRadius={borderRadius}
+        >
+            {hideLabel ? null : (
+                <CheckboxAdvancedLabel
+                    htmlFor={id.current}
                     length={length}
-                    borderColor={borderColor}
-                    showBorders={showBorders}
-                    hideBottomBorder={hideBottomBorder}
-                    borderRadius={borderRadius}
+                    labelColor={labelColor}
+                    labelPosition={labelPosition}
+                    labelLength={labelLength}
                 >
-                    {hideLabel ? null : (
-                        <CheckboxAdvancedLabel
-                            htmlFor={id.current}
-                            length={length}
-                            labelColor={labelColor}
-                        >
-                            {label}
-                        </CheckboxAdvancedLabel>
-                    )}
-                    <CheckboxElement
-                        className={className}
-                        checked={checkedFromProps}
-                        color={color}
-                        colorOff={colorOff}
-                        onChange={onChange}
-                    />
-                </CheckboxAdvancedWrapper>
+                    {label}
+                </CheckboxAdvancedLabel>
             )}
-        </Fragment>
+            <CheckboxElement
+                className={className}
+                checked={checkedFromProps}
+                color={color}
+                colorOff={colorOff}
+                onChange={onChange}
+            />
+        </CheckboxAdvancedWrapper>
     );
 }
 
@@ -261,7 +260,7 @@ const defaultProps: PropsObjectInterface = {
     color: allColors['Dim Gray'],
     colorOff: allColors['White'],
     label: 'Label',
-    simpleElement: false,
+    align: AlignPositions.center,
     shadow: true,
     labelPosition: LabelPositions.horizontal,
     length: ElementLength.m,
@@ -271,6 +270,7 @@ const defaultProps: PropsObjectInterface = {
     borderRadius: BorderRadius.no,
     labelColor: allColors['Dim Gray'],
     hideLabel: false,
+    labelLength: LabelLength.auto,
     onChange: () => {}
 };
 

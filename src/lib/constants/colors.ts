@@ -36,7 +36,7 @@ const redExtArray = [
         ]
     },
     {
-        'name':'Permanent Geranium Lake',
+        'name':'Geranium Lake',
         'hex':'#dd2c2f',
         'rgb':[
             221,
@@ -101,7 +101,7 @@ const yellowExtArray = [
         ]
     },
     {
-        'name': 'School Bus Yellow',
+        'name': 'School Bus',
         'hex': '#ffd819',
         'rgb': [
             255,
@@ -110,7 +110,7 @@ const yellowExtArray = [
         ]
     },
     {
-        'name': 'Sizzling Sunrise',
+        'name': 'Sunrise',
         'hex': '#ffdd32',
         'rgb': [
             255,
@@ -119,7 +119,7 @@ const yellowExtArray = [
         ]
     },
     {
-        'name': 'Minion Yellow',
+        'name': 'Minion',
         'hex': '#ffe14c',
         'rgb': [
             255,
@@ -128,7 +128,7 @@ const yellowExtArray = [
         ]
     },
     {
-        'name': 'Minion Yellow 2',
+        'name': 'Minion 2',
         'hex': '#ffe566',
         'rgb': [
             255,
@@ -137,7 +137,7 @@ const yellowExtArray = [
         ]
     },
     {
-        'name': 'Yellow Crayola',
+        'name': 'Crayola',
         'hex': '#ffe97f',
         'rgb': [
             255,
@@ -146,7 +146,7 @@ const yellowExtArray = [
         ]
     },
     {
-        'name': 'Yellow Crayola 2',
+        'name': 'Crayola 2',
         'hex': '#ffee99',
         'rgb': [
             255,
@@ -155,7 +155,7 @@ const yellowExtArray = [
         ]
     },
     {
-        'name': 'Medium Champagne',
+        'name': 'Champagne',
         'hex': '#fff2b2',
         'rgb': [
             255,
@@ -184,7 +184,7 @@ const yellowExtArray = [
 ];
 const greenExtArray = [
     {
-        'name':'Forest Green Traditional',
+        'name':'Forest Green',
         'hex':'#10451d',
         'rgb':[
             16,
@@ -211,7 +211,7 @@ const greenExtArray = [
         ]
     },
     {
-        'name':'Forest Green Web',
+        'name':'Green Web',
         'hex':'#208b3a',
         'rgb':[
             32,
@@ -229,7 +229,7 @@ const greenExtArray = [
         ]
     },
     {
-        'name':'Dark Pastel Green',
+        'name':'Dark Pastel',
         'hex':'#2dc653',
         'rgb':[
             45,
@@ -256,7 +256,7 @@ const greenExtArray = [
         ]
     },
     {
-        'name':'Granny Smith Apple',
+        'name':'Granny Smith',
         'hex':'#92e6a7',
         'rgb':[
             146,
@@ -541,7 +541,7 @@ const violetExtArray = [
         ]
     },
     {
-        'name':'Pale Purple Pantone',
+        'name':'Pale Purple',
         'hex':'#f7ebfd',
         'rgb':[
             247,
