@@ -1,5 +1,5 @@
 import { throttle } from 'throttle-debounce';
-import { BorderRadius, ChangeElementValueType, ElementLength, PropsObjectInterface } from '../types';
+import { BorderRadius, ChangeElementValueType, ElementLength, LabelLength, LabelPositions, PropsObjectInterface } from '../types';
 
 export enum InputTypes {
     text = 'text',
@@ -19,11 +19,13 @@ export interface InputProps extends PropsObjectInterface {
     length: ElementLength,
     active?: boolean,
     labelColor?: string,
+    labelPosition?: LabelPositions,
     textColor?: string,
     borderColor?: string,
     min?: number,
     max?: number,
     type?: InputTypes,
+    labelLength?: LabelLength,
     hideLabel?: boolean
 }
 
@@ -62,6 +64,8 @@ export interface InputWrapperProps {
     borderColor?: string,
     showBorders?: boolean,
     hideBottomBorder?: boolean,
+    hideLabel?: boolean,
+    labelPosition?: LabelPositions,
     borderRadius?: BorderRadius
 }
 
@@ -71,9 +75,10 @@ export interface LabelProps {
     active: boolean,
     labelColor?: string,
     length: ElementLength,
+    labelPosition?: LabelPositions,
     type?: InputTypes,
+    labelLength?: LabelLength,
     label: string,
-    hideLabel?: boolean
 }
 
 export interface InputElementProps {

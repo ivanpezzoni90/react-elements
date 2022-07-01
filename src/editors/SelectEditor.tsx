@@ -4,13 +4,13 @@ import Editor from './EditorBuilder';
 import { Fragment } from 'react';
 import { borderRadiusEditor, bordersAndShadowSection, colorEditors, ElementContainer, labelSection, lengthEditor } from './commons';
 
-import { BorderRadius, EditorSection, EditorSectionTypes, PropsObjectInterface } from '../lib/types';
+import { BorderRadius, EditorSection, EditorSectionTypes, LabelPositions, PropsObjectInterface } from '../lib/types';
 import { Select } from '../lib/Select';
 import { useEditorInit } from '../lib/hooks';
 import { allColors } from '../lib/constants/colors';
 
 const getEditor = (props: PropsObjectInterface): EditorSection[] => ([
-    labelSection(),
+    labelSection(LabelPositions.vertical),
     {
         type: EditorSectionTypes.section,
         label: 'Multiple',

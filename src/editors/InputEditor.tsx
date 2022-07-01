@@ -2,7 +2,7 @@ import React from 'react';
 
 import Editor from './EditorBuilder';
 
-import { EditorSection, EditorSectionTypes, PropsObjectInterface } from '../lib/types';
+import { EditorSection, EditorSectionTypes, LabelPositions, PropsObjectInterface } from '../lib/types';
 import { Fragment } from 'react';
 import { Input } from '../lib/Input';
 import { useEditorInit } from '../lib/hooks';
@@ -11,7 +11,7 @@ import { InputTypes } from '../lib/Input/config';
 
 const getEditor = (props: PropsObjectInterface) => {
     const editorJson: EditorSection[] = [
-        labelSection(),
+        labelSection(LabelPositions.vertical),
         {
             type: EditorSectionTypes.section,
             label: 'Type',

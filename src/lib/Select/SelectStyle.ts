@@ -8,7 +8,7 @@ import {
     fontColorFromBackground,
     lightenDarkenColor
 } from '../helpers';
-import { BorderRadius, ElementLength } from '../types';
+import { BorderRadius, ElementLength, LabelLength, LabelPositions } from '../types';
 
 import {
     SelectElementProps,
@@ -37,6 +37,7 @@ export const SelectElement = styled.div<SelectElementProps>`
         )
     };   
     display: flex;
+    align-items: center;
     text-align: left;
     height: 1.75em;
     position: relative;
@@ -73,7 +74,12 @@ export const SelectElement = styled.div<SelectElementProps>`
 
 export const SelectWrapper = styled.div<SelectWrapperProps>`
     display: flex;
-    flex-direction: column;
+    ${props => props.labelPosition === LabelPositions.vertical
+        ? `flex-direction: column;
+            justify-content: center;
+        ` : `flex-direction: row;
+            align-items: center
+        `};
     width: ${props => props.length};
     height: 3.5em;
     position: relative;
@@ -94,9 +100,13 @@ export const SelectWrapper = styled.div<SelectWrapperProps>`
 `;
 
 export const Label = styled.div<LabelProps>`
-    padding: 1em 1em 0 1em;
+    display: flex;
+    align-items: center;
     font-family: "Gotham SSm A", "Gotham SSm B", sans-serif;
-    font-size: 16px;
+    ${props => props.labelPosition === LabelPositions.horizontal
+        ? 'font-size: 16px;'
+        : 'font-size: 12px;'
+    }
     font-weight: 600;
     line-height: 24px;
     color: ${props => props.labelColor};
@@ -107,11 +117,8 @@ export const Label = styled.div<LabelProps>`
     padding: .25em 1.5em 0 1.5em;
     opacity: 1;
     color: ${props => props.labelColor};
-    font-size: 12px;
 
-    ${props => props.hideLabel || props.label === '' ? 'height: 2em;' : ''}
-
-    max-width: ${({length}) => length};
+    max-width: ${({length, labelLength}) => labelLength === LabelLength.auto ? length : labelLength};
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;

@@ -9,7 +9,7 @@ import {
 } from './InputStyle';
 
 import { CheckValidatorsType, InputProps, InputTypeProps, InputTypes } from './config';
-import { BorderRadius, ElementLength, PropsObjectInterface } from '../types';
+import { BorderRadius, ElementLength, LabelLength, LabelPositions, PropsObjectInterface } from '../types';
 import { allColors } from '../constants/colors';
 import { IconList, Icon } from '../Icon';
 import { useComputedWidth } from '../hooks';
@@ -135,12 +135,14 @@ function Input({
     value: valueFromProps,
     label,
     hideLabel,
+    labelLength,
     shadow,
     onBlur,
     onChange,
     length,
     active: activeFromProps,
     labelColor,
+    labelPosition,
     textColor,
     borderColor,
     max,
@@ -195,20 +197,25 @@ function Input({
             showBorders={showBorders}
             hideBottomBorder={hideBottomBorder}
             borderRadius={borderRadius}
+            labelPosition={labelPosition}
+            hideLabel={hideLabel}
             onClick={setFocusFromDiv}
         >
-            <Label
-                htmlFor={id.current}
-                error={error}
-                length={length}
-                // Type date is always "active"
-                active={active || type === InputTypes.date}
-                labelColor={labelColor}
-                hideLabel={hideLabel}
-                label={label}
-            >
-                {hideLabel ? '' : (error && errorMessage) || label}
-            </Label>
+            {hideLabel ? null : (
+                <Label
+                    htmlFor={id.current}
+                    error={error}
+                    length={length}
+                    // Type date is always "active"
+                    active={active || type === InputTypes.date}
+                    labelColor={labelColor}
+                    labelPosition={labelPosition}
+                    labelLength={labelLength}
+                    label={label}
+                >
+                    {(error && errorMessage) || label}
+                </Label>
+            )}
             <InputElement
                 error={error}
                 setError={setError}
@@ -246,6 +253,8 @@ const defaultProps: PropsObjectInterface = {
     labelColor: allColors['Dim Gray'],
     textColor: allColors['Dim Gray'],
     borderColor: allColors['Silver Sand'],
+    labelPosition: LabelPositions.vertical,
+    labelLength: LabelLength.auto,
     min: undefined,
     max: undefined,
     type: InputTypes.text,
