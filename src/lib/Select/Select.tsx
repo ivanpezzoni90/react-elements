@@ -127,9 +127,12 @@ function Select(props: SelectProps) {
 
     const dropDownRef = useRef<HTMLDivElement>(null);
     // Set close dropdown callback on click outside when enabled
-    useClickOutside(dropDownRef, closeOnClickOutside
-        ? () => setIsOpen(false)
-        : doNothing
+    useClickOutside(
+        dropDownRef,
+        closeOnClickOutside
+            ? () => setIsOpen(false)
+            : doNothing,
+        [selectRef]
     );
 
     const currentOptionsList: OptionType[] = getOptionsFromValue(selectedOption);

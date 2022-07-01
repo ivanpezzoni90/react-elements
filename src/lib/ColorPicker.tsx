@@ -227,8 +227,8 @@ function ColorPickerElement({
 
     const toggling = () => setIsOpen(!isOpen);
 
-    const ref = useRef<HTMLDivElement>(null);
-    const dropDownZIndex = useComputedZIndex(ref);
+    const styledColorPickerRef = useRef<HTMLDivElement>(null);
+    const dropDownZIndex = useComputedZIndex(styledColorPickerRef);
 
     const onChangeColor = (newColor: string) => () => {
         setSelectedColor(newColor);
@@ -258,9 +258,12 @@ function ColorPickerElement({
 
     const dropDownRef = useRef<HTMLDivElement>(null);
     // Set close dropdown callback on click outside when enabled
-    useClickOutside(dropDownRef, closeOnClickOutside
-        ? () => setIsOpen(false)
-        : doNothing
+    useClickOutside(
+        dropDownRef,
+        closeOnClickOutside
+            ? () => setIsOpen(false)
+            : doNothing,
+        [styledColorPickerRef]
     );
 
     return (
@@ -278,7 +281,7 @@ function ColorPickerElement({
                 </ColorPickerInfoContainer>
                 <StyledColorPicker
                     className="ie-color-picker__element__picker"
-                    ref={ref}
+                    ref={styledColorPickerRef}
                     color={selectedColor}
                     onClick={toggling}
                 />
