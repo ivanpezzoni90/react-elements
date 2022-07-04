@@ -85,7 +85,7 @@ const CheckboxAdvancedWrapper = styled.div<CheckboxAdvancedWrapperInterface>`
     ${(props) => props.showBorders ? `border: 1px solid ${props.borderColor}` : ''};
     transition: 0.3s background-color ease-in-out, 0.3s box-shadow ease-in-out;
     background-color: #ffffff;
-    ${({shadow}) => shadow ? 'box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2);' : ''}
+    ${({shadow}) => shadow ? 'box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.1);' : ''}
 
     &:hover{
         background-color: rgba(255, 255, 255, 0.45);

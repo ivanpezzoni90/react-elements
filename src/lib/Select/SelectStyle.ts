@@ -90,7 +90,7 @@ export const SelectWrapper = styled.div<SelectWrapperProps>`
     transition: 0.3s background-color ease-in-out, 0.3s box-shadow ease-in-out;
     ${props => props.hasValue && props.shadow
         ? `background-color: #ffffff;
-        box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2);`
+        box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.1);`
         : ''
     }
     &:hover{

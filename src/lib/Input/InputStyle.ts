@@ -90,7 +90,7 @@ export const InputWrapper = styled.div<InputWrapperProps>`
     ${props => props.locked ? 'pointer-events: none;' : ''}
     ${props => props.active && props.shadow
         ? `background-color: ${allColors['White']};
-            box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2);`
+            box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.1);`
         : ''
     }
     &:hover{
