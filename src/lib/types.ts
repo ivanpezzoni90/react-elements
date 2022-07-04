@@ -8,8 +8,16 @@ export type Component = {
     editor: Function // TODO:
 };
 
+export enum EditorTypes {
+    input = 'input',
+    select = 'select',
+    checkbox = 'checkbox',
+    toggle = 'toggle',
+    color = 'color',
+}
+
 export type Editor = {
-    type: string,
+    type: EditorTypes,
     default: string | boolean | Array<string> | number | undefined,
     label: string,
     options?: Array<Option>,
@@ -104,6 +112,14 @@ export enum ElementSize {
     l = '18px',
     xl = '20px',
     xxl = '22px'
+}
+
+export enum ElementHeight {
+    xs = '1.5em',
+    s = '2.5em',
+    m = '3.5em',
+    l = '4.5em',
+    xl = '5.5em'
 }
 
 export enum LabelPositions {

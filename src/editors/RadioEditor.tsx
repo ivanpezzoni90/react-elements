@@ -2,7 +2,7 @@ import React from 'react';
 
 import Editor from './EditorBuilder';
 
-import { EditorSection, EditorSectionTypes, LabelPositions, PropsObjectInterface, RadioTypes } from '../lib/types';
+import { EditorSection, EditorSectionTypes, EditorTypes, LabelPositions, PropsObjectInterface, RadioTypes } from '../lib/types';
 import { Fragment } from 'react';
 import { useEditorInit } from '../lib/hooks';
 import { ElementContainer, labelSection, positionEditor } from './commons';
@@ -28,7 +28,7 @@ const getEditor = (props: PropsObjectInterface) => {
             label: 'Type',
             editors: [
                 {
-                    type: 'select',
+                    type: EditorTypes.select,
                     default: RadioTypes.checkbox,
                     label: 'Type',
                     prop: 'type',
@@ -52,7 +52,7 @@ const getEditor = (props: PropsObjectInterface) => {
                 positionEditor,
                 // Workaround to change number of options using value prop
                 {
-                    type: 'input',
+                    type: EditorTypes.input,
                     inputType: InputTypes.number,
                     default: 2,
                     label: 'Number of elements',

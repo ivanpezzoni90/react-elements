@@ -6,6 +6,8 @@ import {
     Editor,
     EditorSection,
     EditorSectionTypes,
+    EditorTypes,
+    ElementHeight,
     ElementLength,
     ElementSize,
     FontWeight,
@@ -44,7 +46,7 @@ export const ElementContainer = ({children}: {children: ReactElement}) => (
 export const labelPositionEditor: (def?: LabelPositions) => Editor = (
     def = LabelPositions.horizontal
 ) => ({
-    type: 'select',
+    type: EditorTypes.select,
     label: 'Label Position',
     default: def,
     prop: 'labelPosition',
@@ -58,7 +60,7 @@ export const labelPositionEditor: (def?: LabelPositions) => Editor = (
 });
 
 export const positionEditor: Editor = {
-    type: 'select',
+    type: EditorTypes.select,
     label: 'Position',
     default: Positions.vertical,
     prop: 'position',
@@ -72,7 +74,7 @@ export const positionEditor: Editor = {
 };
 
 export const alignPositionEditor: Editor = {
-    type: 'select',
+    type: EditorTypes.select,
     label: 'Alignment',
     default: AlignPositions.center,
     prop: 'align',
@@ -90,20 +92,20 @@ export const alignPositionEditor: Editor = {
 
 export const shadowEditor: Editor = {
     label: 'Shadow',
-    type: 'toggle',
+    type: EditorTypes.toggle,
     default: true,
     prop: 'shadow'
 };
 
 export const colorEditors: Editor[] = [
     {
-        type: 'color',
+        type: EditorTypes.color,
         label: 'Text Color',
         prop: 'textColor',
         default: allColors['Dim Gray']
     },
     {
-        type: 'color',
+        type: EditorTypes.color,
         label: 'Border Color',
         prop: 'borderColor',
         default: allColors['Silver Sand']
@@ -111,7 +113,7 @@ export const colorEditors: Editor[] = [
 ];
 
 export const labelColorEditor: Editor =  {
-    type: 'color',
+    type: EditorTypes.color,
     label: 'Label Color',
     prop: 'labelColor',
     default: allColors['Dim Gray']
@@ -119,7 +121,7 @@ export const labelColorEditor: Editor =  {
 
 export const lengthEditor = (def = ElementLength.full): Editor => ({
     label: 'Length',
-    type: 'select',
+    type: EditorTypes.select,
     default: def,
     prop: 'length',
     options: [
@@ -162,9 +164,39 @@ export const lengthEditor = (def = ElementLength.full): Editor => ({
     ]
 });
 
+
+export const heightEditor = (def = ElementHeight.m): Editor => ({
+    label: 'Height',
+    type: EditorTypes.select,
+    default: def,
+    prop: 'height',
+    options: [
+        {
+            label: 'XS',
+            value: ElementHeight.xs
+        },
+        {
+            label: 'S',
+            value: ElementHeight.s
+        },
+        {
+            label: 'M',
+            value: ElementHeight.m
+        },
+        {
+            label: 'L',
+            value: ElementHeight.l
+        },
+        {
+            label: 'XL',
+            value: ElementHeight.xl
+        },
+    ]
+});
+
 export const labelLengthEditor = (def = LabelLength.auto): Editor => ({
     label: 'Label length',
-    type: 'select',
+    type: EditorTypes.select,
     default: def,
     prop: 'labelLength',
     options: [
@@ -207,7 +239,7 @@ export const labelLengthEditor = (def = LabelLength.auto): Editor => ({
 
 export const paddingEditor: Editor = {
     label: 'Padding',
-    type: 'select',
+    type: EditorTypes.select,
     default: Padding.m,
     prop: 'padding',
     options: [{
@@ -224,7 +256,7 @@ export const paddingEditor: Editor = {
 
 export const fontWeightEditor: Editor = {
     label: 'Font Weight',
-    type: 'select',
+    type: EditorTypes.select,
     default: FontWeight.light,
     prop: 'fontWeight',
     options: [{
@@ -254,7 +286,7 @@ type borderRadiusEditorType = (
 export const borderRadiusEditor: borderRadiusEditorType =
 (_default: BorderRadius, label = 'Border Radius', prop = 'borderRadius') => ({
     label,
-    type: 'select',
+    type: EditorTypes.select,
     default: _default,
     prop,
     options: [{
@@ -283,7 +315,7 @@ export const borderRadiusEditor: borderRadiusEditorType =
 
 export const fontSizeEditor: Editor = {
     label: 'Element Size',
-    type: 'select',
+    type: EditorTypes.select,
     default: ElementSize.m,
     prop: 'fontSize',
     options: [{
@@ -318,7 +350,7 @@ const iconOptions: Option[] = Object.values(IconList).map(v => ({
 }));
 
 export const iconEditor: Editor = {
-    type: 'select',
+    type: EditorTypes.select,
     default: IconList.check,
     label: 'Icon',
     prop: 'icon',
@@ -333,7 +365,7 @@ const sizeOptions: Option[] = Object.entries(IconSize).map(([k,v]) => ({
 
 export const iconSizeEditor: Editor = {
     label: 'Size',
-    type: 'select',
+    type: EditorTypes.select,
     default: IconSize.xs,
     prop: 'fontSize',
     options: sizeOptions
@@ -342,13 +374,13 @@ export const iconSizeEditor: Editor = {
 export const bordersEditor: Editor[] = [
     {
         label: 'Show all borders',
-        type: 'toggle',
+        type: EditorTypes.toggle,
         default: false,
         prop: 'showBorders'
     },
     {
         label: 'Hide bottom border',
-        type: 'toggle',
+        type: EditorTypes.toggle,
         default: false,
         prop: 'hideBottomBorder'
     }
@@ -360,7 +392,7 @@ export const bordersAndShadowSection = (simpleElement?: boolean): EditorSection 
     editors: !simpleElement ? [
         shadowEditor,
         {
-            type: 'color',
+            type: EditorTypes.color,
             label: 'Border Color',
             prop: 'borderColor',
             default: allColors['Silver Sand']
@@ -375,13 +407,13 @@ export const labelSection = (defaultPosition?: LabelPositions): EditorSection =>
     label: 'Label',
     editors: [
         {
-            type: 'input',
+            type: EditorTypes.input,
             default: 'Label',
             label: 'Label',
             prop: 'label'
         },
         {
-            type: 'toggle',
+            type: EditorTypes.toggle,
             default: false,
             label: 'Hide label',
             prop: 'hideLabel'

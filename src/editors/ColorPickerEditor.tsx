@@ -3,7 +3,7 @@ import React from 'react';
 import { Fragment } from 'react';
 import Editor from './EditorBuilder';
 import {ColorPicker} from '../lib/ColorPicker';
-import { EditorSection, EditorSectionTypes, ElementLength, PropsObjectInterface } from '../lib/types';
+import { EditorSection, EditorSectionTypes, EditorTypes, ElementLength, PropsObjectInterface } from '../lib/types';
 import { useEditorInit } from '../lib/hooks';
 import { alignPositionEditor, bordersAndShadowSection, ElementContainer, labelSection, lengthEditor } from './commons';
 import { allColors } from '../lib/constants/colors';
@@ -24,7 +24,7 @@ const getEditor = (props: PropsObjectInterface) => {
             label: 'Others',
             editors: [
                 {
-                    type: 'toggle',
+                    type: EditorTypes.toggle,
                     label: 'Close dropdown on click outside',
                     prop: 'closeOnClickOutside',
                     default: true

@@ -2,7 +2,7 @@ import React from 'react';
 import { Fragment } from 'react';
 import Editor from './EditorBuilder';
 import { SwitchToggle } from '../lib/SwitchToggle';
-import { EditorSection, EditorSectionTypes, ElementLength, PropsObjectInterface, ToggleLabelType } from '../lib/types';
+import { EditorSection, EditorSectionTypes, EditorTypes, ElementLength, PropsObjectInterface, ToggleLabelType } from '../lib/types';
 import { useEditorInit } from '../lib/hooks';
 import { alignPositionEditor, bordersAndShadowSection, ElementContainer, labelSection, lengthEditor } from './commons';
 
@@ -14,13 +14,13 @@ const getEditor = (props: PropsObjectInterface) => {
             label: 'Colors',
             editors: [
                 {
-                    type: 'color',
+                    type: EditorTypes.color,
                     default: '#666',
                     label: 'Color',
                     prop: 'color'
                 },
                 {
-                    type: 'color',
+                    type: EditorTypes.color,
                     default: 'white',
                     label: 'Off Color',
                     prop: 'colorOff'
@@ -32,7 +32,7 @@ const getEditor = (props: PropsObjectInterface) => {
             label: 'Type',
             editors: [
                 {
-                    type: 'select',
+                    type: EditorTypes.select,
                     default: ToggleLabelType.label,
                     label: 'Label type',
                     prop: 'labelType',
@@ -46,24 +46,24 @@ const getEditor = (props: PropsObjectInterface) => {
                 },
                 ... props.labelType === ToggleLabelType.label
                     ? [{
-                        type: 'input',
+                        type: EditorTypes.input,
                         default: 'YES',
                         label: 'Label ON',
                         prop: 'labelOn'
                     }, {
-                        type: 'input',
+                        type: EditorTypes.input,
                         default: 'NO',
                         label: 'Label OFF',
                         prop: 'labelOff'
                     }] : [],
                 ... props.labelType === ToggleLabelType.icon
                     ? [{
-                        type: 'color',
+                        type: EditorTypes.color,
                         default: 'white',
                         label: 'Icon Color',
                         prop: 'iconColor'
                     }, {
-                        type: 'color',
+                        type: EditorTypes.color,
                         default: '#666',
                         label: 'Icon Off Color',
                         prop: 'iconOffColor'

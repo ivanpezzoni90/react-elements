@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 
 import styled from 'styled-components';
-import { ChangeEditorPropType, ChangeElementValueType, Editor, EditorSection, ElementLength } from '../lib/types';
+import { ChangeEditorPropType, ChangeElementValueType, Editor, EditorSection, EditorTypes, ElementLength } from '../lib/types';
 import { Checkbox } from '../lib/Checkbox';
-import { LabelPositions } from '../lib/types';
 import { Input } from '../lib/Input';
 import { Select } from '../lib/Select';
 import { SwitchToggle } from '../lib/SwitchToggle';
@@ -151,7 +150,7 @@ export default function EditorFunction({
                                                         group={group.length}
                                                     >
                                                         {{
-                                                            input: (<Input
+                                                            [EditorTypes.input]: (<Input
                                                                 locked={false}
                                                                 value={e.default as string}
                                                                 type={e.inputType as InputTypes || InputTypes.text}
@@ -159,7 +158,7 @@ export default function EditorFunction({
                                                                 onBlur={() => { } }
                                                                 length={ElementLength.full}
                                                                 onChange={onChangeValue(e.prop)} />),
-                                                            select: (<Select
+                                                            [EditorTypes.select]: (<Select
                                                                 options={e.options ? e.options : []}
                                                                 value={Array.isArray(e.default)
                                                                     ? e.default as Array<string>
@@ -169,19 +168,19 @@ export default function EditorFunction({
                                                                 length={ElementLength.full}
                                                                 resettable={e.resettable}
                                                                 onChange={onChangeValue(e.prop)} />),
-                                                            checkbox: (<Checkbox
+                                                            [EditorTypes.checkbox]: (<Checkbox
                                                                 className=""
                                                                 checked={e.default as boolean}
                                                                 label={e.label}
                                                                 length={ElementLength.full}
                                                                 onChange={onChangeValue(e.prop)} />),
-                                                            toggle: (<SwitchToggle
+                                                            [EditorTypes.toggle]: (<SwitchToggle
                                                                 checked={e.default as boolean}
                                                                 label={e.label}
                                                                 color="#666"
                                                                 length={ElementLength.full}
                                                                 onChange={onChangeValue(e.prop)} />),
-                                                            color: (<ColorPicker
+                                                            [EditorTypes.color]: (<ColorPicker
                                                                 value={e.default as string}
                                                                 label={e.label}
                                                                 length={ElementLength.full}

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Editor from './EditorBuilder';
-import { EditorSection, EditorSectionTypes } from '../lib/types';
+import { EditorSection, EditorSectionTypes, EditorTypes } from '../lib/types';
 import { Fragment } from 'react';
 import { IconList, Icon } from '../lib/Icon';
 import { useEditorInit } from '../lib/hooks';
@@ -15,7 +15,7 @@ const getEditor = () => {
             editors: [
                 iconEditor,
                 {
-                    type: 'color',
+                    type: EditorTypes.color,
                     default: '#666',
                     label: 'Color',
                     prop: 'color'
