@@ -96,8 +96,9 @@ const SliderAdvancedLabel = styled.label<LabelProps>`
 
 const getSliderCursorStyles = (color: string) => (`
     width: 1em;
-    height: 2em;
-    background: ${color};
+    height: 1em;
+    border: 2px solid ${color};
+    background: white;
     cursor: pointer;
 
     outline: none;
@@ -105,6 +106,8 @@ const getSliderCursorStyles = (color: string) => (`
     border-radius: 18px;
 
     transition: outline 0.5s ease-in-out;
+
+    margin-bottom: 0.75em;
 
     &:hover {
         outline: ${getOutlineColor(lightenDarkenColor(color, 80))} solid 4px;
@@ -126,7 +129,7 @@ const SliderElementContainer = styled.div`
 const SliderInput = styled.input<SliderInputInterface>`
     -webkit-appearance: none;
     width: 100%;
-    height: 1em;
+    height: 0.5em;
     border-radius: 5px;
     background: ${allColors['Platinum']};
     outline: none;
@@ -138,7 +141,6 @@ const SliderInput = styled.input<SliderInputInterface>`
         appearance: none;
         ${({color}) => getSliderCursorStyles(color)}
     }
-
     &::-moz-range-thumb {
         ${({color}) => getSliderCursorStyles(color)}
     }
@@ -227,7 +229,6 @@ const SliderValue = styled.div<SliderValueInterface>`
         length === ElementLength.l || length === ElementLength.full ? '14px' : '11px'};
     color: ${allColors['Dim Gray']};
     padding-right: 0.5em;
-    align-items: center;
     display: flex;
     width: ${({length}) =>
         length === ElementLength.l || length === ElementLength.full ? '2em' : '1.5em'};
