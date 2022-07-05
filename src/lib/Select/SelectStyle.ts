@@ -68,8 +68,11 @@ export const SelectElement = styled.div<SelectElementProps>`
     :-moz-placeholder {
         color: rgba(255, 255, 255, 0.8);
     }
-    padding: 0 1em;
+    margin: 0 2em 0 1em;
     ${({multiple}) => multiple ? 'padding-bottom: 0.25em;' : ''}
+
+    overflow: auto;
+    white-space: nowrap;
 `;
 
 export const SelectWrapper = styled.div<SelectWrapperProps>`
@@ -203,9 +206,8 @@ export const SelectChip = styled.div<SelectChipInterface>`
     border-radius: ${({borderRadius}) => borderRadius};
     display: flex;
     align-items: center;
-    padding: 0.25em;
     margin-right: 0.75em;
-    font-size: 14px;
+    font-size: 12px;
 `;
 
 export const ChipText = styled.div`
