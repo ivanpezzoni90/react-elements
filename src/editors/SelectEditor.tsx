@@ -2,7 +2,8 @@ import React from 'react';
 
 import Editor from './EditorBuilder';
 import { Fragment } from 'react';
-import { borderRadiusEditor, bordersAndShadowSection, colorEditors, ElementContainer, labelSection, lengthEditor } from './commons';
+import { borderRadiusEditor, bordersAndShadowSection, colorEditors, labelSection, lengthEditor } from './commons/editors';
+import { ElementContainer } from './commons/ElementContainer';
 
 import { BorderRadius, EditorSection, EditorSectionTypes, EditorTypes, LabelPositions, PropsObjectInterface } from '../lib/types';
 import { Select } from '../lib/Select';

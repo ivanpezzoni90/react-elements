@@ -4,7 +4,8 @@ import Editor from './EditorBuilder';
 import { SwitchToggle } from '../lib/SwitchToggle';
 import { EditorSection, EditorSectionTypes, EditorTypes, ElementLength, PropsObjectInterface, ToggleLabelType } from '../lib/types';
 import { useEditorInit } from '../lib/hooks';
-import { alignPositionEditor, bordersAndShadowSection, ElementContainer, labelSection, lengthEditor } from './commons';
+import { alignPositionEditor, bordersAndShadowSection, labelSection, lengthEditor } from './commons/editors';
+import { ElementContainer } from './commons/ElementContainer';
 
 const getEditor = (props: PropsObjectInterface) => {
     const editorJson: EditorSection[] = [

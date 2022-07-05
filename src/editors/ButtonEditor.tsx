@@ -2,9 +2,19 @@ import React from 'react';
 import { Fragment } from 'react';
 import Editor from './EditorBuilder';
 import {Button} from '../lib/Button';
-import { BorderRadius, ButtonIconSize, EditorSection, EditorSectionTypes, EditorTypes, IconPosition } from '../lib/types';
+import { BorderRadius, ButtonIconSize, EditorSection, EditorSectionTypes, EditorTypes, ElementHeight, IconPosition } from '../lib/types';
 import { useEditorInit } from '../lib/hooks';
-import { alignPositionEditor, borderRadiusEditor, ElementContainer, fontSizeEditor, fontWeightEditor, heightEditor, iconEditor, lengthEditor } from './commons';
+import {
+    alignPositionEditor,
+    borderRadiusEditor,
+    fontSizeEditor,
+    fontWeightEditor,
+    heightEditor,
+    iconEditor,
+    lengthEditor,
+} from './commons/editors';
+import { ElementContainer } from './commons/ElementContainer';
+
 import { allColors } from '../lib/constants/colors';
 import { IconList } from '../lib/Icon';
 

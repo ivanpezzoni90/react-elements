@@ -5,7 +5,9 @@ import { EditorSection, EditorSectionTypes, EditorTypes } from '../lib/types';
 import { Fragment } from 'react';
 import { IconList, Icon } from '../lib/Icon';
 import { useEditorInit } from '../lib/hooks';
-import { ElementContainer, iconEditor, iconSizeEditor } from './commons';
+import { iconEditor, iconSizeEditor } from './commons/editors';
+import { ElementContainer } from './commons/ElementContainer';
+
 
 const getEditor = () => {
     const editorJson: EditorSection[] = [

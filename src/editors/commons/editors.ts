@@ -1,6 +1,4 @@
-import React, { ReactElement } from 'react';
-import styled from 'styled-components';
-import { allColors } from '../lib/constants/colors';
+import { allColors } from '../../lib/constants/colors';
 import {
     BorderRadius,
     Editor,
@@ -16,32 +14,9 @@ import {
     Option,
     Padding,
     Positions
-} from '../lib/types';
-import { AlignPositions, LabelPositions } from '../lib/types';
-import { IconList } from '../lib/Icon';
-
-export const Container = styled.div`
-    padding: 2em 1em 2em 1em;
-    border-bottom: 1px solid ${allColors['Dim Gray']};
-    display: flex;
-    justify-content: center;
-`;
-
-export const Wrapper = styled.div`
-    width: 40em;
-`;
-
-export const ElementContainer = ({children}: {children: ReactElement}) => (
-    <Container
-        className="ie__workarea__element"
-    >
-        <Wrapper
-            className="ie__workarea__element__wrapper"
-        >
-            {children}
-        </Wrapper>
-    </Container>
-);
+} from '../../lib/types';
+import { AlignPositions, LabelPositions } from '../../lib/types';
+import { IconList } from '../../lib/Icon';
 
 export const labelPositionEditor: (def?: LabelPositions) => Editor = (
     def = LabelPositions.horizontal
@@ -160,36 +135,6 @@ export const lengthEditor = (def = ElementLength.full): Editor => ({
         {
             value: ElementLength.full,
             label: 'Full'
-        },
-    ]
-});
-
-
-export const heightEditor = (def = ElementHeight.m): Editor => ({
-    label: 'Height',
-    type: EditorTypes.select,
-    default: def,
-    prop: 'height',
-    options: [
-        {
-            label: 'XS',
-            value: ElementHeight.xs
-        },
-        {
-            label: 'S',
-            value: ElementHeight.s
-        },
-        {
-            label: 'M',
-            value: ElementHeight.m
-        },
-        {
-            label: 'L',
-            value: ElementHeight.l
-        },
-        {
-            label: 'XL',
-            value: ElementHeight.xl
         },
     ]
 });
@@ -421,5 +366,34 @@ export const labelSection = (defaultPosition?: LabelPositions): EditorSection =>
         labelColorEditor,
         labelPositionEditor(defaultPosition),
         labelLengthEditor()
+    ]
+});
+
+export const heightEditor = (def = ElementHeight.m): Editor => ({
+    label: 'Height',
+    type: EditorTypes.select,
+    default: def,
+    prop: 'height',
+    options: [
+        {
+            label: 'XS',
+            value: ElementHeight.xs
+        },
+        {
+            label: 'S',
+            value: ElementHeight.s
+        },
+        {
+            label: 'M',
+            value: ElementHeight.m
+        },
+        {
+            label: 'L',
+            value: ElementHeight.l
+        },
+        {
+            label: 'XL',
+            value: ElementHeight.xl
+        },
     ]
 });

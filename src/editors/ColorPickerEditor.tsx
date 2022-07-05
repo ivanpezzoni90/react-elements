@@ -5,7 +5,9 @@ import Editor from './EditorBuilder';
 import {ColorPicker} from '../lib/ColorPicker';
 import { EditorSection, EditorSectionTypes, EditorTypes, ElementLength, PropsObjectInterface } from '../lib/types';
 import { useEditorInit } from '../lib/hooks';
-import { alignPositionEditor, bordersAndShadowSection, ElementContainer, labelSection, lengthEditor } from './commons';
+import { alignPositionEditor, bordersAndShadowSection, labelSection, lengthEditor } from './commons/editors';
+import { ElementContainer } from './commons/ElementContainer';
+
 import { allColors } from '../lib/constants/colors';
 
 const getEditor = (props: PropsObjectInterface) => {

@@ -5,7 +5,9 @@ import Editor from './EditorBuilder';
 import { EditorSection, EditorSectionTypes, EditorTypes, LabelPositions, PropsObjectInterface, RadioTypes } from '../lib/types';
 import { Fragment } from 'react';
 import { useEditorInit } from '../lib/hooks';
-import { ElementContainer, labelSection, positionEditor } from './commons';
+import { labelSection, positionEditor } from './commons/editors';
+import { ElementContainer } from './commons/ElementContainer';
+
 import { InputTypes } from '../lib/Input/config';
 import { Radio } from '../lib/Radio';
 import { IconList } from '../lib/Icon';
