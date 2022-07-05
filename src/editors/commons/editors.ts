@@ -139,6 +139,35 @@ export const lengthEditor = (def = ElementLength.full): Editor => ({
     ]
 });
 
+export const heightEditor = (def = ElementHeight.m): Editor => ({
+    label: 'Height',
+    type: EditorTypes.select,
+    default: def,
+    prop: 'height',
+    options: [
+        {
+            label: 'XS',
+            value: ElementHeight.xs
+        },
+        {
+            label: 'S',
+            value: ElementHeight.s
+        },
+        {
+            label: 'M',
+            value: ElementHeight.m
+        },
+        {
+            label: 'L',
+            value: ElementHeight.l
+        },
+        {
+            label: 'XL',
+            value: ElementHeight.xl
+        },
+    ]
+});
+
 export const labelLengthEditor = (def = LabelLength.auto): Editor => ({
     label: 'Label length',
     type: EditorTypes.select,
@@ -366,34 +395,5 @@ export const labelSection = (defaultPosition?: LabelPositions): EditorSection =>
         labelColorEditor,
         labelPositionEditor(defaultPosition),
         labelLengthEditor()
-    ]
-});
-
-export const heightEditor = (def = ElementHeight.m): Editor => ({
-    label: 'Height',
-    type: EditorTypes.select,
-    default: def,
-    prop: 'height',
-    options: [
-        {
-            label: 'XS',
-            value: ElementHeight.xs
-        },
-        {
-            label: 'S',
-            value: ElementHeight.s
-        },
-        {
-            label: 'M',
-            value: ElementHeight.m
-        },
-        {
-            label: 'L',
-            value: ElementHeight.l
-        },
-        {
-            label: 'XL',
-            value: ElementHeight.xl
-        },
     ]
 });

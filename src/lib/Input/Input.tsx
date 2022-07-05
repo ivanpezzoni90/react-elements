@@ -9,7 +9,7 @@ import {
 } from './InputStyle';
 
 import { CheckValidatorsType, InputProps, InputTypeProps, InputTypes } from './config';
-import { BorderRadius, ElementLength, LabelLength, LabelPositions, PropsObjectInterface } from '../types';
+import { BorderRadius, ElementHeight, ElementLength, LabelLength, LabelPositions, PropsObjectInterface } from '../types';
 import { allColors } from '../constants/colors';
 import { IconList, Icon } from '../Icon';
 import { useComputedWidth } from '../hooks';
@@ -22,7 +22,6 @@ function InputElement({
     active,
     shadow,
     textColor,
-    label,
     id,
     type,
     defaultValue,
@@ -31,6 +30,7 @@ function InputElement({
     onBlur,
     max,
     min,
+    placeholder,
     computedWidth
 }: InputTypeProps) {
     const checkValidators: CheckValidatorsType = useCallback((newValue, opts = {}) => {
@@ -98,7 +98,7 @@ function InputElement({
                 id={id}
                 type={type}
                 defaultValue={defaultValue}
-                placeholder={label}
+                placeholder={placeholder}
                 computedWidth={computedWidth}
                 onChange={onChangeValue}
                 onFocus={onFocus}
@@ -150,7 +150,9 @@ function Input({
     type,
     showBorders,
     hideBottomBorder,
-    borderRadius
+    borderRadius,
+    height,
+    placeholder
 }: InputProps) {
     // active = focused or with value
     const [active, setActive] = useState(activeFromProps || (valueFromProps !== ''));
@@ -205,6 +207,7 @@ function Input({
             borderRadius={borderRadius}
             labelPosition={labelPosition}
             hideLabel={hideLabel}
+            height={height}
             onClick={setFocusFromDiv}
         >
             {hideLabel ? null : (
@@ -212,8 +215,8 @@ function Input({
                     htmlFor={id.current}
                     error={error}
                     length={length}
-                    // Type date is always "active"
-                    active={active || type === InputTypes.date}
+                    // Type date is always "active", and force active when there is a placeholder
+                    active={active || type === InputTypes.date || placeholder !== ''}
                     labelColor={labelColor}
                     labelPosition={labelPosition}
                     labelLength={labelLength}
@@ -239,6 +242,7 @@ function Input({
                 onBlur={onBlurCb}
                 max={max}
                 min={min}
+                placeholder={placeholder}
                 computedWidth={inputElementWidth}
             />
         </InputWrapper>
@@ -268,6 +272,8 @@ const defaultProps: PropsObjectInterface = {
     hideBottomBorder: false,
     borderRadius: BorderRadius.no,
     hideLabel: false,
+    height: ElementHeight.m,
+    placeholder: ''
 };
 
 Input.defaultProps = defaultProps;

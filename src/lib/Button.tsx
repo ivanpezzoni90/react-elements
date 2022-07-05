@@ -141,7 +141,7 @@ const Button = ({
     );
 };
 
-Button.defaultProps = {
+const defaultProps: PropsObjectInterface = {
     padding: Padding.m,
     borderRadius: BorderRadius.s,
     color: allColors['Firebrick'],
@@ -159,5 +159,7 @@ Button.defaultProps = {
     iconPosition: IconPosition.left,
     align: AlignPositions.center
 };
+
+Button.defaultProps = defaultProps;
 
 export { Button };

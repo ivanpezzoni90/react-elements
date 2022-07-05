@@ -1,7 +1,7 @@
-import React, { MouseEvent } from 'react';
+import React, { MouseEvent, useCallback } from 'react';
 import { Fragment, useEffect, useRef, useState } from 'react';
 import { checkEventTargetContainsClass, elaborateComputedWidth, generateID, lightenDarkenColor, mergeClasses } from '../helpers';
-import { BorderRadius, IconSize, LabelLength, LabelPositions, Option as OptionType, PropsObjectInterface } from '../types';
+import { BorderRadius, ElementHeight, IconSize, LabelLength, LabelPositions, Option as OptionType, PropsObjectInterface } from '../types';
 import { IconList, Icon } from '../Icon';
 import { ElementLength } from '../types';
 import {
@@ -19,7 +19,9 @@ import {
     ChipsWrapper,
     ChipIconWrapper,
     RelativeDropDownContainer,
-    SelectContainer
+    SelectContainer,
+    DropDownSearchContainer,
+    DropDownSearchIconWrapper
 } from './SelectStyle';
 
 import {
@@ -29,6 +31,7 @@ import {
 import { useClickOutside, useComputedWidth, useComputedZIndex } from '../hooks';
 import { allColors } from '../constants/colors';
 import { CheckboxElement } from '../Checkbox';
+import { Input } from '../Input';
 
 const doNothing = () => {};
 
@@ -62,7 +65,8 @@ function Select(props: SelectProps) {
         chipBorderRadius,
         closeOnClickOutside,
         labelLength,
-        labelPosition
+        labelPosition,
+        filterable
     } = props;
 
     const id = useRef(generateID());
@@ -77,8 +81,8 @@ function Select(props: SelectProps) {
     };
 
     const [selectedOption, setSelectedOption] = useState(valueFromProps);
-
     const [hasValue, setHasValue] = useState(isValidValue(selectedOption));
+    const [filteredOptions, setFilteredOptions] = useState(options);
 
     useEffect(() => {
         setHasValue(isValidValue(selectedOption));
@@ -153,6 +157,13 @@ function Select(props: SelectProps) {
         </ChipText>
     </>);
 
+    const filterOptions = useCallback((value: string | number | boolean | string[] | null) => {
+        const _value:string = value as string; // TODO: // REVIEW: Remove propsobjectinterface
+        const newOptions = options.filter(o => {
+            return o.label.toLowerCase().indexOf(_value.toLowerCase()) !== -1;
+        });
+        setFilteredOptions(newOptions);
+    }, [options]);
     return (
         <SelectContainer>
             <SelectWrapper
@@ -244,7 +255,22 @@ function Select(props: SelectProps) {
                         length={length}
                     >
                         <DropDownList>
-                            {options.map((o: OptionType) => (
+                            {filterable && (
+                                <DropDownSearchContainer>
+                                    <Input
+                                        hideLabel
+                                        placeholder='Search...'
+                                        height={ElementHeight.s}
+                                        onChange={filterOptions}
+                                    />
+                                    <DropDownSearchIconWrapper>
+                                        <Icon
+                                            icon={IconList.search}
+                                        />
+                                    </DropDownSearchIconWrapper>
+                                </DropDownSearchContainer>
+                            )}
+                            {filteredOptions.map((o: OptionType) => (
                                 <ListItem
                                     onClick={onOptionClicked(o.value as string)}
                                     key={o.value.toString()}
@@ -306,6 +332,7 @@ const defaultProps: PropsObjectInterface = {
     closeOnClickOutside: true,
     labelPosition: LabelPositions.vertical,
     labelLength: LabelLength.auto,
+    filterable: false,
     onChange: () => {}
 };
 

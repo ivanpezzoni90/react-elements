@@ -157,6 +157,9 @@ export const DropDownList = styled('ul')`
     font-size: 1em;
     font-weight: 500;
     text-align: left;
+
+    max-height: 20em;
+    overflow: auto;
 `;
 
 export const ListItem = styled('li')<ListItemProps>`
@@ -223,4 +226,15 @@ export const ChipIconWrapper = styled.div<ChipIconWrapperInterface>`
     }
     border-left: 1px solid ${allColors['Silver Sand']};
     padding: 0.25em;
+`;
+
+export const DropDownSearchContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5em 1em 0.5em 1em;
+`;
+
+export const DropDownSearchIconWrapper = styled.div`
+    padding-left: 1em;
 `;

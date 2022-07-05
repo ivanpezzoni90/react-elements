@@ -219,6 +219,12 @@ export interface PropsObjectInterface {
     showSteps?: boolean,
     hideLabel?: boolean,
     closeOnClickOutside?: boolean,
-    labelLength?: LabelLength
+    labelLength?: LabelLength,
+    height?: ElementHeight,
+    fontWeight?: FontWeight,
+    disabled?: boolean,
+    onClick?: VoidFunction,
+    placeholder?: string,
+    filterable?: boolean
 }
 export type SetPropsToStateType = (props: PropsObjectInterface) => void;

@@ -60,6 +60,12 @@ const getEditor = (props: PropsObjectInterface): EditorSection[] => ([
             },
             {
                 type: EditorTypes.toggle,
+                label: 'Filterable',
+                prop: 'filterable',
+                default: false
+            },
+            {
+                type: EditorTypes.toggle,
                 label: 'Close dropdown on click outside',
                 prop: 'closeOnClickOutside',
                 default: true

@@ -38,19 +38,6 @@ export const InputElementStyle = styled.input<InputElementProps>`
       0.1s padding ease-in-out;
     -webkit-appearance: none;
 
-    ::placeholder,
-    ::-webkit-input-placeholder {
-      color: rgba(255, 255, 255, 0.8);
-    }
-    ::-moz-placeholder {
-      color: rgba(255, 255, 255, 0.8);
-    }
-    :-ms-input-placeholder {
-      color: rgba(255, 255, 255, 0.8);
-    }
-    :-moz-placeholder {
-      color: rgba(255, 255, 255, 0.8);
-    }
     ${(props) => props.error ? `color: ${allColors['Lava']};` : ''}
 
     ${({type}) => type === InputTypes.number ? `
@@ -80,7 +67,7 @@ export const InputWrapper = styled.div<InputWrapperProps>`
         `};
     cursor: text;
     width: ${(props) => props.length};
-    height: 3.5em;
+    height: ${props => props.height};
     position: relative;
     background-color: rgba(255, 255, 255, 0.3);
     border-radius: ${props => props.borderRadius};

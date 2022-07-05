@@ -6,7 +6,7 @@ import { EditorSection, EditorSectionTypes, EditorTypes, LabelPositions, PropsOb
 import { Fragment } from 'react';
 import { Input } from '../lib/Input';
 import { useEditorInit } from '../lib/hooks';
-import { bordersAndShadowSection, colorEditors, labelSection, lengthEditor } from './commons/editors';
+import { bordersAndShadowSection, colorEditors, heightEditor, labelSection, lengthEditor } from './commons/editors';
 import { InputTypes } from '../lib/Input/config';
 import { ElementContainer } from './commons/ElementContainer';
 
@@ -79,6 +79,7 @@ const getEditor = (props: PropsObjectInterface) => {
             label: 'Size',
             editors: [
                 lengthEditor(),
+                heightEditor()
             ]
         },
         bordersAndShadowSection(false),
@@ -92,6 +93,12 @@ const getEditor = (props: PropsObjectInterface) => {
                     default: false,
                     prop: 'locked'
                 },
+                {
+                    label: 'Placeholder',
+                    type: EditorTypes.input,
+                    default: '',
+                    prop: 'placeholder'
+                }
             ]
         },
     ];
