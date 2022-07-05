@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { MouseEvent } from 'react';
 import { Fragment, useEffect, useRef, useState } from 'react';
 import { checkEventTargetContainsClass, elaborateComputedWidth, generateID, lightenDarkenColor, mergeClasses } from '../helpers';
-import { BorderRadius, IconSize, Option as OptionType, PropsObjectInterface } from '../types';
+import { BorderRadius, IconSize, LabelLength, LabelPositions, Option as OptionType, PropsObjectInterface } from '../types';
 import { IconList, Icon } from '../Icon';
 import { ElementLength } from '../types';
 import {
@@ -26,9 +26,11 @@ import {
     ListItemClickCallbackType,
     SelectProps,
 } from './config';
-import { useComputedWidth, useComputedZIndex } from '../hooks';
+import { useClickOutside, useComputedWidth, useComputedZIndex } from '../hooks';
 import { allColors } from '../constants/colors';
 import { CheckboxElement } from '../Checkbox';
+
+const doNothing = () => {};
 
 // Valid value when is not null and not empty string or empty array
 const isValidValue = (
@@ -44,6 +46,7 @@ function Select(props: SelectProps) {
         className,
         value: valueFromProps,
         label,
+        hideLabel,
         shadow,
         onChange,
         length,
@@ -56,14 +59,17 @@ function Select(props: SelectProps) {
         showBorders,
         hideBottomBorder,
         borderRadius,
-        chipBorderRadius
+        chipBorderRadius,
+        closeOnClickOutside,
+        labelLength,
+        labelPosition
     } = props;
 
     const id = useRef(generateID());
 
     const [isOpen, setIsOpen] = useState(false);
     
-    const toggleOpen = (e: any) => {
+    const toggleOpen = (e: MouseEvent<HTMLDivElement>) => {
         // Exclude event trigger for icon elements
         if (!checkEventTargetContainsClass(e, 'ie-icon')) {
             setIsOpen(!isOpen);
@@ -112,16 +118,26 @@ function Select(props: SelectProps) {
         return opts;
     };
 
-    const selectRef = useRef<Element>(null);
+    const selectRef = useRef<HTMLDivElement>(null);
     const dropDownZIndex = useComputedZIndex(selectRef);
     const selectElementWidth = elaborateComputedWidth(
         useComputedWidth(selectRef)
     );
     const selectWrapperWidth = useComputedWidth(selectRef);
 
+    const dropDownRef = useRef<HTMLDivElement>(null);
+    // Set close dropdown callback on click outside when enabled
+    useClickOutside(
+        dropDownRef,
+        closeOnClickOutside
+            ? () => setIsOpen(false)
+            : doNothing,
+        [selectRef]
+    );
+
     const currentOptionsList: OptionType[] = getOptionsFromValue(selectedOption);
 
-    const getChip = (currentOptionObject: OptionType) => (<>
+    const getChip = (currentOptionObject: OptionType, multiple: boolean) => (<>
         {currentOptionObject && currentOptionObject.icon ? (
             <ListIcon>
                 <Icon
@@ -130,7 +146,9 @@ function Select(props: SelectProps) {
                 />
             </ListIcon>
         ) : null}
-        <ChipText>
+        <ChipText
+            multiple={multiple}
+        >
             {currentOptionObject && currentOptionObject.label}
         </ChipText>
     </>);
@@ -147,17 +165,24 @@ function Select(props: SelectProps) {
                 showBorders={showBorders}
                 hideBottomBorder={hideBottomBorder}
                 borderRadius={borderRadius}
+                labelPosition={labelPosition}
                 onClick={toggleOpen}
             >
-                <Label
-                    className="ie-select__label"
-                    htmlFor={id.current}
-                    hasValue={hasValue}
-                    labelColor={labelColor}
-                    length={length}
-                >
-                    {label}
-                </Label>
+                {hideLabel ? null : (
+                    <Label
+                        className="ie-select__label"
+                        htmlFor={id.current}
+                        hasValue={hasValue}
+                        labelColor={labelColor}
+                        length={length}
+                        hideLabel={hideLabel}
+                        labelPosition={labelPosition}
+                        labelLength={labelLength}
+                        label={label}
+                    >
+                        {label}
+                    </Label>
+                )}
                 <SelectElement
                     className="ie-select__element"
                     length={length}
@@ -176,7 +201,7 @@ function Select(props: SelectProps) {
                                         borderRadius={chipBorderRadius}
                                         key={`${currentOptionObject.label}_${i}`}
                                     >
-                                        {getChip(currentOptionObject)}
+                                        {getChip(currentOptionObject, true)}
                                         <ChipIconWrapper
                                             color={lightenDarkenColor(optionSelectedColor as string, -30)}
                                             borderRadius={chipBorderRadius}
@@ -190,7 +215,7 @@ function Select(props: SelectProps) {
                                     </SelectChip>
                                 );
                             }
-                            return getChip(currentOptionObject);
+                            return getChip(currentOptionObject, false);
                         })}
                     </ChipsWrapper>
                 </SelectElement>
@@ -213,6 +238,7 @@ function Select(props: SelectProps) {
             {isOpen && (
                 <RelativeDropDownContainer>
                     <DropDownListContainer
+                        ref={dropDownRef}
                         computedWidth={selectWrapperWidth}
                         zIndex={dropDownZIndex}
                         length={length}
@@ -276,6 +302,10 @@ const defaultProps: PropsObjectInterface = {
     hideBottomBorder: false,
     borderRadius: BorderRadius.no,
     chipBorderRadius: BorderRadius.xs,
+    hideLabel: false,
+    closeOnClickOutside: true,
+    labelPosition: LabelPositions.vertical,
+    labelLength: LabelLength.auto,
     onChange: () => {}
 };
 

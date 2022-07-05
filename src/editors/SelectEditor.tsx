@@ -4,19 +4,19 @@ import Editor from './EditorBuilder';
 import { Fragment } from 'react';
 import { borderRadiusEditor, bordersAndShadowSection, colorEditors, ElementContainer, labelSection, lengthEditor } from './commons';
 
-import { BorderRadius, EditorSection, EditorSectionTypes, PropsObjectInterface } from '../lib/types';
+import { BorderRadius, EditorSection, EditorSectionTypes, EditorTypes, LabelPositions, PropsObjectInterface } from '../lib/types';
 import { Select } from '../lib/Select';
 import { useEditorInit } from '../lib/hooks';
 import { allColors } from '../lib/constants/colors';
 
 const getEditor = (props: PropsObjectInterface): EditorSection[] => ([
-    labelSection(),
+    labelSection(LabelPositions.vertical),
     {
         type: EditorSectionTypes.section,
         label: 'Multiple',
         editors: [
             {
-                type: 'toggle',
+                type: EditorTypes.toggle,
                 label: 'Multiple',
                 prop: 'multiple',
                 default: false
@@ -32,7 +32,7 @@ const getEditor = (props: PropsObjectInterface): EditorSection[] => ([
         editors: [
             ...colorEditors,
             {
-                type: 'color',
+                type: EditorTypes.color,
                 label: 'Option Selected Color',
                 prop: 'optionSelectedColor',
                 default: allColors['Quick Silver']
@@ -52,11 +52,17 @@ const getEditor = (props: PropsObjectInterface): EditorSection[] => ([
         label: 'Others',
         editors: [
             {
-                type: 'toggle',
+                type: EditorTypes.toggle,
                 label: 'Resettable',
                 prop: 'resettable',
                 default: false
             },
+            {
+                type: EditorTypes.toggle,
+                label: 'Close dropdown on click outside',
+                prop: 'closeOnClickOutside',
+                default: true
+            }
         ]
     },
 ]);

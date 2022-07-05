@@ -3,21 +3,33 @@ import React from 'react';
 import { Fragment } from 'react';
 import Editor from './EditorBuilder';
 import {ColorPicker} from '../lib/ColorPicker';
-import { EditorSection, EditorSectionTypes, ElementLength, PropsObjectInterface } from '../lib/types';
+import { EditorSection, EditorSectionTypes, EditorTypes, ElementLength, PropsObjectInterface } from '../lib/types';
 import { useEditorInit } from '../lib/hooks';
-import { bordersAndShadowSection, ElementContainer, labelSection, lengthEditor, simpleElementSection } from './commons';
+import { alignPositionEditor, bordersAndShadowSection, ElementContainer, labelSection, lengthEditor } from './commons';
 import { allColors } from '../lib/constants/colors';
 
 const getEditor = (props: PropsObjectInterface) => {
     const editorJson: EditorSection[] = [
         labelSection(),
-        simpleElementSection(props.simpleElement),
         bordersAndShadowSection(props.simpleElement),
         {
             type: EditorSectionTypes.section,
             label: 'Size',
             editors: [
                 lengthEditor(ElementLength.m),
+            ]
+        },
+        {
+            type: EditorSectionTypes.section,
+            label: 'Others',
+            editors: [
+                {
+                    type: EditorTypes.toggle,
+                    label: 'Close dropdown on click outside',
+                    prop: 'closeOnClickOutside',
+                    default: true
+                },
+                alignPositionEditor
             ]
         }
     ];

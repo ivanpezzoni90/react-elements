@@ -12,7 +12,7 @@ import {
     calculateInnerElementLength,
 } from '../helpers';
 import { allColors } from '../constants/colors';
-import { ElementLength } from '../types';
+import { ElementLength, LabelLength, LabelPositions } from '../types';
 
 export const InputElementStyle = styled.input<InputElementProps>`
     width: ${(props) => (
@@ -72,7 +72,12 @@ export const InputElementStyle = styled.input<InputElementProps>`
 
 export const InputWrapper = styled.div<InputWrapperProps>`
     display: flex;
-    flex-direction: column;
+    ${props => props.labelPosition === LabelPositions.vertical
+        ? `flex-direction: column;
+            justify-content: center;
+        ` : `flex-direction: row;
+            align-items: center
+        `};
     cursor: text;
     width: ${(props) => props.length};
     height: 3.5em;
@@ -85,7 +90,7 @@ export const InputWrapper = styled.div<InputWrapperProps>`
     ${props => props.locked ? 'pointer-events: none;' : ''}
     ${props => props.active && props.shadow
         ? `background-color: ${allColors['White']};
-            box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2);`
+            box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.1);`
         : ''
     }
     &:hover{
@@ -95,7 +100,11 @@ export const InputWrapper = styled.div<InputWrapperProps>`
 `;
 
 export const Label = styled.label<LabelProps>`
-    padding: 1em 1em 0 1em;
+    display: flex;
+    ${props => props.labelPosition === LabelPositions.vertical
+        ? 'padding: 1em 1em 0 1em;'
+        : 'padding: 0 1em;'
+    }
     font-family: "Gotham SSm A", "Gotham SSm B", sans-serif;
     font-size: 16px;
     font-weight: 600;
@@ -107,7 +116,7 @@ export const Label = styled.label<LabelProps>`
 
     ${(props) => props.error ? `color: ${allColors['Lava']};` : ''}
 
-    ${props => props.active
+    ${props => props.active && props.labelPosition === LabelPositions.vertical
         ? `padding: .25em 1.5em 0 1.5em;
         opacity: 1;
         color: ${props.error ? allColors['Lava'] : props.labelColor};
@@ -115,9 +124,12 @@ export const Label = styled.label<LabelProps>`
         : ''
     }
 
-    ${props => !props.active ? 'height: 3em;' : ''}
+    ${props => !props.active && props.labelPosition === LabelPositions.vertical
+        ? 'height: 3em;'
+        : ''
+    }
 
-    max-width: ${({length}) => length};
+    max-width: ${({length, labelLength}) => labelLength === LabelLength.auto ? length : labelLength};
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;

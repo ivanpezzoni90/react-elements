@@ -9,10 +9,11 @@ import {
 } from './InputStyle';
 
 import { CheckValidatorsType, InputProps, InputTypeProps, InputTypes } from './config';
-import { BorderRadius, ElementLength, PropsObjectInterface } from '../types';
+import { BorderRadius, ElementLength, LabelLength, LabelPositions, PropsObjectInterface } from '../types';
 import { allColors } from '../constants/colors';
 import { IconList, Icon } from '../Icon';
 import { useComputedWidth } from '../hooks';
+import { throttle } from 'throttle-debounce';
 
 function InputElement({
     error,
@@ -24,7 +25,7 @@ function InputElement({
     label,
     id,
     type,
-    value,
+    defaultValue,
     onChange,
     onFocus,
     onBlur,
@@ -63,14 +64,14 @@ function InputElement({
         return true;
     }, [max, min, type, setError]);
    
-    const onChangeValue = useCallback((event: any) => {
+    const onChangeValue = throttle(200, (event: React.ChangeEvent<HTMLInputElement>) => {
         const newValue = event.target.value;
         if (checkValidators(newValue)) {
             onChange(newValue);
         }
-    }, [onChange, checkValidators]);
+    });
 
-    const onBlurInput = useCallback((event: any) => {
+    const onBlurInput = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
         const newValue = event.target.value;
         if (checkValidators(newValue)) {
             onBlur(newValue);
@@ -78,13 +79,13 @@ function InputElement({
     }, [onBlur, checkValidators]);
 
     const handleNumberCaret = useCallback((type: 'up'|'down') => () => {
-        const parsedValue = parseFloat(value || '0');
+        const parsedValue = parseFloat(defaultValue || '0');
         const newValue = (type === 'up' ? (parsedValue + 1) : (parsedValue - 1)).toString();
 
         if (checkValidators(newValue, { changeFromCaret: true })) {
             onChange(newValue);
         }
-    }, [checkValidators, onChange, value]);
+    }, [checkValidators, onChange, defaultValue]);
 
     return (
         <Fragment>
@@ -96,7 +97,7 @@ function InputElement({
                 textColor={textColor}
                 id={id}
                 type={type}
-                value={value}
+                defaultValue={defaultValue}
                 placeholder={label}
                 computedWidth={computedWidth}
                 onChange={onChangeValue}
@@ -133,12 +134,15 @@ function Input({
     errorMessage,
     value: valueFromProps,
     label,
+    hideLabel,
+    labelLength,
     shadow,
     onBlur,
     onChange,
     length,
     active: activeFromProps,
     labelColor,
+    labelPosition,
     textColor,
     borderColor,
     max,
@@ -150,11 +154,11 @@ function Input({
 }: InputProps) {
     // active = focused or with value
     const [active, setActive] = useState(activeFromProps || (valueFromProps !== ''));
-    const [value, setValue] = useState(valueFromProps);
     const [error, setError] = useState(errorFromProps);
+    const [defaultValue, setDefaultValue] = useState(valueFromProps);
 
     useEffect(() => {
-        setValue(valueFromProps);
+        setDefaultValue(valueFromProps);
     }, [valueFromProps]);
 
     useEffect(() => {
@@ -165,7 +169,6 @@ function Input({
 
     const onChangeCb = useCallback((newValue: string | number) => {
         if (newValue !== '') setActive(true);
-        setValue(newValue as string);
         onChange(newValue);
     }, [onChange]);
 
@@ -183,7 +186,7 @@ function Input({
         onBlur(newValue);
     }, [onBlur]);
 
-    const inputWrapperRef = useRef<Element>(null);
+    const inputWrapperRef = useRef<HTMLDivElement>(null);
     const inputElementWidth = elaborateComputedWidth(
         useComputedWidth(inputWrapperRef)
     );
@@ -191,6 +194,7 @@ function Input({
     return (
         <InputWrapper
             ref={inputWrapperRef}
+            key={defaultValue}
             length={length}
             active={active}
             locked={locked}
@@ -199,18 +203,25 @@ function Input({
             showBorders={showBorders}
             hideBottomBorder={hideBottomBorder}
             borderRadius={borderRadius}
+            labelPosition={labelPosition}
+            hideLabel={hideLabel}
             onClick={setFocusFromDiv}
         >
-            <Label
-                htmlFor={id.current}
-                error={error}
-                length={length}
-                // Type date is always "active"
-                active={active || type === InputTypes.date}
-                labelColor={labelColor}
-            >
-                {(error && errorMessage) || label}
-            </Label>
+            {hideLabel ? null : (
+                <Label
+                    htmlFor={id.current}
+                    error={error}
+                    length={length}
+                    // Type date is always "active"
+                    active={active || type === InputTypes.date}
+                    labelColor={labelColor}
+                    labelPosition={labelPosition}
+                    labelLength={labelLength}
+                    label={label}
+                >
+                    {(error && errorMessage) || label}
+                </Label>
+            )}
             <InputElement
                 error={error}
                 setError={setError}
@@ -222,7 +233,7 @@ function Input({
                 label={label}
                 id={id.current}
                 type={type}
-                value={value}
+                defaultValue={defaultValue}
                 onChange={onChangeCb}
                 onFocus={onFocusCb}
                 onBlur={onBlurCb}
@@ -248,12 +259,15 @@ const defaultProps: PropsObjectInterface = {
     labelColor: allColors['Dim Gray'],
     textColor: allColors['Dim Gray'],
     borderColor: allColors['Silver Sand'],
+    labelPosition: LabelPositions.vertical,
+    labelLength: LabelLength.auto,
     min: undefined,
     max: undefined,
     type: InputTypes.text,
     showBorders: false,
     hideBottomBorder: false,
     borderRadius: BorderRadius.no,
+    hideLabel: false,
 };
 
 Input.defaultProps = defaultProps;

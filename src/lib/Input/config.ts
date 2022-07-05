@@ -1,4 +1,5 @@
-import { BorderRadius, ChangeElementValueType, ElementLength, PropsObjectInterface } from '../types';
+import { throttle } from 'throttle-debounce';
+import { BorderRadius, ChangeElementValueType, ElementLength, LabelLength, LabelPositions, PropsObjectInterface } from '../types';
 
 export enum InputTypes {
     text = 'text',
@@ -18,11 +19,14 @@ export interface InputProps extends PropsObjectInterface {
     length: ElementLength,
     active?: boolean,
     labelColor?: string,
+    labelPosition?: LabelPositions,
     textColor?: string,
     borderColor?: string,
     min?: number,
     max?: number,
-    type?: InputTypes
+    type?: InputTypes,
+    labelLength?: LabelLength,
+    hideLabel?: boolean
 }
 
 export type SetErrorType = (e: boolean) => void;
@@ -39,7 +43,7 @@ export interface InputTypeProps {
     label: string,
     id: string,
     type?: InputTypes,
-    value: string,
+    defaultValue: string,
     onChange: ChangeInputHandlerType,
     onFocus: VoidFunction,
     onBlur: ChangeInputHandlerType,
@@ -52,7 +56,7 @@ export interface InputTypeProps {
 }
 
 export interface InputWrapperProps {
-    ref: any,
+    ref: React.RefObject<HTMLDivElement>,
     length: string,
     active: boolean
     locked: boolean,
@@ -60,6 +64,8 @@ export interface InputWrapperProps {
     borderColor?: string,
     showBorders?: boolean,
     hideBottomBorder?: boolean,
+    hideLabel?: boolean,
+    labelPosition?: LabelPositions,
     borderRadius?: BorderRadius
 }
 
@@ -69,7 +75,10 @@ export interface LabelProps {
     active: boolean,
     labelColor?: string,
     length: ElementLength,
-    type?: InputTypes
+    labelPosition?: LabelPositions,
+    type?: InputTypes,
+    labelLength?: LabelLength,
+    label: string,
 }
 
 export interface InputElementProps {
@@ -81,10 +90,10 @@ export interface InputElementProps {
     type?: InputTypes,
     placeholder: string,
     id: string,
-    value: string,
-    onChange: ChangeInputHandlerType,
+    defaultValue: string,
+    onChange: throttle<(event: React.ChangeEvent<HTMLInputElement>) => void>,
     onFocus: VoidFunction,
-    onBlur: ChangeInputHandlerType,
+    onBlur: (event: React.ChangeEvent<HTMLInputElement>) => void,
     computedWidth: string
 }
 

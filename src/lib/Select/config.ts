@@ -2,6 +2,8 @@ import {
     BorderRadius,
     ChangeElementValueType,
     ElementLength,
+    LabelLength,
+    LabelPositions,
     Option as OptionType,
     PropsObjectInterface,
     VoidFunction
@@ -22,7 +24,11 @@ export interface LabelProps {
     htmlFor: string,
     hasValue: boolean,
     labelColor?: string,
-    length?: ElementLength
+    length?: ElementLength,
+    label?: string,
+    labelLength?: LabelLength,
+    labelPosition?: LabelPositions,
+    hideLabel?: boolean
 }
 export interface SelectElementProps {
     length: string,
@@ -44,7 +50,8 @@ export interface SelectWrapperProps{
     borderColor?: string,
     showBorders?: boolean,
     hideBottomBorder?: boolean,
-    ref: any,
+    labelPosition?: LabelPositions,
+    ref: React.RefObject<HTMLDivElement>,
     borderRadius?: BorderRadius
 }
 
@@ -64,6 +71,8 @@ export interface SelectProps extends PropsObjectInterface {
     className: string,
     showBorders?: boolean,
     hideBottomBorder?: boolean,
-    borderRadius?: BorderRadius
-    chipBorderRadius?: BorderRadius
+    borderRadius?: BorderRadius,
+    chipBorderRadius?: BorderRadius,
+    hideLabel?: boolean,
+    closeOnClickOutside?: boolean
 }

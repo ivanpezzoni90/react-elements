@@ -8,8 +8,16 @@ export type Component = {
     editor: Function // TODO:
 };
 
+export enum EditorTypes {
+    input = 'input',
+    select = 'select',
+    checkbox = 'checkbox',
+    toggle = 'toggle',
+    color = 'color',
+}
+
 export type Editor = {
-    type: string,
+    type: EditorTypes,
     default: string | boolean | Array<string> | number | undefined,
     label: string,
     options?: Array<Option>,
@@ -42,10 +50,14 @@ export type ChangeEditorPropType = (prop: string, value: string | boolean | Arra
 export type ChangeElementValueType = (value: string | boolean | Array<string> | number | null) => void;
 
 export enum ElementLength {
-    squared = '4em',
+    squared = '3.5em',
+    xxs = '2em',
+    xs = '6em',
     s = '8em',
-    m = '16em',
-    l = '32em',
+    m = '14em',
+    l = '18em',
+    xl = '26em',
+    xxl = '32em',
     full = '100%'
 }
 
@@ -102,6 +114,14 @@ export enum ElementSize {
     xxl = '22px'
 }
 
+export enum ElementHeight {
+    xs = '1.5em',
+    s = '2.5em',
+    m = '3.5em',
+    l = '4.5em',
+    xl = '5.5em'
+}
+
 export enum LabelPositions {
     vertical = 'vertical',
     horizontal = 'horizontal'
@@ -121,6 +141,17 @@ export enum AlignPositions {
     left = 'flex-start',
     center = 'center',
     right = 'flex-end'
+}
+
+export enum LabelLength {
+    xxs = '2em',
+    xs = '4em',
+    s = '6em',
+    m = '8em',
+    l = '10em',
+    xl = '12em',
+    xxl = '14em',
+    auto = 'auto'
 }
 
 export enum ToggleLabelType {
@@ -185,6 +216,9 @@ export interface PropsObjectInterface {
     hideBottomBorder?: boolean,
     chipBorderRadius?: BorderRadius,
     showStepValue?: boolean,
-    showSteps?: boolean
+    showSteps?: boolean,
+    hideLabel?: boolean,
+    closeOnClickOutside?: boolean,
+    labelLength?: LabelLength
 }
 export type SetPropsToStateType = (props: PropsObjectInterface) => void;

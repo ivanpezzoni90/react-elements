@@ -1,17 +1,24 @@
 import React, { useMemo } from 'react';
-import { Fragment, useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { generateID, lightenDarkenColor, mergeClasses, rgbFromHex } from './helpers';
-import { Element } from './Element';
-import { BorderRadius, ElementLength, LabelPositions, Option } from './types';
+import { AlignPositions, BorderRadius, ElementLength, LabelLength, LabelPositions, Option } from './types';
 import { ChangeElementValueType, PropsObjectInterface } from './types';
 import { allColors } from './constants/colors';
 
-const SliderContainer = styled.div`
+interface SliderContainerInterface {
+    labelPosition?: LabelPositions
+}
+const SliderContainer = styled.div<SliderContainerInterface>`
     display: flex;
     vertical-align: middle;
     padding: 0.25em 1em 0 0.25em;
     flex: 1;
+
+    ${props => props.labelPosition === LabelPositions.vertical
+        ? ` width: 100%;
+            padding: 1em;`
+        : 'padding: 0.25em 1em 0 0.25em;'}
 `;
 
 interface SliderAdvancedWrapperInterface {
@@ -20,15 +27,26 @@ interface SliderAdvancedWrapperInterface {
     borderColor?: string,
     showBorders?: boolean,
     hideBottomBorder?: boolean,
-    borderRadius?: BorderRadius
+    borderRadius?: BorderRadius,
+    labelPosition?: LabelPositions,
+    align?: AlignPositions,
 }
 
 const SliderAdvancedWrapper = styled.div<SliderAdvancedWrapperInterface>`
     display: flex;
-    align-items: center;
+    ${props => props.labelPosition === LabelPositions.vertical ? `
+        flex-direction: column;
+        padding-left: 0.5em;
+        align-items: ${props.align};
+        justify-content: center;
+    ` :`
+        flex-direction: row;
+        align-items: center;
+        justify-content: ${props.align};
+    `}
     min-width: 7em;
     width: ${props => props.length};
-    height: 3.5em;
+    height: ${props => props.labelPosition === LabelPositions.vertical ? '5.5em' : '3.5em'};
     position: relative;
     background-color: rgba(255, 255, 255, 0.3);
     border-radius: ${props => props.borderRadius};
@@ -36,7 +54,7 @@ const SliderAdvancedWrapper = styled.div<SliderAdvancedWrapperInterface>`
     ${(props) => props.showBorders ? `border: 1px solid ${props.borderColor}` : ''};
     transition: 0.3s background-color ease-in-out, 0.3s box-shadow ease-in-out;
     background-color: #ffffff;
-    ${({shadow}) => shadow ? 'box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2);' : ''}
+    ${({shadow}) => shadow ? 'box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.1);' : ''}
 
     &:hover{
         background-color: rgba(255, 255, 255, 0.45);
@@ -46,25 +64,31 @@ const SliderAdvancedWrapper = styled.div<SliderAdvancedWrapperInterface>`
 
 interface LabelProps {
     htmlFor: string,
-    length: ElementLength
+    length: ElementLength,
+    labelColor?: string,
+    labelPosition?: LabelPositions,
+    labelLength?: LabelLength
 }
 
 const SliderAdvancedLabel = styled.label<LabelProps>`
     display: flex;
     justify-content: flex-start;
-    flex: 0.2;
-    padding: 0 1em 0 1em;
+    ${props => props.labelPosition === LabelPositions.horizontal ? 'flex: 0.2;' : ''}
+
+    padding: 0 1em 0 ${props => props.labelPosition === LabelPositions.horizontal ? '1em' : '0'};
 
     font-family: "Gotham SSm A", "Gotham SSm B", sans-serif;
     font-size: 16px;
     font-weight: 600;
     line-height: 24px;
-    color: #666;
+    color: ${props => props.labelColor};
     opacity: 1;
     pointer-events: none;
     transition: 0.1s all ease-in-out;
 
-    max-width: ${({length}) => length};
+    max-width: ${props => props.labelLength === LabelLength.auto
+        ? props.length
+        : props.labelLength};
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
@@ -72,8 +96,9 @@ const SliderAdvancedLabel = styled.label<LabelProps>`
 
 const getSliderCursorStyles = (color: string) => (`
     width: 1em;
-    height: 2em;
-    background: ${color};
+    height: 1em;
+    border: 2px solid ${color};
+    background: white;
     cursor: pointer;
 
     outline: none;
@@ -81,6 +106,8 @@ const getSliderCursorStyles = (color: string) => (`
     border-radius: 18px;
 
     transition: outline 0.5s ease-in-out;
+
+    margin-bottom: 0.75em;
 
     &:hover {
         outline: ${getOutlineColor(lightenDarkenColor(color, 80))} solid 4px;
@@ -102,7 +129,7 @@ const SliderElementContainer = styled.div`
 const SliderInput = styled.input<SliderInputInterface>`
     -webkit-appearance: none;
     width: 100%;
-    height: 1em;
+    height: 0.5em;
     border-radius: 5px;
     background: ${allColors['Platinum']};
     outline: none;
@@ -114,7 +141,6 @@ const SliderInput = styled.input<SliderInputInterface>`
         appearance: none;
         ${({color}) => getSliderCursorStyles(color)}
     }
-
     &::-moz-range-thumb {
         ${({color}) => getSliderCursorStyles(color)}
     }
@@ -203,7 +229,6 @@ const SliderValue = styled.div<SliderValueInterface>`
         length === ElementLength.l || length === ElementLength.full ? '14px' : '11px'};
     color: ${allColors['Dim Gray']};
     padding-right: 0.5em;
-    align-items: center;
     display: flex;
     width: ${({length}) =>
         length === ElementLength.l || length === ElementLength.full ? '2em' : '1.5em'};
@@ -214,7 +239,6 @@ interface SliderProps extends PropsObjectInterface{
     value: string | number,
     cursorColor: string,
     label: string,
-    simpleElement?: boolean,
     labelPosition?: LabelPositions,
     shadow?: boolean,
     length: ElementLength,
@@ -229,7 +253,11 @@ interface SliderProps extends PropsObjectInterface{
     borderColor?: string,
     showBorders?: boolean,
     hideBottomBorder?: boolean,
-    borderRadius?: BorderRadius
+    borderRadius?: BorderRadius,
+    labelColor?: string,
+    hideLabel?: boolean,
+    labelLength?: LabelLength,
+    align?: AlignPositions,
     onChange: ChangeElementValueType
 }
 
@@ -247,6 +275,7 @@ interface SliderElementInterface {
     showStepValue: boolean,
     showSteps: boolean,
     length: ElementLength,
+    labelPosition?: LabelPositions,
     onChange: ChangeElementValueType
 }
 
@@ -300,7 +329,7 @@ function getOutlineColor(color: string, opacity = '0.5'): string {
 }
 
 function SliderElement({
-    className,
+    labelPosition,
     value: valueFromProps,
     cursorColor,
     min,
@@ -319,7 +348,7 @@ function SliderElement({
     const defaultValue = getDefaultValue(valueFromProps, min, options);
     const [value, setValue] = useState(defaultValue);
 
-    const onSliderChange = useCallback((event: any) => {
+    const onSliderChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
         const newValue = event.target.value;
         setValue(newValue);
         onChange(newValue);
@@ -370,24 +399,24 @@ function SliderElement({
     }, [id, newMax, newMin, newStep, options, showStepValue]);
 
     return (<SliderContainer
-        className={mergeClasses('ie-slider', className)}
+        labelPosition={labelPosition}
+        className="ie-slider__element"
     >
         {showValue && (
             <SliderValue
-                className="ie-slider__value"
+                className="ie-slider__element__value"
                 length={length}
             >
                 {value}
             </SliderValue>
         )}
         <SliderElementContainer
-            className="ie-slider__element"
+            className="ie-slider__element__slider"
         >
             <SliderInputWrapper
-                className="ie-slider__element__input"
             >
                 <SliderInput
-                    className="ie-slider__element__input__element"
+                    className="ie-slider__element__slider__input"
                     name={id}
                     color={cursorColor}
                     type="range"
@@ -420,9 +449,10 @@ function Slider(props: SliderProps) {
         value,
         label,
         labelPosition,
-        simpleElement,
+        labelLength,
         shadow,
         length,
+        align,
         cursorColor,
         min,
         max,
@@ -436,70 +466,53 @@ function Slider(props: SliderProps) {
         borderRadius,
         showStepValue,
         showSteps,
+        labelColor,
+        hideLabel,
         onChange
     } = props;
 
     const id = useRef(generateID());
 
     return (
-        <Fragment>
-            {simpleElement ? (
-                <Element
-                    id={id.current}
-                    label={label}
-                    labelPosition={labelPosition}
-                >
-                    <SliderElement
-                        className={className}
-                        value={value}
-                        cursorColor={cursorColor}
-                        min={min}
-                        max={max}
-                        step={step}
-                        options={options}
-                        id={id.current}
-                        showValue={showValue}
-                        showTooltip={showTooltip}
-                        showStepValue={showStepValue}
-                        showSteps={showSteps}
-                        length={length}
-                        onChange={onChange}
-                    />
-                </Element>
-            ): (
-                <SliderAdvancedWrapper
-                    shadow={shadow}
+        <SliderAdvancedWrapper
+            align={align}
+            shadow={shadow}
+            length={length}
+            borderColor={borderColor}
+            showBorders={showBorders}
+            hideBottomBorder={hideBottomBorder}
+            borderRadius={borderRadius}
+            labelPosition={labelPosition}
+            className={mergeClasses('ie-slider', className)}
+        >
+            {hideLabel ? null : (
+                <SliderAdvancedLabel
+                    htmlFor={id.current}
                     length={length}
-                    borderColor={borderColor}
-                    showBorders={showBorders}
-                    hideBottomBorder={hideBottomBorder}
-                    borderRadius={borderRadius}
+                    labelColor={labelColor}
+                    labelPosition={labelPosition}
+                    labelLength={labelLength}
                 >
-                    <SliderAdvancedLabel
-                        htmlFor={id.current}
-                        length={length}
-                    >
-                        {label}
-                    </SliderAdvancedLabel>
-                    <SliderElement
-                        className={className}
-                        value={value}
-                        cursorColor={cursorColor}
-                        min={min}
-                        max={max}
-                        step={step}
-                        options={options}
-                        id={id.current}
-                        showValue={showValue}
-                        showTooltip={showTooltip}
-                        showStepValue={showStepValue}
-                        showSteps={showSteps}
-                        length={length}
-                        onChange={onChange}
-                    />
-                </SliderAdvancedWrapper>
+                    {label}
+                </SliderAdvancedLabel>
             )}
-        </Fragment>
+            <SliderElement
+                labelPosition={labelPosition}
+                value={value}
+                cursorColor={cursorColor}
+                min={min}
+                max={max}
+                step={step}
+                options={options}
+                id={id.current}
+                showValue={showValue}
+                showTooltip={showTooltip}
+                showStepValue={showStepValue}
+                showSteps={showSteps}
+                length={length}
+                onChange={onChange}
+            />
+        </SliderAdvancedWrapper>
     );
 }
 
@@ -508,14 +521,15 @@ const defaultProps: PropsObjectInterface = {
     value: '',
     cursorColor: allColors['Dim Gray'],
     label: 'Label',
-    simpleElement: false,
     shadow: true,
     labelPosition: LabelPositions.horizontal,
+    labelLength: LabelLength.auto,
+    align: AlignPositions.center,
     min: 0,
     max: 100,
     step: 20,
     options: [],
-    length: ElementLength.l,
+    length: ElementLength.xl,
     showValue: true,
     showTooltip: true,
     borderColor: allColors['Silver Sand'],
@@ -524,6 +538,8 @@ const defaultProps: PropsObjectInterface = {
     borderRadius: BorderRadius.no,
     showStepValue: false,
     showSteps: true,
+    labelColor: allColors['Dim Gray'],
+    hideLabel: false,
     onChange: () => {}
 };
 

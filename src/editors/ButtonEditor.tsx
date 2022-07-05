@@ -2,21 +2,33 @@ import React from 'react';
 import { Fragment } from 'react';
 import Editor from './EditorBuilder';
 import {Button} from '../lib/Button';
-import { BorderRadius, ButtonIconSize, EditorSection, EditorSectionTypes, IconPosition } from '../lib/types';
+import { BorderRadius, ButtonIconSize, EditorSection, EditorSectionTypes, EditorTypes, IconPosition } from '../lib/types';
 import { useEditorInit } from '../lib/hooks';
-import { borderRadiusEditor, ElementContainer, fontSizeEditor, fontWeightEditor, iconEditor, labelSection, lengthEditor } from './commons';
+import { alignPositionEditor, borderRadiusEditor, ElementContainer, fontSizeEditor, fontWeightEditor, heightEditor, iconEditor, lengthEditor } from './commons';
 import { allColors } from '../lib/constants/colors';
 import { IconList } from '../lib/Icon';
 
 const getEditor = () => {
 
     const editorJson: EditorSection[] = [
-        labelSection(),
+        {
+            type: EditorSectionTypes.section,
+            label: 'Label',
+            editors: [
+                {
+                    type: EditorTypes.input,
+                    default: 'Label',
+                    label: 'Label',
+                    prop: 'label'
+                }
+            ]
+        },
         {
             type: EditorSectionTypes.section,
             label: 'Size and Weight',
             editors: [
                 lengthEditor(),
+                heightEditor(),
                 fontWeightEditor,
                 fontSizeEditor,
             ]
@@ -26,13 +38,13 @@ const getEditor = () => {
             label: 'Colors',
             editors: [
                 {
-                    type: 'color',
+                    type: EditorTypes.color,
                     default: allColors['Firebrick'],
                     label: 'Color',
                     prop: 'color'
                 },
                 {
-                    type: 'color',
+                    type: EditorTypes.color,
                     default: allColors['White'],
                     label: 'Text Color',
                     prop: 'textColor'
@@ -45,13 +57,13 @@ const getEditor = () => {
             editors: [
                 iconEditor,
                 {
-                    type: 'color',
+                    type: EditorTypes.color,
                     default: allColors['White'],
                     label: 'Icon Color',
                     prop: 'iconColor'
                 },
                 {
-                    type: 'select',
+                    type: EditorTypes.select,
                     default: ButtonIconSize.auto,
                     label: 'Icon Size',
                     prop: 'buttonIconSize',
@@ -76,7 +88,7 @@ const getEditor = () => {
                     }]
                 },
                 {
-                    type: 'select',
+                    type: EditorTypes.select,
                     default: IconPosition.left,
                     label: 'Icon Position',
                     prop: 'iconPosition',
@@ -95,11 +107,12 @@ const getEditor = () => {
             label: 'Others',
             editors: [
                 {
-                    type: 'toggle',
+                    type: EditorTypes.toggle,
                     default: false,
                     label: 'Disabled',
                     prop: 'disabled'
                 },
+                alignPositionEditor,
                 borderRadiusEditor(BorderRadius.s),
             ]
         }

@@ -3,9 +3,9 @@ import React from 'react';
 import { Fragment } from 'react';
 import Editor from './EditorBuilder';
 import { Slider } from '../lib/Slider';
-import { EditorSection, EditorSectionTypes, ElementLength, PropsObjectInterface } from '../lib/types';
+import { EditorSection, EditorSectionTypes, EditorTypes, ElementLength, PropsObjectInterface } from '../lib/types';
 import { useEditorInit } from '../lib/hooks';
-import { bordersAndShadowSection, ElementContainer, labelSection, lengthEditor, simpleElementSection } from './commons';
+import { alignPositionEditor, bordersAndShadowSection, ElementContainer, labelSection, lengthEditor } from './commons';
 import { allColors } from '../lib/constants/colors';
 import { InputTypes } from '../lib/Input/config';
 
@@ -17,22 +17,22 @@ const getEditor = (props: PropsObjectInterface) => {
             label: 'Show/Hide',
             editors: [
                 {
-                    type: 'toggle',
+                    type: EditorTypes.toggle,
                     label: 'Show value',
                     prop: 'showValue',
                     default: true
                 }, {
-                    type: 'toggle',
+                    type: EditorTypes.toggle,
                     label: 'Show value tooltip',
                     prop: 'showTooltip',
                     default: true
                 }, {
-                    type: 'toggle',
+                    type: EditorTypes.toggle,
                     label: 'Show step values',
                     prop: 'showStepValue',
                     default: false
                 }, {
-                    type: 'toggle',
+                    type: EditorTypes.toggle,
                     label: 'Show steps',
                     prop: 'showSteps',
                     default: true
@@ -44,33 +44,25 @@ const getEditor = (props: PropsObjectInterface) => {
             label: 'Values',
             editors: [
                 {
-                    type: 'input',
+                    type: EditorTypes.input,
                     inputType: InputTypes.number,
                     label: 'Max',
                     prop: 'max',
                     default: 100
                 },
                 {
-                    type: 'input',
+                    type: EditorTypes.input,
                     label: 'Min',
                     inputType: InputTypes.number,
                     prop: 'min',
                     default: 0
                 },  {
-                    type: 'input',
+                    type: EditorTypes.input,
                     label: 'Step',
                     inputType: InputTypes.number,
                     prop: 'step',
                     default: 20
                 }
-            ]
-        },
-        simpleElementSection(props.simpleElement),
-        {
-            type: EditorSectionTypes.section,
-            label: 'Size',
-            editors: [
-                lengthEditor(ElementLength.l),
             ]
         },
         bordersAndShadowSection(props.simpleElement),
@@ -79,13 +71,21 @@ const getEditor = (props: PropsObjectInterface) => {
             label: 'Colors',
             editors: [
                 {
-                    type: 'color',
+                    type: EditorTypes.color,
                     default: allColors['Dim Gray'],
                     label: 'Color',
                     prop: 'cursorColor'
                 },
             ]
-        }
+        },
+        {
+            type: EditorSectionTypes.section,
+            label: 'Others',
+            editors: [
+                lengthEditor(ElementLength.l),
+                alignPositionEditor
+            ]
+        },
     ];
 
     return editorJSON;

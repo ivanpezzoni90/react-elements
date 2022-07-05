@@ -1,18 +1,20 @@
 import React, { Fragment, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { fontColorFromBackground, generateID, mergeClasses } from './helpers';
-import { Element } from './Element';
 import {
     AlignPositions,
     ElementLength,
     LabelPositions,
     ChangeElementValueType,
     PropsObjectInterface,
-    BorderRadius
+    BorderRadius,
+    LabelLength
 } from './types';
-import { useComputedZIndex } from './hooks';
+import { useClickOutside, useComputedZIndex } from './hooks';
 import { ColorObject, palette, getColorNameByHex, allColors } from './constants/colors';
 import { Input } from './Input';
+
+const doNothing = () => {};
 
 const ColorPickerContainer = styled.div`
     padding-right: 1em;
@@ -25,7 +27,7 @@ const ColorPickerContainer = styled.div`
 
 interface StyledColorPickerInterface {
     color: string,
-    ref: any // TODO:
+    ref: React.RefObject<HTMLDivElement>
 }
 
 const StyledColorPicker = styled.div<StyledColorPickerInterface>`
@@ -43,12 +45,23 @@ interface ColorPickerAdvancedWrapperInterface {
     borderColor?: string,
     showBorders?: boolean,
     hideBottomBorder?: boolean,
+    align?: AlignPositions,
+    labelPosition?: LabelPositions,
     borderRadius?: BorderRadius
 }
 
 const ColorPickerAdvancedWrapper = styled.div<ColorPickerAdvancedWrapperInterface>`
     display: flex;
-    align-items: center;
+    ${props => props.labelPosition === LabelPositions.vertical ? `
+        flex-direction: column;
+        padding-left: 0.5em;
+        align-items: ${props.align};
+        justify-content: center;
+    ` :`
+        flex-direction: row;
+        justify-content: ${props.align};
+        align-items: center;
+    `}
     min-width: 7em;
     width: ${props => props.length};
     height: 3.5em;
@@ -59,7 +72,7 @@ const ColorPickerAdvancedWrapper = styled.div<ColorPickerAdvancedWrapperInterfac
     ${(props) => props.showBorders ? `border: 1px solid ${props.borderColor}` : ''};
     transition: 0.3s background-color ease-in-out, 0.3s box-shadow ease-in-out;
     background-color: #ffffff;
-    ${({shadow}) => shadow ? 'box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2);' : ''}
+    ${({shadow}) => shadow ? 'box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.1);' : ''}
 
     &:hover{
         background-color: rgba(255, 255, 255, 0.45);
@@ -69,7 +82,10 @@ const ColorPickerAdvancedWrapper = styled.div<ColorPickerAdvancedWrapperInterfac
 
 interface LabelProps {
     htmlFor: string,
-    length: ElementLength
+    length: ElementLength,
+    labelColor?: string,
+    labelPosition?: LabelPositions,
+    labelLength?: LabelLength
 }
 interface DropDownContainerProps {
     zIndex: number | null
@@ -79,18 +95,20 @@ const ColorPickerAdvancedLabel = styled.div<LabelProps>`
     display: flex;
     justify-content: flex-start;
     flex: 1;
-    padding: 0 1em 0 1em;
+    padding: 0 1em 0 ${props => props.labelPosition === LabelPositions.horizontal ? '1em' : '0'};
 
     font-family: "Gotham SSm A", "Gotham SSm B", sans-serif;
     font-size: 16px;
     font-weight: 600;
     line-height: 24px;
-    color: #666;
+    color: ${props => props.labelColor};
     opacity: 1;
     pointer-events: none;
     transition: 0.1s all ease-in-out;
 
-    max-width: ${({length}) => length};
+    max-width: ${props => props.labelLength === LabelLength.auto
+        ? props.length
+        : props.labelLength};
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
@@ -100,6 +118,7 @@ const DropDownListContainer = styled('div')<DropDownContainerProps>`
     position: absolute;
     ${props => props.zIndex ? `z-index: ${props.zIndex}` : ''};
     margin-top: 2em;
+    right: 0;
 `;
 
 const DropDownList = styled.div`
@@ -107,7 +126,7 @@ const DropDownList = styled.div`
     margin-top: 0.25em;
     padding: 0.5em;
     background-color: #ebebeb;
-    box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
     color: #666;
     font-size: 1em;
@@ -164,6 +183,7 @@ const ColorPickerInfoContainer = styled.div`
     font-size: 10px;
     color: ${allColors['Dim Gray']};
     padding-right: 0.5em;
+    text-align: right;
 `;
 const SelectedColor = styled.div`
 `;
@@ -174,7 +194,6 @@ interface ColorPickerProps extends PropsObjectInterface{
     className: string,
     value: string,
     label: string,
-    simpleElement?: boolean,
     labelPosition?: LabelPositions,
     align?: AlignPositions,
     shadow?: boolean,
@@ -183,18 +202,22 @@ interface ColorPickerProps extends PropsObjectInterface{
     borderColor?: string,
     showBorders?: boolean,
     hideBottomBorder?: boolean,
+    labelColor?: string,
+    hideLabel?: boolean,
+    closeOnClickOutside?: boolean,
+    labelLength?: LabelLength,
     borderRadius?: BorderRadius
 }
 
 interface ColorPickerElementInterface {
-    className: string,
     valueFromProps: string,
+    closeOnClickOutside?: boolean,
     onChange: ChangeElementValueType
 }
 
 function ColorPickerElement({
-    className,
     valueFromProps,
+    closeOnClickOutside,
     onChange
 }: ColorPickerElementInterface) {
     const [selectedColor, setSelectedColor] = useState(valueFromProps);
@@ -204,8 +227,8 @@ function ColorPickerElement({
 
     const toggling = () => setIsOpen(!isOpen);
 
-    const ref = useRef<Element>(null);
-    const dropDownZIndex = useComputedZIndex(ref);
+    const styledColorPickerRef = useRef<HTMLDivElement>(null);
+    const dropDownZIndex = useComputedZIndex(styledColorPickerRef);
 
     const onChangeColor = (newColor: string) => () => {
         setSelectedColor(newColor);
@@ -233,64 +256,79 @@ function ColorPickerElement({
     const onMouseEnter = (color: ColorObject) => () => setHoverColor(color);
     const onMouseLeave = () => setHoverColor(emptyColorObj);
 
-    return (<ColorPickerContainer
-        className={mergeClasses('ie-color-picker', className)}
-    >
-        <ColorPickerInfoContainer>
-            <SelectedColor>
-                {selectedColor}
-            </SelectedColor>
-            <SelectedColorLabel>
-                {selectedColorLabel}
-            </SelectedColorLabel>
-        </ColorPickerInfoContainer>
-        <StyledColorPicker
-            className="ie-color-picker__picker"
-            ref={ref}
-            color={selectedColor}
-            onClick={toggling}
-        />
-        {isOpen && (
-            <DropDownListContainer
-                zIndex={dropDownZIndex}
-            >
-                <DropDownList>
-                    <ColorListColumn
-                        // Reset hoverColor when leaving palette div
-                        onMouseLeave={onMouseLeave}
-                    >
-                        {Object.values(palette).map((colorArray) => (
-                            <ColorListRow
-                                key={Math.random()}
-                            >
-                                {colorArray.map((colorObj: ColorObject) => (
-                                    <ColorListItem
-                                        key={`${colorObj.name}_${colorObj.hex}`}
-                                        color={colorObj.hex}
-                                        selected={colorObj.hex === selectedColor}
-                                        hovered={colorObj.hex === hoverColor.hex}
-                                        onClick={onChangeColor(colorObj.hex)}
-                                        onMouseEnter={onMouseEnter(colorObj)}
-                                        borderColor={fontColorFromBackground(colorObj.hex)}
-                                    />
-                                ))}
-                            </ColorListRow>
-                        ))}
-                    </ColorListColumn>
-                    <ColorListFooter>
-                        <Input
-                            active
-                            shadow={false}
-                            value={hoverColor.hex !== '' ? hoverColor.hex : selectedColor}
-                            label={hoverColor.name !== '' ? hoverColor.name : (selectedColorLabel || '')}
-                            onChange={onCustomColorChange}
-                        />
+    const dropDownRef = useRef<HTMLDivElement>(null);
+    // Set close dropdown callback on click outside when enabled
+    useClickOutside(
+        dropDownRef,
+        closeOnClickOutside
+            ? () => setIsOpen(false)
+            : doNothing,
+        [styledColorPickerRef]
+    );
 
-                    </ColorListFooter>
-                </DropDownList>
-            </DropDownListContainer>
-        )}
-    </ColorPickerContainer>);
+    return (
+        <>
+            <ColorPickerContainer
+                className="ie-color-picker__element"
+            >
+                <ColorPickerInfoContainer>
+                    <SelectedColor>
+                        {selectedColor}
+                    </SelectedColor>
+                    <SelectedColorLabel>
+                        {selectedColorLabel}
+                    </SelectedColorLabel>
+                </ColorPickerInfoContainer>
+                <StyledColorPicker
+                    className="ie-color-picker__element__picker"
+                    ref={styledColorPickerRef}
+                    color={selectedColor}
+                    onClick={toggling}
+                />
+                {isOpen && (
+                    <DropDownListContainer
+                        ref={dropDownRef}
+                        zIndex={dropDownZIndex}
+                    >
+                        <DropDownList>
+                            <ColorListColumn
+                            // Reset hoverColor when leaving palette div
+                                onMouseLeave={onMouseLeave}
+                            >
+                                {Object.values(palette).map((colorArray) => (
+                                    <ColorListRow
+                                        key={Math.random()}
+                                    >
+                                        {colorArray.map((colorObj: ColorObject) => (
+                                            <ColorListItem
+                                                key={`${colorObj.name}_${colorObj.hex}`}
+                                                color={colorObj.hex}
+                                                selected={colorObj.hex === selectedColor}
+                                                hovered={colorObj.hex === hoverColor.hex}
+                                                onClick={onChangeColor(colorObj.hex)}
+                                                onMouseEnter={onMouseEnter(colorObj)}
+                                                borderColor={fontColorFromBackground(colorObj.hex)}
+                                            />
+                                        ))}
+                                    </ColorListRow>
+                                ))}
+                            </ColorListColumn>
+                            <ColorListFooter>
+                                <Input
+                                    active
+                                    shadow={false}
+                                    value={hoverColor.hex !== '' ? hoverColor.hex : selectedColor}
+                                    label={hoverColor.name !== '' ? hoverColor.name : (selectedColorLabel || '')}
+                                    onChange={onCustomColorChange}
+                                />
+
+                            </ColorListFooter>
+                        </DropDownList>
+                    </DropDownListContainer>
+                )}
+            </ColorPickerContainer>
+        </>
+    );
 }
 
 function ColorPicker(props: ColorPickerProps) {
@@ -299,57 +337,51 @@ function ColorPicker(props: ColorPickerProps) {
         value: valueFromProps,
         label,
         labelPosition,
+        labelLength,
         align,
-        simpleElement,
         shadow,
         length,
         borderColor,
         showBorders,
         hideBottomBorder,
         borderRadius,
+        hideLabel,
+        labelColor,
+        closeOnClickOutside,
         onChange
     } = props;
 
     const id = useRef(generateID());
 
     return (
-        <Fragment>
-            {simpleElement ? (
-                <Element
-                    id={id.current}
-                    align={align}
-                    label={label}
-                    labelPosition={labelPosition}
-                >
-                    <ColorPickerElement
-                        className={className}
-                        valueFromProps={valueFromProps}
-                        onChange={onChange}
-                    />
-                </Element>
-            ): (
-                <ColorPickerAdvancedWrapper
-                    shadow={shadow}
+        <ColorPickerAdvancedWrapper
+            align={align}
+            shadow={shadow}
+            length={length}
+            labelPosition={labelPosition}
+            borderColor={borderColor}
+            showBorders={showBorders}
+            hideBottomBorder={hideBottomBorder}
+            borderRadius={borderRadius}
+            className={mergeClasses('ie-color-picker', className)}
+        >
+            {hideLabel ? null : (
+                <ColorPickerAdvancedLabel
+                    htmlFor={id.current}
                     length={length}
-                    borderColor={borderColor}
-                    showBorders={showBorders}
-                    hideBottomBorder={hideBottomBorder}
-                    borderRadius={borderRadius}
+                    labelColor={labelColor}
+                    labelPosition={labelPosition}
+                    labelLength={labelLength}
                 >
-                    <ColorPickerAdvancedLabel
-                        htmlFor={id.current}
-                        length={length}
-                    >
-                        {label}
-                    </ColorPickerAdvancedLabel>
-                    <ColorPickerElement
-                        className={className}
-                        valueFromProps={valueFromProps}
-                        onChange={onChange}
-                    />
-                </ColorPickerAdvancedWrapper>
+                    {label}
+                </ColorPickerAdvancedLabel>
             )}
-        </Fragment>
+            <ColorPickerElement
+                valueFromProps={valueFromProps}
+                closeOnClickOutside={closeOnClickOutside}
+                onChange={onChange}
+            />
+        </ColorPickerAdvancedWrapper>
     );
 }
 
@@ -357,14 +389,18 @@ const defaultProps: PropsObjectInterface = {
     className: '',
     value: '',
     label: 'Label',
-    simpleElement: false,
     shadow: true,
     labelPosition: LabelPositions.horizontal,
+    labelLength: LabelLength.auto,
+    align: AlignPositions.center,
     length: ElementLength.m,
     borderColor: allColors['Silver Sand'],
     showBorders: false,
     hideBottomBorder: false,
     borderRadius: BorderRadius.no,
+    labelColor: allColors['Dim Gray'],
+    hideLabel: false,
+    closeOnClickOutside: true,
     onChange: () => {}
 };
 

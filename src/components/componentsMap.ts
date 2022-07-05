@@ -1,7 +1,6 @@
 import InputEditor from '../editors/InputEditor';
 import SelectEditor from '../editors/SelectEditor';
 import CheckboxEditor from '../editors/CheckboxEditor';
-import ElementEditor from '../editors/ElementEditor';
 import SwitchToggleEditor from '../editors/SwitchToggleEditor';
 import IconEditor from '../editors/IconEditor';
 import ColorPickerEditor from '../editors/ColorPickerEditor';
@@ -23,10 +22,6 @@ const Components: Component[] = [{
     key: 'checkbox',
     name: 'Checkbox',
     editor: CheckboxEditor
-}, {
-    key: 'element',
-    name: 'Element',
-    editor: ElementEditor
 }, {
     key: 'switchToggle',
     name: 'Toggle',

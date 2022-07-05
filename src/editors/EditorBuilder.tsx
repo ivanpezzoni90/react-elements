@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 
 import styled from 'styled-components';
-import { ChangeEditorPropType, ChangeElementValueType, Editor, EditorSection, ElementLength } from '../lib/types';
+import { ChangeEditorPropType, ChangeElementValueType, Editor, EditorSection, EditorTypes, ElementLength } from '../lib/types';
 import { Checkbox } from '../lib/Checkbox';
-import { LabelPositions } from '../lib/types';
 import { Input } from '../lib/Input';
 import { Select } from '../lib/Select';
 import { SwitchToggle } from '../lib/SwitchToggle';
@@ -56,10 +55,11 @@ const Separator = styled.div`
     flex: 1;
 `;
 const SectionsWrapper = styled.div`
+    padding-top: 2em;
     display: flex;
     flex-direction: column;
 
-    height: 30em;
+    height: 70vh;
     overflow: auto;
 `;
 
@@ -121,11 +121,13 @@ export default function EditorFunction({
 
     return (
         <SectionsWrapper>
-            {json.map((s) => {
+            {json.map((s, i) => {
                 if (s.type === 'section') {
                     const editorGroups = splitArrayInGroups<Editor>(s.editors, 4);
 
-                    return (<Section>
+                    return (<Section
+                        key={`${s.type}_${i}`}
+                    >
                         <SectionTitle>
                             <Title>
                                 {s.label}
@@ -148,15 +150,16 @@ export default function EditorFunction({
                                                         group={group.length}
                                                     >
                                                         {{
-                                                            input: (<Input
+                                                            [EditorTypes.input]: (<Input
                                                                 locked={false}
                                                                 value={e.default as string}
                                                                 type={e.inputType as InputTypes || InputTypes.text}
                                                                 label={e.label}
                                                                 onBlur={() => { } }
+                                                                shadow={false}
                                                                 length={ElementLength.full}
                                                                 onChange={onChangeValue(e.prop)} />),
-                                                            select: (<Select
+                                                            [EditorTypes.select]: (<Select
                                                                 options={e.options ? e.options : []}
                                                                 value={Array.isArray(e.default)
                                                                     ? e.default as Array<string>
@@ -165,24 +168,26 @@ export default function EditorFunction({
                                                                 label={e.label}
                                                                 length={ElementLength.full}
                                                                 resettable={e.resettable}
+                                                                shadow={false}
                                                                 onChange={onChangeValue(e.prop)} />),
-                                                            checkbox: (<Checkbox
+                                                            [EditorTypes.checkbox]: (<Checkbox
                                                                 className=""
                                                                 checked={e.default as boolean}
                                                                 label={e.label}
+                                                                shadow={false}
                                                                 length={ElementLength.full}
-                                                                labelPosition={LabelPositions.vertical}
                                                                 onChange={onChangeValue(e.prop)} />),
-                                                            toggle: (<SwitchToggle
+                                                            [EditorTypes.toggle]: (<SwitchToggle
                                                                 checked={e.default as boolean}
                                                                 label={e.label}
                                                                 color="#666"
+                                                                shadow={false}
                                                                 length={ElementLength.full}
-                                                                labelPosition={LabelPositions.vertical}
                                                                 onChange={onChangeValue(e.prop)} />),
-                                                            color: (<ColorPicker
+                                                            [EditorTypes.color]: (<ColorPicker
                                                                 value={e.default as string}
                                                                 label={e.label}
+                                                                shadow={false}
                                                                 length={ElementLength.full}
                                                                 onChange={onChangeValue(e.prop)} />)
                                                         }[e.type]}

@@ -3,8 +3,10 @@ import styled from 'styled-components';
 import { allColors } from './constants/colors';
 import { lightenDarkenColor } from './helpers';
 import {
+    AlignPositions,
     BorderRadius,
     ButtonIconSize,
+    ElementHeight,
     ElementLength,
     ElementSize,
     FontWeight,
@@ -24,9 +26,9 @@ const calculateIconSize = (iconSize: ButtonIconSize, fontSize: ElementSize) => {
 const ButtonElement = styled.button<ButtonElementProps>`
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: ${props => props.align};
     width: ${props => props.length};
-    height: 3.5em;
+    height: ${props => props.height};
     padding: ${props => props.padding};
     border-radius: ${props => props.borderRadius};
     background-color: ${props => props.color};
@@ -50,10 +52,12 @@ interface ButtonElementProps {
     padding?: string
     borderRadius?: string
     textColor: string
-    fontSize?: string
+    fontSize?: ElementSize | string,
     disabled?: boolean
     length: ElementLength,
-    fontWeight?: FontWeight
+    height?: ElementHeight,
+    fontWeight?: FontWeight,
+    align?: AlignPositions
 }
 
 interface ButtonProps extends PropsObjectInterface {
@@ -70,6 +74,8 @@ interface ButtonProps extends PropsObjectInterface {
     iconColor?: string,
     buttonIconSize?: ButtonIconSize,
     iconPosition?: IconPosition,
+    height?: ElementHeight,
+    align?: AlignPositions
     onClick: VoidFunction
 }
 
@@ -92,6 +98,8 @@ const Button = ({
     label,
     length,
     icon,
+    height,
+    align,
     iconColor,
     buttonIconSize,
     iconPosition,
@@ -110,6 +118,7 @@ const Button = ({
 
     return (
         <ButtonElement
+            align={align}
             padding={padding}
             borderRadius={borderRadius}
             color={color}
@@ -118,6 +127,7 @@ const Button = ({
             fontWeight={fontWeight}
             length={length}
             disabled={disabled}
+            height={height}
             onClick={onClick}
         >
             {icon && iconPosition === IconPosition.left && IconElement}
@@ -142,10 +152,12 @@ Button.defaultProps = {
     disabled: false,
     onClick: () => {},
     length: ElementLength.full,
+    height: ElementHeight.m,
     icon: undefined,
     iconColor: allColors['White'],
     buttonIconSize: ButtonIconSize.auto,
-    iconPosition: IconPosition.left
+    iconPosition: IconPosition.left,
+    align: AlignPositions.center
 };
 
 export { Button };

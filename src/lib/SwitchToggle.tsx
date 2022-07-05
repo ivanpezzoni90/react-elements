@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { generateID, mergeClasses } from './helpers';
 import {
@@ -6,19 +6,21 @@ import {
     ChangeElementValueType,
     ElementLength, 
     IconSize,
+    LabelLength,
     PropsObjectInterface,
     SetBoolToStateType,
     ToggleLabelType
 } from './types';
-import { Element } from './Element';
 import { AlignPositions, LabelPositions } from './types';
 import {IconList, Icon} from './Icon';
 import { allColors } from './constants/colors';
+import { useBodyFontSize } from './hooks';
 
 interface Slider {
     toggle: boolean,
     color?: string,
-    colorOff?: string
+    colorOff?: string,
+    bodyFontSize: number
 }
 interface Switch {
     toggle: boolean,
@@ -46,11 +48,11 @@ const Slider = styled.span<Slider>`
         content: "";
 
         position: absolute;
-        left: 1px;
+        left: ${({toggle}) => toggle ? '2px' : '2px'};
         bottom: 1px;
 
-        width: 20px;
-        height: 20px;
+        width: ${({bodyFontSize}) => (bodyFontSize * 1.5) - 4}px;
+        height: ${({bodyFontSize}) => (bodyFontSize * 1.5) - 4}px;
         border-radius: 100%;
 
         background-color: ${({ toggle, color, colorOff }) => (toggle ? colorOff : color)};
@@ -72,8 +74,8 @@ const SwitchElementWrapper = styled.div`
 const Switch = styled.label<Switch>`
     position: relative;
     display: inline-block;
-    width: 48px;
-    height: 24px;
+    width: 3em;
+    height: 1.5em;
     background-color: ${({ toggle, color, colorOff }) => (toggle ? color : colorOff)};
     border-radius: 15px;
     transition: 0.4s;
@@ -91,14 +93,26 @@ interface SwitchToggleAdvancedWrapperInterface {
     borderColor?: string,
     showBorders?: boolean,
     hideBottomBorder?: boolean,
-    borderRadius?: BorderRadius
+    align?: AlignPositions,
+    borderRadius?: BorderRadius,
+    labelPosition?: LabelPositions,
 }
 const SwitchToggleAdvancedWrapper = styled.div<SwitchToggleAdvancedWrapperInterface>`
     display: flex;
-    align-items: center;
+    ${props => props.labelPosition === LabelPositions.vertical ? `
+        flex-direction: column;
+        padding-left: 0.5em;
+        padding-bottom: 0.25em;
+        align-items: ${props.align};
+        justify-content: center;
+    ` :`
+        flex-direction: row;
+        justify-content: ${props.align};
+        align-items: center;
+    `}
     min-width: 7em;
     width: ${props => props.length};
-    height: 3.5em;
+    height: ${props => props.labelPosition === LabelPositions.vertical ? '4em' : '3.5em'};
     position: relative;
     background-color: rgba(255, 255, 255, 0.3);
     border-radius: ${props => props.borderRadius};
@@ -106,35 +120,40 @@ const SwitchToggleAdvancedWrapper = styled.div<SwitchToggleAdvancedWrapperInterf
     ${(props) => props.showBorders ? `border: 1px solid ${props.borderColor}` : ''};
     transition: 0.3s background-color ease-in-out, 0.3s box-shadow ease-in-out;
     background-color: #ffffff;
-    ${({shadow}) => shadow ? 'box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2);' : ''}
+    ${({shadow}) => shadow ? 'box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.1);' : ''}
 
     &:hover{
         background-color: rgba(255, 255, 255, 0.45);
-        ${({shadow}) => shadow ? 'box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.05);' : ''}
+        ${({shadow}) => shadow ? 'box-shadow: 0px 4px 20px 0px  rgba(0, 0, 0, 0.05);' : ''}
     }
 `;
 
 interface LabelProps {
     htmlFor: string
-    length: ElementLength
+    length: ElementLength,
+    labelColor?: string,
+    labelPosition?: LabelPositions,
+    labelLength?: LabelLength
 }
 
 const SwitchToggleAdvancedLabel = styled.div<LabelProps>`
     display: flex;
     justify-content: flex-start;
     flex: 1;
-    padding: 0 1em 0 1em;
+    padding: 0 1em 0 ${props => props.labelPosition === LabelPositions.horizontal ? '1em' : '0'};
 
     font-family: "Gotham SSm A", "Gotham SSm B", sans-serif;
     font-size: 16px;
     font-weight: 600;
     line-height: 24px;
-    color: #666;
+    color: ${props => props.labelColor};
     opacity: 1;
     pointer-events: none;
     transition: 0.1s all ease-in-out;
 
-    max-width: ${({length}) => length};
+    max-width: ${props => props.labelLength === LabelLength.auto
+        ? props.length
+        : props.labelLength};
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
@@ -146,12 +165,13 @@ interface ToggleInnerLabelType {
 }
 
 const ToggleInnerLabel = styled.div<ToggleInnerLabelType>`
-    font-size: 9px;
+    font-size: 7px;
     font-weight: 600;
     color: ${({ toggle, color }) => (toggle ? 'white' : color)};
     display: flex;
     flex: 0.5;
     justify-content: center;
+    padding-${({toggle}) => toggle ? 'left' : 'right'}: 0.5em;
 `;
 
 interface SwitchToggleProps extends PropsObjectInterface {
@@ -159,7 +179,6 @@ interface SwitchToggleProps extends PropsObjectInterface {
     className: string,
     color?: string,
     label?: string,
-    simpleElement?: boolean,
     labelPosition?: LabelPositions,
     align?: AlignPositions,
     labelOn?: string,
@@ -173,7 +192,10 @@ interface SwitchToggleProps extends PropsObjectInterface {
     borderColor?: string,
     showBorders?: boolean,
     hideBottomBorder?: boolean,
-    borderRadius?: BorderRadius
+    labelColor?: string,
+    hideLabel?: boolean,
+    borderRadius?: BorderRadius,
+    labelLength?: LabelLength
 }
 
 function SwitchToggleElement({
@@ -213,6 +235,8 @@ function SwitchToggleElement({
         setToggle(checked);
     }, [checked]);
 
+    const bodyFontSize = useBodyFontSize();
+
     return (
         <SwitchElementWrapper
             className="ie-radio__element-wrapper"
@@ -233,6 +257,7 @@ function SwitchToggleElement({
                     {...{ toggle, color, colorOff }}
                     className="ie-radio__element__slider"
                     onClick={onClickCb}
+                    bodyFontSize={bodyFontSize}
                 >
                     <ToggleInnerLabel
                         toggle={toggle}
@@ -270,7 +295,7 @@ const SwitchToggle = (props: SwitchToggleProps) => {
         iconOffColor,
         label,
         labelPosition,
-        simpleElement,
+        labelLength,
         align,
         labelType,
         labelOn,
@@ -281,65 +306,49 @@ const SwitchToggle = (props: SwitchToggleProps) => {
         showBorders,
         hideBottomBorder,
         borderRadius,
+        labelColor,
+        hideLabel,
         onChange
     } = props;
 
     const id = useRef(generateID());
 
-   
     return (
-        <Fragment>
-            {simpleElement ? (
-                <Element
-                    className={mergeClasses('ie-radio', className)}
-                    id={id.current}
-                    align={align}
-                    label={label}
-                    labelPosition={labelPosition}
-                >
-                    <SwitchToggleElement
-                        checked={checked}
-                        color={color}
-                        labelOn={labelOn}
-                        labelOff={labelOff}
-                        labelType={labelType}
-                        colorOff={colorOff}
-                        iconColor={iconColor}
-                        iconOffColor={iconOffColor}
-                        onChange={onChange}
-                    />
-                </Element>
-            ): (
-                <SwitchToggleAdvancedWrapper
-                    shadow={shadow}
+        <SwitchToggleAdvancedWrapper
+            align={align}
+            shadow={shadow}
+            length={length}
+            borderColor={borderColor}
+            showBorders={showBorders}
+            hideBottomBorder={hideBottomBorder}
+            borderRadius={borderRadius}
+            labelPosition={labelPosition}
+            className={mergeClasses('ie-radio', className)}
+        >
+            {hideLabel ? null : (
+                <SwitchToggleAdvancedLabel
+                    className="ie-radio__label"
+                    htmlFor={id.current}
                     length={length}
-                    borderColor={borderColor}
-                    showBorders={showBorders}
-                    hideBottomBorder={hideBottomBorder}
-                    borderRadius={borderRadius}
-                    className={mergeClasses('ie-radio', className)}
+                    labelColor={labelColor}
+                    labelPosition={labelPosition}
+                    labelLength={labelLength}
                 >
-                    <SwitchToggleAdvancedLabel
-                        className="ie-radio__label"
-                        htmlFor={id.current}
-                        length={length}
-                    >
-                        {label}
-                    </SwitchToggleAdvancedLabel>
-                    <SwitchToggleElement
-                        checked={checked}
-                        color={color}
-                        labelOn={labelOn}
-                        labelOff={labelOff}
-                        labelType={labelType}
-                        colorOff={colorOff}
-                        iconColor={iconColor}
-                        iconOffColor={iconOffColor}
-                        onChange={onChange}
-                    />
-                </SwitchToggleAdvancedWrapper>
+                    {label}
+                </SwitchToggleAdvancedLabel>
             )}
-        </Fragment>
+            <SwitchToggleElement
+                checked={checked}
+                color={color}
+                labelOn={labelOn}
+                labelOff={labelOff}
+                labelType={labelType}
+                colorOff={colorOff}
+                iconColor={iconColor}
+                iconOffColor={iconOffColor}
+                onChange={onChange}
+            />
+        </SwitchToggleAdvancedWrapper>
     );
 };
 
@@ -351,17 +360,20 @@ const defaultProps: PropsObjectInterface = {
     iconColor: allColors['White'],
     iconOffColor: allColors['Dim Gray'],
     label: 'Label',
-    labelPosition: undefined,
-    simpleElement: false,
+    labelPosition: LabelPositions.horizontal,
     labelOn: 'YES',
     labelOff: 'NO',
     shadow: true,
     labelType: ToggleLabelType.label,
+    align: AlignPositions.center,
     length: ElementLength.m,
     borderColor: allColors['Silver Sand'],
     showBorders: false,
     hideBottomBorder: false,
     borderRadius: BorderRadius.no,
+    labelColor: allColors['Dim Gray'],
+    hideLabel: false,
+    labelLength: LabelLength.auto,
     onChange: () => {}
 };
 

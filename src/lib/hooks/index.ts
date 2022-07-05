@@ -61,3 +61,45 @@ export const useComputedWidth = (ref: React.RefObject<Element>) => {
 
     return width;
 };
+
+
+export const useBodyFontSize = () => {
+    const bodyEl = document.getElementsByTagName('body').item(0);
+    if (bodyEl) {
+        const fontSize = window.getComputedStyle(bodyEl, null).getPropertyValue('font-size');
+        const parsedFontSize = parseFloat(fontSize);
+        return parsedFontSize;
+    }
+    // Fallback to default font size
+    return 16;
+};
+
+export function useClickOutside (
+    ref: React.RefObject<HTMLDivElement>,
+    cb: VoidFunction,
+    exceptions?: React.RefObject<Element>[]
+) {
+    useEffect(() => {
+        function handleClickOutside(event: CustomEvent) {
+            // When event target (where the user clicked) is not the current ref
+            if (ref.current && !ref.current.contains(event.target as Node)) {
+                // When event target is not one of the given exception refs
+                if (
+                    exceptions
+                    && exceptions.some(
+                        e => e.current && !e.current.contains(event.target as Node)
+                    )
+                ) {
+                    cb();
+                } else if (!exceptions || exceptions.length === 0) {
+                    // When no exceptions are specified, call cb
+                    cb();
+                }
+            }
+        }
+        document.addEventListener('mousedown', handleClickOutside as EventListener);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside as EventListener);
+        };
+    }, [ref, cb, exceptions]);
+}

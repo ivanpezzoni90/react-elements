@@ -3,9 +3,9 @@ import React from 'react';
 import { Fragment } from 'react';
 import Editor from './EditorBuilder';
 import {Checkbox} from '../lib/Checkbox';
-import { EditorSection, EditorSectionTypes, ElementLength, PropsObjectInterface } from '../lib/types';
+import { EditorSection, EditorSectionTypes, EditorTypes, ElementLength, PropsObjectInterface } from '../lib/types';
 import { useEditorInit } from '../lib/hooks';
-import { bordersAndShadowSection, ElementContainer, labelSection, lengthEditor, simpleElementSection } from './commons';
+import { alignPositionEditor, bordersAndShadowSection, ElementContainer, labelSection, lengthEditor } from './commons';
 import { allColors } from '../lib/constants/colors';
 
 const getEditor = (props: PropsObjectInterface) => {
@@ -17,26 +17,26 @@ const getEditor = (props: PropsObjectInterface) => {
             label: 'Colors',
             editors: [
                 {
-                    type: 'color',
+                    type: EditorTypes.color,
                     default: allColors['Dim Gray'],
                     label: 'Color',
                     prop: 'color'
                 },
                 {
-                    type: 'color',
+                    type: EditorTypes.color,
                     default: allColors['White'],
                     label: 'Icon Color',
                     prop: 'colorOff'
                 },
             ]
         },
-        simpleElementSection(props.simpleElement),
         bordersAndShadowSection(props.simpleElement),
         {
             type: EditorSectionTypes.section,
-            label: 'Size',
+            label: 'Others',
             editors: [
-                lengthEditor(ElementLength.m)
+                lengthEditor(ElementLength.m),
+                alignPositionEditor
             ]
         }
     ];

@@ -2,22 +2,22 @@ import React from 'react';
 
 import Editor from './EditorBuilder';
 
-import { EditorSection, EditorSectionTypes, PropsObjectInterface } from '../lib/types';
+import { EditorSection, EditorSectionTypes, EditorTypes, LabelPositions, PropsObjectInterface } from '../lib/types';
 import { Fragment } from 'react';
 import { Input } from '../lib/Input';
 import { useEditorInit } from '../lib/hooks';
-import { bordersAndShadowSection, ElementContainer, labelSection, lengthEditor } from './commons';
+import { bordersAndShadowSection, colorEditors, ElementContainer, labelSection, lengthEditor } from './commons';
 import { InputTypes } from '../lib/Input/config';
 
 const getEditor = (props: PropsObjectInterface) => {
     const editorJson: EditorSection[] = [
-        labelSection(),
+        labelSection(LabelPositions.vertical),
         {
             type: EditorSectionTypes.section,
             label: 'Type',
             editors: [
                 {
-                    type: 'select',
+                    type: EditorTypes.select,
                     default: InputTypes.text,
                     label: 'Type',
                     prop: 'type',
@@ -33,14 +33,14 @@ const getEditor = (props: PropsObjectInterface) => {
                     }]
                 },
                 {
-                    type: 'input',
+                    type: EditorTypes.input,
                     inputType: props.type,
                     label: props.type === InputTypes.text ? 'Max length' : 'Max',
                     prop: 'max',
                     default: undefined
                 },
                 {
-                    type: 'input',
+                    type: EditorTypes.input,
                     label: props.type === InputTypes.text ? 'Min length' : 'Min',
                     inputType: props.type,
                     prop: 'min',
@@ -50,17 +50,24 @@ const getEditor = (props: PropsObjectInterface) => {
         },
         {
             type: EditorSectionTypes.section,
+            label: 'Colors',
+            editors: [
+                ...colorEditors,
+            ]
+        },
+        {
+            type: EditorSectionTypes.section,
             label: 'Error',
             editors: [
                 {
                     label: 'Error',
-                    type: 'toggle',
+                    type: EditorTypes.toggle,
                     default: false,
                     prop: 'error'
                 },
                 ... props.error ? [{
                     label: 'Error Message',
-                    type: 'input',
+                    type: EditorTypes.input,
                     default: '',
                     prop: 'errorMessage'
                 }] : []
@@ -80,7 +87,7 @@ const getEditor = (props: PropsObjectInterface) => {
             editors: [
                 {
                     label: 'Locked',
-                    type: 'toggle',
+                    type: EditorTypes.toggle,
                     default: false,
                     prop: 'locked'
                 },

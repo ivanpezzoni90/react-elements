@@ -8,7 +8,7 @@ import {
     fontColorFromBackground,
     lightenDarkenColor
 } from '../helpers';
-import { BorderRadius, ElementLength } from '../types';
+import { BorderRadius, ElementLength, LabelLength, LabelPositions } from '../types';
 
 import {
     SelectElementProps,
@@ -37,6 +37,7 @@ export const SelectElement = styled.div<SelectElementProps>`
         )
     };   
     display: flex;
+    align-items: center;
     text-align: left;
     height: 1.75em;
     position: relative;
@@ -73,7 +74,12 @@ export const SelectElement = styled.div<SelectElementProps>`
 
 export const SelectWrapper = styled.div<SelectWrapperProps>`
     display: flex;
-    flex-direction: column;
+    ${props => props.labelPosition === LabelPositions.vertical
+        ? `flex-direction: column;
+            justify-content: center;
+        ` : `flex-direction: row;
+            align-items: center
+        `};
     width: ${props => props.length};
     height: 3.5em;
     position: relative;
@@ -84,7 +90,7 @@ export const SelectWrapper = styled.div<SelectWrapperProps>`
     transition: 0.3s background-color ease-in-out, 0.3s box-shadow ease-in-out;
     ${props => props.hasValue && props.shadow
         ? `background-color: #ffffff;
-        box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2);`
+        box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.1);`
         : ''
     }
     &:hover{
@@ -94,9 +100,13 @@ export const SelectWrapper = styled.div<SelectWrapperProps>`
 `;
 
 export const Label = styled.div<LabelProps>`
-    padding: 1em 1em 0 1em;
+    display: flex;
+    align-items: center;
     font-family: "Gotham SSm A", "Gotham SSm B", sans-serif;
-    font-size: 16px;
+    ${props => props.labelPosition === LabelPositions.horizontal
+        ? 'font-size: 16px;'
+        : 'font-size: 12px;'
+    }
     font-weight: 600;
     line-height: 24px;
     color: ${props => props.labelColor};
@@ -107,9 +117,8 @@ export const Label = styled.div<LabelProps>`
     padding: .25em 1.5em 0 1.5em;
     opacity: 1;
     color: ${props => props.labelColor};
-    font-size: 12px;
 
-    max-width: ${({length}) => length};
+    max-width: ${({length, labelLength}) => labelLength === LabelLength.auto ? length : labelLength};
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
@@ -192,11 +201,12 @@ export const SelectChip = styled.div<SelectChipInterface>`
     display: flex;
     align-items: center;
     padding: 0.25em;
-    margin-right: 0.5em;
+    margin-right: 0.75em;
+    font-size: 14px;
 `;
 
 export const ChipText = styled.div`
-    padding-right: 0.5em;
+    padding: 0 0.5em 0 ${({multiple}: {multiple: boolean}) => multiple ? '0.5em' : '0'};
 `;
 
 export const ChipsWrapper = styled.div`
@@ -212,4 +222,5 @@ export const ChipIconWrapper = styled.div<ChipIconWrapperInterface>`
         border-radius: ${({borderRadius}) => borderRadius};
     }
     border-left: 1px solid ${allColors['Silver Sand']};
+    padding: 0.25em;
 `;

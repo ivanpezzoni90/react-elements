@@ -1,3 +1,4 @@
+import React, { ReactElement } from 'react';
 import styled from 'styled-components';
 import { allColors } from '../lib/constants/colors';
 import {
@@ -5,10 +6,13 @@ import {
     Editor,
     EditorSection,
     EditorSectionTypes,
+    EditorTypes,
+    ElementHeight,
     ElementLength,
     ElementSize,
     FontWeight,
     IconSize,
+    LabelLength,
     Option,
     Padding,
     Positions
@@ -16,16 +20,35 @@ import {
 import { AlignPositions, LabelPositions } from '../lib/types';
 import { IconList } from '../lib/Icon';
 
-export const ElementContainer = styled.div.attrs({
-    className: 'ie__workarea__element'
-})`
-    padding: 1em 1em 2em 1em;
+export const Container = styled.div`
+    padding: 2em 1em 2em 1em;
+    border-bottom: 1px solid ${allColors['Dim Gray']};
+    display: flex;
+    justify-content: center;
 `;
 
-export const labelPositionEditor: Editor = {
-    type: 'select',
+export const Wrapper = styled.div`
+    width: 40em;
+`;
+
+export const ElementContainer = ({children}: {children: ReactElement}) => (
+    <Container
+        className="ie__workarea__element"
+    >
+        <Wrapper
+            className="ie__workarea__element__wrapper"
+        >
+            {children}
+        </Wrapper>
+    </Container>
+);
+
+export const labelPositionEditor: (def?: LabelPositions) => Editor = (
+    def = LabelPositions.horizontal
+) => ({
+    type: EditorTypes.select,
     label: 'Label Position',
-    default: LabelPositions.horizontal,
+    default: def,
     prop: 'labelPosition',
     options: [{
         label: 'Horizontal',
@@ -34,10 +57,10 @@ export const labelPositionEditor: Editor = {
         label: 'Vertical',
         value: LabelPositions.vertical
     }]
-};
+});
 
 export const positionEditor: Editor = {
-    type: 'select',
+    type: EditorTypes.select,
     label: 'Position',
     default: Positions.vertical,
     prop: 'position',
@@ -51,9 +74,9 @@ export const positionEditor: Editor = {
 };
 
 export const alignPositionEditor: Editor = {
-    type: 'select',
+    type: EditorTypes.select,
     label: 'Alignment',
-    default: AlignPositions.left,
+    default: AlignPositions.center,
     prop: 'align',
     options: [{
         label: 'Left',
@@ -69,58 +92,154 @@ export const alignPositionEditor: Editor = {
 
 export const shadowEditor: Editor = {
     label: 'Shadow',
-    type: 'toggle',
+    type: EditorTypes.toggle,
     default: true,
     prop: 'shadow'
 };
 
 export const colorEditors: Editor[] = [
     {
-        type: 'color',
+        type: EditorTypes.color,
         label: 'Text Color',
         prop: 'textColor',
         default: allColors['Dim Gray']
     },
     {
-        type: 'color',
-        label: 'Label Color',
-        prop: 'labelColor',
-        default: allColors['Dim Gray']
-    },
-    {
-        type: 'color',
+        type: EditorTypes.color,
         label: 'Border Color',
         prop: 'borderColor',
         default: allColors['Silver Sand']
     },
 ];
 
+export const labelColorEditor: Editor =  {
+    type: EditorTypes.color,
+    label: 'Label Color',
+    prop: 'labelColor',
+    default: allColors['Dim Gray']
+};
+
 export const lengthEditor = (def = ElementLength.full): Editor => ({
     label: 'Length',
-    type: 'select',
+    type: EditorTypes.select,
     default: def,
     prop: 'length',
-    options: [{
-        label: 'Full',
-        value: ElementLength.full
-    }, {
-        label: 'S',
-        value: ElementLength.s
-    }, {
-        label: 'M',
-        value: ElementLength.m
-    }, {
-        label: 'L',
-        value: ElementLength.l
-    }, {
-        label: 'Squared',
-        value: ElementLength.squared
-    }]
+    options: [
+        {
+            value: ElementLength.squared,
+            label: 'Squared'
+        },
+        {
+            value: ElementLength.xxs,
+            label: 'XXS'
+        },
+        {
+            value: ElementLength.xs,
+            label: 'XS'
+        },
+        {
+            value: ElementLength.s,
+            label: 'S'
+        },
+        {
+            value: ElementLength.m,
+            label: 'M'
+        },
+        {
+            value: ElementLength.l,
+            label: 'L'
+        },
+        {
+            value: ElementLength.xl,
+            label: 'XL'
+        },
+        {
+            value: ElementLength.xxl,
+            label: 'XXL'
+        },
+        {
+            value: ElementLength.full,
+            label: 'Full'
+        },
+    ]
 });
+
+
+export const heightEditor = (def = ElementHeight.m): Editor => ({
+    label: 'Height',
+    type: EditorTypes.select,
+    default: def,
+    prop: 'height',
+    options: [
+        {
+            label: 'XS',
+            value: ElementHeight.xs
+        },
+        {
+            label: 'S',
+            value: ElementHeight.s
+        },
+        {
+            label: 'M',
+            value: ElementHeight.m
+        },
+        {
+            label: 'L',
+            value: ElementHeight.l
+        },
+        {
+            label: 'XL',
+            value: ElementHeight.xl
+        },
+    ]
+});
+
+export const labelLengthEditor = (def = LabelLength.auto): Editor => ({
+    label: 'Label length',
+    type: EditorTypes.select,
+    default: def,
+    prop: 'labelLength',
+    options: [
+        {
+            value: LabelLength.xxs,
+            label: 'XXS'
+        },
+        {
+            value: LabelLength.xs,
+            label: 'XS'
+        },
+        {
+            value: LabelLength.s,
+            label: 'S'
+        },
+        {
+            value: LabelLength.m,
+            label: 'M'
+        },
+        {
+            value: LabelLength.l,
+            label: 'L'
+        },
+        {
+            value: LabelLength.xl,
+            label: 'XL'
+        },
+        {
+            value: LabelLength.xxl,
+            label: 'XXL'
+        },
+        {
+            value: LabelLength.auto,
+            label: 'Auto'
+        },
+    ]
+});
+
+
 
 export const paddingEditor: Editor = {
     label: 'Padding',
-    type: 'select',
+    type: EditorTypes.select,
     default: Padding.m,
     prop: 'padding',
     options: [{
@@ -137,7 +256,7 @@ export const paddingEditor: Editor = {
 
 export const fontWeightEditor: Editor = {
     label: 'Font Weight',
-    type: 'select',
+    type: EditorTypes.select,
     default: FontWeight.light,
     prop: 'fontWeight',
     options: [{
@@ -167,7 +286,7 @@ type borderRadiusEditorType = (
 export const borderRadiusEditor: borderRadiusEditorType =
 (_default: BorderRadius, label = 'Border Radius', prop = 'borderRadius') => ({
     label,
-    type: 'select',
+    type: EditorTypes.select,
     default: _default,
     prop,
     options: [{
@@ -196,7 +315,7 @@ export const borderRadiusEditor: borderRadiusEditorType =
 
 export const fontSizeEditor: Editor = {
     label: 'Element Size',
-    type: 'select',
+    type: EditorTypes.select,
     default: ElementSize.m,
     prop: 'fontSize',
     options: [{
@@ -231,7 +350,7 @@ const iconOptions: Option[] = Object.values(IconList).map(v => ({
 }));
 
 export const iconEditor: Editor = {
-    type: 'select',
+    type: EditorTypes.select,
     default: IconList.check,
     label: 'Icon',
     prop: 'icon',
@@ -246,7 +365,7 @@ const sizeOptions: Option[] = Object.entries(IconSize).map(([k,v]) => ({
 
 export const iconSizeEditor: Editor = {
     label: 'Size',
-    type: 'select',
+    type: EditorTypes.select,
     default: IconSize.xs,
     prop: 'fontSize',
     options: sizeOptions
@@ -255,13 +374,13 @@ export const iconSizeEditor: Editor = {
 export const bordersEditor: Editor[] = [
     {
         label: 'Show all borders',
-        type: 'toggle',
+        type: EditorTypes.toggle,
         default: false,
         prop: 'showBorders'
     },
     {
         label: 'Hide bottom border',
-        type: 'toggle',
+        type: EditorTypes.toggle,
         default: false,
         prop: 'hideBottomBorder'
     }
@@ -273,7 +392,7 @@ export const bordersAndShadowSection = (simpleElement?: boolean): EditorSection 
     editors: !simpleElement ? [
         shadowEditor,
         {
-            type: 'color',
+            type: EditorTypes.color,
             label: 'Border Color',
             prop: 'borderColor',
             default: allColors['Silver Sand']
@@ -283,29 +402,24 @@ export const bordersAndShadowSection = (simpleElement?: boolean): EditorSection 
     ] : []
 });
 
-export const simpleElementSection = (simpleElement?: boolean): EditorSection => ({
-    type: EditorSectionTypes.section,
-    label: 'Simple Element',
-    editors: [
-        {
-            type: 'checkbox',
-            default: false,
-            label: 'Simple Element',
-            prop: 'simpleElement'
-        },
-        ...simpleElement ? [labelPositionEditor, alignPositionEditor] : [],
-    ]
-});
-
-export const labelSection = (): EditorSection => ({
+export const labelSection = (defaultPosition?: LabelPositions): EditorSection => ({
     type: EditorSectionTypes.section,
     label: 'Label',
     editors: [
         {
-            type: 'input',
+            type: EditorTypes.input,
             default: 'Label',
             label: 'Label',
             prop: 'label'
-        }
+        },
+        {
+            type: EditorTypes.toggle,
+            default: false,
+            label: 'Hide label',
+            prop: 'hideLabel'
+        },
+        labelColorEditor,
+        labelPositionEditor(defaultPosition),
+        labelLengthEditor()
     ]
 });
