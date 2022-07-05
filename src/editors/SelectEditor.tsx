@@ -5,12 +5,12 @@ import { Fragment } from 'react';
 import { borderRadiusEditor, bordersAndShadowSection, colorEditors, labelSection, lengthEditor } from './commons/editors';
 import { ElementContainer } from './commons/ElementContainer';
 
-import { BorderRadius, EditorSection, EditorSectionTypes, EditorTypes, LabelPositions, PropsObjectInterface } from '../lib/types';
-import { Select } from '../lib/Select';
+import { BorderRadius, EditorSection, EditorSectionTypes, EditorTypes, LabelPositions } from '../lib/types';
+import { Select, SelectProps } from '../lib/Select';
 import { useEditorInit } from '../lib/hooks';
 import { allColors } from '../lib/constants/colors';
 
-const getEditor = (props: PropsObjectInterface): EditorSection[] => ([
+const getEditor = (props: SelectProps): EditorSection[] => ([
     labelSection(LabelPositions.vertical),
     {
         type: EditorSectionTypes.section,
@@ -47,7 +47,7 @@ const getEditor = (props: PropsObjectInterface): EditorSection[] => ([
             lengthEditor()
         ]
     },
-    bordersAndShadowSection(false),
+    bordersAndShadowSection(),
     {
         type: EditorSectionTypes.section,
         label: 'Others',

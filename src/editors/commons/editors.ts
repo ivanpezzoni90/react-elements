@@ -360,10 +360,10 @@ export const bordersEditor: Editor[] = [
     }
 ];
 
-export const bordersAndShadowSection = (simpleElement?: boolean): EditorSection => ({
+export const bordersAndShadowSection = (): EditorSection => ({
     type: EditorSectionTypes.section,
     label: 'Borders and Shadow',
-    editors: !simpleElement ? [
+    editors: [
         shadowEditor,
         {
             type: EditorTypes.color,
@@ -373,7 +373,7 @@ export const bordersAndShadowSection = (simpleElement?: boolean): EditorSection 
         },
         ...bordersEditor,
         borderRadiusEditor(BorderRadius.no)
-    ] : []
+    ]
 });
 
 export const labelSection = (defaultPosition?: LabelPositions): EditorSection => ({

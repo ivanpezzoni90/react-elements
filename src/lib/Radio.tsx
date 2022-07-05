@@ -12,7 +12,6 @@ import {
     Positions,
     RadioTypes
 } from './types';
-import { ChangeElementValueType, PropsObjectInterface } from './types';
 import { CheckboxElement } from './Checkbox';
 import { SwitchToggleElement } from './SwitchToggle';
 import { Button } from './Button';
@@ -101,7 +100,7 @@ const RadioLabel = styled.div`
     overflow: hidden;
 `;
 
-interface RadioProps extends PropsObjectInterface{
+interface RadioProps {
     className: string,
     label: string,
     position: Positions,
@@ -110,7 +109,9 @@ interface RadioProps extends PropsObjectInterface{
     options: Array<Option>,
     labelPosition?: LabelPositions,
     labelLength?: LabelLength,
-    onChange: ChangeElementValueType
+    hideLabel?: boolean,
+    labelColor?: string,
+    onChange: (v: string | number | boolean) => void
 }
 
 type getRadioElementType = (
@@ -225,7 +226,7 @@ function Radio(props: RadioProps) {
     );
 }
 
-const defaultProps: PropsObjectInterface = {
+const defaultProps: RadioProps = {
     className: '',
     label: 'Label',
     position: Positions.vertical,

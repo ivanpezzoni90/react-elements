@@ -1,5 +1,5 @@
 import { throttle } from 'throttle-debounce';
-import { BorderRadius, ChangeElementValueType, ElementHeight, ElementLength, LabelLength, LabelPositions, PropsObjectInterface } from '../types';
+import { BorderRadius, ElementHeight, ElementLength, LabelLength, LabelPositions } from '../types';
 
 export enum InputTypes {
     text = 'text',
@@ -7,15 +7,15 @@ export enum InputTypes {
     date = 'date'
 }
 
-export interface InputProps extends PropsObjectInterface {
+export interface InputProps {
     locked: boolean,
     error: boolean,
     errorMessage?: string,
     value: string,
     label: string,
     shadow?: boolean,
-    onBlur: ChangeElementValueType,
-    onChange: ChangeElementValueType,
+    onBlur: ChangeInputHandlerType,
+    onChange: ChangeInputHandlerType,
     length: ElementLength,
     active?: boolean,
     labelColor?: string,
@@ -28,7 +28,10 @@ export interface InputProps extends PropsObjectInterface {
     labelLength?: LabelLength,
     hideLabel?: boolean,
     height?: ElementHeight,
-    placeholder?: string
+    placeholder?: string,
+    showBorders?: boolean,
+    hideBottomBorder?: boolean
+    borderRadius?: BorderRadius
 }
 
 export type SetErrorType = (e: boolean) => void;

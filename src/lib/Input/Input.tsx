@@ -9,7 +9,7 @@ import {
 } from './InputStyle';
 
 import { CheckValidatorsType, InputProps, InputTypeProps, InputTypes } from './config';
-import { BorderRadius, ElementHeight, ElementLength, LabelLength, LabelPositions, PropsObjectInterface } from '../types';
+import { BorderRadius, ElementHeight, ElementLength, LabelLength, LabelPositions } from '../types';
 import { allColors } from '../constants/colors';
 import { IconList, Icon } from '../Icon';
 import { useComputedWidth } from '../hooks';
@@ -249,7 +249,7 @@ function Input({
     );
 }
 
-const defaultProps: PropsObjectInterface = {
+const defaultProps: InputProps = {
     locked: false,
     error: false,
     errorMessage: undefined,

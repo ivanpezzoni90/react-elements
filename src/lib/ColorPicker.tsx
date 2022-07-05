@@ -5,8 +5,6 @@ import {
     AlignPositions,
     ElementLength,
     LabelPositions,
-    ChangeElementValueType,
-    PropsObjectInterface,
     BorderRadius,
     LabelLength
 } from './types';
@@ -190,7 +188,9 @@ const SelectedColor = styled.div`
 const SelectedColorLabel = styled.div`
 `;
 
-interface ColorPickerProps extends PropsObjectInterface{
+type ColorPickerChangeHandlerType = (v: string) => void;
+
+interface ColorPickerProps {
     className: string,
     value: string,
     label: string,
@@ -198,7 +198,7 @@ interface ColorPickerProps extends PropsObjectInterface{
     align?: AlignPositions,
     shadow?: boolean,
     length: ElementLength,
-    onChange: ChangeElementValueType,
+    onChange: ColorPickerChangeHandlerType,
     borderColor?: string,
     showBorders?: boolean,
     hideBottomBorder?: boolean,
@@ -212,7 +212,7 @@ interface ColorPickerProps extends PropsObjectInterface{
 interface ColorPickerElementInterface {
     valueFromProps: string,
     closeOnClickOutside?: boolean,
-    onChange: ChangeElementValueType
+    onChange: ColorPickerChangeHandlerType,
 }
 
 function ColorPickerElement({
@@ -235,9 +235,9 @@ function ColorPickerElement({
         onChange(newColor);
     };
 
-    const onCustomColorChange: ChangeElementValueType = (newColor) => {
+    const onCustomColorChange: (v: string | number) => void = (newColor) => {
         setSelectedColor(newColor as string);
-        onChange(newColor);
+        onChange(newColor as string);
     };
 
     const emptyColorObj: ColorObject = {
@@ -385,7 +385,7 @@ function ColorPicker(props: ColorPickerProps) {
     );
 }
 
-const defaultProps: PropsObjectInterface = {
+const defaultProps: ColorPickerProps = {
     className: '',
     value: '',
     label: 'Label',

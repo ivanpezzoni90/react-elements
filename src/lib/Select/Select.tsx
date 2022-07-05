@@ -1,7 +1,7 @@
 import React, { MouseEvent, useCallback } from 'react';
 import { Fragment, useEffect, useRef, useState } from 'react';
 import { checkEventTargetContainsClass, elaborateComputedWidth, generateID, lightenDarkenColor, mergeClasses } from '../helpers';
-import { BorderRadius, ElementHeight, IconSize, LabelLength, LabelPositions, Option as OptionType, PropsObjectInterface } from '../types';
+import { BorderRadius, ElementHeight, IconSize, LabelLength, LabelPositions, Option as OptionType } from '../types';
 import { IconList, Icon } from '../Icon';
 import { ElementLength } from '../types';
 import {
@@ -157,10 +157,9 @@ function Select(props: SelectProps) {
         </ChipText>
     </>);
 
-    const filterOptions = useCallback((value: string | number | boolean | string[] | null) => {
-        const _value:string = value as string; // TODO: // REVIEW: Remove propsobjectinterface
+    const filterOptions = useCallback((value: string | number) => {
         const newOptions = options.filter(o => {
-            return o.label.toLowerCase().indexOf(_value.toLowerCase()) !== -1;
+            return o.label.toLowerCase().indexOf(value.toString().toLowerCase()) !== -1;
         });
         setFilteredOptions(newOptions);
     }, [options]);
@@ -311,7 +310,7 @@ function Select(props: SelectProps) {
         </SelectContainer>
     );
 }
-const defaultProps: PropsObjectInterface = {
+const defaultProps: SelectProps = {
     options: [],
     className: '',
     value: null,

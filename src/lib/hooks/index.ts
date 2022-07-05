@@ -1,11 +1,9 @@
 import {useState, useEffect} from 'react';
-import { ChangeEditorPropType, PropsObjectInterface, SetPropsToStateType } from '../types';
+import { ChangeEditorPropType } from '../types';
 
-export const useEditorInit = (defaultProps: PropsObjectInterface) => {
+export function useEditorInit (defaultProps: any) {
     const [
         props, setProps
-    ]: [
-        props: PropsObjectInterface, setProps: SetPropsToStateType
     ] = useState(defaultProps);
 
     const onChangeProp: ChangeEditorPropType = (prop, value) => {
@@ -18,8 +16,7 @@ export const useEditorInit = (defaultProps: PropsObjectInterface) => {
         onChangeProp,
         props
     };
-};
-
+}
 
 export const useComputedZIndex = (ref: React.RefObject<Element>) => {
     const [

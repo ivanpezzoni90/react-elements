@@ -2,8 +2,8 @@ import React from 'react';
 
 import { Fragment } from 'react';
 import Editor from './EditorBuilder';
-import { Slider } from '../lib/Slider';
-import { EditorSection, EditorSectionTypes, EditorTypes, ElementLength, PropsObjectInterface } from '../lib/types';
+import { Slider, SliderProps } from '../lib/Slider';
+import { EditorSection, EditorSectionTypes, EditorTypes, ElementLength } from '../lib/types';
 import { useEditorInit } from '../lib/hooks';
 import { alignPositionEditor, bordersAndShadowSection, labelSection, lengthEditor } from './commons/editors';
 import { ElementContainer } from './commons/ElementContainer';
@@ -11,7 +11,7 @@ import { ElementContainer } from './commons/ElementContainer';
 import { allColors } from '../lib/constants/colors';
 import { InputTypes } from '../lib/Input/config';
 
-const getEditor = (props: PropsObjectInterface) => {
+const getEditor = (props: SliderProps) => {
     const editorJSON: EditorSection[] = [
         labelSection(),
         {
@@ -67,7 +67,7 @@ const getEditor = (props: PropsObjectInterface) => {
                 }
             ]
         },
-        bordersAndShadowSection(props.simpleElement),
+        bordersAndShadowSection(),
         {
             type: EditorSectionTypes.section,
             label: 'Colors',

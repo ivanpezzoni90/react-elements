@@ -221,6 +221,7 @@ export const ChipsWrapper = styled.div`
 interface ChipIconWrapperInterface {
     borderRadius?: BorderRadius
 }
+
 export const ChipIconWrapper = styled.div<ChipIconWrapperInterface>`
     &:hover {
         background-color: ${({color}) => color};
@@ -239,4 +240,6 @@ export const DropDownSearchContainer = styled.div`
 
 export const DropDownSearchIconWrapper = styled.div`
     padding-left: 1em;
+    position: absolute;
+    right: 1.5em;
 `;

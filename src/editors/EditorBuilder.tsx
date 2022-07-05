@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import styled from 'styled-components';
-import { ChangeEditorPropType, ChangeElementValueType, Editor, EditorSection, EditorTypes, ElementLength } from '../lib/types';
+import { ChangeEditorPropType, Editor, EditorSection, EditorTypes, ElementLength } from '../lib/types';
 import { Checkbox } from '../lib/Checkbox';
 import { Input } from '../lib/Input';
 import { Select } from '../lib/Select';
@@ -63,7 +63,8 @@ const SectionsWrapper = styled.div`
     overflow: auto;
 `;
 
-type ChangeEditorValueType = (prop: string) => ChangeElementValueType;
+type InnerOnChange = (value: string | boolean | Array<string> | number | null) => void;
+type ChangeEditorValueType = (prop: string) => InnerOnChange;
 type ChangedPropsType = {[key: string]: string | number | boolean | string[] | null};
 const defaultChangedProps: ChangedPropsType = {};
 
@@ -106,7 +107,7 @@ export default function EditorFunction({
     const [changedProps, setChangedProps] = useState(defaultChangedProps);
 
     const onChangeValue: ChangeEditorValueType = (prop) => {
-        const innerOnChange: ChangeElementValueType = (newValue) => {
+        const innerOnChange: InnerOnChange = (newValue) => {
             onChange(prop, newValue);
             // Update changedProps obj
             setChangedProps(Object.assign({}, changedProps, {

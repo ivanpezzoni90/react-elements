@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { IconList, iconMap } from './constants/icons';
-import { IconSize, PropsObjectInterface } from './types';
+import { IconSize } from './types';
 
 // https://react-icons.github.io/react-icons/icons?name=fa
 
@@ -11,8 +11,8 @@ const IconWrapper = styled.div`
     display: flex;
 `;
 
-interface IconProps extends PropsObjectInterface {
-    icon: IconList | string,
+interface IconProps {
+    icon?: IconList | string,
     color?: string,
     fontSize?: IconSize | string,
     onClick?: () => void
@@ -24,7 +24,7 @@ function Icon({
     fontSize,
     onClick
 }: IconProps) {
-    const IconComponent = iconMap[icon];
+    const IconComponent = iconMap[icon as IconList | string];
     return (
         <IconWrapper
             className='ie-icon'
@@ -40,7 +40,7 @@ function Icon({
     );
 }
 
-const defaultProps: PropsObjectInterface = {
+const defaultProps: IconProps = {
     icon: undefined,
     color: '#666',
     fontSize: IconSize.xs

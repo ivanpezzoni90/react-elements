@@ -1,11 +1,9 @@
 import {
     BorderRadius,
-    ChangeElementValueType,
     ElementLength,
     LabelLength,
     LabelPositions,
     Option as OptionType,
-    PropsObjectInterface,
     VoidFunction
 } from '../types';
 
@@ -55,10 +53,10 @@ export interface SelectWrapperProps{
     borderRadius?: BorderRadius
 }
 
-export interface SelectProps extends PropsObjectInterface {
+export interface SelectProps {
     options: Array<OptionType>,
     value: string | string[] | null,
-    onChange: ChangeElementValueType,
+    onChange: (v: string | string[] | null) => void,
     label?: string,
     shadow?: boolean,
     length: ElementLength,
@@ -74,5 +72,8 @@ export interface SelectProps extends PropsObjectInterface {
     borderRadius?: BorderRadius,
     chipBorderRadius?: BorderRadius,
     hideLabel?: boolean,
-    closeOnClickOutside?: boolean
+    closeOnClickOutside?: boolean,
+    labelLength?: LabelLength,
+    labelPosition?: LabelPositions,
+    filterable?: boolean
 }

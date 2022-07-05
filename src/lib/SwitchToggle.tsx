@@ -3,11 +3,9 @@ import styled from 'styled-components';
 import { generateID, mergeClasses } from './helpers';
 import {
     BorderRadius,
-    ChangeElementValueType,
     ElementLength, 
     IconSize,
     LabelLength,
-    PropsObjectInterface,
     SetBoolToStateType,
     ToggleLabelType
 } from './types';
@@ -174,7 +172,7 @@ const ToggleInnerLabel = styled.div<ToggleInnerLabelType>`
     padding-${({toggle}) => toggle ? 'left' : 'right'}: 0.5em;
 `;
 
-interface SwitchToggleProps extends PropsObjectInterface {
+interface SwitchToggleProps {
     checked: boolean,
     className: string,
     color?: string,
@@ -184,7 +182,7 @@ interface SwitchToggleProps extends PropsObjectInterface {
     labelOn?: string,
     labelOff?: string,
     labelType?: ToggleLabelType,
-    onChange: ChangeElementValueType,
+    onChange: (v: boolean) => void,
     colorOff?: string,
     iconColor?: string,
     iconOffColor?: string,
@@ -195,7 +193,8 @@ interface SwitchToggleProps extends PropsObjectInterface {
     labelColor?: string,
     hideLabel?: boolean,
     borderRadius?: BorderRadius,
-    labelLength?: LabelLength
+    labelLength?: LabelLength,
+    shadow?: boolean
 }
 
 function SwitchToggleElement({
@@ -217,7 +216,7 @@ function SwitchToggleElement({
     colorOff?: string,
     iconColor?: string,
     iconOffColor?: string,
-    onChange: ChangeElementValueType
+    onChange: (v: boolean) => void,
 }) {
     const [
         toggle, setToggle
@@ -352,7 +351,7 @@ const SwitchToggle = (props: SwitchToggleProps) => {
     );
 };
 
-const defaultProps: PropsObjectInterface = {
+const defaultProps: SwitchToggleProps = {
     checked: true,
     className: '',
     color: allColors['Dim Gray'],
@@ -381,3 +380,4 @@ SwitchToggle.defaultProps = defaultProps;
 SwitchToggleElement.defaultProps = defaultProps;
 
 export { SwitchToggleElement, SwitchToggle };
+export type { SwitchToggleProps };

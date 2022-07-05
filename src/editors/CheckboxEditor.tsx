@@ -2,15 +2,15 @@ import React from 'react';
 
 import { Fragment } from 'react';
 import Editor from './EditorBuilder';
-import {Checkbox} from '../lib/Checkbox';
-import { EditorSection, EditorSectionTypes, EditorTypes, ElementLength, PropsObjectInterface } from '../lib/types';
+import {Checkbox, CheckboxProps} from '../lib/Checkbox';
+import { EditorSection, EditorSectionTypes, EditorTypes, ElementLength } from '../lib/types';
 import { useEditorInit } from '../lib/hooks';
 import { alignPositionEditor, bordersAndShadowSection, labelSection, lengthEditor } from './commons/editors';
 import { ElementContainer } from './commons/ElementContainer';
 
 import { allColors } from '../lib/constants/colors';
 
-const getEditor = (props: PropsObjectInterface) => {
+const getEditor = (props: CheckboxProps) => {
 
     const editorJson: EditorSection[] = [
         labelSection(),
@@ -32,7 +32,7 @@ const getEditor = (props: PropsObjectInterface) => {
                 },
             ]
         },
-        bordersAndShadowSection(props.simpleElement),
+        bordersAndShadowSection(),
         {
             type: EditorSectionTypes.section,
             label: 'Others',

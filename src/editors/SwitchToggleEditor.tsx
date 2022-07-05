@@ -1,13 +1,13 @@
 import React from 'react';
 import { Fragment } from 'react';
 import Editor from './EditorBuilder';
-import { SwitchToggle } from '../lib/SwitchToggle';
-import { EditorSection, EditorSectionTypes, EditorTypes, ElementLength, PropsObjectInterface, ToggleLabelType } from '../lib/types';
+import { SwitchToggle, SwitchToggleProps } from '../lib/SwitchToggle';
+import { EditorSection, EditorSectionTypes, EditorTypes, ElementLength, ToggleLabelType } from '../lib/types';
 import { useEditorInit } from '../lib/hooks';
 import { alignPositionEditor, bordersAndShadowSection, labelSection, lengthEditor } from './commons/editors';
 import { ElementContainer } from './commons/ElementContainer';
 
-const getEditor = (props: PropsObjectInterface) => {
+const getEditor = (props: SwitchToggleProps) => {
     const editorJson: EditorSection[] = [
         labelSection(),
         {
@@ -79,7 +79,7 @@ const getEditor = (props: PropsObjectInterface) => {
                 alignPositionEditor
             ]
         },
-        bordersAndShadowSection(props.simpleElement)
+        bordersAndShadowSection()
     ];
     return editorJson;
 };
