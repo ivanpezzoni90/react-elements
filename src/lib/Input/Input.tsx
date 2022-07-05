@@ -155,6 +155,11 @@ function Input({
     // active = focused or with value
     const [active, setActive] = useState(activeFromProps || (valueFromProps !== ''));
     const [error, setError] = useState(errorFromProps);
+    const [defaultValue, setDefaultValue] = useState(valueFromProps);
+
+    useEffect(() => {
+        setDefaultValue(valueFromProps);
+    }, [valueFromProps]);
 
     useEffect(() => {
         setError(errorFromProps);
@@ -189,6 +194,7 @@ function Input({
     return (
         <InputWrapper
             ref={inputWrapperRef}
+            key={defaultValue}
             length={length}
             active={active}
             locked={locked}
@@ -227,7 +233,7 @@ function Input({
                 label={label}
                 id={id.current}
                 type={type}
-                defaultValue={valueFromProps}
+                defaultValue={defaultValue}
                 onChange={onChangeCb}
                 onFocus={onFocusCb}
                 onBlur={onBlurCb}

@@ -156,6 +156,7 @@ export default function EditorFunction({
                                                                 type={e.inputType as InputTypes || InputTypes.text}
                                                                 label={e.label}
                                                                 onBlur={() => { } }
+                                                                shadow={false}
                                                                 length={ElementLength.full}
                                                                 onChange={onChangeValue(e.prop)} />),
                                                             [EditorTypes.select]: (<Select
@@ -167,22 +168,26 @@ export default function EditorFunction({
                                                                 label={e.label}
                                                                 length={ElementLength.full}
                                                                 resettable={e.resettable}
+                                                                shadow={false}
                                                                 onChange={onChangeValue(e.prop)} />),
                                                             [EditorTypes.checkbox]: (<Checkbox
                                                                 className=""
                                                                 checked={e.default as boolean}
                                                                 label={e.label}
+                                                                shadow={false}
                                                                 length={ElementLength.full}
                                                                 onChange={onChangeValue(e.prop)} />),
                                                             [EditorTypes.toggle]: (<SwitchToggle
                                                                 checked={e.default as boolean}
                                                                 label={e.label}
                                                                 color="#666"
+                                                                shadow={false}
                                                                 length={ElementLength.full}
                                                                 onChange={onChangeValue(e.prop)} />),
                                                             [EditorTypes.color]: (<ColorPicker
                                                                 value={e.default as string}
                                                                 label={e.label}
+                                                                shadow={false}
                                                                 length={ElementLength.full}
                                                                 onChange={onChangeValue(e.prop)} />)
                                                         }[e.type]}

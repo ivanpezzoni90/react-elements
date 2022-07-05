@@ -4,27 +4,28 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import { Components, getComponentByKey } from './componentsMap';
 import { SetStringToStateType } from '../lib/types';
-import AsideCaret from './AsideCaret';
+import { allColors } from '../lib/constants/colors';
 
 const Container = styled.div`
     display: flex;
     flex-direction: row;
-    padding: 1em;
     flex: 1;
     text-align: left;
 `;
 const Aside = styled.div`
     display: flex;
     flex-direction: column;
-    border-right: 1px solid #666;
-    padding: 1em 1em 1em 0em;
 
-    height: 90vh;
+    background: ${allColors['Cultured']};
+
+    height: 100vh;
     overflow: auto;
 
     transition: width 1s, opacity 1s;
-    width: 12em;
+    width: 10em;
     opacity: 1;
+
+    padding: 0.5em 1em 0.5em 1em;
 
     ${({open}: {open: boolean}) => open ? '' : 'width:0; opacity:0;'}
 `;
@@ -34,20 +35,32 @@ const Workarea = styled.div`
     display: flex;
     flex: 1;
     flex-direction: column;
+
+    height: 100vh;
+    overflow: hidden;
 `;
 const Component = styled.div`
     display: flex;
-    padding: 0.5em 2em 0.5em 2em;
-    font-size: 20px;
-    font-weight: semibold;
+    padding: 0.5em 0 0.5em 1em;
+    font-size: 14px;
     cursor: pointer;
+    font-weight: 400;
     &:hover {
-        ${({ active }: { active: boolean }) => !active ? 'background: #dfdede' : ''};
+        ${({ active }: { active: boolean }) => !active ? `background: ${allColors['Platinum']}` : ''};
     }
     ${({ active }: { active: boolean }) => active
-        ? `background: #adadad;
-            color: #ffffff;`
+        ? `
+            font-weight: 600;
+            color: ${allColors['Davys Grey']};
+            font-size: 16px;
+        `
         : ''}
+`;
+const AsideTitle = styled.div`
+    display: flex;
+    align-items: center;
+    padding: 1.5em 0 1em 1em;
+    border-bottom: 1px solid ${allColors['Silver Sand']}
 `;
 
 type AsideClickCallbackType = (key: string) => void;
@@ -66,6 +79,7 @@ function IEAside({
             className="ie__aside"
             open={open}
         >
+            <AsideTitle>{'Components'}</AsideTitle>
             {Components.map(c => (
                 <Component
                     active={currentComponentKey === c.key}
@@ -93,9 +107,6 @@ function IEWorkarea({
         <Workarea
             className="ie__workarea"
         >
-            <AsideCaret
-                getOpen={getOpen}
-            />
             <Editor />
         </Workarea>
     );

@@ -48,11 +48,11 @@ const Slider = styled.span<Slider>`
         content: "";
 
         position: absolute;
-        left: ${({toggle}) => toggle ? '8px' : '2px'};
+        left: ${({toggle}) => toggle ? '2px' : '2px'};
         bottom: 1px;
 
-        width: ${({bodyFontSize}) => (bodyFontSize * 2) - 4}px;
-        height: ${({bodyFontSize}) => (bodyFontSize * 2) - 4}px;
+        width: ${({bodyFontSize}) => (bodyFontSize * 1.5) - 4}px;
+        height: ${({bodyFontSize}) => (bodyFontSize * 1.5) - 4}px;
         border-radius: 100%;
 
         background-color: ${({ toggle, color, colorOff }) => (toggle ? colorOff : color)};
@@ -74,8 +74,8 @@ const SwitchElementWrapper = styled.div`
 const Switch = styled.label<Switch>`
     position: relative;
     display: inline-block;
-    width: 4em;
-    height: 2em;
+    width: 3em;
+    height: 1.5em;
     background-color: ${({ toggle, color, colorOff }) => (toggle ? color : colorOff)};
     border-radius: 15px;
     transition: 0.4s;
@@ -165,7 +165,7 @@ interface ToggleInnerLabelType {
 }
 
 const ToggleInnerLabel = styled.div<ToggleInnerLabelType>`
-    font-size: 9px;
+    font-size: 7px;
     font-weight: 600;
     color: ${({ toggle, color }) => (toggle ? 'white' : color)};
     display: flex;

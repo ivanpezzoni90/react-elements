@@ -21,7 +21,7 @@ import { AlignPositions, LabelPositions } from '../lib/types';
 import { IconList } from '../lib/Icon';
 
 export const Container = styled.div`
-    padding: 1em 1em 2em 1em;
+    padding: 2em 1em 2em 1em;
     border-bottom: 1px solid ${allColors['Dim Gray']};
     display: flex;
     justify-content: center;
