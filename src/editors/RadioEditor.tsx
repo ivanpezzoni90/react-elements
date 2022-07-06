@@ -2,14 +2,14 @@ import React from 'react';
 
 import Editor from './EditorBuilder';
 
-import { EditorSection, EditorSectionTypes, EditorTypes, LabelPositions, PropsObjectInterface, RadioTypes } from '../lib/types';
+import { EditorSection, EditorSectionTypes, EditorTypes, LabelPositions, RadioTypes } from '../lib/types';
 import { Fragment } from 'react';
 import { useEditorInit } from '../lib/hooks';
 import { labelSection, positionEditor } from './commons/editors';
 import { ElementContainer } from './commons/ElementContainer';
 
 import { InputTypes } from '../lib/Input/config';
-import { Radio } from '../lib/Radio';
+import { Radio, RadioProps } from '../lib/Radio';
 import { IconList } from '../lib/Icon';
 
 const defaultOptions = [{
@@ -22,7 +22,7 @@ const defaultOptions = [{
     icon: IconList.check
 }];
 
-const getEditor = (props: PropsObjectInterface) => {
+const getEditor = (props: RadioProps) => {
     const editorJson: EditorSection[] = [
         labelSection(LabelPositions.vertical),
         {
@@ -41,8 +41,8 @@ const getEditor = (props: PropsObjectInterface) => {
                         label: 'Toggle',
                         value: RadioTypes.toggle
                     }, {
-                        label: 'Button',
-                        value: RadioTypes.button
+                        label: 'Icon',
+                        value: RadioTypes.icon
                     }]
                 },
             ]

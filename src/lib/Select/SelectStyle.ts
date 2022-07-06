@@ -68,8 +68,11 @@ export const SelectElement = styled.div<SelectElementProps>`
     :-moz-placeholder {
         color: rgba(255, 255, 255, 0.8);
     }
-    padding: 0 1em;
+    margin: 0 2em 0 1em;
     ${({multiple}) => multiple ? 'padding-bottom: 0.25em;' : ''}
+
+    overflow: auto;
+    white-space: nowrap;
 `;
 
 export const SelectWrapper = styled.div<SelectWrapperProps>`
@@ -157,6 +160,9 @@ export const DropDownList = styled('ul')`
     font-size: 1em;
     font-weight: 500;
     text-align: left;
+
+    max-height: 20em;
+    overflow: auto;
 `;
 
 export const ListItem = styled('li')<ListItemProps>`
@@ -200,9 +206,8 @@ export const SelectChip = styled.div<SelectChipInterface>`
     border-radius: ${({borderRadius}) => borderRadius};
     display: flex;
     align-items: center;
-    padding: 0.25em;
     margin-right: 0.75em;
-    font-size: 14px;
+    font-size: 12px;
 `;
 
 export const ChipText = styled.div`
@@ -216,6 +221,7 @@ export const ChipsWrapper = styled.div`
 interface ChipIconWrapperInterface {
     borderRadius?: BorderRadius
 }
+
 export const ChipIconWrapper = styled.div<ChipIconWrapperInterface>`
     &:hover {
         background-color: ${({color}) => color};
@@ -223,4 +229,17 @@ export const ChipIconWrapper = styled.div<ChipIconWrapperInterface>`
     }
     border-left: 1px solid ${allColors['Silver Sand']};
     padding: 0.25em;
+`;
+
+export const DropDownSearchContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5em 1em 0.5em 1em;
+`;
+
+export const DropDownSearchIconWrapper = styled.div`
+    padding-left: 1em;
+    position: absolute;
+    right: 1.5em;
 `;

@@ -1,47 +1,41 @@
 import React from 'react';
 import styled from 'styled-components';
-import { FaCaretDown, FaCaretUp, FaCaretLeft, FaCaretRight } from 'react-icons/fa';
-import { IoCloseSharp, IoCheckmarkSharp } from 'react-icons/io5';
-import { AiOutlineCloseCircle } from 'react-icons/ai';
-
-import { IconType } from 'react-icons/lib';
-import { IconSize, PropsObjectInterface } from './types';
+import { allColors } from './constants/colors';
+import { IconList, iconMap } from './constants/icons';
+import { mergeClasses } from './helpers';
+import { BorderRadius, Cursors, IconSize, Padding } from './types';
 
 // https://react-icons.github.io/react-icons/icons?name=fa
 
-const IconWrapper = styled.div`
+interface IconWrapperInterface {
+    backgroundColor?: string,
+    borderRadius?: BorderRadius,
+    padding?: Padding,
+    cursor?: Cursors
+}
+
+const IconWrapper = styled.div<IconWrapperInterface>`
+    display: flex;
     align-items: center;
     justify-content: center;
-    display: flex;
+    width: fit-content;
+
+    cursor: ${props => props.cursor};
+
+    background-color: ${props => props.backgroundColor};
+    border-radius: ${props => props.borderRadius};
+    padding: ${props => props.padding}
 `;
 
-interface IconInterface {
-    [key: string]: IconType
-}
-enum IconList {
-    caretDown = 'caret-down',
-    caretUp = 'caret-up',
-    caretLeft = 'caret-left',
-    caretRight = 'caret-right',
-    check = 'check',
-    close = 'close',
-    outlineClose = 'outline-close'
-}
-
-const iconMap: IconInterface = {
-    [IconList.caretDown]: FaCaretDown,
-    [IconList.caretUp]: FaCaretUp,
-    [IconList.caretLeft]: FaCaretLeft,
-    [IconList.caretRight]: FaCaretRight,
-    [IconList.close]: IoCloseSharp,
-    [IconList.check]: IoCheckmarkSharp,
-    [IconList.outlineClose]: AiOutlineCloseCircle
-};
-
-interface IconProps extends PropsObjectInterface {
-    icon: IconList | string,
+interface IconProps {
+    className: string,
+    icon?: IconList | string,
     color?: string,
     fontSize?: IconSize | string,
+    backgroundColor?: string,
+    borderRadius?: BorderRadius,
+    padding?: Padding,
+    cursor?: Cursors,
     onClick?: () => void
 }
 
@@ -49,12 +43,21 @@ function Icon({
     icon,
     color,
     fontSize,
+    backgroundColor,
+    borderRadius,
+    padding,
+    cursor,
+    className,
     onClick
 }: IconProps) {
-    const IconComponent = iconMap[icon];
+    const IconComponent = iconMap[icon as IconList | string];
     return (
         <IconWrapper
-            className='ie-icon'
+            backgroundColor={backgroundColor}
+            borderRadius={borderRadius}
+            padding={padding}
+            className={mergeClasses('ie-icon', className)}
+            cursor={cursor}
             onClick={(onClick)}
         >
             <IconComponent
@@ -67,10 +70,15 @@ function Icon({
     );
 }
 
-const defaultProps: PropsObjectInterface = {
+const defaultProps: IconProps = {
+    className: '',
     icon: undefined,
-    color: '#666',
-    fontSize: IconSize.xs
+    color: allColors['Dim Gray'],
+    fontSize: IconSize.xs,
+    backgroundColor: allColors['Transparent'],
+    borderRadius: BorderRadius.no,
+    padding: Padding.no,
+    cursor: Cursors.auto
 };
 
 Icon.defaultProps = defaultProps;

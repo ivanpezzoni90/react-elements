@@ -10,7 +10,9 @@ const Container = styled.div`
 `;
 
 const Wrapper = styled.div`
-    width: 40em;
+    display: flex;
+    justify-content: center;
+    min-width: 40em;
 `;
 export const ElementContainer = ({children}: {children: ReactElement}) => (
     <Container

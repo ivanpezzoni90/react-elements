@@ -12,7 +12,6 @@ import {
     FontWeight,
     IconPosition,
     Padding,
-    PropsObjectInterface
 } from './types';
 import { IconList, Icon } from './Icon';
 
@@ -60,7 +59,7 @@ interface ButtonElementProps {
     align?: AlignPositions
 }
 
-interface ButtonProps extends PropsObjectInterface {
+interface ButtonProps {
     padding?: Padding
     borderRadius?: BorderRadius
     color: string
@@ -141,7 +140,7 @@ const Button = ({
     );
 };
 
-Button.defaultProps = {
+const defaultProps: ButtonProps = {
     padding: Padding.m,
     borderRadius: BorderRadius.s,
     color: allColors['Firebrick'],
@@ -159,5 +158,7 @@ Button.defaultProps = {
     iconPosition: IconPosition.left,
     align: AlignPositions.center
 };
+
+Button.defaultProps = defaultProps;
 
 export { Button };

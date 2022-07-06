@@ -20,7 +20,7 @@ export const darkOrLightColor = (colorCode: string): string => {
 export const fontColorFromBackground = (colorCode: string): string => {
     return darkOrLightColor(colorCode) === 'light'
         ? allColors['Davys Grey']
-        : allColors['Cultured 2'];
+        : allColors['Cultured'];
 };
 
 export const rgbFromHex: RgbFromHexType = (colorCode) => {

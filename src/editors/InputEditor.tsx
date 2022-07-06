@@ -2,15 +2,15 @@ import React from 'react';
 
 import Editor from './EditorBuilder';
 
-import { EditorSection, EditorSectionTypes, EditorTypes, LabelPositions, PropsObjectInterface } from '../lib/types';
+import { EditorSection, EditorSectionTypes, EditorTypes, LabelPositions } from '../lib/types';
 import { Fragment } from 'react';
 import { Input } from '../lib/Input';
 import { useEditorInit } from '../lib/hooks';
-import { bordersAndShadowSection, colorEditors, labelSection, lengthEditor } from './commons/editors';
-import { InputTypes } from '../lib/Input/config';
+import { bordersAndShadowSection, colorEditors, heightEditor, labelSection, lengthEditor } from './commons/editors';
+import { InputProps, InputTypes } from '../lib/Input/config';
 import { ElementContainer } from './commons/ElementContainer';
 
-const getEditor = (props: PropsObjectInterface) => {
+const getEditor = (props: InputProps) => {
     const editorJson: EditorSection[] = [
         labelSection(LabelPositions.vertical),
         {
@@ -79,9 +79,10 @@ const getEditor = (props: PropsObjectInterface) => {
             label: 'Size',
             editors: [
                 lengthEditor(),
+                heightEditor()
             ]
         },
-        bordersAndShadowSection(false),
+        bordersAndShadowSection(),
         {
             type: EditorSectionTypes.section,
             label: 'Others',
@@ -92,6 +93,12 @@ const getEditor = (props: PropsObjectInterface) => {
                     default: false,
                     prop: 'locked'
                 },
+                {
+                    label: 'Placeholder',
+                    type: EditorTypes.input,
+                    default: '',
+                    prop: 'placeholder'
+                }
             ]
         },
     ];

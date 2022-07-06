@@ -1,13 +1,13 @@
 import React from 'react';
 
 import Editor from './EditorBuilder';
-import { EditorSection, EditorSectionTypes, EditorTypes } from '../lib/types';
+import { BorderRadius, Cursors, EditorSection, EditorSectionTypes, EditorTypes, Padding } from '../lib/types';
 import { Fragment } from 'react';
 import { IconList, Icon } from '../lib/Icon';
 import { useEditorInit } from '../lib/hooks';
-import { iconEditor, iconSizeEditor } from './commons/editors';
+import { borderRadiusEditor, cursorEditor, iconEditor, iconSizeEditor, paddingEditor } from './commons/editors';
 import { ElementContainer } from './commons/ElementContainer';
-
+import { allColors } from '../lib/constants/colors';
 
 const getEditor = () => {
     const editorJson: EditorSection[] = [
@@ -15,14 +15,29 @@ const getEditor = () => {
             type: EditorSectionTypes.section,
             label: 'Icon',
             editors: [
-                iconEditor,
+                iconEditor(IconList.check, false),
                 {
                     type: EditorTypes.color,
-                    default: '#666',
+                    default: allColors['Dim Gray'],
                     label: 'Color',
                     prop: 'color'
                 },
                 iconSizeEditor
+            ]
+        },
+        {
+            type: EditorSectionTypes.section,
+            label: 'Container',
+            editors: [
+                {
+                    prop: 'backgroundColor',
+                    type: EditorTypes.color,
+                    label: 'Container color',
+                    default: allColors['Transparent'],
+                },
+                borderRadiusEditor(BorderRadius.no),
+                paddingEditor(Padding.xs),
+                cursorEditor(Cursors.auto)
             ]
         }
     ];

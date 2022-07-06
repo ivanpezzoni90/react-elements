@@ -2,18 +2,18 @@ import React from 'react';
 
 import { Fragment } from 'react';
 import Editor from './EditorBuilder';
-import {ColorPicker} from '../lib/ColorPicker';
-import { EditorSection, EditorSectionTypes, EditorTypes, ElementLength, PropsObjectInterface } from '../lib/types';
+import {ColorPicker, ColorPickerProps} from '../lib/ColorPicker';
+import { EditorSection, EditorSectionTypes, EditorTypes, ElementLength } from '../lib/types';
 import { useEditorInit } from '../lib/hooks';
 import { alignPositionEditor, bordersAndShadowSection, labelSection, lengthEditor } from './commons/editors';
 import { ElementContainer } from './commons/ElementContainer';
 
 import { allColors } from '../lib/constants/colors';
 
-const getEditor = (props: PropsObjectInterface) => {
+const getEditor = (props: ColorPickerProps) => {
     const editorJson: EditorSection[] = [
         labelSection(),
-        bordersAndShadowSection(props.simpleElement),
+        bordersAndShadowSection(),
         {
             type: EditorSectionTypes.section,
             label: 'Size',

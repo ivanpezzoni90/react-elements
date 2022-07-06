@@ -1,5 +1,5 @@
 import { throttle } from 'throttle-debounce';
-import { BorderRadius, ChangeElementValueType, ElementLength, LabelLength, LabelPositions, PropsObjectInterface } from '../types';
+import { BorderRadius, ElementHeight, ElementLength, LabelLength, LabelPositions } from '../types';
 
 export enum InputTypes {
     text = 'text',
@@ -7,15 +7,15 @@ export enum InputTypes {
     date = 'date'
 }
 
-export interface InputProps extends PropsObjectInterface {
+export interface InputProps {
     locked: boolean,
     error: boolean,
     errorMessage?: string,
     value: string,
     label: string,
     shadow?: boolean,
-    onBlur: ChangeElementValueType,
-    onChange: ChangeElementValueType,
+    onBlur: ChangeInputHandlerType,
+    onChange: ChangeInputHandlerType,
     length: ElementLength,
     active?: boolean,
     labelColor?: string,
@@ -26,7 +26,12 @@ export interface InputProps extends PropsObjectInterface {
     max?: number,
     type?: InputTypes,
     labelLength?: LabelLength,
-    hideLabel?: boolean
+    hideLabel?: boolean,
+    height?: ElementHeight,
+    placeholder?: string,
+    showBorders?: boolean,
+    hideBottomBorder?: boolean
+    borderRadius?: BorderRadius
 }
 
 export type SetErrorType = (e: boolean) => void;
@@ -52,7 +57,8 @@ export interface InputTypeProps {
     computedWidth: string,
     showBorders?: boolean,
     hideBottomBorder?: boolean,
-    borderRadius?: BorderRadius
+    borderRadius?: BorderRadius,
+    placeholder?: string
 }
 
 export interface InputWrapperProps {
@@ -66,7 +72,8 @@ export interface InputWrapperProps {
     hideBottomBorder?: boolean,
     hideLabel?: boolean,
     labelPosition?: LabelPositions,
-    borderRadius?: BorderRadius
+    borderRadius?: BorderRadius,
+    height?: ElementHeight
 }
 
 export interface LabelProps {
@@ -79,6 +86,7 @@ export interface LabelProps {
     type?: InputTypes,
     labelLength?: LabelLength,
     label: string,
+    placeholder?: string
 }
 
 export interface InputElementProps {
@@ -88,13 +96,13 @@ export interface InputElementProps {
     shadow?: boolean
     textColor?: string,
     type?: InputTypes,
-    placeholder: string,
+    placeholder?: string,
     id: string,
     defaultValue: string,
     onChange: throttle<(event: React.ChangeEvent<HTMLInputElement>) => void>,
     onFocus: VoidFunction,
     onBlur: (event: React.ChangeEvent<HTMLInputElement>) => void,
-    computedWidth: string
+    computedWidth: string,
 }
 
 export type CheckValidatorsType = (v: string, opts?: {

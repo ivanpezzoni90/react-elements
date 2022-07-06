@@ -3,7 +3,6 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { generateID, lightenDarkenColor, mergeClasses, rgbFromHex } from './helpers';
 import { AlignPositions, BorderRadius, ElementLength, LabelLength, LabelPositions, Option } from './types';
-import { ChangeElementValueType, PropsObjectInterface } from './types';
 import { allColors } from './constants/colors';
 
 interface SliderContainerInterface {
@@ -234,7 +233,7 @@ const SliderValue = styled.div<SliderValueInterface>`
         length === ElementLength.l || length === ElementLength.full ? '2em' : '1.5em'};
 `;
 
-interface SliderProps extends PropsObjectInterface{
+interface SliderProps {
     className: string,
     value: string | number,
     cursorColor: string,
@@ -258,7 +257,7 @@ interface SliderProps extends PropsObjectInterface{
     hideLabel?: boolean,
     labelLength?: LabelLength,
     align?: AlignPositions,
-    onChange: ChangeElementValueType
+    onChange: (v: string | number) => void
 }
 
 interface SliderElementInterface {
@@ -276,7 +275,7 @@ interface SliderElementInterface {
     showSteps: boolean,
     length: ElementLength,
     labelPosition?: LabelPositions,
-    onChange: ChangeElementValueType
+    onChange: (v: string | number) => void
 }
 
 const getStepValue = (min: number, step: number, i: number) => {
@@ -516,7 +515,7 @@ function Slider(props: SliderProps) {
     );
 }
 
-const defaultProps: PropsObjectInterface = {
+const defaultProps: SliderProps = {
     className: '',
     value: '',
     cursorColor: allColors['Dim Gray'],

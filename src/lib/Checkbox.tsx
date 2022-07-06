@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { generateID, mergeClasses } from './helpers';
 import { AlignPositions, BorderRadius, ElementLength, LabelLength, LabelPositions } from './types';
-import { ChangeElementValueType, PropsObjectInterface, SetBoolToStateType } from './types';
+import { SetBoolToStateType } from './types';
 import { allColors } from './constants/colors';
 
 const CheckboxContainer = styled.div`
@@ -124,7 +124,7 @@ const CheckboxAdvancedLabel = styled.label<LabelProps>`
     overflow: hidden;
 `;
 
-interface CheckboxProps extends PropsObjectInterface{
+interface CheckboxProps {
     className: string,
     checked: boolean,
     color: string,
@@ -141,7 +141,7 @@ interface CheckboxProps extends PropsObjectInterface{
     labelColor?: string,
     hideLabel?: boolean,
     labelLength?: LabelLength,
-    onChange: ChangeElementValueType
+    onChange: (v: boolean) => void
 }
 
 interface CheckboxElementInterface {
@@ -149,7 +149,7 @@ interface CheckboxElementInterface {
     checked: boolean,
     color: string,
     colorOff: string,
-    onChange: ChangeElementValueType
+    onChange: (v: boolean) => void
 }
 
 function CheckboxElement({
@@ -254,7 +254,7 @@ function Checkbox(props: CheckboxProps) {
     );
 }
 
-const defaultProps: PropsObjectInterface = {
+const defaultProps: CheckboxProps = {
     className: '',
     checked: false,
     color: allColors['Dim Gray'],

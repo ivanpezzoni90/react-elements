@@ -9,10 +9,10 @@ import {
 } from './InputStyle';
 
 import { CheckValidatorsType, InputProps, InputTypeProps, InputTypes } from './config';
-import { BorderRadius, ElementLength, LabelLength, LabelPositions, PropsObjectInterface } from '../types';
+import { BorderRadius, ElementHeight, ElementLength, LabelLength, LabelPositions } from '../types';
 import { allColors } from '../constants/colors';
 import { IconList, Icon } from '../Icon';
-import { useComputedWidth } from '../hooks';
+import { useComputedWidth, useInputValue } from '../hooks';
 import { throttle } from 'throttle-debounce';
 
 function InputElement({
@@ -22,7 +22,6 @@ function InputElement({
     active,
     shadow,
     textColor,
-    label,
     id,
     type,
     defaultValue,
@@ -31,8 +30,10 @@ function InputElement({
     onBlur,
     max,
     min,
+    placeholder,
     computedWidth
 }: InputTypeProps) {
+    const inputElementRef = useRef<HTMLInputElement>(null);
     const checkValidators: CheckValidatorsType = useCallback((newValue, opts = {}) => {
         switch (type) {
             case InputTypes.text:
@@ -79,17 +80,23 @@ function InputElement({
     }, [onBlur, checkValidators]);
 
     const handleNumberCaret = useCallback((type: 'up'|'down') => () => {
-        const parsedValue = parseFloat(defaultValue || '0');
-        const newValue = (type === 'up' ? (parsedValue + 1) : (parsedValue - 1)).toString();
-
-        if (checkValidators(newValue, { changeFromCaret: true })) {
-            onChange(newValue);
+        if (inputElementRef !== null && inputElementRef.current) {
+            // Get current input value and parse to increase its value
+            const currentValue = inputElementRef?.current?.value;
+            const parsedValue = parseFloat(currentValue || '0');
+            const newValue = (type === 'up' ? (parsedValue + 1) : (parsedValue - 1)).toString();
+    
+            if (checkValidators(newValue, { changeFromCaret: true })) {
+                onChange(newValue);
+                inputElementRef.current.value = newValue;
+            }
         }
-    }, [checkValidators, onChange, defaultValue]);
+    }, [checkValidators, onChange]);
 
     return (
         <Fragment>
             <InputElementStyle
+                ref={inputElementRef}
                 error={error}
                 length={length}
                 active={active}
@@ -98,7 +105,7 @@ function InputElement({
                 id={id}
                 type={type}
                 defaultValue={defaultValue}
-                placeholder={label}
+                placeholder={placeholder}
                 computedWidth={computedWidth}
                 onChange={onChangeValue}
                 onFocus={onFocus}
@@ -106,22 +113,16 @@ function InputElement({
             />
             {type === InputTypes.number ? (
                 <InputNumberIcons>
-                    <IconWrapper
+                    <Icon
+                        color={textColor}
+                        icon={IconList.caretUp}
                         onClick={handleNumberCaret('up')}
-                    >
-                        <Icon
-                            color={textColor}
-                            icon={IconList.caretUp}
-                        />
-                    </IconWrapper>
-                    <IconWrapper
+                    />
+                    <Icon
+                        color={textColor}
+                        icon={IconList.caretDown}
                         onClick={handleNumberCaret('down')}
-                    >
-                        <Icon
-                            color={textColor}
-                            icon={IconList.caretDown}
-                        />
-                    </IconWrapper>
+                    />
                 </InputNumberIcons>
             ) : null}
         </Fragment>
@@ -150,7 +151,9 @@ function Input({
     type,
     showBorders,
     hideBottomBorder,
-    borderRadius
+    borderRadius,
+    height,
+    placeholder
 }: InputProps) {
     // active = focused or with value
     const [active, setActive] = useState(activeFromProps || (valueFromProps !== ''));
@@ -205,6 +208,7 @@ function Input({
             borderRadius={borderRadius}
             labelPosition={labelPosition}
             hideLabel={hideLabel}
+            height={height}
             onClick={setFocusFromDiv}
         >
             {hideLabel ? null : (
@@ -212,8 +216,8 @@ function Input({
                     htmlFor={id.current}
                     error={error}
                     length={length}
-                    // Type date is always "active"
-                    active={active || type === InputTypes.date}
+                    // Type date is always "active", and force active when there is a placeholder
+                    active={active || type === InputTypes.date || placeholder !== ''}
                     labelColor={labelColor}
                     labelPosition={labelPosition}
                     labelLength={labelLength}
@@ -239,13 +243,14 @@ function Input({
                 onBlur={onBlurCb}
                 max={max}
                 min={min}
+                placeholder={placeholder}
                 computedWidth={inputElementWidth}
             />
         </InputWrapper>
     );
 }
 
-const defaultProps: PropsObjectInterface = {
+const defaultProps: InputProps = {
     locked: false,
     error: false,
     errorMessage: undefined,
@@ -268,6 +273,8 @@ const defaultProps: PropsObjectInterface = {
     hideBottomBorder: false,
     borderRadius: BorderRadius.no,
     hideLabel: false,
+    height: ElementHeight.m,
+    placeholder: ''
 };
 
 Input.defaultProps = defaultProps;

@@ -1,6 +1,7 @@
 import { allColors } from '../../lib/constants/colors';
 import {
     BorderRadius,
+    Cursors,
     Editor,
     EditorSection,
     EditorSectionTypes,
@@ -139,6 +140,35 @@ export const lengthEditor = (def = ElementLength.full): Editor => ({
     ]
 });
 
+export const heightEditor = (def = ElementHeight.m): Editor => ({
+    label: 'Height',
+    type: EditorTypes.select,
+    default: def,
+    prop: 'height',
+    options: [
+        {
+            label: 'XS',
+            value: ElementHeight.xs
+        },
+        {
+            label: 'S',
+            value: ElementHeight.s
+        },
+        {
+            label: 'M',
+            value: ElementHeight.m
+        },
+        {
+            label: 'L',
+            value: ElementHeight.l
+        },
+        {
+            label: 'XL',
+            value: ElementHeight.xl
+        },
+    ]
+});
+
 export const labelLengthEditor = (def = LabelLength.auto): Editor => ({
     label: 'Label length',
     type: EditorTypes.select,
@@ -180,14 +210,18 @@ export const labelLengthEditor = (def = LabelLength.auto): Editor => ({
     ]
 });
 
-
-
-export const paddingEditor: Editor = {
+export const paddingEditor = (def = Padding.m): Editor => ({
     label: 'Padding',
     type: EditorTypes.select,
-    default: Padding.m,
+    default: def,
     prop: 'padding',
     options: [{
+        label: 'No',
+        value: Padding.no
+    },{
+        label: 'XS',
+        value: Padding.xs
+    },{
         label: 'S',
         value: Padding.s
     }, {
@@ -196,8 +230,25 @@ export const paddingEditor: Editor = {
     }, {
         label: 'L',
         value: Padding.l
+    }, {
+        label: 'XL',
+        value: Padding.xl
     }]
-};
+});
+
+export const cursorEditor = (def = Cursors.auto): Editor => ({
+    label: 'Cursor type',
+    type: EditorTypes.select,
+    default: def,
+    prop: 'cursor',
+    options: [{
+        label: 'Auto',
+        value: Cursors.auto
+    },{
+        label: 'Pointer',
+        value: Cursors.pointer
+    }]
+});
 
 export const fontWeightEditor: Editor = {
     label: 'Font Weight',
@@ -294,14 +345,15 @@ const iconOptions: Option[] = Object.values(IconList).map(v => ({
     icon: v
 }));
 
-export const iconEditor: Editor = {
+export const iconEditor = (def: IconList | undefined, resettable = true):Editor => ({
     type: EditorTypes.select,
-    default: IconList.check,
+    default: def,
     label: 'Icon',
     prop: 'icon',
     options: iconOptions,
-    resettable: true
-};
+    resettable,
+    filterable: true
+});
 
 const sizeOptions: Option[] = Object.entries(IconSize).map(([k,v]) => ({
     label: k,
@@ -331,10 +383,10 @@ export const bordersEditor: Editor[] = [
     }
 ];
 
-export const bordersAndShadowSection = (simpleElement?: boolean): EditorSection => ({
+export const bordersAndShadowSection = (): EditorSection => ({
     type: EditorSectionTypes.section,
     label: 'Borders and Shadow',
-    editors: !simpleElement ? [
+    editors: [
         shadowEditor,
         {
             type: EditorTypes.color,
@@ -344,7 +396,7 @@ export const bordersAndShadowSection = (simpleElement?: boolean): EditorSection 
         },
         ...bordersEditor,
         borderRadiusEditor(BorderRadius.no)
-    ] : []
+    ]
 });
 
 export const labelSection = (defaultPosition?: LabelPositions): EditorSection => ({
@@ -366,34 +418,5 @@ export const labelSection = (defaultPosition?: LabelPositions): EditorSection =>
         labelColorEditor,
         labelPositionEditor(defaultPosition),
         labelLengthEditor()
-    ]
-});
-
-export const heightEditor = (def = ElementHeight.m): Editor => ({
-    label: 'Height',
-    type: EditorTypes.select,
-    default: def,
-    prop: 'height',
-    options: [
-        {
-            label: 'XS',
-            value: ElementHeight.xs
-        },
-        {
-            label: 'S',
-            value: ElementHeight.s
-        },
-        {
-            label: 'M',
-            value: ElementHeight.m
-        },
-        {
-            label: 'L',
-            value: ElementHeight.l
-        },
-        {
-            label: 'XL',
-            value: ElementHeight.xl
-        },
     ]
 });
