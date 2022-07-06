@@ -77,7 +77,7 @@ const defaultProps: IconProps = {
     fontSize: IconSize.xs,
     backgroundColor: allColors['Transparent'],
     borderRadius: BorderRadius.no,
-    padding: Padding.s,
+    padding: Padding.no,
     cursor: Cursors.auto
 };
 

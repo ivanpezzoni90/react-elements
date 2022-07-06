@@ -60,6 +60,7 @@ export enum ElementLength {
 }
 
 export enum Padding {
+    no = '0',
     xs = '0.25em',
     s = '0.5em',
     m = '0.75em',
@@ -167,5 +168,5 @@ export enum ToggleLabelType {
 export enum RadioTypes {
     checkbox = 'checkbox',
     toggle = 'toggle',
-    button = 'button'
+    icon = 'icon'
 }

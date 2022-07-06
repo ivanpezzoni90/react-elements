@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import { ChangeEditorPropType } from '../types';
 
 export function useEditorInit (defaultProps: any) {
@@ -57,6 +57,16 @@ export const useComputedWidth = (ref: React.RefObject<Element>) => {
     }, [ref]);
 
     return width;
+};
+
+export const useInputValue = (ref: React.RefObject<HTMLInputElement>, defaultValue: string) => {
+    const [value, setValue] = useState(defaultValue);
+    useEffect(() => {
+        if (ref !== null) {
+            setValue(ref.current?.getAttribute('value') as string);
+        }
+    }, [ref]);
+    return value;
 };
 
 

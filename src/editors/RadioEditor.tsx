@@ -41,8 +41,8 @@ const getEditor = (props: RadioProps) => {
                         label: 'Toggle',
                         value: RadioTypes.toggle
                     }, {
-                        label: 'Button',
-                        value: RadioTypes.button
+                        label: 'Icon',
+                        value: RadioTypes.icon
                     }]
                 },
             ]

@@ -3,19 +3,18 @@ import styled from 'styled-components';
 import { generateID, mergeClasses } from './helpers';
 import {
     BorderRadius,
-    ButtonIconSize,
-    ElementLength,
+    Cursors,
     ElementSize,
     LabelLength,
     LabelPositions,
     Option,
+    Padding,
     Positions,
     RadioTypes
 } from './types';
 import { CheckboxElement } from './Checkbox';
 import { SwitchToggleElement } from './SwitchToggle';
-import { Button } from './Button';
-import { IconList } from './Icon';
+import { Icon, IconList } from './Icon';
 import { allColors } from './constants/colors';
 
 interface LabelProps {
@@ -80,7 +79,7 @@ interface RadioElementInterface {
 const RadioElement = styled.div<RadioElementInterface>`
     display: flex;
     align-items: center;
-    padding: 0.25em ${({type}) => type === RadioTypes.button ? '1em' : '0'} 0.25em 0;
+    padding: 0.25em ${({type}) => type === RadioTypes.icon ? '1em' : '0'} 0.25em 0;
 `;
 
 const RadioLabel = styled.div`
@@ -146,15 +145,15 @@ const getRadioElement: getRadioElementType = (
                 }}
             />);
             break;
-        case RadioTypes.button:
-            element = (<Button
-                label=""
+        case RadioTypes.icon:
+            element = (<Icon
                 icon={o.icon as IconList}
-                borderRadius={BorderRadius.m}
-                length={ElementLength.squared}
-                fontSize={ElementSize.xxs}
-                buttonIconSize={ButtonIconSize.xl}
-                color={value === o.value ? allColors['Gray Web'] : allColors['Quick Silver']}
+                borderRadius={BorderRadius.xxl}
+                fontSize={ElementSize.m}
+                color={allColors['Cultured']}
+                backgroundColor={value === o.value ? allColors['Gray Web'] : allColors['Quick Silver']}
+                cursor={Cursors.pointer}
+                padding={Padding.s}
                 onClick={() => {
                     onRadioChange(o.value);
                 }}

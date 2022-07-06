@@ -12,7 +12,7 @@ import { CheckValidatorsType, InputProps, InputTypeProps, InputTypes } from './c
 import { BorderRadius, ElementHeight, ElementLength, LabelLength, LabelPositions } from '../types';
 import { allColors } from '../constants/colors';
 import { IconList, Icon } from '../Icon';
-import { useComputedWidth } from '../hooks';
+import { useComputedWidth, useInputValue } from '../hooks';
 import { throttle } from 'throttle-debounce';
 
 function InputElement({
@@ -33,6 +33,7 @@ function InputElement({
     placeholder,
     computedWidth
 }: InputTypeProps) {
+    const inputElementRef = useRef<HTMLInputElement>(null);
     const checkValidators: CheckValidatorsType = useCallback((newValue, opts = {}) => {
         switch (type) {
             case InputTypes.text:
@@ -79,17 +80,23 @@ function InputElement({
     }, [onBlur, checkValidators]);
 
     const handleNumberCaret = useCallback((type: 'up'|'down') => () => {
-        const parsedValue = parseFloat(defaultValue || '0');
-        const newValue = (type === 'up' ? (parsedValue + 1) : (parsedValue - 1)).toString();
-
-        if (checkValidators(newValue, { changeFromCaret: true })) {
-            onChange(newValue);
+        if (inputElementRef !== null && inputElementRef.current) {
+            // Get current input value and parse to increase its value
+            const currentValue = inputElementRef?.current?.value;
+            const parsedValue = parseFloat(currentValue || '0');
+            const newValue = (type === 'up' ? (parsedValue + 1) : (parsedValue - 1)).toString();
+    
+            if (checkValidators(newValue, { changeFromCaret: true })) {
+                onChange(newValue);
+                inputElementRef.current.value = newValue;
+            }
         }
-    }, [checkValidators, onChange, defaultValue]);
+    }, [checkValidators, onChange]);
 
     return (
         <Fragment>
             <InputElementStyle
+                ref={inputElementRef}
                 error={error}
                 length={length}
                 active={active}
@@ -106,22 +113,16 @@ function InputElement({
             />
             {type === InputTypes.number ? (
                 <InputNumberIcons>
-                    <IconWrapper
+                    <Icon
+                        color={textColor}
+                        icon={IconList.caretUp}
                         onClick={handleNumberCaret('up')}
-                    >
-                        <Icon
-                            color={textColor}
-                            icon={IconList.caretUp}
-                        />
-                    </IconWrapper>
-                    <IconWrapper
+                    />
+                    <Icon
+                        color={textColor}
+                        icon={IconList.caretDown}
                         onClick={handleNumberCaret('down')}
-                    >
-                        <Icon
-                            color={textColor}
-                            icon={IconList.caretDown}
-                        />
-                    </IconWrapper>
+                    />
                 </InputNumberIcons>
             ) : null}
         </Fragment>

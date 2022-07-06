@@ -216,6 +216,9 @@ export const paddingEditor = (def = Padding.m): Editor => ({
     default: def,
     prop: 'padding',
     options: [{
+        label: 'No',
+        value: Padding.no
+    },{
         label: 'XS',
         value: Padding.xs
     },{
