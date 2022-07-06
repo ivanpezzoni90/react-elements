@@ -1,6 +1,7 @@
 import { allColors } from '../../lib/constants/colors';
 import {
     BorderRadius,
+    Cursors,
     Editor,
     EditorSection,
     EditorSectionTypes,
@@ -209,14 +210,15 @@ export const labelLengthEditor = (def = LabelLength.auto): Editor => ({
     ]
 });
 
-
-
-export const paddingEditor: Editor = {
+export const paddingEditor = (def = Padding.m): Editor => ({
     label: 'Padding',
     type: EditorTypes.select,
-    default: Padding.m,
+    default: def,
     prop: 'padding',
     options: [{
+        label: 'XS',
+        value: Padding.xs
+    },{
         label: 'S',
         value: Padding.s
     }, {
@@ -225,8 +227,25 @@ export const paddingEditor: Editor = {
     }, {
         label: 'L',
         value: Padding.l
+    }, {
+        label: 'XL',
+        value: Padding.xl
     }]
-};
+});
+
+export const cursorEditor = (def = Cursors.auto): Editor => ({
+    label: 'Cursor type',
+    type: EditorTypes.select,
+    default: def,
+    prop: 'cursor',
+    options: [{
+        label: 'Auto',
+        value: Cursors.auto
+    },{
+        label: 'Pointer',
+        value: Cursors.pointer
+    }]
+});
 
 export const fontWeightEditor: Editor = {
     label: 'Font Weight',
@@ -323,14 +342,15 @@ const iconOptions: Option[] = Object.values(IconList).map(v => ({
     icon: v
 }));
 
-export const iconEditor: Editor = {
+export const iconEditor = (def: IconList | undefined, resettable = true):Editor => ({
     type: EditorTypes.select,
-    default: IconList.check,
+    default: def,
     label: 'Icon',
     prop: 'icon',
     options: iconOptions,
-    resettable: true
-};
+    resettable,
+    filterable: true
+});
 
 const sizeOptions: Option[] = Object.entries(IconSize).map(([k,v]) => ({
     label: k,

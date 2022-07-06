@@ -169,6 +169,7 @@ export default function EditorFunction({
                                                                 label={e.label}
                                                                 length={ElementLength.full}
                                                                 resettable={e.resettable}
+                                                                filterable={e.filterable}
                                                                 shadow={false}
                                                                 onChange={onChangeValue(e.prop)} />),
                                                             [EditorTypes.checkbox]: (<Checkbox

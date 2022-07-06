@@ -65,7 +65,7 @@ const getEditor = () => {
             type: EditorSectionTypes.section,
             label: 'Icon',
             editors: [
-                iconEditor,
+                iconEditor(undefined, true),
                 {
                     type: EditorTypes.color,
                     default: allColors['White'],

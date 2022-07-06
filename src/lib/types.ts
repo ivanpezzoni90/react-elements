@@ -21,7 +21,8 @@ export type Editor = {
     options?: Array<Option>,
     inputType?: InputTypes | RadioTypes,
     prop: string,
-    resettable?: boolean
+    resettable?: boolean,
+    filterable?: boolean
 };
 
 export enum EditorSectionTypes {
@@ -59,9 +60,16 @@ export enum ElementLength {
 }
 
 export enum Padding {
+    xs = '0.25em',
     s = '0.5em',
-    m = '1em',
-    l = '1.5em'
+    m = '0.75em',
+    l = '1em',
+    xl = '1.5em'
+}
+
+export enum Cursors {
+    auto = 'auto',
+    pointer = 'pointer'
 }
 
 export enum BorderRadius {

@@ -156,7 +156,13 @@ const ColorListItem = styled.div<ColorListItemInterface>`
     display: inline-block;
     width: 1.5em;
     height: 1.5em;
-    background: ${props => props.color};
+    ${props => props.color === allColors['Transparent']
+        ? `
+            background: repeating-conic-gradient(${allColors['Silver Sand']} 0% 25%, transparent 0% 50%) 
+            50% / 16px 16px;
+        ` : `
+            background: ${props.color};
+        `}
     ${props => props.hovered ? `
         -webkit-box-shadow:inset 0px 0px 0px 1px ${props.borderColor};
         -moz-box-shadow:inset 0px 0px 0px 10px ${props.borderColor};

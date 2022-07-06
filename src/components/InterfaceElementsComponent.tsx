@@ -46,13 +46,20 @@ const Component = styled.div`
     cursor: pointer;
     font-weight: 400;
     &:hover {
-        ${({ active }: { active: boolean }) => !active ? `background: ${allColors['Platinum']}` : ''};
+        ${({ active }: { active: boolean }) => !active
+        ? `
+            font-weight: 700;
+            color: ${allColors['Davys Grey']};
+            font-size: 18px;
+        `
+        : ''}
+       
     }
     ${({ active }: { active: boolean }) => active
         ? `
-            font-weight: 600;
-            color: ${allColors['Davys Grey']};
-            font-size: 16px;
+            font-weight: 700;
+            color: ${allColors['Cadet Blue']};
+            font-size: 18px;
         `
         : ''}
 `;
