@@ -45,6 +45,9 @@ const Component = styled.div`
     font-size: 14px;
     cursor: pointer;
     font-weight: 400;
+
+    transition: color 0.5s, font-size 0.5s, font-weight 0.5s;
+
     &:hover {
         ${({ active }: { active: boolean }) => !active
         ? `
