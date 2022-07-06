@@ -153,7 +153,6 @@ interface CheckboxElementInterface {
 }
 
 function CheckboxElement({
-    className,
     checked: checkedFromProps,
     color,
     colorOff,
@@ -175,13 +174,13 @@ function CheckboxElement({
     }, [checkedFromProps]);
 
     return (<CheckboxContainer
-        className={mergeClasses('ie-checkbox', className)}
+        className="ie-checkbox__element"
     >
         <HiddenCheckbox
-            className="ie-checkbox__input"
+            className="ie-checkbox__element__input"
         />
         <StyledCheckbox
-            className="ie-checkbox__checkbox"
+            className="checkbox__element__checkbox"
             checked={checked}
             color={color}
             colorOff={colorOff}
@@ -189,7 +188,7 @@ function CheckboxElement({
         >
             <Icon
                 viewBox="0 0 24 24"
-                className="ie-checkbox__checkbox__icon"
+                className="checkbox__element__checkbox__icon"
                 colorOff={colorOff}
             >
                 <polyline points="20 6 9 17 4 12" />
@@ -223,6 +222,7 @@ function Checkbox(props: CheckboxProps) {
 
     return (
         <CheckboxAdvancedWrapper
+            className={mergeClasses('ie-checkbox', className)}
             shadow={shadow}
             length={length}
             align={align}
@@ -234,6 +234,7 @@ function Checkbox(props: CheckboxProps) {
         >
             {hideLabel ? null : (
                 <CheckboxAdvancedLabel
+                    className="ie-checkbox__label"
                     htmlFor={id.current}
                     length={length}
                     labelColor={labelColor}

@@ -8,6 +8,7 @@ export enum InputTypes {
 }
 
 export interface InputProps {
+    className: string,
     locked: boolean,
     error: boolean,
     errorMessage?: string,

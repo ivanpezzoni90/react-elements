@@ -139,6 +139,7 @@ const getRadioElement: getRadioElementType = (
             break;
         case RadioTypes.toggle:
             element = (<SwitchToggleElement
+                className={'ie-radio__element__toggle'}
                 checked={value === o.value}
                 onChange={() => {
                     onRadioChange(o.value);
@@ -147,6 +148,7 @@ const getRadioElement: getRadioElementType = (
             break;
         case RadioTypes.icon:
             element = (<Icon
+                className={'ie-radio__element__icon'}
                 icon={o.icon as IconList}
                 borderRadius={BorderRadius.xxl}
                 fontSize={ElementSize.m}

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { allColors } from './constants/colors';
-import { lightenDarkenColor } from './helpers';
+import { lightenDarkenColor, mergeClasses } from './helpers';
 import {
     AlignPositions,
     BorderRadius,
@@ -60,6 +60,7 @@ interface ButtonElementProps {
 }
 
 interface ButtonProps {
+    className: string,
     padding?: Padding
     borderRadius?: BorderRadius
     color: string
@@ -87,6 +88,7 @@ const LabelWrapper = styled.div`
 `;
 
 const Button = ({
+    className,
     padding,
     borderRadius,
     color,
@@ -117,6 +119,7 @@ const Button = ({
 
     return (
         <ButtonElement
+            className={mergeClasses('ie-button', className)}
             align={align}
             padding={padding}
             borderRadius={borderRadius}
@@ -141,6 +144,7 @@ const Button = ({
 };
 
 const defaultProps: ButtonProps = {
+    className: '',
     padding: Padding.m,
     borderRadius: BorderRadius.s,
     color: allColors['Firebrick'],

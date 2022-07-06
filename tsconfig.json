@@ -1,5 +1,6 @@
 {
     "compilerOptions": {
+      "baseUrl": "http://localhost:3000",
       "strict": true,
       "jsx": "react",
       "declaration": true,
@@ -8,7 +9,8 @@
       "rootDir": "./src",
       "target": "es6",
       "module": "es6",
-      "moduleResolution": "node"
+      "moduleResolution": "node",
+      "types": ["cypress", "node"]
     },
     "include": ["src"]
 }

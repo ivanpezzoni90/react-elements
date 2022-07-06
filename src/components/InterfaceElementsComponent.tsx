@@ -89,9 +89,12 @@ function IEAside({
             className="ie__aside"
             open={open}
         >
-            <AsideTitle>{'Components'}</AsideTitle>
+            <AsideTitle
+                className="ie__aside__title"
+            >{'Components'}</AsideTitle>
             {Components.map(c => (
                 <Component
+                    className="ie__aside__component"
                     active={currentComponentKey === c.key}
                     key={`${c.key}_${c.name}`}
                     onClick={() => onClick(c.key)}

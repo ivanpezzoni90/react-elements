@@ -1,18 +1,17 @@
 import React, { Fragment, useState, useCallback, useRef, useEffect } from 'react';
-import { elaborateComputedWidth, generateID } from '../helpers';
+import { elaborateComputedWidth, generateID, mergeClasses } from '../helpers';
 import {
     InputWrapper,
     InputElementStyle,
     Label,
     InputNumberIcons,
-    IconWrapper
 } from './InputStyle';
 
 import { CheckValidatorsType, InputProps, InputTypeProps, InputTypes } from './config';
 import { BorderRadius, ElementHeight, ElementLength, LabelLength, LabelPositions } from '../types';
 import { allColors } from '../constants/colors';
 import { IconList, Icon } from '../Icon';
-import { useComputedWidth, useInputValue } from '../hooks';
+import { useComputedWidth } from '../hooks';
 import { throttle } from 'throttle-debounce';
 
 function InputElement({
@@ -130,6 +129,7 @@ function InputElement({
 }
 
 function Input({
+    className,
     locked,
     error: errorFromProps,
     errorMessage,
@@ -196,6 +196,7 @@ function Input({
 
     return (
         <InputWrapper
+            className={mergeClasses('ie-input', className)}
             ref={inputWrapperRef}
             key={defaultValue}
             length={length}
@@ -252,6 +253,7 @@ function Input({
 
 const defaultProps: InputProps = {
     locked: false,
+    className: '',
     error: false,
     errorMessage: undefined,
     value: '',

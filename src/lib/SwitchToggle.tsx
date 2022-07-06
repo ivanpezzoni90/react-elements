@@ -238,30 +238,30 @@ function SwitchToggleElement({
 
     return (
         <SwitchElementWrapper
-            className="ie-radio__element-wrapper"
+            className="ie-toggle__element"
         >
             <Switch
-                className="ie-radio__element"
+                className="ie-toggle__element__switch"
                 toggle={toggle}
                 color={color}
             >
                 <Input
                     {...{ color }}
-                    className="ie-radio__element__input"
+                    className="ie-toggle__element__switch__input"
                     type="checkbox"
                     checked={toggle}
                     readOnly
                 />
                 <Slider
                     {...{ toggle, color, colorOff }}
-                    className="ie-radio__element__slider"
+                    className="ie-toggle__element__switch__slider"
                     onClick={onClickCb}
                     bodyFontSize={bodyFontSize}
                 >
                     <ToggleInnerLabel
                         toggle={toggle}
                         color={color}
-                        className="ie-radio__element__slider__label"
+                        className="ie-toggle__element__switch__slider__label"
                     >
                         {labelType === ToggleLabelType.label
                             ? toggle ? labelOn : labelOff
@@ -322,11 +322,11 @@ const SwitchToggle = (props: SwitchToggleProps) => {
             hideBottomBorder={hideBottomBorder}
             borderRadius={borderRadius}
             labelPosition={labelPosition}
-            className={mergeClasses('ie-radio', className)}
+            className={mergeClasses('ie-toggle', className)}
         >
             {hideLabel ? null : (
                 <SwitchToggleAdvancedLabel
-                    className="ie-radio__label"
+                    className="ie-toggle__label"
                     htmlFor={id.current}
                     length={length}
                     labelColor={labelColor}
