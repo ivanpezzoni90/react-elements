@@ -92,9 +92,19 @@ function InputElement({
         }
     }, [checkValidators, onChange]);
 
+    const maxMin = type === InputTypes.text
+        ? {
+            minLength: min as number,
+            maxLength: max as number
+        } : {
+            min: min,
+            max: max
+        };
+
     return (
         <Fragment>
             <InputElementStyle
+                className="ie-input__element"
                 ref={inputElementRef}
                 error={error}
                 length={length}
@@ -102,6 +112,7 @@ function InputElement({
                 shadow={shadow}
                 textColor={textColor}
                 id={id}
+                {...maxMin}
                 type={type}
                 defaultValue={defaultValue}
                 placeholder={placeholder}
@@ -111,13 +122,17 @@ function InputElement({
                 onBlur={onBlurInput}
             />
             {type === InputTypes.number ? (
-                <InputNumberIcons>
+                <InputNumberIcons
+                    className="ie-input__element__icons"
+                >
                     <Icon
+                        className="ie-input__element__icons__up"
                         color={textColor}
                         icon={IconList.caretUp}
                         onClick={handleNumberCaret('up')}
                     />
                     <Icon
+                        className="ie-input__element__icons__down"
                         color={textColor}
                         icon={IconList.caretDown}
                         onClick={handleNumberCaret('down')}
@@ -214,6 +229,7 @@ function Input({
         >
             {hideLabel ? null : (
                 <Label
+                    className="ie-input__label"
                     htmlFor={id.current}
                     error={error}
                     length={length}

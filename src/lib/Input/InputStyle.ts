@@ -41,10 +41,11 @@ export const InputElementStyle = styled.input<InputElementProps>`
     ${(props) => props.error ? `color: ${allColors['Lava']};` : ''}
 
     ${({type}) => type === InputTypes.number ? `
+        -moz-appearance: textfield;
+
         ::-webkit-inner-spin-button,
         ::-webkit-outer-spin-button {
             -webkit-appearance: none;
-            -moz-appearance: none;
             appearance: none;
             margin: 0;
         }

@@ -23,8 +23,8 @@ export interface InputProps {
     labelPosition?: LabelPositions,
     textColor?: string,
     borderColor?: string,
-    min?: number,
-    max?: number,
+    min?: number | string,
+    max?: number | string,
     type?: InputTypes,
     labelLength?: LabelLength,
     hideLabel?: boolean,
@@ -53,8 +53,8 @@ export interface InputTypeProps {
     onChange: ChangeInputHandlerType,
     onFocus: VoidFunction,
     onBlur: ChangeInputHandlerType,
-    max?: number,
-    min?: number,
+    max?: number | string,
+    min?: number | string,
     computedWidth: string,
     showBorders?: boolean,
     hideBottomBorder?: boolean,
@@ -104,6 +104,8 @@ export interface InputElementProps {
     onFocus: VoidFunction,
     onBlur: (event: React.ChangeEvent<HTMLInputElement>) => void,
     computedWidth: string,
+    minlength?: number,
+    maxlength?: number,
 }
 
 export type CheckValidatorsType = (v: string, opts?: {

@@ -22,6 +22,7 @@
         "url": "git+https://github.com/ivanpezzoni90/react-elements"
     },
     "devDependencies": {
+        "@cypress/mount-utils": "^2.0.0",
         "@types/react": "^18.0.14",
         "@types/react-dom": "^18.0.5",
         "@types/styled-components": "^5.1.23",
@@ -30,6 +31,7 @@
         "@typescript-eslint/parser": "^5.12.1",
         "cypress": "^10.3.0",
         "eslint": "^8.9.0",
+        "eslint-plugin-cypress": "^2.12.1",
         "eslint-plugin-jsx-a11y": "^6.5.1",
         "eslint-plugin-only-warn": "^1.0.3",
         "eslint-plugin-react": "^7.29.1",

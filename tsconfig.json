@@ -1,6 +1,5 @@
 {
     "compilerOptions": {
-      "baseUrl": "http://localhost:3000",
       "strict": true,
       "jsx": "react",
       "declaration": true,
@@ -12,5 +11,5 @@
       "moduleResolution": "node",
       "types": ["cypress", "node"]
     },
-    "include": ["src"]
+    "include": ["src"],
 }
