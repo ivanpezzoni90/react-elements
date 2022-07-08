@@ -665,9 +665,9 @@ const blackExtArray = [
         'name': 'Dim Gray',
         'hex': '#666',
         'rgb': [
-            104,
-            106,
-            106
+            102,
+            102,
+            102
         ]
     },
     {

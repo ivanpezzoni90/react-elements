@@ -150,7 +150,11 @@ export const DropDownListContainer = styled('div')<DropDownContainerProps>`
     ${props => props.zIndex ? `z-index: ${props.zIndex}` : ''}
 `;
 
-export const DropDownList = styled('ul')`
+export interface DropDownListInterface {
+    borderRadius?: BorderRadius
+}
+export const DropDownList = styled('ul')<DropDownListInterface>`
+    border-radius: ${props => props.borderRadius};
     margin-top: 0;
     padding: 0;
     background-color: #ffffff;

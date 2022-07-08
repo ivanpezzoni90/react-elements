@@ -40,6 +40,12 @@ export const InputElementStyle = styled.input<InputElementProps>`
 
     ${(props) => props.error ? `color: ${allColors['Lava']};` : ''}
 
+    ${({type}) => type === InputTypes.date ? `
+        :invalid {
+            color:${allColors['Lava']};
+        }
+    `: ''}
+
     ${({type}) => type === InputTypes.number ? `
         -moz-appearance: textfield;
 

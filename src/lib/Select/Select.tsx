@@ -1,6 +1,6 @@
 import React, { MouseEvent, useCallback } from 'react';
 import { Fragment, useEffect, useRef, useState } from 'react';
-import { checkEventTargetContainsClass, elaborateComputedWidth, generateID, lightenDarkenColor, mergeClasses } from '../helpers';
+import { checkEventTargetContainsClass, elaborateComputedWidth, fontColorFromBackground, generateID, lightenDarkenColor, mergeClasses } from '../helpers';
 import { BorderRadius, ElementHeight, IconSize, LabelLength, LabelPositions, Option as OptionType } from '../types';
 import { IconList, Icon } from '../Icon';
 import { ElementLength } from '../types';
@@ -39,9 +39,6 @@ const doNothing = () => {};
 const isValidValue = (
     v: string | string[] | null
 ) => Array.isArray(v) ? v !== null && v.length !== 0 : v !== null && v !== '';
-
-const isOptionSelected = (value: string | string[], optionValue: string) =>
-    Array.isArray(value) ? value.includes(optionValue as string) : optionValue === value;
 
 function Select(props: SelectProps) {
     const {
@@ -87,6 +84,13 @@ function Select(props: SelectProps) {
     useEffect(() => {
         setHasValue(isValidValue(selectedOption));
     }, [selectedOption]);
+
+    const isOptionSelected = useCallback((
+        value: string | string[],
+        optionValue: string
+    ) =>
+        Array.isArray(value) ? value.includes(optionValue as string) : optionValue === value,
+    []);
 
     const onOptionClicked: ListItemClickCallbackType = (value: string) => () => {
         if (multiple) {
@@ -143,14 +147,18 @@ function Select(props: SelectProps) {
 
     const getChip = (currentOptionObject: OptionType, multiple: boolean) => (<>
         {currentOptionObject && currentOptionObject.icon ? (
-            <ListIcon>
+            <ListIcon
+                className="ie-select__element__chip_icon"
+            >
                 <Icon
+                    color={textColor}
                     icon={currentOptionObject.icon}
                     fontSize={IconSize.s}
                 />
             </ListIcon>
         ) : null}
         <ChipText
+            className="ie-select__element__chip_text"
             multiple={multiple}
         >
             {currentOptionObject && currentOptionObject.label}
@@ -163,6 +171,14 @@ function Select(props: SelectProps) {
         });
         setFilteredOptions(newOptions);
     }, [options]);
+
+    const getIconSelectedColor = useCallback((selected: boolean) => {
+        if (selected) {
+            return fontColorFromBackground(optionSelectedColor as string);
+        }
+        return textColor;
+    }, [optionSelectedColor, textColor]);
+
     return (
         <SelectContainer>
             <SelectWrapper
@@ -201,7 +217,9 @@ function Select(props: SelectProps) {
                     multiple={multiple}
                     textColor={textColor}
                 >
-                    <ChipsWrapper>
+                    <ChipsWrapper
+                        className="ie-select__element__chips"
+                    >
                         {currentOptionsList.map((currentOptionObject: OptionType, i) => {
                             if (multiple) {
                                 return (
@@ -231,6 +249,7 @@ function Select(props: SelectProps) {
                 </SelectElement>
                 {resettable &&
                     <ResetWrapper
+                        className="ie-select__reset"
                         onClick={onSelectReset}
                     >
                         <Icon
@@ -241,22 +260,32 @@ function Select(props: SelectProps) {
                 }
                 <CaretWrapper>
                     <Icon
+                        className="ie-select__caret"
                         icon={IconList.caretDown}
                     />
                 </CaretWrapper>
             </SelectWrapper>
             {isOpen && (
-                <RelativeDropDownContainer>
+                <RelativeDropDownContainer
+                    className="ie-dropdown"
+                >
                     <DropDownListContainer
+                        className="ie-dropdown__container"
                         ref={dropDownRef}
                         computedWidth={selectWrapperWidth}
                         zIndex={dropDownZIndex}
                         length={length}
                     >
-                        <DropDownList>
+                        <DropDownList
+                            borderRadius={borderRadius}
+                            className="ie-dropdown__container__list"
+                        >
                             {filterable && (
-                                <DropDownSearchContainer>
+                                <DropDownSearchContainer
+                                    className="ie-dropdown__container__list__filter"
+                                >
                                     <Input
+                                        className="ie-dropdown__container__list__filter__input"
                                         hideLabel
                                         placeholder='Search...'
                                         height={ElementHeight.s}
@@ -271,6 +300,7 @@ function Select(props: SelectProps) {
                             )}
                             {filteredOptions.map((o: OptionType) => (
                                 <ListItem
+                                    className="ie-dropdown__container__list__item"
                                     onClick={onOptionClicked(o.value as string)}
                                     key={o.value.toString()}
                                     selected={isOptionSelected(
@@ -283,6 +313,7 @@ function Select(props: SelectProps) {
                                 >
                                     {multiple ? (
                                         <CheckboxElement
+                                            className="ie-dropdown__container__list__item__checkbox"
                                             color={optionSelectedColor}
                                             colorOff={textColor}
                                             checked={isOptionSelected(
@@ -294,7 +325,14 @@ function Select(props: SelectProps) {
                                     {o.icon ? (
                                         <ListIcon>
                                             <Icon
+                                                className="ie-dropdown__container__list__item__icon"
                                                 icon={o.icon}
+                                                color={getIconSelectedColor(
+                                                    isOptionSelected(
+                                                        selectedOption as string | string[],
+                                                        o.value as string
+                                                    )
+                                                )}
                                                 fontSize={IconSize.s}
                                             />
                                         </ListIcon>

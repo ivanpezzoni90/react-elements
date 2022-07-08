@@ -47,7 +47,7 @@
         "test": "react-scripts test",
         "eject": "react-scripts eject",
         "clean": "rm -rf dist",
-        "cypress": "sudo npx cypress open",
+        "cypress": "sudo ./node_modules/.bin/cypress open",
         "build-dist": "npm run clean && tsc && cp package.json README.md ./dist/lib",
         "lintfix": "eslint --fix --ext .js,.jsx,.ts,.tsx ."
     },
