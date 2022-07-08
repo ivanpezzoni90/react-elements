@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { generateID, lightenDarkenColor, mergeClasses, rgbFromHex } from './helpers';
+import { fontColorFromBackground, generateID, lightenDarkenColor, mergeClasses, rgbFromHex } from './helpers';
 import { AlignPositions, BorderRadius, ElementLength, LabelLength, LabelPositions, Option } from './types';
 import { allColors } from './constants/colors';
 
@@ -156,6 +156,7 @@ const SliderDataList = styled.datalist<SliderDataListInterface>`
     overflow: hidden;
     padding-left: 0.25em;
     padding-right: 0.075em;
+    color: ${props => props.color};
 
     ${(props) => props.showValue ? `
         font-size: 8px;
@@ -187,8 +188,8 @@ const SliderTooltip = styled.output`
     opacity: 0;
     transition: visibility 0s 0.5s, opacity 0.5s;
 
-    background-color: ${allColors['Dim Gray']};
-    color: ${allColors['White']};
+    background-color: ${props => props.color};
+    color: ${props => fontColorFromBackground(props.color as string)};
     text-align: center;
     border-radius: 6px;
 
@@ -202,7 +203,7 @@ const SliderTooltip = styled.output`
         margin-left: -5px;
         border-width: 5px;
         border-style: solid;
-        border-color: ${allColors['Dim Gray']} transparent transparent transparent;
+        border-color: ${props => props.color} transparent transparent transparent;
     }
 `;
 
@@ -226,7 +227,7 @@ interface SliderValueInterface {
 const SliderValue = styled.div<SliderValueInterface>`
     font-size: ${({length}) =>
         length === ElementLength.l || length === ElementLength.full ? '14px' : '11px'};
-    color: ${allColors['Dim Gray']};
+    color: ${props => props.color};
     padding-right: 0.5em;
     display: flex;
     width: ${({length}) =>
@@ -367,6 +368,7 @@ function SliderElement({
         const nOfSteps = options.length !== 0 ? options.length : Math.floor((newMax - newMin) / newStep);
         return (<SliderDataList
             id={id}
+            color={cursorColor}
             showValue={showStepValue}
         >
             {Array.from(Array(nOfSteps)).map((e, i) => (
@@ -395,7 +397,7 @@ function SliderElement({
                 }
             </SliderDataListOption>
         </SliderDataList>);
-    }, [id, newMax, newMin, newStep, options, showStepValue]);
+    }, [cursorColor, id, newMax, newMin, newStep, options, showStepValue]);
 
     return (<SliderContainer
         labelPosition={labelPosition}
@@ -405,6 +407,7 @@ function SliderElement({
             <SliderValue
                 className="ie-slider__element__value"
                 length={length}
+                color={cursorColor}
             >
                 {value}
             </SliderValue>
@@ -430,6 +433,7 @@ function SliderElement({
                     <SliderTooltip
                         htmlFor={id}
                         left={calculateTooltipPosition(newMin, newMax, value)}
+                        color={cursorColor}
                     >
                         {value}
                     </SliderTooltip>

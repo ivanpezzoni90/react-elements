@@ -41,14 +41,17 @@ const EditorRow = styled.div`
 
 const SectionTitle = styled.div`
     display: flex;
+    flex-direction: column;
 `;
 const Title = styled.div`
-    font-weight: 600;
-    color: ${allColors['Dim Gray']};
+    text-transform: uppercase;
+    font-weight: 700;
+    color: ${allColors['Dark Turquoise']};
+    font-size: 18px;
     padding-right: 0.5em;
 `;
 const Separator = styled.div`
-    border-bottom: 1px solid ${allColors['Silver Sand']};
+    border-bottom: 1px solid ${allColors['Dark Turquoise']};
     display: flex;
     flex: 1;
 `;
@@ -61,7 +64,9 @@ const SectionsWrapper = styled.div`
     overflow: auto;
 `;
 
-const CodeBlockWrapper = styled.div``;
+const CodeBlockWrapper = styled.div`
+    padding: 2em 0;
+`;
 
 type InnerOnChange = (value: string | boolean | Array<string> | number | null) => void;
 type ChangeEditorValueType = (prop: string) => InnerOnChange;
@@ -159,6 +164,7 @@ export default function EditorFunction({
                                                     >
                                                         {{
                                                             [EditorTypes.input]: (<Input
+                                                                labelColor={allColors['Teal']}
                                                                 className="ie__workarea__editor__section__editors__row__element__input"
                                                                 locked={false}
                                                                 value={e.default as string}
@@ -169,6 +175,7 @@ export default function EditorFunction({
                                                                 length={ElementLength.full}
                                                                 onChange={onChangeValue(e.prop)} />),
                                                             [EditorTypes.select]: (<Select
+                                                                labelColor={allColors['Teal']}
                                                                 className="ie__workarea__editor__section__editors__row__element__select"
                                                                 options={e.options ? e.options : []}
                                                                 value={Array.isArray(e.default)
@@ -182,6 +189,7 @@ export default function EditorFunction({
                                                                 shadow={false}
                                                                 onChange={onChangeValue(e.prop)} />),
                                                             [EditorTypes.checkbox]: (<Checkbox
+                                                                labelColor={allColors['Teal']}
                                                                 className="ie__workarea__editor__section__editors__row__element__checkbox"
                                                                 checked={e.default as boolean}
                                                                 label={e.label}
@@ -189,14 +197,16 @@ export default function EditorFunction({
                                                                 length={ElementLength.full}
                                                                 onChange={onChangeValue(e.prop)} />),
                                                             [EditorTypes.toggle]: (<SwitchToggle
+                                                                labelColor={allColors['Teal']}
                                                                 className="ie__workarea__editor__section__editors__row__element__toggle"
                                                                 checked={e.default as boolean}
                                                                 label={e.label}
-                                                                color="#666"
+                                                                color={allColors['Teal']}
                                                                 shadow={false}
                                                                 length={ElementLength.full}
                                                                 onChange={onChangeValue(e.prop)} />),
                                                             [EditorTypes.color]: (<ColorPicker
+                                                                labelColor={allColors['Teal']}
                                                                 className="ie__workarea__editor__section__editors__row__element__color"
                                                                 value={e.default as string}
                                                                 label={e.label}
@@ -215,6 +225,10 @@ export default function EditorFunction({
                     </Section>);
                 }
             })}
+            <Title>
+                Code
+            </Title>
+            <Separator/>
             <CodeBlockWrapper
                 className=""
             >

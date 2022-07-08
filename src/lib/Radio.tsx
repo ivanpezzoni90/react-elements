@@ -68,7 +68,7 @@ const RadioContainer = styled.div<RadioContainerInterface>`
             max-width: 8em;
         `
         : ''}
-    padding-left: 1.5em;
+    padding-left: 1em;
 `;
 
 interface RadioElementInterface {
