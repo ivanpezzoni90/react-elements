@@ -5,7 +5,7 @@ import {Select} from '../../src/lib/Select';
 import { BorderRadius, ElementLength, LabelLength, LabelPositions, Option } from '../../src/lib/types';
 import { checkDefaultElementProps } from '../modules/actions';
 import { verifyElementRgbColor, verifyElementRgbColorProp } from '../modules/assertions';
-import { selectDropdownListNthItem, selectSelectElement, selectSelectLabel, selectSelectSingleChipIcon, selectSelectSingleChipText, selectSelectWrapper } from '../modules/selectors';
+import { selectDropdownFilter, selectDropdownListItems, selectDropdownListNthItem, selectDropdownListNthItemCheckbox, selectSelectChips, selectSelectElement, selectSelectLabel, selectSelectNthChip, selectSelectNthChipClose, selectSelectNthChipText, selectSelectResetButton, selectSelectSingleChipIcon, selectSelectSingleChipText, selectSelectWrapper } from '../modules/selectors';
 import { log } from '../modules/utils';
 
 const selectOptions: Option[] = [{
@@ -63,6 +63,12 @@ describe('Select', () => {
             options={selectOptions}
         />);
 
+        // log('Verify close on click outside');
+        // selectSelectWrapper().click();
+        // selectDropdownList().should('be.visible');
+        // cy.get('body').click('bottomRight');
+        // selectDropdown().should('not.exist');
+
         // label
         selectSelectLabel().should('have.text', 'Name');
 
@@ -100,21 +106,75 @@ describe('Select', () => {
         verifyElementRgbColorProp(selectDropdownListNthItem(0), allRgbColors['Teal'], 'background-color');
         verifyElementRgbColor(selectDropdownListNthItem(0), allRgbColors['Cultured']);
 
-        // labelPosition
-        // labelLength
 
-        // options
-        // resettable
-        // multiple
-        // chipBorderRadius
-        // filterable
-        // closeOnClickOutside
+        cy.mount(<Select
+            resettable
+            multiple
+            chipBorderRadius={BorderRadius.l}
+            filterable
+            closeOnClickOutside={false}
+            hideBottomBorder
+            hideLabel
+            options={selectOptions}
+        />);
 
-        // showBorders
+        // TODO: Verify how to click outside if iframe body is same size as select element
+        // log('Verify close on click outside false');
+        // selectSelectWrapper().click();
+        // selectDropdownList().should('be.visible');
+        
+        // cy.get('body').click('bottomRight');
+        // selectDropdownList().should('be.visible');
+
+        // selectSelectWrapper().click();
+        // selectDropdown().should('not.exist');
+
+        log('Verify multiple select');
+        selectSelectWrapper().click();
+        selectDropdownListNthItemCheckbox(0).click();
+        selectDropdownListNthItemCheckbox(1).click();
+        selectDropdownListNthItemCheckbox(2).click();
+
+
+        selectSelectNthChipText(0).should('have.text', 'Heart');
+        selectSelectNthChipText(1).should('have.text', 'Home');
+        selectSelectNthChipText(2).should('have.text', 'Eye');
+
+        selectSelectNthChipClose(0).click();
+        selectSelectNthChipText(0).should('have.text', 'Home');
+        selectSelectNthChipText(1).should('have.text', 'Eye');
+        selectSelectNthChip(2).should('not.exist');
+
+        log('Verify Chip border radius');
+        selectSelectNthChip(0).should('have.css', 'border-radius').and('eq', `${parseFloat(BorderRadius.l)*12}px`);
+
+        log('Verify filterable');
+        selectDropdownFilter().type('h');
+        selectDropdownListItems().should('have.length', 4);
+
+        selectDropdownFilter().type('o');
+        selectDropdownListItems().should('have.length', 2);
+    
+        selectDropdownFilter().type('m');
+        selectDropdownListItems().should('have.length', 1);
+
+        selectDropdownFilter().type('{backspace}');
+        selectDropdownListItems().should('have.length', 2);
+
+        selectDropdownFilter().type('{backspace}');
+        selectDropdownListItems().should('have.length', 4);
+
+        selectDropdownFilter().clear();
+        selectDropdownListItems().should('have.length', 7);
+
+        log('Verify resettable');
+        selectSelectResetButton().click();
+        selectSelectChips().should('have.length', 0);
+
         // hideBottomBorder
+        // TODO: How to test there is no bottom border?
         
-        // hideLabel
-        
-        
+        log('Verify hide label');
+        selectSelectLabel().should('not.exist');
     });
 });

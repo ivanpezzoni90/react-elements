@@ -235,6 +235,7 @@ function Select(props: SelectProps) {
                                             borderRadius={chipBorderRadius}
                                         >
                                             <Icon
+                                                className="ie-select__element__chip__close"
                                                 icon={IconList.close}
                                                 color={textColor}
                                                 onClick={onOptionClicked(currentOptionObject.value as string)}
