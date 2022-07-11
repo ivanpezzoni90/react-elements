@@ -3,7 +3,7 @@ import { allColors, allRgbColors } from '../../src/lib/constants/colors';
 import { IconList } from '../../src/lib/Icon';
 import {Select} from '../../src/lib/Select';
 import { BorderRadius, ElementLength, LabelLength, LabelPositions, Option } from '../../src/lib/types';
-import { checkDefaultElementProps } from '../modules/actions';
+import { checkCustomElementProps, checkDefaultElementProps } from '../modules/actions';
 import { verifyElementRgbColor, verifyElementRgbColorProp } from '../modules/assertions';
 import { selectDropdownFilter, selectDropdownListItems, selectDropdownListNthItem, selectDropdownListNthItemCheckbox, selectSelectChips, selectSelectElement, selectSelectLabel, selectSelectNthChip, selectSelectNthChipClose, selectSelectNthChipText, selectSelectResetButton, selectSelectSingleChipIcon, selectSelectSingleChipText, selectSelectWrapper } from '../modules/selectors';
 import { log } from '../modules/utils';
@@ -69,24 +69,11 @@ describe('Select', () => {
         // cy.get('body').click('bottomRight');
         // selectDropdown().should('not.exist');
 
-        // label
-        selectSelectLabel().should('have.text', 'Name');
+        checkCustomElementProps(selectSelectWrapper, selectSelectLabel);
 
-        // length
-        selectSelectWrapper().should('have.css', 'width')
-            .and('eq', `${parseInt(ElementLength.m, 10)*16}px`);
-
-        // TODO: How to test there is no box-shadow?
-        verifyElementRgbColor(selectSelectLabel(), allRgbColors['Teal']);
+        // textColor
         verifyElementRgbColor(selectSelectElement(), allRgbColors['Teal']);
-        verifyElementRgbColorProp(selectSelectWrapper(), allRgbColors['Teal'], 'border-bottom-color');
-        verifyElementRgbColorProp(selectSelectWrapper(), allRgbColors['Teal'], 'border-top-color');
-        verifyElementRgbColorProp(selectSelectWrapper(), allRgbColors['Teal'], 'border-left-color');
-        verifyElementRgbColorProp(selectSelectWrapper(), allRgbColors['Teal'], 'border-right-color');
 
-        selectSelectWrapper().should('have.css', 'flex-direction').and('eq', 'row');
-        selectSelectLabel().should('have.css', 'max-width').and('eq', `${parseFloat(LabelLength.m)*16}px`);
-        selectSelectWrapper().should('have.css', 'border-radius').and('eq', `${parseFloat(BorderRadius.l)*16}px`);
 
         log('Verify dropdown interactions and option selected color');
         selectSelectWrapper().click();

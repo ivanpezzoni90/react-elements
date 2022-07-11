@@ -181,6 +181,7 @@ function CheckboxElement({
         />
         <StyledCheckbox
             className="checkbox__element__checkbox"
+            data-checked={checked ? 'checked' : 'not-checked'}
             checked={checked}
             color={color}
             colorOff={colorOff}

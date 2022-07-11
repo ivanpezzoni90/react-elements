@@ -120,3 +120,23 @@ export const selectDropdownListItemCheckboxWithLabel: SelectorWithParam<string, 
     parent = selectDropdown
 ) => selectDropdownListItemWithLabel(label, parent).find('.ie-checkbox__element');
 
+
+// CHECKBOX
+
+export const selectCheckboxWrapper: Selector<HTMLDivElement> = () => cy.get('.ie-checkbox');
+
+export const selectCheckboxElement: Selector<HTMLDivElement> = (
+    parent = selectCheckboxWrapper
+) => parent().find('.ie-checkbox__element');
+
+export const selectCheckboxElementCheck: Selector<HTMLDivElement> = (
+    parent = selectCheckboxWrapper
+) => selectCheckboxElement(parent).find('.checkbox__element__checkbox');
+
+export const selectCheckboxElementIcon: Selector<HTMLDivElement> = (
+    parent = selectCheckboxWrapper
+) => selectCheckboxElementCheck(parent).find('.checkbox__element__checkbox__icon');
+
+export const selectCheckboxLabel: Selector<HTMLLabelElement> = (
+    parent = selectCheckboxWrapper
+) => parent().find('label');
