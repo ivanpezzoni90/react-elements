@@ -140,3 +140,32 @@ export const selectCheckboxElementIcon: Selector<HTMLDivElement> = (
 export const selectCheckboxLabel: Selector<HTMLLabelElement> = (
     parent = selectCheckboxWrapper
 ) => parent().find('label');
+
+
+// TOGGLE
+
+export const selectToggleWrapper: Selector<HTMLDivElement> = () => cy.get('.ie-toggle');
+
+export const selectToggleElement: Selector<HTMLDivElement> = (
+    parent = selectToggleWrapper
+) => parent().find('.ie-toggle__element');
+
+export const selectToggleElementSwitch: Selector<HTMLDivElement> = (
+    parent = selectToggleWrapper
+) => selectToggleElement(parent).find('.ie-toggle__element__switch');
+
+export const selectToggleElementSlider: Selector<HTMLDivElement> = (
+    parent = selectToggleWrapper
+) => selectToggleElementSwitch(parent).find('.ie-toggle__element__switch__slider');
+
+export const selectToggleElementLabel: Selector<HTMLDivElement> = (
+    parent = selectToggleWrapper
+) => selectToggleElementSlider(parent).find('.ie-toggle__element__switch__slider__label');
+
+export const selectToggleElementIcon: Selector<HTMLDivElement> = (
+    parent = selectToggleWrapper
+) => selectToggleElementLabel(parent).find('.ie-icon > svg');
+
+export const selectToggleLabel: Selector<HTMLLabelElement> = (
+    parent = selectToggleWrapper
+) => parent().find('.ie-toggle__label');
