@@ -240,3 +240,19 @@ export const selectIconWrapper: Selector<HTMLDivElement> = () => cy.get('.ie-ico
 export const selectIcon: Selector<HTMLDivElement> = (
     parent = selectIconWrapper
 ) => parent().find('svg');
+
+
+// BUTTON
+export const selectButton: Selector<HTMLDivElement> = () => cy.get('.ie-button');
+
+export const selectButtonLabel: Selector<HTMLDivElement> = (
+    parent = selectButton
+) => parent().find('.ie-button__label');
+
+export const selectButtonIconContainer: Selector<HTMLDivElement> = (
+    parent = selectButton
+) => parent().find('.ie-button__icon');
+
+export const selectButtonIcon: Selector<HTMLDivElement> = (
+    parent = selectButton
+) => selectButtonIconContainer(parent).find('svg');
