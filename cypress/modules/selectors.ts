@@ -6,6 +6,11 @@ type SelectorWithParam<T, R, P> = (
     parent?: () => Cypress.Chainable<JQuery<P>>
 ) => Cypress.Chainable<JQuery<R>>;
 
+type SelectorWithParams<T, R, P> = (
+    parent?: () => Cypress.Chainable<JQuery<P>>,
+    ...params: T[]
+) => Cypress.Chainable<JQuery<R>>;
+
 
 // Component testing
 
@@ -169,3 +174,61 @@ export const selectToggleElementIcon: Selector<HTMLDivElement> = (
 export const selectToggleLabel: Selector<HTMLLabelElement> = (
     parent = selectToggleWrapper
 ) => parent().find('.ie-toggle__label');
+
+
+// COLOR
+
+export const selectColorPickerWrapper: Selector<HTMLDivElement> = () => cy.get('.ie-color-picker');
+
+export const selectColorPickerElement: Selector<HTMLDivElement> = (
+    parent = selectColorPickerWrapper
+) => parent().find('.ie-color-picker__element');
+
+export const selectColorPickerElementInfoColor: Selector<HTMLDivElement> = (
+    parent = selectColorPickerWrapper
+) => selectColorPickerElement(parent)
+    .find('.ie-color-picker__element__info__color');
+
+export const selectColorPickerElementInfoLabel: Selector<HTMLDivElement> = (
+    parent = selectColorPickerWrapper
+) => selectColorPickerElement(parent)
+    .find('.ie-color-picker__element__info__label');
+
+export const selectColorPickerElementPicker: Selector<HTMLDivElement> = (
+    parent = selectColorPickerWrapper
+) => selectColorPickerElement(parent).find('.ie-color-picker__element__picker');
+
+export const selectColorPickerLabel: Selector<HTMLLabelElement> = (
+    parent = selectColorPickerWrapper
+) => parent().find('.ie-color-picker__label');
+
+// Color dropdown
+export const selectDropdownColor: Selector<HTMLDivElement> = () => cy.get('.ie-dropdown__color');
+
+export const selectDropDownColorList: Selector<HTMLDivElement> = (
+    parent = selectDropdownColor 
+) => parent().find('.ie-dropdown__color__list');
+
+export const selectDropDownColorListFooterInput: Selector<HTMLDivElement> = (
+    parent = selectDropdownColor 
+) => selectDropDownColorList(parent).find('.ie-dropdown__color__list__footer__input');
+
+export const selectDropDownColorListRows: Selector<HTMLDivElement> = (
+    parent = selectDropdownColor 
+) => selectDropDownColorList(parent).find('.ie-dropdown__color__list__row');
+
+export const selectDropDownColorListNthRow: SelectorWithParam<number, HTMLDivElement, HTMLDivElement> = (
+    nth: number,
+    parent = selectDropdownColor,
+) => selectDropDownColorListRows(parent).eq(nth);
+
+export const selectDropDownColorListNthRowItems: SelectorWithParam<number, HTMLDivElement, HTMLDivElement> = (
+    nth: number,
+    parent = selectDropdownColor,
+) => selectDropDownColorListNthRow(nth, parent).find('.ie-dropdown__color__list__row__item');
+
+export const selectDropDownColorListNthRowNthItem: SelectorWithParams<number, HTMLDivElement, HTMLDivElement> = (
+    parent = selectDropdownColor,
+    nthRow: number,
+    nthItem: number,
+) => selectDropDownColorListNthRowItems(nthRow, parent).eq(nthItem);

@@ -52,7 +52,6 @@ export default function ColorPickerEditor() {
                 <ElementContainer>
                     <ColorPicker
                         {...pickerProps}
-                        value={pickerProps.value as string || allColors['Ruby Red']}
                     />
                 </ElementContainer>
                 <Editor

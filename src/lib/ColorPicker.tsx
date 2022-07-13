@@ -1,4 +1,4 @@
-import React, { Fragment, useRef, useState } from 'react';
+import React, { Fragment, memo, useCallback, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { fontColorFromBackground, generateID, mergeClasses } from './helpers';
 import {
@@ -116,7 +116,8 @@ const DropDownListContainer = styled('div')<DropDownContainerProps>`
     position: absolute;
     ${props => props.zIndex ? `z-index: ${props.zIndex}` : ''};
     margin-top: 2em;
-    right: 0;
+    right: auto;
+    left: 0;
 `;
 
 const DropDownList = styled.div`
@@ -130,6 +131,9 @@ const DropDownList = styled.div`
     font-size: 1em;
     font-weight: 500;
     text-align: left;
+
+    max-height: 25em;
+    overflow: auto;
 
     display: flex;
     flex-direction: column;
@@ -221,11 +225,80 @@ interface ColorPickerElementInterface {
     onChange: ColorPickerChangeHandlerType,
 }
 
-function ColorPickerElement({
+const ColorListItemComponent = memo(({
+    color,
+    selectedColor,
+    hoverColor,
+    onMouseEnter,
+    onChange
+}: {
+    color: ColorObject,
+    selectedColor: string,
+    hoverColor: string,
+    onMouseEnter: (color: ColorObject) => () => void,
+    onChange: (newColor: string) => void
+}) => {
+    const onChangeColor = useCallback((newColor: string) => () => {
+        onChange(newColor);
+    }, [onChange]);
+
+    return (<ColorListItem
+        className="ie-dropdown__color__list__row__item"
+        color={color.hex}
+        selected={color.hex === selectedColor}
+        hovered={color.hex === hoverColor}
+        onClick={onChangeColor(color.hex)}
+        onMouseEnter={onMouseEnter(color)}
+        borderColor={fontColorFromBackground(color.hex)}
+    />);
+});
+ColorListItemComponent.displayName = 'ColorListItem';
+
+const ColorListFooterComponent = memo(({
+    hoverColor,
+    selectedColor,
+    selectedColorLabel,
+    onCustomColorChange
+}: {
+    hoverColor: ColorObject
+    selectedColor: string,
+    selectedColorLabel?: string
+    onCustomColorChange: (newColor: string | number) => void
+}) => {
+    const [customColor, setCustomColor] = useState(false);
+    const onInputChange = useCallback(() => {
+        if (!customColor) setCustomColor(true);
+    }, [customColor]);
+
+    return (
+        <ColorListFooter
+            className="ie-dropdown__color__list__footer"
+        >
+            <Input
+                className="ie-dropdown__color__list__footer__input"
+                active
+                shadow={false}
+                value={hoverColor.hex !== '' ? hoverColor.hex : selectedColor}
+                label={ customColor
+                    ? '' 
+                    : hoverColor.name !== ''
+                        ? hoverColor.name
+                        : selectedColorLabel
+                }
+                onChange={onInputChange}
+                onBlur={onCustomColorChange}
+            />
+
+        </ColorListFooter>
+    );
+});
+ColorListFooterComponent.displayName = 'ColorListFooter';
+
+const ColorPickerElement = memo(({
     valueFromProps,
     closeOnClickOutside,
     onChange
-}: ColorPickerElementInterface) {
+}: ColorPickerElementInterface) => {
     const [selectedColor, setSelectedColor] = useState(valueFromProps);
     const [isOpen, setIsOpen] = useState(false);
 
@@ -236,15 +309,16 @@ function ColorPickerElement({
     const styledColorPickerRef = useRef<HTMLDivElement>(null);
     const dropDownZIndex = useComputedZIndex(styledColorPickerRef);
 
-    const onChangeColor = (newColor: string) => () => {
+    const onChangeColor = useCallback((newColor: string) => {
         setSelectedColor(newColor);
         onChange(newColor);
-    };
+    }, [onChange]);
 
-    const onCustomColorChange: (v: string | number) => void = (newColor) => {
+
+    const onCustomColorChange = useCallback((newColor: string | number) => {
         setSelectedColor(newColor as string);
         onChange(newColor as string);
-    };
+    }, [onChange]);
 
     const emptyColorObj: ColorObject = {
         name: '',
@@ -272,16 +346,44 @@ function ColorPickerElement({
         [styledColorPickerRef]
     );
 
+    const colorListRows = useMemo(() => {
+        return (
+            Object.values(palette).map((colorArray) => (
+                <ColorListRow
+                    className="ie-dropdown__color__list__row"
+                    key={Math.random()}
+                >
+                    {colorArray.map((colorObj: ColorObject) => (
+                        <ColorListItemComponent
+                            key={`${colorObj.name}_${colorObj.hex}`}
+                            color={colorObj}
+                            selectedColor={selectedColor}
+                            hoverColor={hoverColor.hex}
+                            onMouseEnter={onMouseEnter}
+                            onChange={onChangeColor}
+                        />
+                    ))}
+                </ColorListRow>
+            ))
+        );
+    }, [hoverColor.hex, onChangeColor, selectedColor]);
+
     return (
         <>
             <ColorPickerContainer
                 className="ie-color-picker__element"
             >
-                <ColorPickerInfoContainer>
-                    <SelectedColor>
+                <ColorPickerInfoContainer
+                    className="ie-color-picker__element__info"
+                >
+                    <SelectedColor
+                        className="ie-color-picker__element__info__color"
+                    >
                         {selectedColor}
                     </SelectedColor>
-                    <SelectedColorLabel>
+                    <SelectedColorLabel
+                        className="ie-color-picker__element__info__label"
+                    >
                         {selectedColorLabel}
                     </SelectedColorLabel>
                 </ColorPickerInfoContainer>
@@ -293,49 +395,33 @@ function ColorPickerElement({
                 />
                 {isOpen && (
                     <DropDownListContainer
+                        className="ie-dropdown ie-dropdown__color"
                         ref={dropDownRef}
                         zIndex={dropDownZIndex}
                     >
-                        <DropDownList>
+                        <DropDownList
+                            className="ie-dropdown__color__list"
+                        >
                             <ColorListColumn
-                            // Reset hoverColor when leaving palette div
+                                className="ie-dropdown__color__list__column"
+                                // Reset hoverColor when leaving palette div
                                 onMouseLeave={onMouseLeave}
                             >
-                                {Object.values(palette).map((colorArray) => (
-                                    <ColorListRow
-                                        key={Math.random()}
-                                    >
-                                        {colorArray.map((colorObj: ColorObject) => (
-                                            <ColorListItem
-                                                key={`${colorObj.name}_${colorObj.hex}`}
-                                                color={colorObj.hex}
-                                                selected={colorObj.hex === selectedColor}
-                                                hovered={colorObj.hex === hoverColor.hex}
-                                                onClick={onChangeColor(colorObj.hex)}
-                                                onMouseEnter={onMouseEnter(colorObj)}
-                                                borderColor={fontColorFromBackground(colorObj.hex)}
-                                            />
-                                        ))}
-                                    </ColorListRow>
-                                ))}
+                                {colorListRows}
                             </ColorListColumn>
-                            <ColorListFooter>
-                                <Input
-                                    active
-                                    shadow={false}
-                                    value={hoverColor.hex !== '' ? hoverColor.hex : selectedColor}
-                                    label={hoverColor.name !== '' ? hoverColor.name : (selectedColorLabel || '')}
-                                    onChange={onCustomColorChange}
-                                />
-
-                            </ColorListFooter>
+                            <ColorListFooterComponent
+                                hoverColor={hoverColor}
+                                selectedColor={selectedColor}
+                                selectedColorLabel={selectedColorLabel}
+                                onCustomColorChange={onCustomColorChange}
+                            />
                         </DropDownList>
                     </DropDownListContainer>
                 )}
             </ColorPickerContainer>
         </>
     );
-}
+});
 
 function ColorPicker(props: ColorPickerProps) {
     const {
@@ -373,6 +459,7 @@ function ColorPicker(props: ColorPickerProps) {
         >
             {hideLabel ? null : (
                 <ColorPickerAdvancedLabel
+                    className="ie-color-picker__label"
                     htmlFor={id.current}
                     length={length}
                     labelColor={labelColor}
@@ -411,6 +498,7 @@ const defaultProps: ColorPickerProps = {
 };
 
 ColorPicker.defaultProps = defaultProps;
+ColorPickerElement.displayName = 'ColorPickerElement';
 
 export { ColorPickerElement, ColorPicker };
 export type {ColorPickerProps };
