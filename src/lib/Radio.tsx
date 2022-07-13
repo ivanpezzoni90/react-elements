@@ -169,11 +169,13 @@ const getRadioElement: getRadioElementType = (
         type={type}
         className="ie-radio__element"
     >
-        <RadioLabel
-            className="ie-radio__element__label"
-        >
-            {o.label}
-        </RadioLabel>
+        {o.label !== '' ? (
+            <RadioLabel
+                className="ie-radio__element__label"
+            >
+                {o.label}
+            </RadioLabel>
+        ) : null}
         {element}
     </RadioElement>;
 };

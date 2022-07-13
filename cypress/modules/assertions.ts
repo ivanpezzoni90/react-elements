@@ -27,3 +27,7 @@ export function verifyElementNotHasRgbColor<T> (element: Cypress.Chainable<JQuer
  
 export const verifyCheckboxChecked = (element: () => Cypress.Chainable<JQuery<HTMLDivElement>>, checked = true) =>
     element().should('have.attr', 'data-checked').and('eq', checked ? 'checked' : 'not-checked');
+
+
+export const verifySwitchToggleValue = (element: () => Cypress.Chainable<JQuery<HTMLDivElement>>, value: string) =>
+    element().should('have.text', value);

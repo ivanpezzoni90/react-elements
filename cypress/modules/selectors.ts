@@ -256,3 +256,53 @@ export const selectButtonIconContainer: Selector<HTMLDivElement> = (
 export const selectButtonIcon: Selector<HTMLDivElement> = (
     parent = selectButton
 ) => selectButtonIconContainer(parent).find('svg');
+
+
+// RADIO
+
+export const selectRadioWrapper: Selector<HTMLSelectElement> = () => cy.get('.ie-radio');
+
+export const selectRadioLabel: Selector<HTMLSelectElement> = (
+    parent = selectRadioWrapper
+) => parent().find('.ie-radio__label');
+
+export const selectRadioContainer: Selector<HTMLSelectElement> = (
+    parent = selectRadioWrapper
+) => parent().find('.ie-radio__container');
+
+export const selectRadioElements: Selector<HTMLSelectElement> = (
+    parent = selectRadioWrapper
+) => selectRadioContainer(parent).find('.ie-radio__element');
+
+export const selectRadioNthElement: SelectorWithParam<number, HTMLDivElement, HTMLDivElement> = (
+    nth: number,
+    parent = selectRadioWrapper
+) => selectRadioElements(parent).eq(nth);
+
+export const selectRadioNthElementLabel: SelectorWithParam<number, HTMLDivElement, HTMLDivElement> = (
+    nth: number,
+    parent = selectRadioWrapper
+) => selectRadioNthElement(nth,parent).find('.ie-radio__element__label');
+
+export const selectRadioNthElementCheckbox: SelectorWithParam<number, HTMLDivElement, HTMLDivElement> = (
+    nth: number,
+    parent = selectRadioWrapper
+) => selectCheckboxElementCheck(() => selectRadioNthElement(nth,parent));
+
+export const selectRadioNthElementToggleLabel: SelectorWithParam<number, HTMLDivElement, HTMLDivElement> = (
+    nth: number,
+    parent = selectRadioWrapper
+) => selectToggleElementLabel(() => selectRadioNthElement(nth,parent));
+
+export const selectRadioNthElementToggleSlider: SelectorWithParam<number, HTMLDivElement, HTMLDivElement> = (
+    nth: number,
+    parent = selectRadioWrapper
+) => selectToggleElementSlider(() => selectRadioNthElement(nth,parent));
+
+export const selectRadioNthElementIcon: SelectorWithParam<number, HTMLDivElement, HTMLDivElement> = (
+    nth: number,
+    parent = selectRadioWrapper
+) => selectRadioNthElement(nth,parent).find('.ie-radio__element__icon');
+
+
+
