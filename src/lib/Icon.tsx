@@ -60,12 +60,14 @@ function Icon({
             cursor={cursor}
             onClick={(onClick)}
         >
-            <IconComponent
-                style={{
-                    color,
-                    fontSize
-                }} 
-            />
+            {IconComponent ? (
+                <IconComponent
+                    style={{
+                        color,
+                        fontSize
+                    }} 
+                />
+            ) : null}
         </IconWrapper>
     );
 }

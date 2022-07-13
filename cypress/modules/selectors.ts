@@ -232,3 +232,11 @@ export const selectDropDownColorListNthRowNthItem: SelectorWithParams<number, HT
     nthRow: number,
     nthItem: number,
 ) => selectDropDownColorListNthRowItems(nthRow, parent).eq(nthItem);
+
+
+// ICON
+
+export const selectIconWrapper: Selector<HTMLDivElement> = () => cy.get('.ie-icon');
+export const selectIcon: Selector<HTMLDivElement> = (
+    parent = selectIconWrapper
+) => parent().find('svg');
