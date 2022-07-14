@@ -9,16 +9,7 @@ jobs:
       - uses: cypress-io/github-action@v4
         with:
           browser: chrome
-          command: npm run cypress-run-components
-  component_firefox:
-    runs-on: ubuntu-20.04
-    name: Component testing on firefox
-    steps:
-      - uses: actions/checkout@v2
-      - uses: cypress-io/github-action@v4
-        with:
-          browser: firefox
-          command: npm run cypress-run-components
+          component: true
   e2e_chrome:
     runs-on: ubuntu-20.04
     name: E2E testing on chrome
@@ -29,6 +20,5 @@ jobs:
           start: npm start
           wait-on: 'http://localhost:3000'
           browser: chrome
-          command: npm run cypress-run-e2e
 
 
