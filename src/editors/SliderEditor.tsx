@@ -84,7 +84,7 @@ const getEditor = (props: SliderProps) => {
             type: EditorSectionTypes.section,
             label: 'Others',
             editors: [
-                lengthEditor(ElementLength.l),
+                lengthEditor(ElementLength.xl),
                 alignPositionEditor
             ]
         },

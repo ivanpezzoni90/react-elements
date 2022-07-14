@@ -305,4 +305,43 @@ export const selectRadioNthElementIcon: SelectorWithParam<number, HTMLDivElement
 ) => selectRadioNthElement(nth,parent).find('.ie-radio__element__icon');
 
 
+// SLIDER
+
+
+export const selectSliderWrapper: Selector<HTMLDivElement> = () => cy.get('.ie-slider');
+
+export const selectSliderElement: Selector<HTMLDivElement> = (
+    parent = selectSliderWrapper
+) => parent().find('.ie-slider__element');
+
+export const selectSliderLabel: Selector<HTMLLabelElement> = (
+    parent = selectSliderWrapper
+) => parent().find('label');
+
+export const selectSliderElementValue: Selector<HTMLDivElement> = (
+    parent = selectSliderWrapper
+) => selectSliderElement(parent).find('.ie-slider__element__value');
+
+export const selectSliderElementInput: Selector<HTMLDivElement> = (
+    parent = selectSliderWrapper
+) => selectSliderElement(parent).find('.ie-slider__element__slider__input');
+
+export const selectSliderElementTooltip: Selector<HTMLDivElement> = (
+    parent = selectSliderWrapper
+) => selectSliderElement(parent).find('.ie-slider__element__slider__tooltip');
+
+export const selectSliderElementDatalist: Selector<HTMLDivElement> = (
+    parent = selectSliderWrapper
+) => selectSliderElement(parent).find('.ie-slider__element__slider__data-list');
+
+export const selectSliderElementDatalistOptions: Selector<HTMLDivElement> = (
+    parent = selectSliderWrapper
+) => selectSliderElementDatalist(parent).find('.ie-slider__element__slider__data-list__option');
+
+export const selectSliderElementDatalistNthOption: SelectorWithParam<number, HTMLOptionElement, HTMLDivElement> = (
+    nth: number,
+    parent = selectSliderWrapper
+) => selectSliderElementDatalistOptions(parent).eq(nth);
+
+
 

@@ -367,12 +367,14 @@ function SliderElement({
     const steps = useMemo(() => {
         const nOfSteps = options.length !== 0 ? options.length : Math.floor((newMax - newMin) / newStep);
         return (<SliderDataList
+            className="ie-slider__element__slider__data-list"
             id={id}
             color={cursorColor}
             showValue={showStepValue}
         >
             {Array.from(Array(nOfSteps)).map((e, i) => (
                 <SliderDataListOption
+                    className="ie-slider__element__slider__data-list__option"
                     value={options.length !== 0 ? options[i].value as string | number : getStepValue(newMin, newStep, i)}
                     key={`${e}_${i}`}
                 >
@@ -385,6 +387,7 @@ function SliderElement({
                 </SliderDataListOption>
             ))}
             <SliderDataListOption
+                className="ie-slider__element__slider__data-list__option"
                 value={options.length !== 0
                     ? options[options.length - 1].value as string | number
                     : newMax
@@ -431,6 +434,7 @@ function SliderElement({
                 />
                 {showTooltip && (
                     <SliderTooltip
+                        className="ie-slider__element__slider__tooltip"
                         htmlFor={id}
                         left={calculateTooltipPosition(newMin, newMax, value)}
                         color={cursorColor}
@@ -490,6 +494,7 @@ function Slider(props: SliderProps) {
         >
             {hideLabel ? null : (
                 <SliderAdvancedLabel
+                    className="ie-slider__label"
                     htmlFor={id.current}
                     length={length}
                     labelColor={labelColor}

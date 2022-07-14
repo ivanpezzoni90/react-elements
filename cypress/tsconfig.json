@@ -6,6 +6,6 @@
         "module": "es6",
         "types": ["cypress"],
         "moduleResolution": "node",
-        "lib": ["esnext"]
+        "lib": ["esnext", "dom"]
     }
 }
