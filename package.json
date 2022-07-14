@@ -50,8 +50,8 @@
         "cypress": "sudo ./node_modules/.bin/cypress open",
         "build-dist": "npm run clean && tsc && cp package.json README.md ./dist/lib",
         "lintfix": "eslint --fix --ext .js,.jsx,.ts,.tsx .",
-        "cypress-run-components": "npx cypress run --component --record --key 269ccc4d-e23d-4f7f-88e2-755b719812bd",
-        "cypress-run-e2e": "npx cypress run --record --key 269ccc4d-e23d-4f7f-88e2-755b719812bd"
+        "cypress-run-components": "npx cypress run --component",
+        "cypress-run-e2e": "npx cypress run"
     },
     "eslintConfig": {
         "extends": [
