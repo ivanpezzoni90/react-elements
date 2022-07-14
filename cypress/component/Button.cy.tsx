@@ -47,6 +47,7 @@ describe('Button', () => {
 
         cy.mount(<Button
             label="Name"
+            className="additional-class"
             length={ElementLength.s}
             height={ElementHeight.s}
             fontWeight={FontWeight.bold}
@@ -59,6 +60,8 @@ describe('Button', () => {
         />);
         // label
         selectButtonLabel().should('have.text', 'Name');
+        // className
+        selectButton().should('have.class', 'additional-class');
         // length
         selectButton().should('have.css', 'width').and('eq', '160px');
         // height

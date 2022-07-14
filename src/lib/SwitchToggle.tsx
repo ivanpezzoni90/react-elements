@@ -352,7 +352,7 @@ const SwitchToggle = (props: SwitchToggleProps) => {
 };
 
 const defaultProps: SwitchToggleProps = {
-    checked: true,
+    checked: false,
     className: '',
     color: allColors['Dim Gray'],
     colorOff: allColors['White'],

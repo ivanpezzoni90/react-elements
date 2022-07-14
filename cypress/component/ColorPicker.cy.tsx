@@ -19,6 +19,7 @@ import { log } from '../modules/utils';
 
 describe('Color Picker', () => {
     it('Color picker props', () => {
+        log('Verify color picker default props');
         cy.mount(<ColorPicker/>);
 
         checkDefaultElementProps(
@@ -33,8 +34,24 @@ describe('Color Picker', () => {
         selectColorPickerElementInfoColor().should('have.text', '');
         selectColorPickerElementInfoLabel().should('have.text', '');
 
+        log('Verify color picker with passed value');
+        cy.mount(<ColorPicker
+            value={allColors['Teal']}
+        />);
+        log('Verify selected color info');
+        selectColorPickerElementInfoColor().should('have.text', allColors['Teal']);
+        selectColorPickerElementInfoLabel().should('have.text', 'Teal');
+        log('Verify selected color in dropdown');
+        selectColorPickerElementPicker().click();
+        selectInputLabel(selectDropDownColorListFooterInput).should('have.text', 'Teal');
+        selectInput(selectDropDownColorListFooterInput).should('have.value', allColors['Teal']);
+        selectDropDownColorListNthRowNthItem(undefined, 6, 0).should('have.css', 'box-shadow');
+
+
+        log('Verify color picker custom props');
         cy.mount(<ColorPicker
             label="Name"
+            className="additional-class"
             length={ElementLength.l}
             shadow={false}
             labelColor={allColors['Teal']}
@@ -54,6 +71,7 @@ describe('Color Picker', () => {
                 labelPosition: 'column'
             }
         );
+        selectColorPickerWrapper().should('have.class', 'additional-class');
 
         cy.mount(<ColorPicker
             hideLabel
@@ -105,8 +123,5 @@ describe('Color Picker', () => {
 
         selectColorPickerElementInfoColor().should('have.text', '#ff6');
         selectColorPickerElementInfoLabel().should('have.text', '');
-        
-
-
     });
 });

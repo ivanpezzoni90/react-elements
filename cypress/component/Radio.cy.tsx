@@ -79,6 +79,7 @@ describe('Radio', () => {
     });
     it('Radio custom props', () => {
         cy.mount(<Radio
+            className="additional-class"
             options={radioOptionsCheckToggle}
             label="Names"
             labelColor={allColors['Teal']}
@@ -86,6 +87,9 @@ describe('Radio', () => {
             labelLength={LabelLength.s}
             position={Positions.horizontal}
         />);
+
+        // className
+        selectRadioWrapper().should('have.class', 'additional-class');
 
         // label & hideLabel
         selectRadioLabel().should('have.text', 'Names');

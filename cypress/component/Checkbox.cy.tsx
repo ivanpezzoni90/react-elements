@@ -10,6 +10,7 @@ import { log } from '../modules/utils';
 
 describe('Checkbox', () => {
     it('Checkbox props', () => {
+        log('Verify checkbox default props');
         cy.mount(<Checkbox/>);
 
         checkDefaultElementProps(
@@ -22,8 +23,22 @@ describe('Checkbox', () => {
             }
         );
 
+        log('Verify checkbox with passed value');
+        cy.mount(<Checkbox
+            checked
+        />);
+        selectCheckboxElementCheck().should('have.attr', 'data-checked').and('eq', 'checked');
+        verifyElementRgbColorProp(selectCheckboxElementCheck(), allRgbColors['Dim Gray'], 'background-color');
+        cy.mount(<Checkbox
+            checked={false}
+        />);
+        selectCheckboxElementCheck().should('have.attr', 'data-checked').and('eq', 'not-checked');
+        verifyElementRgbColorProp(selectCheckboxElementCheck(), allRgbColors['White'], 'background-color');
+
+        log('Verify checkbox custom props');
         cy.mount(<Checkbox
             label="Name"
+            className="additional-class"
             length={ElementLength.l}
             shadow={false}
             labelColor={allColors['Teal']}
@@ -43,6 +58,7 @@ describe('Checkbox', () => {
                 labelPosition: 'column'
             }
         );
+        selectCheckboxWrapper().should('have.class', 'additional-class');
 
         cy.mount(<Checkbox
             hideLabel
@@ -55,9 +71,16 @@ describe('Checkbox', () => {
         selectCheckboxWrapper().should('have.css', 'justify-content').and('eq', 'center');
 
         log('Verify checkbox click interactions and colors');
-        verifyElementRgbColorProp(selectCheckboxElementCheck().click(), allRgbColors['Teal'], 'background-color');
-        verifyElementRgbColorProp(selectCheckboxElementIcon(), allRgbColors['Light Cyan'], 'stroke');
 
+        log('Verify not checked status');
+        selectCheckboxElementCheck().should('have.attr', 'data-checked').and('eq', 'not-checked');
+        verifyElementRgbColorProp(selectCheckboxElementCheck(), allRgbColors['White'], 'background-color');
+        log('Click and verify checked status');
+        verifyElementRgbColorProp(selectCheckboxElementCheck().click(), allRgbColors['Teal'], 'background-color');
+        selectCheckboxElementCheck().should('have.attr', 'data-checked').and('eq', 'checked');
+        verifyElementRgbColorProp(selectCheckboxElementIcon(), allRgbColors['Light Cyan'], 'stroke');
+        log('Click again and verify not checked status');
         verifyElementRgbColorProp(selectCheckboxElementCheck().click(), allRgbColors['White'], 'background-color');
+        selectCheckboxElementCheck().should('have.attr', 'data-checked').and('eq', 'not-checked');
     });
 });

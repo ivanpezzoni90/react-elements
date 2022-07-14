@@ -18,6 +18,7 @@ describe('Switch Toggle', () => {
     it('Switch Toggle props', () => {
         cy.mount(<SwitchToggle/>);
 
+        log('Verify toggle default props');
         checkDefaultElementProps(
             selectToggleWrapper,
             selectToggleLabel,
@@ -28,12 +29,25 @@ describe('Switch Toggle', () => {
             }
         );
 
-        selectToggleElementLabel().should('have.text', 'YES');
+        log('Verify toggle interactions');
+        selectToggleElementLabel().should('have.text', 'NO');
         selectToggleElementSlider().click();
+        selectToggleElementLabel().should('have.text', 'YES');
+
+        log('Verify toggle with passed values');
+        cy.mount(<SwitchToggle
+            checked
+        />);
+        selectToggleElementLabel().should('have.text', 'YES');
+        cy.mount(<SwitchToggle
+            checked={false}
+        />);
         selectToggleElementLabel().should('have.text', 'NO');
 
+        log('Verify toggle custom props');
         cy.mount(<SwitchToggle
             label="Name"
+            className="additional-class"
             length={ElementLength.l}
             shadow={false}
             labelColor={allColors['Teal']}
@@ -55,9 +69,11 @@ describe('Switch Toggle', () => {
                 labelPosition: 'column'
             }
         );
-        selectToggleElementLabel().should('have.text', 'MAH');
-        selectToggleElementSlider().click();
         selectToggleElementLabel().should('have.text', 'BOH');
+        selectToggleElementSlider().click();
+        selectToggleElementLabel().should('have.text', 'MAH');
+        // className
+        selectToggleWrapper().should('have.class', 'additional-class');
 
         cy.mount(<SwitchToggle
             hideLabel
@@ -73,14 +89,18 @@ describe('Switch Toggle', () => {
         selectToggleWrapper().should('have.css', 'justify-content').and('eq', 'center');
 
         log('Color and colorOff');
-        verifyElementRgbColorProp(selectToggleElementSlider(), allRgbColors['Teal'], 'background-color');
-        selectToggleElementSlider().click();
+        // off
         verifyElementRgbColorProp(selectToggleElementSlider(), allRgbColors['Light Cyan'], 'background-color');
+        selectToggleElementSlider().click();
+        // on
+        verifyElementRgbColorProp(selectToggleElementSlider(), allRgbColors['Teal'], 'background-color');
         selectToggleElementSlider().click();
 
         log('Label type icon and icon color/colorOff');
-        verifyElementRgbColor(selectToggleElementIcon(), allRgbColors['Prussian Blue']);
-        selectToggleElementSlider().click();
+        // off
         verifyElementRgbColor(selectToggleElementIcon(), allRgbColors['Blue Violet']);
+        selectToggleElementSlider().click();
+        // on
+        verifyElementRgbColor(selectToggleElementIcon(), allRgbColors['Prussian Blue']);
     });
 });

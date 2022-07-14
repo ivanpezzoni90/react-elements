@@ -43,13 +43,24 @@ describe('Input', () => {
         selectInput().type('Some text');
         selectInputLabel().should('have.css', 'font-size').and('eq', '12px');
 
+        log('Verify input with passed value');
+        cy.mount(<Input
+            value="Falcon"
+        />);
+        selectInput().should('have.value', 'Falcon');
+        selectInputLabel().should('have.css', 'font-size').and('eq', '12px');
+
 
         log('Verify custom props and styles');
         cy.mount(<Input
+            className="additional-class"
             label="Name"
             length={ElementLength.m}
             placeholder="Your name"
         />);
+
+        // className
+        selectInputWrapper().should('have.class', 'additional-class');
 
         // label
         selectInputLabel().should('have.text', 'Name');

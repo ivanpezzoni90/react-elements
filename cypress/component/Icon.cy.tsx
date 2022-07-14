@@ -2,18 +2,8 @@ import React from 'react';
 
 import {Icon, IconList} from '../../src/lib/Icon';
 import { allColors, allRgbColors } from '../../src/lib/constants/colors';
-import { AlignPositions, BorderRadius, Cursors, ElementLength, ElementSize, IconSize, LabelLength, LabelPositions, Padding } from '../../src/lib/types';
-import { checkCustomElementProps, checkDefaultElementProps } from '../modules/actions';
+import { BorderRadius, Cursors, IconSize, Padding } from '../../src/lib/types';
 import {
-    selectColorPickerWrapper,
-    selectColorPickerLabel,
-    selectColorPickerElementPicker,
-    selectColorPickerElementInfoColor,
-    selectColorPickerElementInfoLabel,
-    selectDropDownColorListNthRowNthItem,
-    selectDropDownColorListFooterInput,
-    selectInputLabel,
-    selectInput,
     selectIcon,
     selectIconWrapper,
 } from '../modules/selectors';
@@ -42,6 +32,7 @@ describe('Icon', () => {
 
         log('Verify custom props');
         cy.mount(<Icon
+            className="additional-class"
             icon={IconList.shoppingCart}
             color={allColors['Teal']}
             fontSize={IconSize.xl}
@@ -52,6 +43,7 @@ describe('Icon', () => {
         />);
         // TODO: Can't verify the icon is changing
 
+        selectIconWrapper().should('have.class', 'additional-class');
         // color
         verifyElementRgbColor(selectIcon(), allRgbColors['Teal']);
         // fontSize

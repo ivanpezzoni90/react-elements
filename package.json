@@ -49,7 +49,8 @@
         "clean": "rm -rf dist",
         "cypress": "sudo ./node_modules/.bin/cypress open",
         "build-dist": "npm run clean && tsc && cp package.json README.md ./dist/lib",
-        "lintfix": "eslint --fix --ext .js,.jsx,.ts,.tsx ."
+        "lintfix": "eslint --fix --ext .js,.jsx,.ts,.tsx .",
+        "cypress-run": "npx cypress run --component --record --key 269ccc4d-e23d-4f7f-88e2-755b719812bd"
     },
     "eslintConfig": {
         "extends": [

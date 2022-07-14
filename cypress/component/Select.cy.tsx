@@ -48,8 +48,26 @@ describe('Select', () => {
             selectSelectLabel,
         );
 
+        log('Verify select with passed value');
+        cy.mount(<Select
+            value="search"
+            options={selectOptions}
+        />);
+        selectSelectSingleChipIcon().should('be.visible');
+        selectSelectSingleChipText().should('have.text', 'Search');
+        cy.mount(<Select
+            multiple
+            value={['home', 'eye', 'search', 'phone']}
+            options={selectOptions}
+        />);
+        selectSelectNthChipText(0).should('have.text', 'Home');
+        selectSelectNthChipText(1).should('have.text', 'Eye');
+        selectSelectNthChipText(2).should('have.text', 'Phone');
+        selectSelectNthChipText(3).should('have.text', 'Search');
+
         cy.mount(<Select
             label="Name"
+            className="additional-class"
             length={ElementLength.m}
             shadow={false}
             labelColor={allColors['Teal']}
@@ -70,6 +88,9 @@ describe('Select', () => {
         // selectDropdown().should('not.exist');
 
         checkCustomElementProps(selectSelectWrapper, selectSelectLabel);
+
+        // className
+        selectSelectWrapper().should('have.class', 'additional-class');
 
         // textColor
         verifyElementRgbColor(selectSelectElement(), allRgbColors['Teal']);
