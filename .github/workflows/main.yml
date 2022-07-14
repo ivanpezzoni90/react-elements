@@ -1,0 +1,24 @@
+name: Push CI
+on: [push]
+jobs:
+  component_chrome:
+    runs-on: ubuntu-20.04
+    name: Component testing on chrome
+    steps:
+      - uses: actions/checkout@v2
+      - uses: cypress-io/github-action@v4
+        with:
+          browser: chrome
+          component: true
+  e2e_chrome:
+    runs-on: ubuntu-20.04
+    name: E2E testing on chrome
+    steps:
+      - uses: actions/checkout@v2
+      - uses: cypress-io/github-action@v4
+        with:
+          start: npm start
+          wait-on: 'http://localhost:3000'
+          browser: chrome
+
+
