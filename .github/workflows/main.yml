@@ -1,7 +1,7 @@
 name: Push CI
 on: [push]
 jobs:
-  component testing on chrome:
+  component_chrome:
     runs-on: ubuntu-20.04
     name: Chrome
     steps:
@@ -11,7 +11,7 @@ jobs:
           browser: chrome
           command: cypress run --component
           record: true
-  component testing on firefox:
+  component_firefox:
     runs-on: ubuntu-20.04
     name: Firefox
     steps:
