@@ -24,9 +24,7 @@ const Section = styled.div`
     flex-direction: column;
 `;
 
-const EditorContainer = styled.div.attrs({
-    className: 'ie__workarea__editor'
-})`
+const EditorContainer = styled.div`
     display: flex;
     padding: 0.5em 1em 0.5em 0.5em;
     flex-direction: column;
@@ -43,14 +41,17 @@ const EditorRow = styled.div`
 
 const SectionTitle = styled.div`
     display: flex;
+    flex-direction: column;
 `;
 const Title = styled.div`
-    font-weight: 600;
-    color: ${allColors['Dim Gray']};
+    text-transform: uppercase;
+    font-weight: 700;
+    color: ${allColors['Dark Turquoise']};
+    font-size: 18px;
     padding-right: 0.5em;
 `;
 const Separator = styled.div`
-    border-bottom: 1px solid ${allColors['Silver Sand']};
+    border-bottom: 1px solid ${allColors['Dark Turquoise']};
     display: flex;
     flex: 1;
 `;
@@ -61,6 +62,10 @@ const SectionsWrapper = styled.div`
 
     height: 70vh;
     overflow: auto;
+`;
+
+const CodeBlockWrapper = styled.div`
+    padding: 2em 0;
 `;
 
 type InnerOnChange = (value: string | boolean | Array<string> | number | null) => void;
@@ -121,37 +126,46 @@ export default function EditorFunction({
     // const editorGroups = splitArrayInGroups<EditorType>(json, 4);
 
     return (
-        <SectionsWrapper>
+        <SectionsWrapper
+            className="ie__workarea__editor"
+        >
             {json.map((s, i) => {
                 if (s.type === 'section') {
                     const editorGroups = splitArrayInGroups<Editor>(s.editors, 4);
 
                     return (<Section
+                        className="ie__workarea__editor__section"
                         key={`${s.type}_${i}`}
                     >
-                        <SectionTitle>
+                        <SectionTitle
+                            className="ie__workarea__editor__section__title"
+                        >
                             <Title>
                                 {s.label}
                             </Title>
                             <Separator/>
                         </SectionTitle>
-                        <EditorContainer>
+                        <EditorContainer
+                            className="ie__workarea__editor__section__editors"
+                        >
                             {editorGroups.map((group, i) => {
                                 if (group) {
                                     return (
                                         <EditorRow
-                                            className="ie__workarea__editor__row"
+                                            className="ie__workarea__editor__section__editors__row"
                                             key={`group_${i}`}
                                         >
                                             {group.map((e: Editor) => {
                                                 return (
                                                     <EditorElement
-                                                        className="ie__workarea__editor__element"
+                                                        className="ie__workarea__editor__section__editors__row__element"
                                                         key={`${e.prop}_${e.label}`}
                                                         group={group.length}
                                                     >
                                                         {{
                                                             [EditorTypes.input]: (<Input
+                                                                labelColor={allColors['Teal']}
+                                                                className="ie__workarea__editor__section__editors__row__element__input"
                                                                 locked={false}
                                                                 value={e.default as string}
                                                                 type={e.inputType as InputTypes || InputTypes.text}
@@ -161,6 +175,8 @@ export default function EditorFunction({
                                                                 length={ElementLength.full}
                                                                 onChange={onChangeValue(e.prop)} />),
                                                             [EditorTypes.select]: (<Select
+                                                                labelColor={allColors['Teal']}
+                                                                className="ie__workarea__editor__section__editors__row__element__select"
                                                                 options={e.options ? e.options : []}
                                                                 value={Array.isArray(e.default)
                                                                     ? e.default as Array<string>
@@ -173,20 +189,25 @@ export default function EditorFunction({
                                                                 shadow={false}
                                                                 onChange={onChangeValue(e.prop)} />),
                                                             [EditorTypes.checkbox]: (<Checkbox
-                                                                className=""
+                                                                labelColor={allColors['Teal']}
+                                                                className="ie__workarea__editor__section__editors__row__element__checkbox"
                                                                 checked={e.default as boolean}
                                                                 label={e.label}
                                                                 shadow={false}
                                                                 length={ElementLength.full}
                                                                 onChange={onChangeValue(e.prop)} />),
                                                             [EditorTypes.toggle]: (<SwitchToggle
+                                                                labelColor={allColors['Teal']}
+                                                                className="ie__workarea__editor__section__editors__row__element__toggle"
                                                                 checked={e.default as boolean}
                                                                 label={e.label}
-                                                                color="#666"
+                                                                color={allColors['Teal']}
                                                                 shadow={false}
                                                                 length={ElementLength.full}
                                                                 onChange={onChangeValue(e.prop)} />),
                                                             [EditorTypes.color]: (<ColorPicker
+                                                                labelColor={allColors['Teal']}
+                                                                className="ie__workarea__editor__section__editors__row__element__color"
                                                                 value={e.default as string}
                                                                 label={e.label}
                                                                 shadow={false}
@@ -204,11 +225,17 @@ export default function EditorFunction({
                     </Section>);
                 }
             })}
-            <div>
+            <Title>
+                Code
+            </Title>
+            <Separator/>
+            <CodeBlockWrapper
+                className=""
+            >
                 <CodeBlock
                     code={outputJsx}
                 />
-            </div>
+            </CodeBlockWrapper>
         </SectionsWrapper>
     );
 }

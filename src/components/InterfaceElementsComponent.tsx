@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { Components, getComponentByKey } from './componentsMap';
 import { SetStringToStateType } from '../lib/types';
 import { allColors } from '../lib/constants/colors';
+import { asideBackground } from '../lib/constants/colors';
 
 const Container = styled.div`
     display: flex;
@@ -16,7 +17,7 @@ const Aside = styled.div`
     display: flex;
     flex-direction: column;
 
-    background: ${allColors['Cultured']};
+    background: ${asideBackground};
 
     height: 100vh;
     overflow: auto;
@@ -61,7 +62,7 @@ const Component = styled.div`
     ${({ active }: { active: boolean }) => active
         ? `
             font-weight: 700;
-            color: ${allColors['Cadet Blue']};
+            color: ${allColors['Teal']};
             font-size: 18px;
         `
         : ''}
@@ -70,7 +71,11 @@ const AsideTitle = styled.div`
     display: flex;
     align-items: center;
     padding: 1.5em 0 1em 1em;
-    border-bottom: 1px solid ${allColors['Silver Sand']}
+    border-bottom: 1px solid ${allColors['Silver Sand']};
+
+    font-weight: 700;
+    color: ${allColors['Teal']};
+    font-size: 18px;
 `;
 
 type AsideClickCallbackType = (key: string) => void;
@@ -89,9 +94,14 @@ function IEAside({
             className="ie__aside"
             open={open}
         >
-            <AsideTitle>{'Components'}</AsideTitle>
+            <AsideTitle
+                className="ie__aside__title"
+            >
+                Components
+            </AsideTitle>
             {Components.map(c => (
                 <Component
+                    className="ie__aside__component"
                     active={currentComponentKey === c.key}
                     key={`${c.key}_${c.name}`}
                     onClick={() => onClick(c.key)}

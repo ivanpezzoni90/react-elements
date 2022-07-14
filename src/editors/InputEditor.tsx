@@ -112,20 +112,14 @@ export default function InputEditor() {
             props: inputProps
         } = useEditorInit(Input.defaultProps);
 
-        const max:string = inputProps.max || inputProps.max === 0 ? inputProps.max.toString() : '';
-        const parsedMax: number = parseFloat(max);
-    
-        const min:string = inputProps.min || inputProps.min === 0 ? inputProps.min.toString() : '';
-        const parsedMin: number = parseFloat(min);
-
         return (
             <Fragment>
                 <ElementContainer>
                     <Input
                         {...inputProps}
                         type={inputProps.type as InputTypes}
-                        max={inputProps.max ? parsedMax : undefined}
-                        min={inputProps.min ? parsedMin : undefined}
+                        max={inputProps.max}
+                        min={inputProps.min}
                         value={inputProps.value as string}
                     />
                 </ElementContainer>

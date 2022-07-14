@@ -68,7 +68,7 @@ const RadioContainer = styled.div<RadioContainerInterface>`
             max-width: 8em;
         `
         : ''}
-    padding-left: 1.5em;
+    padding-left: 1em;
 `;
 
 interface RadioElementInterface {
@@ -139,6 +139,7 @@ const getRadioElement: getRadioElementType = (
             break;
         case RadioTypes.toggle:
             element = (<SwitchToggleElement
+                className={'ie-radio__element__toggle'}
                 checked={value === o.value}
                 onChange={() => {
                     onRadioChange(o.value);
@@ -147,6 +148,7 @@ const getRadioElement: getRadioElementType = (
             break;
         case RadioTypes.icon:
             element = (<Icon
+                className={'ie-radio__element__icon'}
                 icon={o.icon as IconList}
                 borderRadius={BorderRadius.xxl}
                 fontSize={ElementSize.m}
@@ -167,11 +169,13 @@ const getRadioElement: getRadioElementType = (
         type={type}
         className="ie-radio__element"
     >
-        <RadioLabel
-            className="ie-radio__element__label"
-        >
-            {o.label}
-        </RadioLabel>
+        {o.label !== '' ? (
+            <RadioLabel
+                className="ie-radio__element__label"
+            >
+                {o.label}
+            </RadioLabel>
+        ) : null}
         {element}
     </RadioElement>;
 };

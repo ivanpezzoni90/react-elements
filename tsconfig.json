@@ -8,7 +8,8 @@
       "rootDir": "./src",
       "target": "es6",
       "module": "es6",
-      "moduleResolution": "node"
+      "moduleResolution": "node",
+      "types": ["cypress", "node"]
     },
-    "include": ["src"]
+    "include": ["src"],
 }

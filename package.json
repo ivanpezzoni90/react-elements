@@ -22,13 +22,16 @@
         "url": "git+https://github.com/ivanpezzoni90/react-elements"
     },
     "devDependencies": {
+        "@cypress/mount-utils": "^2.0.0",
         "@types/react": "^18.0.14",
         "@types/react-dom": "^18.0.5",
         "@types/styled-components": "^5.1.23",
         "@types/throttle-debounce": "^2.1.0",
         "@typescript-eslint/eslint-plugin": "^5.12.1",
         "@typescript-eslint/parser": "^5.12.1",
+        "cypress": "^10.3.0",
         "eslint": "^8.9.0",
+        "eslint-plugin-cypress": "^2.12.1",
         "eslint-plugin-jsx-a11y": "^6.5.1",
         "eslint-plugin-only-warn": "^1.0.3",
         "eslint-plugin-react": "^7.29.1",
@@ -44,8 +47,10 @@
         "test": "react-scripts test",
         "eject": "react-scripts eject",
         "clean": "rm -rf dist",
+        "cypress": "sudo ./node_modules/.bin/cypress open",
         "build-dist": "npm run clean && tsc && cp package.json README.md ./dist/lib",
-        "lintfix": "eslint --fix --ext .js,.jsx,.ts,.tsx ."
+        "lintfix": "eslint --fix --ext .js,.jsx,.ts,.tsx .",
+        "cypress-run": "npx cypress run --component --record --key 269ccc4d-e23d-4f7f-88e2-755b719812bd"
     },
     "eslintConfig": {
         "extends": [

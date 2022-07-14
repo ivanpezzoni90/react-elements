@@ -69,7 +69,7 @@ export const SelectElement = styled.div<SelectElementProps>`
         color: rgba(255, 255, 255, 0.8);
     }
     margin: 0 2em 0 1em;
-    ${({multiple}) => multiple ? 'padding-bottom: 0.25em;' : ''}
+    padding-bottom: 0.25em;
 
     overflow: auto;
     white-space: nowrap;
@@ -150,7 +150,11 @@ export const DropDownListContainer = styled('div')<DropDownContainerProps>`
     ${props => props.zIndex ? `z-index: ${props.zIndex}` : ''}
 `;
 
-export const DropDownList = styled('ul')`
+export interface DropDownListInterface {
+    borderRadius?: BorderRadius
+}
+export const DropDownList = styled('ul')<DropDownListInterface>`
+    border-radius: ${props => props.borderRadius};
     margin-top: 0;
     padding: 0;
     background-color: #ffffff;

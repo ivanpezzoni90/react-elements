@@ -665,9 +665,9 @@ const blackExtArray = [
         'name': 'Dim Gray',
         'hex': '#666',
         'rgb': [
-            104,
-            106,
-            106
+            102,
+            102,
+            102
         ]
     },
     {
@@ -1011,6 +1011,10 @@ const brownExtArray = [
         ]
     }
 ];
+
+
+// COLORS OUTSIDE BUILT-IN PALETTE
+export const asideBackground = '#e8efef';
 
 const colorArray: Array<Array<ColorObject>> = [
     redExtArray,

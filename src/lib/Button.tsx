@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { allColors } from './constants/colors';
-import { lightenDarkenColor } from './helpers';
+import { lightenDarkenColor, mergeClasses } from './helpers';
 import {
     AlignPositions,
     BorderRadius,
@@ -42,8 +42,8 @@ const ButtonElement = styled.button<ButtonElementProps>`
     border: none;
     ${props => props.disabled
         ? (`opacity: 0.5;
-        pointer-events: none,
-        cursor: not-allowed`)
+        pointer-events: none;
+        cursor: not-allowed;`)
         : ''}
 `;
 
@@ -60,6 +60,7 @@ interface ButtonElementProps {
 }
 
 interface ButtonProps {
+    className: string,
     padding?: Padding
     borderRadius?: BorderRadius
     color: string
@@ -87,6 +88,7 @@ const LabelWrapper = styled.div`
 `;
 
 const Button = ({
+    className,
     padding,
     borderRadius,
     color,
@@ -110,6 +112,7 @@ const Button = ({
     );
 
     const IconElement = (<Icon
+        className="ie-button__icon"
         icon={icon}
         color={iconColor}
         fontSize={calculatedIconSize}
@@ -117,6 +120,7 @@ const Button = ({
 
     return (
         <ButtonElement
+            className={mergeClasses('ie-button', className)}
             align={align}
             padding={padding}
             borderRadius={borderRadius}
@@ -131,6 +135,7 @@ const Button = ({
         >
             {icon && iconPosition === IconPosition.left && IconElement}
             <LabelWrapper
+                className="ie-button__label"
                 length={length}
             >
                 {label}
@@ -141,6 +146,7 @@ const Button = ({
 };
 
 const defaultProps: ButtonProps = {
+    className: '',
     padding: Padding.m,
     borderRadius: BorderRadius.s,
     color: allColors['Firebrick'],
