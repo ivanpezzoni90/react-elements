@@ -117,7 +117,7 @@ describe('Slider', () => {
         verifyElementRgbColor(selectSliderElementDatalist(), allRgbColors['Teal']);
     });
 
-    it.only('Slider values', () => {
+    it('Slider values', () => {
         cy.mount(<Slider
             min={20}
             max={60}
