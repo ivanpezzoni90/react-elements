@@ -1,7 +1,7 @@
-name: Component testing
+name: Push CI
 on: [push]
 jobs:
-  cypress-run:
+  component testing on chrome:
     runs-on: ubuntu-20.04
     name: Chrome
     steps:
@@ -9,6 +9,17 @@ jobs:
       - uses: cypress-io/github-action@v4
         with:
           browser: chrome
-          command: npm run cypress-run
+          command: cypress run --component
+          record: true
+  component testing on firefox:
+    runs-on: ubuntu-20.04
+    name: Firefox
+    steps:
+      - uses: actions/checkout@v2
+      - uses: cypress-io/github-action@v4
+        with:
+          browser: firefox
+          command: cypress run --component
+          record: true
 
 
