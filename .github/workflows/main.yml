@@ -3,23 +3,32 @@ on: [push]
 jobs:
   component_chrome:
     runs-on: ubuntu-20.04
-    name: Chrome
+    name: Component testing on chrome
     steps:
       - uses: actions/checkout@v2
       - uses: cypress-io/github-action@v4
         with:
           browser: chrome
-          command: cypress run --component
-          record: true
+          command: npm run cypress-run-components
   component_firefox:
     runs-on: ubuntu-20.04
-    name: Firefox
+    name: Component testing on firefox
     steps:
       - uses: actions/checkout@v2
       - uses: cypress-io/github-action@v4
         with:
           browser: firefox
-          command: cypress run --component
-          record: true
+          command: npm run cypress-run-components
+  e2e_chrome:
+    runs-on: ubuntu-20.04
+    name: E2E testing on chrome
+    steps:
+      - uses: actions/checkout@v2
+      - uses: cypress-io/github-action@v4
+        with:
+          start: npm start
+          wait-on: 'http://localhost:3000'
+          browser: chrome
+          command: npm run cypress-run-e2e
 
 
