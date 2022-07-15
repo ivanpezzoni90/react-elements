@@ -256,4 +256,65 @@ describe('Radio', () => {
 
         verifyElementRgbColorProp(selectRadioNthElementIcon(2), allRgbColors['Gray Web'], 'background-color');
     });
+
+    it('Radio callbacks', () => {
+        const verifyOnChange = (newValue, count) => {
+            switch(count) {
+                case 0: expect(newValue).to.eq('terra'); break;
+                case 1: expect(newValue).to.eq('locke'); break;
+                case 2: expect(newValue).to.eq('edgar'); break;
+                case 3: expect(newValue).to.eq('sabin'); break;
+                case 4: expect(newValue).to.eq('cyan'); break;
+            }
+        };
+
+        const selectRadioValues = (type: RadioTypes) => {
+            let selector;
+            switch(type) {
+                case RadioTypes.checkbox: selector = selectRadioNthElementCheckbox;break;
+                case RadioTypes.toggle: selector = selectRadioNthElementToggleSlider;break;
+                case RadioTypes.icon: selector = selectRadioNthElementIcon;break;
+            }
+            selector(0).click();
+            selector(1).click();
+            selector(2).click();
+            selector(3).click();
+            selector(4).click();
+        };
+
+        log('type checkbox');
+        let countC = 0;
+        cy.mount(<Radio
+            options={radioOptionsCheckToggle}
+            onChange={(newValue) => {
+                verifyOnChange(newValue, countC);
+                countC++;
+            }}
+        />);
+        selectRadioValues(RadioTypes.checkbox);
+
+        log('type toggle');
+        let countT = 0;
+        cy.mount(<Radio
+            options={radioOptionsCheckToggle}
+            type={RadioTypes.toggle}
+            onChange={(newValue) => {
+                verifyOnChange(newValue, countT);
+                countT++;
+            }}
+        />);
+        selectRadioValues(RadioTypes.toggle);
+
+        log('type toggle');
+        let countI = 0;
+        cy.mount(<Radio
+            options={radioOptionsCheckToggle}
+            type={RadioTypes.icon}
+            onChange={(newValue) => {
+                verifyOnChange(newValue, countI);
+                countI++;
+            }}
+        />);
+        selectRadioValues(RadioTypes.icon);
+    });
 });

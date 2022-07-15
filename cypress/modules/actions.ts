@@ -2,7 +2,7 @@ import { allRgbColors } from '../../src/lib/constants/colors';
 import { BorderRadius, ElementHeight, ElementLength, LabelLength } from '../../src/lib/types';
 import { verifyElementRgbColor, verifyElementRgbColorProp } from './assertions';
 import { CypressElement } from './constants';
-import { selectDropdownListItemWithLabel, selectDropdownListNthItem } from './selectors';
+import { selectDropdownListItemCheckboxWithLabel, selectDropdownListItemWithLabel, selectDropdownListNthItem, selectDropdownListNthItemCheckbox } from './selectors';
 
 export const clickAsideElement = (element: CypressElement) => {
     cy.get('.ie__aside').find('.ie__aside__component').contains(element.label).click();
@@ -12,7 +12,8 @@ export const clickAsideElement = (element: CypressElement) => {
 type checkDefaultPropsDefaults = {
     length?: string,
     labelPosition?: string,
-    labelLength?: string
+    labelLength?: string,
+    height?: string
 }
 
 export function checkDefaultElementProps (
@@ -26,7 +27,7 @@ export function checkDefaultElementProps (
     // length
     wrapper().should('have.css', 'width').and('eq', (defaults && defaults.length) || '484px');
     // height
-    wrapper().should('have.css', 'height').and('eq', `${parseFloat(ElementHeight.m)*16}px`);
+    wrapper().should('have.css', 'height').and('eq', (defaults && defaults.height) || `${parseFloat(ElementHeight.m)*16}px`);
     // shadow
     wrapper().should('have.css', 'box-shadow');
     // labelColor
@@ -77,12 +78,26 @@ export function checkCustomElementProps (
 }
 
 
-export const selectOption = (element: Cypress.Chainable<JQuery<HTMLDivElement>>, option: number | string) => {
-    element.click();
+export const selectOption = (element: () => Cypress.Chainable<JQuery<HTMLDivElement>>, option: number | string) => {
+    element().click();
     if (typeof option === 'string') {
         selectDropdownListItemWithLabel(option).click();
     } else {
         selectDropdownListNthItem(option).click();
+    }
+    return element;
+};
+export const selectOptionMultiple = (
+    element: () => Cypress.Chainable<JQuery<HTMLDivElement>>,
+    option: number | string,
+    shouldOpen = false
+) => {
+    if (shouldOpen) element().click();
+
+    if (typeof option === 'string') {
+        selectDropdownListItemCheckboxWithLabel(option).click();
+    } else {
+        selectDropdownListNthItemCheckbox(option).click();
     }
     return element;
 };

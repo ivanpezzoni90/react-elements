@@ -124,4 +124,23 @@ describe('Color Picker', () => {
         selectColorPickerElementInfoColor().should('have.text', '#ff6');
         selectColorPickerElementInfoLabel().should('have.text', '');
     });
+
+    it('Color picker callbacks', () => {
+        cy.mount(<ColorPicker
+            onChange={(color) => {
+                expect(color).to.eq(allColors['Prussian Blue']);
+            }}
+        />);
+
+        selectColorPickerElementPicker().click();
+        selectDropDownColorListNthRowNthItem(undefined, 4, 0).click();
+
+        cy.mount(<ColorPicker
+            onChange={(color) => {
+                expect(color).to.eq('#ff6');
+            }}
+        />);
+        selectColorPickerElementPicker().click();
+        selectInput(selectDropDownColorListFooterInput).clear().type('#ff6').blur();
+    });
 });

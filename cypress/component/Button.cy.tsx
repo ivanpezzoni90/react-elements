@@ -106,4 +106,13 @@ describe('Button', () => {
         selectButton().should('have.css', 'cursor').and('eq', 'not-allowed');
         selectButton().should('have.attr', 'disabled');
     });
+    it('Button callbacks', () => {
+        cy.mount(<Button
+            onClick={() => {
+                expect(true).to.be.true;
+            }}
+        />);
+
+        selectButton().click();
+    });
 });

@@ -22,6 +22,10 @@ export const selectInput: Selector<HTMLInputElement> = (
     parent = selectInputWrapper
 ) => parent().find('input');
 
+export const selectTextarea: Selector<HTMLTextAreaElement> = (
+    parent = selectInputWrapper
+) => parent().find('textarea');
+
 export const selectInputLabel: Selector<HTMLLabelElement> = (
     parent = selectInputWrapper
 ) => parent().find('label');
@@ -35,7 +39,7 @@ export const selectInputNumberIcons: SelectorWithParam<'up' | 'down', HTMLDivEle
 
 
 // SELECT
-export const selectSelectWrapper: Selector<HTMLSelectElement> = () => cy.get('.ie-select');
+export const selectSelectWrapper: Selector<HTMLDivElement> = () => cy.get('.ie-select');
 
 export const selectSelectElement: Selector<HTMLSelectElement> = (
     parent = selectSelectWrapper
@@ -78,12 +82,12 @@ export const selectSelectNthChipText: SelectorWithParam<number, HTMLDivElement, 
     parent = selectSelectWrapper
 ) => selectSelectNthChip(nth, parent).find('.ie-select__element__chip_text');
 
-export const selectSelectChipWithLabel: SelectorWithParam<string, HTMLDivElement, HTMLDivElement> = (
+export const selectSelectChipWithLabel: SelectorWithParam<string, HTMLElement, HTMLDivElement> = (
     label: string,
     parent = selectSelectWrapper
 ) => selectSelectChipWithLabel(label, parent).find('.ie-select__element__chip_text').contains(label);
 
-export const selectSelectLabel: Selector<HTMLSelectElement> = (
+export const selectSelectLabel: Selector<HTMLLabelElement> = (
     parent = selectSelectWrapper
 ) => parent().find('div.ie-select__label');
 
@@ -109,7 +113,7 @@ export const selectDropdownListItems: Selector<HTMLDivElement> = (
 ) =>
     parent().find('li.ie-dropdown__container__list__item');
 
-export const selectDropdownListItemWithLabel: SelectorWithParam<string, HTMLLIElement, HTMLDivElement> = (
+export const selectDropdownListItemWithLabel: SelectorWithParam<string, HTMLElement, HTMLDivElement> = (
     label: string,
     parent = selectDropdown
 ) =>
@@ -260,17 +264,17 @@ export const selectButtonIcon: Selector<HTMLDivElement> = (
 
 // RADIO
 
-export const selectRadioWrapper: Selector<HTMLSelectElement> = () => cy.get('.ie-radio');
+export const selectRadioWrapper: Selector<HTMLDivElement> = () => cy.get('.ie-radio');
 
-export const selectRadioLabel: Selector<HTMLSelectElement> = (
+export const selectRadioLabel: Selector<HTMLDivElement> = (
     parent = selectRadioWrapper
 ) => parent().find('.ie-radio__label');
 
-export const selectRadioContainer: Selector<HTMLSelectElement> = (
+export const selectRadioContainer: Selector<HTMLDivElement> = (
     parent = selectRadioWrapper
 ) => parent().find('.ie-radio__container');
 
-export const selectRadioElements: Selector<HTMLSelectElement> = (
+export const selectRadioElements: Selector<HTMLDivElement> = (
     parent = selectRadioWrapper
 ) => selectRadioContainer(parent).find('.ie-radio__element');
 

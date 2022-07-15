@@ -56,6 +56,16 @@ describe('Icon', () => {
         selectIconWrapper().should('have.css', 'padding').and('eq', `${parseFloat(Padding.m)*16}px`);
         // cursor
         selectIconWrapper().should('have.css', 'cursor').and('eq', Cursors.pointer);
+    });
 
+    it('Icon callbacks', () => {
+        cy.mount(<Icon
+            icon={IconList.download}
+            onClick={() => {
+                expect(true).to.be.true;
+            }}
+        />);
+
+        selectIcon().click();
     });
 });
