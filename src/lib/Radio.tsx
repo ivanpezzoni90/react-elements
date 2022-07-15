@@ -1,4 +1,4 @@
-import React, { ReactElement, useRef, useState } from 'react';
+import React, { ReactElement, useCallback, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { generateID, mergeClasses } from './helpers';
 import {
@@ -103,46 +103,50 @@ interface RadioProps {
     className: string,
     label: string,
     position: Positions,
-    value: string | number | boolean,
+    value: string | string[],
     type: RadioTypes,
     options: Array<Option>,
     labelPosition?: LabelPositions,
     labelLength?: LabelLength,
     hideLabel?: boolean,
     labelColor?: string,
-    onChange: (v: string | number | boolean) => void
+    multiple?: boolean,
+    onChange: (v: string | string[]) => void
 }
 
-type getRadioElementType = (
+interface getRadioElementType {
     o: Option,
     type: RadioTypes,
-    value: string | number | boolean,
-    onRadioChange: (value: string | number | boolean) => void
-) => ReactElement;
+    value: string | string[],
+    multiple?: boolean,
+    isOptionSelected:  (value: string | string[], optionValue: string) => boolean,
+    onRadioChange: (value: string) => void
+}
 
-const getRadioElement: getRadioElementType = (
+const RadioElementComponent = ({
     o,
     type,
     value,
+    isOptionSelected,
     onRadioChange
-) => {
+}: getRadioElementType) => {
     let element: ReactElement = <div></div>;
     switch(type) {
         case RadioTypes.checkbox:
             element = (<CheckboxElement
                 className={'ie-radio__element__checkbox'}
-                checked={value === o.value}
+                checked={isOptionSelected(value, o.value as string)}
                 onChange={() => {
-                    onRadioChange(o.value);
+                    onRadioChange(o.value as string);
                 }}
             />);
             break;
         case RadioTypes.toggle:
             element = (<SwitchToggleElement
                 className={'ie-radio__element__toggle'}
-                checked={value === o.value}
+                checked={isOptionSelected(value, o.value as string)}
                 onChange={() => {
-                    onRadioChange(o.value);
+                    onRadioChange(o.value as string);
                 }}
             />);
             break;
@@ -153,11 +157,14 @@ const getRadioElement: getRadioElementType = (
                 borderRadius={BorderRadius.xxl}
                 fontSize={ElementSize.m}
                 color={allColors['Cultured']}
-                backgroundColor={value === o.value ? allColors['Gray Web'] : allColors['Quick Silver']}
+                backgroundColor={isOptionSelected(value, o.value as string)
+                    ? allColors['Gray Web']
+                    : allColors['Quick Silver']
+                }
                 cursor={Cursors.pointer}
                 padding={Padding.s}
                 onClick={() => {
-                    onRadioChange(o.value);
+                    onRadioChange(o.value as string);
                 }}
             />);
             break;
@@ -192,15 +199,38 @@ function Radio(props: RadioProps) {
         hideLabel,
         labelColor,
         labelLength,
+        multiple,
         onChange
     } = props;
 
     const id = useRef(generateID());
     const [value, setValue] = useState(valueFromProps);
 
-    const onRadioChange = (newValue: string | number | boolean) => {
-        setValue(newValue);
-        onChange(newValue);
+    const isOptionSelected = useCallback((
+        value: string | string[],
+        optionValue: string
+    ) =>
+        Array.isArray(value) ? value.includes(optionValue as string) : optionValue === value,
+    []);
+
+    const onRadioChange = (newValue: string) => {
+        if (multiple) {
+            const newValues = value || [];
+            const valueIndex = newValues.indexOf(newValue);
+            // Remove option from array if selected, add it otherwise
+            const newOptions = isOptionSelected(newValues, newValue)
+                ? [
+                    ...newValues.slice(0, valueIndex),
+                    ...newValues.slice(valueIndex + 1)
+                ]
+                : [...newValues, newValue];
+
+            setValue(newOptions as string[]);
+            onChange(newOptions as string[]);
+        } else {
+            setValue(newValue as string);
+            onChange(newValue);
+        }
     };
 
     return (
@@ -223,7 +253,14 @@ function Radio(props: RadioProps) {
                 className="ie-radio__container"
                 position={position}
             >
-                {options.map((o) => getRadioElement(o, type, value, onRadioChange))}
+                {options.map((o) => RadioElementComponent({
+                    o,
+                    type,
+                    value,
+                    multiple,
+                    isOptionSelected,
+                    onRadioChange
+                }))}
             </RadioContainer>
         </RadioWrapper>
     );
@@ -240,6 +277,7 @@ const defaultProps: RadioProps = {
     options: [],
     labelColor: allColors['Dim Gray'],
     hideLabel: false,
+    multiple: false,
     onChange: () => {}
 };
 

@@ -8,18 +8,25 @@ import { useEditorInit } from '../lib/hooks';
 import { labelSection, positionEditor } from './commons/editors';
 import { ElementContainer } from './commons/ElementContainer';
 
-import { InputTypes } from '../lib/Input/config';
 import { Radio, RadioProps } from '../lib/Radio';
 import { IconList } from '../lib/Icon';
 
 const defaultOptions = [{
-    label: 'Option 1',
-    value: '1',
-    icon: IconList.close
+    label: 'Terra',
+    value: 'terra',
+    icon: IconList.aura
 }, {
-    label: 'Option 2',
-    value: '2',
-    icon: IconList.check
+    label: 'Locke',
+    value: 'locke',
+    icon: IconList.broadDagger
+}, {
+    label: 'Edgar',
+    value: 'edgar',
+    icon: IconList.toolbox
+}, {
+    label: 'Sabin',
+    value: 'sabin',
+    icon: IconList.wolverineClaws
 }];
 
 const getEditor = (props: RadioProps) => {
@@ -45,6 +52,12 @@ const getEditor = (props: RadioProps) => {
                         value: RadioTypes.icon
                     }]
                 },
+                {
+                    type: EditorTypes.toggle,
+                    label: 'Multiple',
+                    prop: 'multiple',
+                    default: false
+                }
             ]
         },
         {
@@ -52,14 +65,6 @@ const getEditor = (props: RadioProps) => {
             label: 'Others',
             editors: [
                 positionEditor,
-                // Workaround to change number of options using value prop
-                {
-                    type: EditorTypes.input,
-                    inputType: InputTypes.number,
-                    default: 2,
-                    label: 'Number of elements',
-                    prop: 'value'
-                }
             ]
         },
     ];
@@ -89,16 +94,13 @@ export default function RadioEditor() {
             props: radioProps
         } = useEditorInit(Radio.defaultProps);
 
-        console.log('radioProps', radioProps);
-
         return (
             <Fragment>
                 <ElementContainer>
                     <Radio
                         {...radioProps}
                         type={radioProps.type as RadioTypes}
-                        // Workaround to change number of options using value prop
-                        options={radioProps.value ? generateOptions(radioProps.value as string) : defaultOptions}
+                        options={defaultOptions}
                         value={radioProps.value as string | boolean}
                     />
                 </ElementContainer>

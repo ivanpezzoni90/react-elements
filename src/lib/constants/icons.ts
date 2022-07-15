@@ -43,6 +43,15 @@ import {
 } from 'react-icons/fa';
 import { IoCloseSharp, IoCheckmarkSharp } from 'react-icons/io5';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
+import {
+    GiWolverineClaws,
+    GiToolbox,
+    GiAura,
+    GiZeppelin,
+    GiBroadDagger,
+    GiBroadsword,
+    GiRuneSword,
+} from 'react-icons/gi';
 import { IconType } from 'react-icons/lib';
 
 export enum IconList {
@@ -90,6 +99,13 @@ export enum IconList {
     exclamationCircle = 'exclamation-circle',
     exclamationTriangle = 'exclamation-triangle',
     download = 'download',
+    wolverineClaws = 'wolverine-claws',
+    toolbox = 'toolbox',
+    aura = 'aura',
+    zeppelin = 'zeppelin',
+    broadDagger = 'broad-dagger',
+    broadsword = 'broadsword',
+    runeSword = 'rune-sword',
 }
 
 interface IconInterface {
@@ -140,4 +156,11 @@ export const iconMap: IconInterface = {
     [IconList.exclamationCircle]: FaExclamationCircle,
     [IconList.exclamationTriangle]: FaExclamationTriangle,
     [IconList.download]: FaDownload,
+    [IconList.wolverineClaws]: GiWolverineClaws,
+    [IconList.toolbox]: GiToolbox,
+    [IconList.aura]: GiAura,
+    [IconList.zeppelin]: GiZeppelin,
+    [IconList.broadDagger]: GiBroadDagger,
+    [IconList.broadsword]: GiBroadsword,
+    [IconList.runeSword]: GiRuneSword,
 };
