@@ -236,7 +236,7 @@ describe('Input', () => {
             selectInputWrapper,
             selectInputLabel,
             {
-                height: '64px'
+                height: null
             }
         );
         // textColor

@@ -27,7 +27,10 @@ export function checkDefaultElementProps (
     // length
     wrapper().should('have.css', 'width').and('eq', (defaults && defaults.length) || '484px');
     // height
-    wrapper().should('have.css', 'height').and('eq', (defaults && defaults.height) || `${parseFloat(ElementHeight.m)*16}px`);
+    if (defaults && defaults.height) {
+        // Skip height if null
+        wrapper().should('have.css', 'height').and('eq', defaults.height || `${parseFloat(ElementHeight.m)*16}px`);
+    }
     // shadow
     wrapper().should('have.css', 'box-shadow');
     // labelColor
