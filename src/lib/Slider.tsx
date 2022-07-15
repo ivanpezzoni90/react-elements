@@ -11,12 +11,12 @@ interface SliderContainerInterface {
 const SliderContainer = styled.div<SliderContainerInterface>`
     display: flex;
     vertical-align: middle;
-    padding: 0.25em 1em 0 0.25em;
     flex: 1;
 
     ${props => props.labelPosition === LabelPositions.vertical
         ? ` width: 100%;
-            padding: 1em;`
+            padding: 0.5em;
+            `
         : 'padding: 0.25em 1em 0 0.25em;'}
 `;
 
@@ -35,7 +35,7 @@ const SliderAdvancedWrapper = styled.div<SliderAdvancedWrapperInterface>`
     display: flex;
     ${props => props.labelPosition === LabelPositions.vertical ? `
         flex-direction: column;
-        padding-left: 0.5em;
+        padding: 0 0.5em;
         align-items: ${props.align};
         justify-content: center;
     ` :`
@@ -72,9 +72,13 @@ interface LabelProps {
 const SliderAdvancedLabel = styled.label<LabelProps>`
     display: flex;
     justify-content: flex-start;
-    ${props => props.labelPosition === LabelPositions.horizontal ? 'flex: 0.2;' : ''}
+    ${props => props.labelPosition === LabelPositions.horizontal
+        ? 'flex: 0.2;'
+        : ''}
 
-    padding: 0 1em 0 ${props => props.labelPosition === LabelPositions.horizontal ? '1em' : '0'};
+    ${props => props.labelPosition === LabelPositions.horizontal
+        ? 'padding: 0 1em'
+        : 'padding-top: 0.5em;'};
 
     font-family: "Gotham SSm A", "Gotham SSm B", sans-serif;
     font-size: 16px;
@@ -93,7 +97,7 @@ const SliderAdvancedLabel = styled.label<LabelProps>`
     overflow: hidden;
 `;
 
-const getSliderCursorStyles = (color: string) => (`
+const getSliderCursorStyles = (color: string, showSteps?: boolean) => (`
     width: 1em;
     height: 1em;
     border: 2px solid ${color};
@@ -106,7 +110,9 @@ const getSliderCursorStyles = (color: string) => (`
 
     transition: outline 0.5s ease-in-out;
 
-    margin-bottom: 0.75em;
+    ${showSteps
+        ? 'margin-bottom: 0.75em;'
+        : 'margin-top: 0.25em;'}
 
     &:hover {
         outline: ${getOutlineColor(lightenDarkenColor(color, 80))} solid 4px;
@@ -116,6 +122,7 @@ const getSliderCursorStyles = (color: string) => (`
 
 interface SliderInputInterface {
     color: string,
+    showSteps?: boolean
 }
 
 const SliderElementContainer = styled.div`
@@ -138,10 +145,10 @@ const SliderInput = styled.input<SliderInputInterface>`
     &::-webkit-slider-thumb {
         -webkit-appearance: none;
         appearance: none;
-        ${({color}) => getSliderCursorStyles(color)}
+        ${({color, showSteps}) => getSliderCursorStyles(color, showSteps)}
     }
     &::-moz-range-thumb {
-        ${({color}) => getSliderCursorStyles(color)}
+        ${({color, showSteps}) => getSliderCursorStyles(color, showSteps)}
     }
 `;
 
@@ -222,9 +229,16 @@ const SliderInputWrapper = styled.div`
 `;
 
 interface SliderValueInterface {
-    length: ElementLength
+    length: ElementLength,
+    labelPosition?: LabelPositions,
+    showSteps?: boolean
 }
 const SliderValue = styled.div<SliderValueInterface>`
+    ${props => props.labelPosition === LabelPositions.horizontal
+        ? 'align-items: flex-start;'
+        : `align-items: center;
+            padding-bottom: ${props.showSteps ? '1em' : '0'};
+        `}
     font-size: ${({length}) =>
         length === ElementLength.l || length === ElementLength.full ? '14px' : '11px'};
     color: ${props => props.color};
@@ -411,6 +425,8 @@ function SliderElement({
                 className="ie-slider__element__value"
                 length={length}
                 color={cursorColor}
+                labelPosition={labelPosition}
+                showSteps={showSteps}
             >
                 {value}
             </SliderValue>
@@ -430,6 +446,7 @@ function SliderElement({
                     max={newMax}
                     value={value}
                     list={id}
+                    showSteps={showSteps}
                     onChange={onSliderChange}
                 />
                 {showTooltip && (

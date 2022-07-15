@@ -3,6 +3,7 @@ import { elaborateComputedWidth, generateID, mergeClasses } from '../helpers';
 import {
     InputWrapper,
     InputElementStyle,
+    TextAreaElementStyle,
     Label,
     InputNumberIcons,
 } from './InputStyle';
@@ -30,7 +31,8 @@ function InputElement({
     max,
     min,
     placeholder,
-    computedWidth
+    computedWidth,
+    textarea
 }: InputTypeProps) {
     const inputElementRef = useRef<HTMLInputElement>(null);
     const checkValidators: CheckValidatorsType = useCallback((newValue, opts = {}) => {
@@ -64,14 +66,19 @@ function InputElement({
         return true;
     }, [max, min, type, setError]);
    
-    const onChangeValue = throttle(200, (event: React.ChangeEvent<HTMLInputElement>) => {
+    
+    const onChangeValue = throttle(200, (
+        event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    ) => {
         const newValue = event.target.value;
         if (checkValidators(newValue)) {
             onChange(newValue);
         }
     });
 
-    const onBlurInput = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+    const onBlurInput = useCallback((
+        event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    ) => {
         const newValue = event.target.value;
         if (checkValidators(newValue)) {
             onBlur(newValue);
@@ -101,26 +108,34 @@ function InputElement({
             max: max
         };
 
+    const commonElementProps = {
+        className: 'ie-input__element',
+        error: error,
+        length: length,
+        active: active,
+        shadow: shadow,
+        textColor: textColor,
+        id: id,
+        defaultValue: defaultValue,
+        placeholder: placeholder,
+        computedWidth: computedWidth,
+        onChange: onChangeValue,
+        onFocus: onFocus,
+        onBlur: onBlurInput,
+    };
     return (
         <Fragment>
-            <InputElementStyle
-                className="ie-input__element"
-                ref={inputElementRef}
-                error={error}
-                length={length}
-                active={active}
-                shadow={shadow}
-                textColor={textColor}
-                id={id}
-                {...maxMin}
-                type={type}
-                defaultValue={defaultValue}
-                placeholder={placeholder}
-                computedWidth={computedWidth}
-                onChange={onChangeValue}
-                onFocus={onFocus}
-                onBlur={onBlurInput}
-            />
+            {textarea
+                ? <TextAreaElementStyle
+                    {...commonElementProps}
+                />
+                : <InputElementStyle
+                    ref={inputElementRef}
+                    type={type}
+                    {...maxMin}
+                    {...commonElementProps}
+                />
+            }
             {type === InputTypes.number ? (
                 <InputNumberIcons
                     className="ie-input__element__icons"
@@ -168,7 +183,8 @@ function Input({
     hideBottomBorder,
     borderRadius,
     height,
-    placeholder
+    placeholder,
+    textarea
 }: InputProps) {
     // active = focused or with value
     const [active, setActive] = useState(activeFromProps || (valueFromProps !== ''));
@@ -225,6 +241,7 @@ function Input({
             labelPosition={labelPosition}
             hideLabel={hideLabel}
             height={height}
+            textarea={textarea}
             onClick={setFocusFromDiv}
         >
             {hideLabel ? null : (
@@ -234,7 +251,8 @@ function Input({
                     error={error}
                     length={length}
                     // Type date is always "active", and force active when there is a placeholder
-                    active={active || type === InputTypes.date || placeholder !== ''}
+                    // or is a textarea
+                    active={active || type === InputTypes.date || placeholder !== '' || !!textarea}
                     labelColor={labelColor}
                     labelPosition={labelPosition}
                     labelLength={labelLength}
@@ -261,6 +279,7 @@ function Input({
                 max={max}
                 min={min}
                 placeholder={placeholder}
+                textarea={textarea}
                 computedWidth={inputElementWidth}
             />
         </InputWrapper>
@@ -292,7 +311,8 @@ const defaultProps: InputProps = {
     borderRadius: BorderRadius.no,
     hideLabel: false,
     height: ElementHeight.m,
-    placeholder: ''
+    placeholder: '',
+    textarea: false
 };
 
 Input.defaultProps = defaultProps;
