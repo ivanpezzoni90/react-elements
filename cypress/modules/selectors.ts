@@ -349,3 +349,6 @@ export const selectSliderElementDatalistNthOption: SelectorWithParam<number, HTM
 
 
 
+// SPINNER
+export const selectSpinner: Selector<HTMLDivElement> = () => cy.get('.ie-spinner');
+

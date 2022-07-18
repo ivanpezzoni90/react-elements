@@ -7,6 +7,7 @@ import ColorPickerEditor from '../editors/ColorPickerEditor';
 import ButtonEditor from '../editors/ButtonEditor';
 import RadioEditor from '../editors/RadioEditor';
 import SliderEditor from '../editors/SliderEditor';
+import SpinnerEditor from '../editors/SpinnerEditor';
 
 import { Component } from '../lib/types';
 
@@ -46,6 +47,10 @@ const Components: Component[] = [{
     key: 'slider',
     name: 'Slider',
     editor: SliderEditor
+}, {
+    key: 'spinner',
+    name: 'Spinner',
+    editor: SpinnerEditor
 }];
 
 function getComponentByKey(key: string) {

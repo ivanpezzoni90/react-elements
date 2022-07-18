@@ -170,3 +170,20 @@ export enum RadioTypes {
     toggle = 'toggle',
     icon = 'icon'
 }
+
+export enum SpinnerSteps {
+    'continuous' = 65,
+    'sixteenSteps' = 17,
+    'single' = 2,
+    'eightSteps' = 9,
+    'fourSteps' = 5,
+    'twoSteps' = 3
+}
+
+export enum SpinnerSpeed {
+    'veryFast' = '0.5s',
+    'fast' = '1s',
+    'normal' = '1.5s',
+    'slow' = '2.5s',
+    'verySlow' = '3.5s'
+}

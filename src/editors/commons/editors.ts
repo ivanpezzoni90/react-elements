@@ -14,7 +14,9 @@ import {
     LabelLength,
     Option,
     Padding,
-    Positions
+    Positions,
+    SpinnerSpeed,
+    SpinnerSteps
 } from '../../lib/types';
 import { AlignPositions, LabelPositions } from '../../lib/types';
 import { IconList } from '../../lib/Icon';
@@ -345,6 +347,55 @@ const iconOptions: Option[] = Object.values(IconList).map(v => ({
     icon: v
 }));
 
+export const spinnerSpeedEditor = () => ({
+    type: EditorTypes.select,
+    default: SpinnerSpeed.normal,
+    label: 'Speed',
+    prop: 'speed',
+    options: [{
+        label: 'Very fast',
+        value: SpinnerSpeed.veryFast
+    }, {
+        label: 'Fast',
+        value: SpinnerSpeed.fast
+    }, {
+        label: 'Normal',
+        value: SpinnerSpeed.normal
+    }, {
+        label: 'Slow',
+        value: SpinnerSpeed.slow
+    }, {
+        label: 'Very Slow',
+        value: SpinnerSpeed.verySlow
+    }]
+});
+
+export const spinnerStepsEditor = () => ({
+    type: EditorTypes.select,
+    default: SpinnerSteps.continuous,
+    label: 'Steps',
+    prop: 'steps',
+    options: [{
+        label: 'Continuous',
+        value: SpinnerSteps.continuous
+    }, {
+        label: 'Single spin',
+        value: SpinnerSteps.single
+    }, {
+        label: 'Sixteen steps spin',
+        value: SpinnerSteps.sixteenSteps
+    }, {
+        label: 'Eight steps spin',
+        value: SpinnerSteps.eightSteps
+    }, {
+        label: 'Four steps spin',
+        value: SpinnerSteps.fourSteps
+    }, {
+        label: 'Two steps spin',
+        value: SpinnerSteps.twoSteps
+    }]
+});
+
 export const iconEditor = (def: IconList | undefined, resettable = true):Editor => ({
     type: EditorTypes.select,
     default: def,
@@ -360,13 +411,13 @@ const sizeOptions: Option[] = Object.entries(IconSize).map(([k,v]) => ({
     value: v
 }));
 
-export const iconSizeEditor: Editor = {
+export const iconSizeEditor = (def = IconSize.xs): Editor =>  ({
     label: 'Size',
     type: EditorTypes.select,
-    default: IconSize.xs,
+    default: def,
     prop: 'fontSize',
     options: sizeOptions
-};
+});
 
 export const bordersEditor: Editor[] = [
     {
@@ -420,3 +471,4 @@ export const labelSection = (defaultPosition?: LabelPositions): EditorSection =>
         labelLengthEditor()
     ]
 });
+

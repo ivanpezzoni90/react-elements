@@ -40,6 +40,9 @@ import {
     FaExclamationCircle,
     FaExclamationTriangle,
     FaDownload,
+    FaSpinner,
+    FaCircleNotch,
+    FaCog
 } from 'react-icons/fa';
 import { IoCloseSharp, IoCheckmarkSharp } from 'react-icons/io5';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
@@ -53,6 +56,13 @@ import {
     GiRuneSword,
 } from 'react-icons/gi';
 import { IconType } from 'react-icons/lib';
+import { HiOutlineRefresh } from 'react-icons/hi';
+import { RiLoader5Line } from 'react-icons/ri';
+import {
+    BiLoaderCircle,
+    BiLoader
+} from 'react-icons/bi';
+
 
 export enum IconList {
     caretDown = 'caret-down',
@@ -106,6 +116,13 @@ export enum IconList {
     broadDagger = 'broad-dagger',
     broadsword = 'broadsword',
     runeSword = 'rune-sword',
+    spinner = 'spinner',
+    circleNotch = 'circle-notch',
+    cog = 'cog',
+    outlineRefresh = 'outline-refresh',
+    loader5Line = 'loader5-line',
+    loaderCircle = 'loader-circle',
+    loader = 'loader',
 }
 
 interface IconInterface {
@@ -163,4 +180,11 @@ export const iconMap: IconInterface = {
     [IconList.broadDagger]: GiBroadDagger,
     [IconList.broadsword]: GiBroadsword,
     [IconList.runeSword]: GiRuneSword,
+    [IconList.spinner]: FaSpinner,
+    [IconList.circleNotch]: FaCircleNotch,
+    [IconList.cog]: FaCog,
+    [IconList.outlineRefresh]: HiOutlineRefresh,
+    [IconList.loader5Line]: RiLoader5Line,
+    [IconList.loaderCircle]: BiLoaderCircle,
+    [IconList.loader]: BiLoader,
 };
