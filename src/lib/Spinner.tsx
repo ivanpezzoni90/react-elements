@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { allColors } from './constants/colors';
 import { mergeClasses } from './helpers';
+import { buildKeyframesAnimation } from './helpers/spinnerHelpers';
 import { Icon, IconList } from './Icon';
 import { IconSize, SpinnerSpeed, SpinnerSteps } from './types';
 
@@ -16,30 +17,6 @@ const SpinnerContainer = styled.div<SpinnerContainerInterface>`
 
     ${props => props.animation}
 `;
-
-const buildKeyframesAnimation = (steps: SpinnerSteps) => {
-    const numberOfSteps = (steps - 1);
-    const degreeStep = 360 / numberOfSteps;
-    const percentStep = 100 / numberOfSteps;
-
-    let animationSteps = '';
-
-    Array.from(Array(numberOfSteps)).forEach((e, i) => {
-        animationSteps = `${animationSteps}
-        ${percentStep * i}% {
-            transform: rotate(${degreeStep * i}deg);
-        }
-        `;
-    });
-
-    return `
-    @keyframes spin-animation {
-    ${animationSteps}
-        100% {
-            transform: rotate(359deg);
-        }
-    }`;
-};
 
 interface SpinnerProps {
     icon?: IconList,
@@ -59,6 +36,7 @@ const Spinner = ({
     className
 }: SpinnerProps) => {
     const animation = buildKeyframesAnimation(steps);
+    console.log(animation);
     return (
         <SpinnerContainer
             className={mergeClasses('ie-spinner', className)}
