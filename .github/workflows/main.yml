@@ -2,10 +2,8 @@ name: Push CI
 on: [push]
 jobs:
   unit:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-        run: npx jest
+    name: Run Jest
+    uses: stefanoeb/jest-action@1.0.4
   component_chrome:
     runs-on: ubuntu-20.04
     name: Component testing on chrome
