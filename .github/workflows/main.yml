@@ -1,9 +1,6 @@
 name: Push CI
 on: [push]
 jobs:
-  unit:
-    name: Run Jest
-    uses: stefanoeb/jest-action@1.0.4
   component_chrome:
     runs-on: ubuntu-20.04
     name: Component testing on chrome
