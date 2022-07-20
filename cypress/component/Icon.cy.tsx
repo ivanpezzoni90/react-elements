@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Icon, IconList} from '../../src/lib/Icon';
+import {Icon} from '../../src/lib/Icon';
 import { allColors, allRgbColors } from '../../src/lib/constants/colors';
 import { BorderRadius, Cursors, IconSize, Padding } from '../../src/lib/types';
 import {
@@ -9,6 +9,7 @@ import {
 } from '../modules/selectors';
 import { log } from '../modules/utils';
 import { verifyElementRgbColor, verifyElementRgbColorProp } from '../modules/assertions';
+import { IconList } from '../../src/lib/constants/icons';
 
 describe('Icon', () => {
     it('Icon props', () => {

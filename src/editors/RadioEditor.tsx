@@ -9,7 +9,7 @@ import { labelSection, positionEditor } from './commons/editors';
 import { ElementContainer } from './commons/ElementContainer';
 
 import { Radio, RadioProps } from '../lib/Radio';
-import { IconList } from '../lib/Icon';
+import { IconList } from '../lib/constants/icons';
 
 const defaultOptions = [{
     label: 'Terra',

@@ -2,7 +2,7 @@ import React from 'react';
 import { Fragment } from 'react';
 import Editor from './EditorBuilder';
 import {Button} from '../lib/Button';
-import { BorderRadius, ButtonIconSize, EditorSection, EditorSectionTypes, EditorTypes, IconPosition } from '../lib/types';
+import { BorderRadius, ButtonIconSize, EditorSection, EditorSectionTypes, EditorTypes, ElementPosition } from '../lib/types';
 import { useEditorInit } from '../lib/hooks';
 import {
     alignPositionEditor,
@@ -16,7 +16,7 @@ import {
 import { ElementContainer } from './commons/ElementContainer';
 
 import { allColors } from '../lib/constants/colors';
-import { IconList } from '../lib/Icon';
+import { IconList } from '../lib/constants/icons';
 
 const getEditor = () => {
 
@@ -99,15 +99,15 @@ const getEditor = () => {
                 },
                 {
                     type: EditorTypes.select,
-                    default: IconPosition.left,
+                    default: ElementPosition.left,
                     label: 'Icon Position',
-                    prop: 'iconPosition',
+                    prop: 'elementPosition',
                     options: [{
                         label: 'Left',
-                        value: IconPosition.left
+                        value: ElementPosition.left
                     }, {
                         label: 'Right',
-                        value: IconPosition.right
+                        value: ElementPosition.right
                     }]
                 }
             ]
@@ -122,7 +122,7 @@ const getEditor = () => {
                     label: 'Disabled',
                     prop: 'disabled'
                 },
-                alignPositionEditor,
+                alignPositionEditor(),
                 borderRadiusEditor(BorderRadius.s),
             ]
         }

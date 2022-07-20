@@ -1,6 +1,6 @@
 import React from 'react';
 import { allColors, allRgbColors } from '../../src/lib/constants/colors';
-import { IconList } from '../../src/lib/Icon';
+import { IconList } from '../../src/lib/constants/icons';
 import { Spinner } from '../../src/lib/Spinner';
 import { IconSize, SpinnerSpeed, SpinnerSteps } from '../../src/lib/types';
 import { verifyElementRgbColor } from '../modules/assertions';

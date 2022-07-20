@@ -10,10 +10,11 @@ import {
     ElementLength,
     ElementSize,
     FontWeight,
-    IconPosition,
+    ElementPosition,
     Padding,
 } from './types';
-import { IconList, Icon } from './Icon';
+import { Icon } from './Icon';
+import { IconList } from './constants/icons';
 
 const calculateIconSize = (iconSize: ButtonIconSize, fontSize: ElementSize) => {
     const parsedFontSize = parseInt(fontSize, 10);
@@ -73,7 +74,7 @@ interface ButtonProps {
     icon?: IconList,
     iconColor?: string,
     buttonIconSize?: ButtonIconSize,
-    iconPosition?: IconPosition,
+    elementPosition?: ElementPosition,
     height?: ElementHeight,
     align?: AlignPositions
     onClick: VoidFunction
@@ -103,7 +104,7 @@ const Button = ({
     align,
     iconColor,
     buttonIconSize,
-    iconPosition,
+    elementPosition,
     onClick
 }: ButtonProps) => {
     const calculatedIconSize = calculateIconSize(
@@ -133,14 +134,14 @@ const Button = ({
             height={height}
             onClick={onClick}
         >
-            {icon && iconPosition === IconPosition.left && IconElement}
+            {icon && elementPosition === ElementPosition.left && IconElement}
             <LabelWrapper
                 className="ie-button__label"
                 length={length}
             >
                 {label}
             </LabelWrapper>
-            {icon && iconPosition === IconPosition.right && IconElement}
+            {icon && elementPosition === ElementPosition.right && IconElement}
         </ButtonElement>
     );
 };
@@ -151,17 +152,17 @@ const defaultProps: ButtonProps = {
     borderRadius: BorderRadius.s,
     color: allColors['Firebrick'],
     textColor: allColors['White'],
-    fontSize: ElementSize.l,
+    fontSize: ElementSize.s,
     fontWeight: FontWeight.light,
     label: 'Label',
     disabled: false,
     onClick: () => {},
     length: ElementLength.full,
-    height: ElementHeight.m,
+    height: ElementHeight.s,
     icon: undefined,
     iconColor: allColors['White'],
     buttonIconSize: ButtonIconSize.auto,
-    iconPosition: IconPosition.left,
+    elementPosition: ElementPosition.left,
     align: AlignPositions.center
 };
 

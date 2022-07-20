@@ -3,11 +3,12 @@ import React from 'react';
 import Editor from './EditorBuilder';
 import { BorderRadius, Cursors, EditorSection, EditorSectionTypes, EditorTypes, Padding } from '../lib/types';
 import { Fragment } from 'react';
-import { IconList, Icon } from '../lib/Icon';
+import { Icon } from '../lib/Icon';
 import { useEditorInit } from '../lib/hooks';
 import { borderRadiusEditor, cursorEditor, iconEditor, iconSizeEditor, paddingEditor } from './commons/editors';
 import { ElementContainer } from './commons/ElementContainer';
 import { allColors } from '../lib/constants/colors';
+import { IconList } from '../lib/constants/icons';
 
 const getEditor = () => {
     const editorJson: EditorSection[] = [

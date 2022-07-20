@@ -8,7 +8,7 @@ import { useEditorInit } from '../lib/hooks';
 import { iconEditor, iconSizeEditor, spinnerSpeedEditor, spinnerStepsEditor } from './commons/editors';
 import { ElementContainer } from './commons/ElementContainer';
 import { allColors } from '../lib/constants/colors';
-import { IconList } from '../lib/Icon';
+import { IconList } from '../lib/constants/icons';
 
 const getEditor = () => {
     const editorJson: EditorSection[] = [

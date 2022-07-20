@@ -2,7 +2,7 @@ import React from 'react';
 
 import {Button} from '../../src/lib/Button';
 import { allColors, allRgbColors } from '../../src/lib/constants/colors';
-import { AlignPositions, BorderRadius, ButtonIconSize, ElementHeight, ElementLength, ElementSize, FontWeight, IconPosition } from '../../src/lib/types';
+import { AlignPositions, BorderRadius, ButtonIconSize, ElementHeight, ElementLength, ElementSize, FontWeight, ElementPosition } from '../../src/lib/types';
 import {
     selectButtonLabel,
     selectButton,
@@ -11,7 +11,7 @@ import {
 } from '../modules/selectors';
 import { log } from '../modules/utils';
 import { verifyElementRgbColor, verifyElementRgbColorProp } from '../modules/assertions';
-import { IconList } from '../../src/lib/Icon';
+import { IconList } from '../../src/lib/constants/icons';
 
 describe('Button', () => {
     it('Button props', () => {
@@ -85,7 +85,7 @@ describe('Button', () => {
 
         cy.mount(<Button
             icon={IconList.eye}
-            iconPosition={IconPosition.left}
+            elementPosition={ElementPosition.left}
             buttonIconSize={ButtonIconSize.xl}
             iconColor={allColors['Blue Violet']}
             disabled

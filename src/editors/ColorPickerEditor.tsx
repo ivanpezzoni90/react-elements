@@ -31,7 +31,7 @@ const getEditor = (props: ColorPickerProps) => {
                     prop: 'closeOnClickOutside',
                     default: true
                 },
-                alignPositionEditor
+                alignPositionEditor()
             ]
         }
     ];

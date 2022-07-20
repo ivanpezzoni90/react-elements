@@ -85,7 +85,7 @@ const getEditor = (props: SliderProps) => {
             label: 'Others',
             editors: [
                 lengthEditor(ElementLength.xl),
-                alignPositionEditor
+                alignPositionEditor()
             ]
         },
     ];

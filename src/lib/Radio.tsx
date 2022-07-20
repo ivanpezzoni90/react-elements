@@ -14,8 +14,9 @@ import {
 } from './types';
 import { CheckboxElement } from './Checkbox';
 import { SwitchToggleElement } from './SwitchToggle';
-import { Icon, IconList } from './Icon';
+import { Icon } from './Icon';
 import { allColors } from './constants/colors';
+import { IconList } from './constants/icons';
 
 interface LabelProps {
     htmlFor: string,

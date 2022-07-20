@@ -9,7 +9,7 @@ import { BorderRadius, EditorSection, EditorSectionTypes, EditorTypes, LabelPosi
 import { Select, SelectProps } from '../lib/Select';
 import { useEditorInit } from '../lib/hooks';
 import { allColors } from '../lib/constants/colors';
-import { IconList } from '../lib/Icon';
+import { IconList } from '../lib/constants/icons';
 
 const getEditor = (props: SelectProps): EditorSection[] => ([
     labelSection(LabelPositions.vertical),

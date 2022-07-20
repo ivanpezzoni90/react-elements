@@ -76,7 +76,7 @@ const getEditor = (props: SwitchToggleProps) => {
             label: 'Others',
             editors: [
                 lengthEditor(ElementLength.m),
-                alignPositionEditor
+                alignPositionEditor()
             ]
         },
         bordersAndShadowSection()

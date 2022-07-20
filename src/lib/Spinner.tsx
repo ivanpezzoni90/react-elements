@@ -1,9 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import { allColors } from './constants/colors';
+import { IconList } from './constants/icons';
 import { mergeClasses } from './helpers';
 import { buildKeyframesAnimation } from './helpers/spinnerHelpers';
-import { Icon, IconList } from './Icon';
+import { Icon } from './Icon';
 import { IconSize, SpinnerSpeed, SpinnerSteps } from './types';
 
 

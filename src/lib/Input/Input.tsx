@@ -11,9 +11,10 @@ import {
 import { CheckValidatorsType, InputProps, InputTypeProps, InputTypes } from './config';
 import { BorderRadius, ElementHeight, ElementLength, LabelLength, LabelPositions } from '../types';
 import { allColors } from '../constants/colors';
-import { IconList, Icon } from '../Icon';
+import { Icon } from '../Icon';
 import { useComputedWidth } from '../hooks';
 import { throttle } from 'throttle-debounce';
+import { IconList } from '../constants/icons';
 
 function InputElement({
     error,

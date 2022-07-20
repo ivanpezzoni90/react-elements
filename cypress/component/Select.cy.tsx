@@ -1,6 +1,6 @@
 import React from 'react';
 import { allColors, allRgbColors } from '../../src/lib/constants/colors';
-import { IconList } from '../../src/lib/Icon';
+import { IconList } from '../../src/lib/constants/icons';
 import {Select} from '../../src/lib/Select';
 import { BorderRadius, ElementLength, LabelLength, LabelPositions, Option } from '../../src/lib/types';
 import { checkCustomElementProps, checkDefaultElementProps, selectOption, selectOptionMultiple } from '../modules/actions';

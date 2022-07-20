@@ -19,7 +19,7 @@ import {
     SpinnerSteps
 } from '../../lib/types';
 import { AlignPositions, LabelPositions } from '../../lib/types';
-import { IconList } from '../../lib/Icon';
+import { IconList } from '../../lib/constants/icons';
 
 export const labelPositionEditor: (def?: LabelPositions) => Editor = (
     def = LabelPositions.horizontal
@@ -51,11 +51,15 @@ export const positionEditor: Editor = {
     }]
 };
 
-export const alignPositionEditor: Editor = {
+export const alignPositionEditor = (
+    def = AlignPositions.center,
+    prop = 'align',
+    label = 'Alignment'
+): Editor => ({
     type: EditorTypes.select,
-    label: 'Alignment',
-    default: AlignPositions.center,
-    prop: 'align',
+    label,
+    default: def,
+    prop,
     options: [{
         label: 'Left',
         value: AlignPositions.left
@@ -66,7 +70,7 @@ export const alignPositionEditor: Editor = {
         label: 'Right',
         value: AlignPositions.right
     }]
-};
+});
 
 export const shadowEditor: Editor = {
     label: 'Shadow',

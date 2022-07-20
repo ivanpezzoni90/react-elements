@@ -138,7 +138,7 @@ export enum Positions {
     horizontal = 'horizontal'
 }
 
-export enum IconPosition {
+export enum ElementPosition {
     left = 'left',
     right = 'right'
 }
@@ -186,4 +186,20 @@ export enum SpinnerSpeed {
     'normal' = '1.5s',
     'slow' = '2.5s',
     'verySlow' = '3.5s'
+}
+
+export enum ModalWidth {
+    s = '40vw',
+    m = '60vw',
+    l = '80vw',
+    full = '95vw',
+    auto = 'auto'
+}
+
+export enum ModalHeight {
+    s = '40vh',
+    m = '60vh',
+    l = '80vh',
+    full = '95vh',
+    auto = 'auto'
 }

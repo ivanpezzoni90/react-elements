@@ -38,7 +38,7 @@ const getEditor = (props: CheckboxProps) => {
             label: 'Others',
             editors: [
                 lengthEditor(ElementLength.m),
-                alignPositionEditor
+                alignPositionEditor()
             ]
         }
     ];

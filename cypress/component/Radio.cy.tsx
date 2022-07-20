@@ -15,7 +15,7 @@ import {
 } from '../modules/selectors';
 import { log } from '../modules/utils';
 import { verifyElementRgbColor, verifyElementRgbColorProp, verifySwitchToggleValue } from '../modules/assertions';
-import { IconList } from '../../src/lib/Icon';
+import { IconList } from '../../src/lib/constants/icons';
 
 const radioOptionsButton: Option[] = [{
     icon: IconList.volumeDown,
