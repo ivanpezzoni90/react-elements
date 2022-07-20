@@ -337,6 +337,17 @@ describe('Input', () => {
     });
 
     it('Input callbacks', () => {
+        log('Verify onBlur and onChange have been called');
+        const onChange = cy.stub().as('onChangeHandler');
+        const onBlur = cy.stub().as('onBlurHandler');
+        cy.mount(<Input
+            onBlur={onBlur}
+            onChange={onChange}
+        />);
+        selectInput().type('T').blur();
+        cy.get('@onChangeHandler').should('have.been.called');
+        cy.get('@onBlurHandler').should('have.been.called');
+
         log('Verify onBlur');
         cy.mount(<Input
             onBlur={(newValue) => {
@@ -387,6 +398,19 @@ describe('Input', () => {
     });
 
     it('Textarea callbacks', () => {
+        log('Verify onBlur and onChange have been called');
+        const onChange = cy.stub().as('onChangeHandler');
+        const onBlur = cy.stub().as('onBlurHandler');
+        cy.mount(<Input
+            textarea
+            onBlur={onBlur}
+            onChange={onChange}
+        />);
+        selectTextarea().type('T').blur();
+        cy.get('@onChangeHandler').should('have.been.called');
+        cy.get('@onBlurHandler').should('have.been.called');
+
+
         log('Verify onBlur');
         cy.mount(<Input
             textarea

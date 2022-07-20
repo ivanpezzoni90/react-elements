@@ -126,6 +126,14 @@ describe('Color Picker', () => {
     });
 
     it('Color picker callbacks', () => {
+        const onClick = cy.stub().as('onClickHandler');
+        cy.mount(<ColorPicker
+            onChange={onClick}
+        />);
+        selectColorPickerElementPicker().click();
+        selectDropDownColorListNthRowNthItem(undefined, 4, 0).click();
+        cy.get('@onClickHandler').should('have.been.called');
+
         cy.mount(<ColorPicker
             onChange={(color) => {
                 expect(color).to.eq(allColors['Prussian Blue']);

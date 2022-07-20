@@ -107,12 +107,12 @@ describe('Button', () => {
         selectButton().should('have.attr', 'disabled');
     });
     it('Button callbacks', () => {
+        const onClick = cy.stub().as('buttonClickHandler');
         cy.mount(<Button
-            onClick={() => {
-                expect(true).to.be.true;
-            }}
+            onClick={onClick}
         />);
-
+            
         selectButton().click();
+        cy.get('@buttonClickHandler').should('have.been.called');
     });
 });

@@ -60,13 +60,13 @@ describe('Icon', () => {
     });
 
     it('Icon callbacks', () => {
+        const onClick = cy.stub().as('onClickHandler');
         cy.mount(<Icon
             icon={IconList.download}
-            onClick={() => {
-                expect(true).to.be.true;
-            }}
+            onClick={onClick}
         />);
-
+            
         selectIcon().click();
+        cy.get('@onClickHandler').should('have.been.called');
     });
 });

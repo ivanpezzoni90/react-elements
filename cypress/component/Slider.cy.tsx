@@ -203,6 +203,22 @@ describe('Slider', () => {
     });
 
     it('Slider callbacks', () => {
+        log('Verify onChange called');
+        const onChange = cy.stub().as('onChangeHandler');
+        cy.mount(<Slider
+            min={0}
+            max={100}
+            step={5}
+            onChange={onChange}
+        />);
+        selectSliderElementInput()
+            // .invoke('val', '5')
+            // .trigger('change')
+            .then(input => changeRangeInputValue(input)(5));
+
+        cy.get('@onChangeHandler').should('have.been.called');
+
+        log('Verify onChange values');
         let count = 0;
         cy.mount(<Slider
             length={ElementLength.xxl}

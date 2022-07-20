@@ -105,6 +105,15 @@ describe('Switch Toggle', () => {
     });
 
     it('Switch toggle callbacks', () => {
+        log('Verify onchange called');
+        const onChange = cy.stub().as('onChangeHandler');
+        cy.mount(<SwitchToggle
+            onChange={onChange}
+        />);
+        selectToggleElementSlider().click();
+        cy.get('@onChangeHandler').should('have.been.called');
+
+        log('Verify onchange values');
         let count = 0;
         cy.mount(<SwitchToggle
             onChange={(newValue) => {

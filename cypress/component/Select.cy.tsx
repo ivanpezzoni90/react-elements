@@ -186,7 +186,7 @@ describe('Select', () => {
         selectSelectLabel().should('not.exist');
     });
     it('Select callbacks', () => {
-        log('Verify onChange');
+        log('Verify onChange is called');
         cy.mount(<Select
             options={selectOptions}
             onChange={(newValue) => {
@@ -194,6 +194,15 @@ describe('Select', () => {
             }}
         />);
         selectOption(selectSelectWrapper, 0);
+        
+        log('Verify onChange value');
+        const onChange = cy.stub().as('onChangeHandler');
+        cy.mount(<Select
+            options={selectOptions}
+            onChange={onChange}
+        />);
+        selectOption(selectSelectWrapper, 0);
+        cy.get('@onChangeHandler').should('have.been.called');
 
         log('Verify multiple onChange');
         let count = 0;

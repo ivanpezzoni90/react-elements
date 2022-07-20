@@ -85,6 +85,13 @@ describe('Checkbox', () => {
     });
 
     it('Checkbox callbacks', () => {
+        const onClick = cy.stub().as('onClickHandler');
+        cy.mount(<Checkbox
+            onChange={onClick}
+        />);
+        selectCheckboxElementCheck().click();
+        cy.get('@onClickHandler').should('have.been.called');
+        
         let count = 0;
         cy.mount(<Checkbox
             onChange={(newValue) => {

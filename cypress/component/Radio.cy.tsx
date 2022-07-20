@@ -373,6 +373,15 @@ describe('Radio', () => {
         />);
         selectRadioValues(RadioTypes.checkbox);
 
+        log('type checkbox called');
+        const onChange = cy.stub().as('onChangeHandler');
+        cy.mount(<Radio
+            options={radioOptionsCheckToggle}
+            onChange={onChange}
+        />);
+        selectRadioNthElementCheckbox(0).click();
+        cy.get('@onChangeHandler').should('have.been.called');
+
         log('type checkbox multiple');
         let countC2 = 0;
         cy.mount(<Radio
@@ -398,6 +407,16 @@ describe('Radio', () => {
         />);
         selectRadioValues(RadioTypes.toggle);
 
+        log('type toggle called');
+        const onChangeT = cy.stub().as('onChangeTHandler');
+        cy.mount(<Radio
+            options={radioOptionsCheckToggle}
+            type={RadioTypes.toggle}
+            onChange={onChangeT}
+        />);
+        selectRadioNthElementToggleSlider(0).click();
+        cy.get('@onChangeTHandler').should('have.been.called');
+
         log('type toggle multiple');
         let countT2 = 0;
         cy.mount(<Radio
@@ -422,6 +441,16 @@ describe('Radio', () => {
             }}
         />);
         selectRadioValues(RadioTypes.icon);
+
+        log('type icon called');
+        const onChangeI = cy.stub().as('onChangeIHandler');
+        cy.mount(<Radio
+            options={radioOptionsCheckToggle}
+            type={RadioTypes.icon}
+            onChange={onChangeI}
+        />);
+        selectRadioNthElementIcon(0).click();
+        cy.get('@onChangeIHandler').should('have.been.called');
 
         log('type icon multiple');
         let countI2 = 0;
