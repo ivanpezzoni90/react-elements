@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { IconSize } from '../lib/types';
-import { IconList, Icon } from '../lib/Icon';
+import { Icon } from '../lib/Icon';
+import { IconList } from '../lib/constants/icons';
 
 const AsideCaretContainer = styled.div`
     width: 2em;

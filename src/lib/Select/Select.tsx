@@ -2,7 +2,7 @@ import React, { MouseEvent, useCallback } from 'react';
 import { Fragment, useEffect, useRef, useState } from 'react';
 import { checkEventTargetContainsClass, elaborateComputedWidth, fontColorFromBackground, generateID, lightenDarkenColor, mergeClasses } from '../helpers';
 import { BorderRadius, ElementHeight, IconSize, LabelLength, LabelPositions, Option as OptionType } from '../types';
-import { IconList, Icon } from '../Icon';
+import { Icon } from '../Icon';
 import { ElementLength } from '../types';
 import {
     SelectElement,
@@ -21,7 +21,7 @@ import {
     RelativeDropDownContainer,
     SelectContainer,
     DropDownSearchContainer,
-    DropDownSearchIconWrapper
+    DropDownSearchIconWrapper,
 } from './SelectStyle';
 
 import {
@@ -32,6 +32,7 @@ import { useClickOutside, useComputedWidth, useComputedZIndex } from '../hooks';
 import { allColors } from '../constants/colors';
 import { CheckboxElement } from '../Checkbox';
 import { Input } from '../Input';
+import { IconList } from '../constants/icons';
 
 const doNothing = () => {};
 
@@ -69,11 +70,17 @@ function Select(props: SelectProps) {
     const id = useRef(generateID());
 
     const [isOpen, setIsOpen] = useState(false);
+
+    const setIsOpenWrapper = useCallback((v: boolean) => {
+        setIsOpen(v);
+        // Reset filtered options on dropdown close
+        if (v === false) setFilteredOptions(options);
+    }, [options]);
     
     const toggleOpen = (e: MouseEvent<HTMLDivElement>) => {
         // Exclude event trigger for icon elements
         if (!checkEventTargetContainsClass(e, 'ie-icon')) {
-            setIsOpen(!isOpen);
+            setIsOpenWrapper(!isOpen);
         }
     };
 
@@ -109,7 +116,7 @@ function Select(props: SelectProps) {
         } else {
             setSelectedOption(value as string);
             onChange(value);
-            setIsOpen(false);
+            setIsOpenWrapper(false);
         }
     };
 
@@ -117,7 +124,7 @@ function Select(props: SelectProps) {
         e.stopPropagation();
         setSelectedOption(null);
         onChange(null);
-        setIsOpen(false);
+        setIsOpenWrapper(false);
     };
 
     const getOptionsFromValue = (value: string | string[] | null): OptionType[] => {
@@ -138,7 +145,7 @@ function Select(props: SelectProps) {
     useClickOutside(
         dropDownRef,
         closeOnClickOutside
-            ? () => setIsOpen(false)
+            ? () => setIsOpenWrapper(false)
             : doNothing,
         [selectRef]
     );
@@ -277,28 +284,28 @@ function Select(props: SelectProps) {
                         zIndex={dropDownZIndex}
                         length={length}
                     >
+                        {filterable && (
+                            <DropDownSearchContainer
+                                className="ie-dropdown__container__list__filter"
+                            >
+                                <Input
+                                    className="ie-dropdown__container__list__filter__input"
+                                    hideLabel
+                                    placeholder='Search...'
+                                    height={ElementHeight.s}
+                                    onChange={filterOptions}
+                                />
+                                <DropDownSearchIconWrapper>
+                                    <Icon
+                                        icon={IconList.search}
+                                    />
+                                </DropDownSearchIconWrapper>
+                            </DropDownSearchContainer>
+                        )}
                         <DropDownList
                             borderRadius={borderRadius}
                             className="ie-dropdown__container__list"
                         >
-                            {filterable && (
-                                <DropDownSearchContainer
-                                    className="ie-dropdown__container__list__filter"
-                                >
-                                    <Input
-                                        className="ie-dropdown__container__list__filter__input"
-                                        hideLabel
-                                        placeholder='Search...'
-                                        height={ElementHeight.s}
-                                        onChange={filterOptions}
-                                    />
-                                    <DropDownSearchIconWrapper>
-                                        <Icon
-                                            icon={IconList.search}
-                                        />
-                                    </DropDownSearchIconWrapper>
-                                </DropDownSearchContainer>
-                            )}
                             {filteredOptions.map((o: OptionType) => (
                                 <ListItem
                                     className="ie-dropdown__container__list__item"

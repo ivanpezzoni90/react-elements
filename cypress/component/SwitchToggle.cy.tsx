@@ -103,4 +103,17 @@ describe('Switch Toggle', () => {
         // on
         verifyElementRgbColor(selectToggleElementIcon(), allRgbColors['Prussian Blue']);
     });
+
+    it('Switch toggle callbacks', () => {
+        let count = 0;
+        cy.mount(<SwitchToggle
+            onChange={(newValue) => {
+                if (count === 0) expect(newValue).to.be.true;
+                else expect(newValue).to.be.false;
+                count++;
+            }}
+        />);
+        selectToggleElementSlider().click();
+        selectToggleElementSlider().click();
+    });
 });

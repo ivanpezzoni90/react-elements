@@ -138,7 +138,7 @@ export enum Positions {
     horizontal = 'horizontal'
 }
 
-export enum IconPosition {
+export enum ElementPosition {
     left = 'left',
     right = 'right'
 }
@@ -169,4 +169,37 @@ export enum RadioTypes {
     checkbox = 'checkbox',
     toggle = 'toggle',
     icon = 'icon'
+}
+
+export enum SpinnerSteps {
+    'continuous' = 65,
+    'sixteenSteps' = 17,
+    'single' = 2,
+    'eightSteps' = 9,
+    'fourSteps' = 5,
+    'twoSteps' = 3
+}
+
+export enum SpinnerSpeed {
+    'veryFast' = '0.5s',
+    'fast' = '1s',
+    'normal' = '1.5s',
+    'slow' = '2.5s',
+    'verySlow' = '3.5s'
+}
+
+export enum ModalWidth {
+    s = '40vw',
+    m = '60vw',
+    l = '80vw',
+    full = '95vw',
+    auto = 'auto'
+}
+
+export enum ModalHeight {
+    s = '40vh',
+    m = '60vh',
+    l = '80vh',
+    full = '95vh',
+    auto = 'auto'
 }

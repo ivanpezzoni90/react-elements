@@ -2,7 +2,7 @@ import React from 'react';
 
 import {Button} from '../../src/lib/Button';
 import { allColors, allRgbColors } from '../../src/lib/constants/colors';
-import { AlignPositions, BorderRadius, ButtonIconSize, ElementHeight, ElementLength, ElementSize, FontWeight, IconPosition } from '../../src/lib/types';
+import { AlignPositions, BorderRadius, ButtonIconSize, ElementHeight, ElementLength, ElementSize, FontWeight, ElementPosition } from '../../src/lib/types';
 import {
     selectButtonLabel,
     selectButton,
@@ -11,7 +11,7 @@ import {
 } from '../modules/selectors';
 import { log } from '../modules/utils';
 import { verifyElementRgbColor, verifyElementRgbColorProp } from '../modules/assertions';
-import { IconList } from '../../src/lib/Icon';
+import { IconList } from '../../src/lib/constants/icons';
 
 describe('Button', () => {
     it('Button props', () => {
@@ -24,13 +24,13 @@ describe('Button', () => {
         // length
         selectButton().should('have.css', 'width').and('eq', '484px');
         // height
-        selectButton().should('have.css', 'height').and('eq', '63px'); // TODO: Computed height is different from 16*3.5em
+        selectButton().should('have.css', 'height').and('eq', '35px'); // TODO: Computed height is different from 16*3.5em
         // borderRadius
-        selectButton().should('have.css', 'border-radius').and('eq', '9px'); // TODO: Computed bradius is different from 16*0.5em
+        selectButton().should('have.css', 'border-radius').and('eq', '7px'); // TODO: Computed bradius is different from 16*0.5em
         // fontWeight
         selectButton().should('have.css', 'font-weight').and('eq', FontWeight.light);
         // fontSize
-        selectButton().should('have.css', 'font-size').and('eq', '18px'); // TODO: Computed fsize is different from FontSize.m
+        selectButton().should('have.css', 'font-size').and('eq', ElementSize.s);
         // color
         verifyElementRgbColorProp(selectButton(), allRgbColors['Firebrick'], 'background-color');
         // textcolor
@@ -71,7 +71,7 @@ describe('Button', () => {
         // fontWeight
         selectButton().should('have.css', 'font-weight').and('eq', FontWeight.bold);
         // fontSize
-        selectButton().should('have.css', 'font-size').and('eq', ElementSize.xl); // TODO: Computed fsize is different from FontSize.m
+        selectButton().should('have.css', 'font-size').and('eq', ElementSize.xl);
         // color
         verifyElementRgbColorProp(selectButton(), allRgbColors['Teal'], 'background-color');
         // textcolor
@@ -85,7 +85,7 @@ describe('Button', () => {
 
         cy.mount(<Button
             icon={IconList.eye}
-            iconPosition={IconPosition.left}
+            elementPosition={ElementPosition.left}
             buttonIconSize={ButtonIconSize.xl}
             iconColor={allColors['Blue Violet']}
             disabled
@@ -96,7 +96,7 @@ describe('Button', () => {
         // (computed sizes different from actual)
         selectButtonIcon().should('have.css', 'font-size').and(
             'eq',
-            `${18 * ButtonIconSize.xl}px`
+            `${parseInt(ElementSize.s, 10) * ButtonIconSize.xl}px`
         );
         verifyElementRgbColor(selectButtonIcon(), allRgbColors['Blue Violet']);
 
@@ -105,5 +105,14 @@ describe('Button', () => {
         selectButton().should('have.css', 'pointer-events').and('eq', 'none');
         selectButton().should('have.css', 'cursor').and('eq', 'not-allowed');
         selectButton().should('have.attr', 'disabled');
+    });
+    it('Button callbacks', () => {
+        cy.mount(<Button
+            onClick={() => {
+                expect(true).to.be.true;
+            }}
+        />);
+
+        selectButton().click();
     });
 });

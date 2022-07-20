@@ -83,4 +83,18 @@ describe('Checkbox', () => {
         verifyElementRgbColorProp(selectCheckboxElementCheck().click(), allRgbColors['White'], 'background-color');
         selectCheckboxElementCheck().should('have.attr', 'data-checked').and('eq', 'not-checked');
     });
+
+    it('Checkbox callbacks', () => {
+        let count = 0;
+        cy.mount(<Checkbox
+            onChange={(newValue) => {
+                if (count === 0) expect(newValue).to.be.true;
+                else expect(newValue).to.be.false;
+                count++;
+            }}
+        />);
+        selectCheckboxElementCheck().click();
+        selectCheckboxElementCheck().click();
+
+    });
 });

@@ -2,7 +2,7 @@
 import styled from 'styled-components';
 
 import {
-    InputElementProps,
+    CommonElementProps,
     InputTypes,
     InputWrapperProps,
     LabelProps,
@@ -14,14 +14,12 @@ import {
 import { allColors } from '../constants/colors';
 import { ElementLength, LabelLength, LabelPositions } from '../types';
 
-export const InputElementStyle = styled.input<InputElementProps>`
-    width: ${(props) => (
+const inputTextareaStyles = (props: CommonElementProps) => `
+    width: ${
         props.length === ElementLength.full
             ? props.computedWidth
             : calculateInnerElementLength(props.length)
-        )
     };
-    height: 2.5em;
     position: relative;
     padding: 0 1em;
     border: none;
@@ -31,21 +29,25 @@ export const InputElementStyle = styled.input<InputElementProps>`
     font-weight: 400;
     line-height: normal;
     background-color: transparent;
-    color: ${props => props.textColor};
+    color: ${props.textColor};
     outline: none;
-    ${props => props.shadow ? 'box-shadow: 0px 4px 20px 0px transparent;' : ''}
+    ${props.shadow ? 'box-shadow: 0px 4px 20px 0px transparent;' : ''}
     transition: 0.3s background-color ease-in-out, 0.3s box-shadow ease-in-out,
       0.1s padding ease-in-out;
     -webkit-appearance: none;
 
-    ${(props) => props.error ? `color: ${allColors['Lava']};` : ''}
+    ${props.error ? `color: ${allColors['Lava']};` : ''}
+`;
+
+export const InputElementStyle = styled.input<CommonElementProps>`
+    ${props => inputTextareaStyles(props)}
+    height: 2.5em;
 
     ${({type}) => type === InputTypes.date ? `
         :invalid {
             color:${allColors['Lava']};
         }
     `: ''}
-
     ${({type}) => type === InputTypes.number ? `
         -moz-appearance: textfield;
 
@@ -64,17 +66,24 @@ export const InputElementStyle = styled.input<InputElementProps>`
     ` : ''}
 `;
 
+export const TextAreaElementStyle = styled.textarea<CommonElementProps>`
+    ${props => inputTextareaStyles(props)}
+
+    resize: vertical;
+`;
+
 export const InputWrapper = styled.div<InputWrapperProps>`
     display: flex;
     ${props => props.labelPosition === LabelPositions.vertical
         ? `flex-direction: column;
             justify-content: center;
         ` : `flex-direction: row;
-            align-items: center
-        `};
+            align-items: center;
+            ${props.textarea ? 'padding: 0.5em 0;' : ''}
+        `}
     cursor: text;
     width: ${(props) => props.length};
-    height: ${props => props.height};
+    ${props => props.textarea ? '' : `height: ${props.height};`}
     position: relative;
     background-color: rgba(255, 255, 255, 0.3);
     border-radius: ${props => props.borderRadius};

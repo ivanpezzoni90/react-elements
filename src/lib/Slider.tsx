@@ -4,6 +4,13 @@ import styled from 'styled-components';
 import { fontColorFromBackground, generateID, lightenDarkenColor, mergeClasses, rgbFromHex } from './helpers';
 import { AlignPositions, BorderRadius, ElementLength, LabelLength, LabelPositions, Option } from './types';
 import { allColors } from './constants/colors';
+import {
+    getStepValue,
+    getDefaultValue,
+    parseUnavailableValues,
+    calculateTooltipPosition,
+    getOutlineColor
+} from './helpers/sliderHelpers';
 
 interface SliderContainerInterface {
     labelPosition?: LabelPositions
@@ -11,12 +18,12 @@ interface SliderContainerInterface {
 const SliderContainer = styled.div<SliderContainerInterface>`
     display: flex;
     vertical-align: middle;
-    padding: 0.25em 1em 0 0.25em;
     flex: 1;
 
     ${props => props.labelPosition === LabelPositions.vertical
         ? ` width: 100%;
-            padding: 1em;`
+            padding: 0.5em;
+            `
         : 'padding: 0.25em 1em 0 0.25em;'}
 `;
 
@@ -35,7 +42,7 @@ const SliderAdvancedWrapper = styled.div<SliderAdvancedWrapperInterface>`
     display: flex;
     ${props => props.labelPosition === LabelPositions.vertical ? `
         flex-direction: column;
-        padding-left: 0.5em;
+        padding: 0 0.5em;
         align-items: ${props.align};
         justify-content: center;
     ` :`
@@ -72,9 +79,13 @@ interface LabelProps {
 const SliderAdvancedLabel = styled.label<LabelProps>`
     display: flex;
     justify-content: flex-start;
-    ${props => props.labelPosition === LabelPositions.horizontal ? 'flex: 0.2;' : ''}
+    ${props => props.labelPosition === LabelPositions.horizontal
+        ? 'flex: 0.2;'
+        : ''}
 
-    padding: 0 1em 0 ${props => props.labelPosition === LabelPositions.horizontal ? '1em' : '0'};
+    ${props => props.labelPosition === LabelPositions.horizontal
+        ? 'padding: 0 1em'
+        : 'padding-top: 0.5em;'};
 
     font-family: "Gotham SSm A", "Gotham SSm B", sans-serif;
     font-size: 16px;
@@ -93,7 +104,7 @@ const SliderAdvancedLabel = styled.label<LabelProps>`
     overflow: hidden;
 `;
 
-const getSliderCursorStyles = (color: string) => (`
+const getSliderCursorStyles = (color: string, showSteps?: boolean) => (`
     width: 1em;
     height: 1em;
     border: 2px solid ${color};
@@ -106,7 +117,9 @@ const getSliderCursorStyles = (color: string) => (`
 
     transition: outline 0.5s ease-in-out;
 
-    margin-bottom: 0.75em;
+    ${showSteps
+        ? 'margin-bottom: 0.75em;'
+        : 'margin-top: 0.25em;'}
 
     &:hover {
         outline: ${getOutlineColor(lightenDarkenColor(color, 80))} solid 4px;
@@ -116,6 +129,7 @@ const getSliderCursorStyles = (color: string) => (`
 
 interface SliderInputInterface {
     color: string,
+    showSteps?: boolean
 }
 
 const SliderElementContainer = styled.div`
@@ -138,10 +152,10 @@ const SliderInput = styled.input<SliderInputInterface>`
     &::-webkit-slider-thumb {
         -webkit-appearance: none;
         appearance: none;
-        ${({color}) => getSliderCursorStyles(color)}
+        ${({color, showSteps}) => getSliderCursorStyles(color, showSteps)}
     }
     &::-moz-range-thumb {
-        ${({color}) => getSliderCursorStyles(color)}
+        ${({color, showSteps}) => getSliderCursorStyles(color, showSteps)}
     }
 `;
 
@@ -222,9 +236,16 @@ const SliderInputWrapper = styled.div`
 `;
 
 interface SliderValueInterface {
-    length: ElementLength
+    length: ElementLength,
+    labelPosition?: LabelPositions,
+    showSteps?: boolean
 }
 const SliderValue = styled.div<SliderValueInterface>`
+    ${props => props.labelPosition === LabelPositions.horizontal
+        ? 'align-items: flex-start;'
+        : `align-items: center;
+            padding-bottom: ${props.showSteps ? '1em' : '0'};
+        `}
     font-size: ${({length}) =>
         length === ElementLength.l || length === ElementLength.full ? '14px' : '11px'};
     color: ${props => props.color};
@@ -279,54 +300,6 @@ interface SliderElementInterface {
     onChange: (v: string | number) => void
 }
 
-const getStepValue = (min: number, step: number, i: number) => {
-    if (i === 0) {
-        return min;
-    }
-    return min + (step * (i));
-};
-
-const getDefaultValue = (
-    valueFromProps: string | number,
-    min: number,
-    options: Array<Option>
-): string | number =>
-    // When value from props is not defined, choose first step when steps are defined, choose min value instead
-    !valueFromProps || valueFromProps === ''
-        ? options && options.length > 0
-            ? options[0].label
-            : min
-        : valueFromProps;
-
-
-const parseUnavailableValues = (
-    min: number,
-    max: number,
-    step: number
-) => {
-    // Parse step value when below 0
-    const newStep = step <= 0 ? 1 : step;
-    // Parse max value when minor than min value
-    const newMax = max < min ? min : max;
-
-    return {
-        newStep,
-        newMax,
-        newMin: min
-    };
-};
-
-const calculateTooltipPosition = (min: number, max: number, value: string | number) => {
-    const parsedValue = typeof value === 'string' ? parseInt(value, 10) : value;
-    const newVal = Number(((parsedValue - min) * 100) / (max - min));
-    const left = `calc(${newVal}% + (${8 - newVal * 0.15}px))`;
-    return left;
-};
-
-function getOutlineColor(color: string, opacity = '0.5'): string {
-    const rgb = rgbFromHex(color);
-    return `rgba(${rgb.r},${rgb.g},${rgb.b},${opacity})`;
-}
 
 function SliderElement({
     labelPosition,
@@ -411,6 +384,8 @@ function SliderElement({
                 className="ie-slider__element__value"
                 length={length}
                 color={cursorColor}
+                labelPosition={labelPosition}
+                showSteps={showSteps}
             >
                 {value}
             </SliderValue>
@@ -430,6 +405,7 @@ function SliderElement({
                     max={newMax}
                     value={value}
                     list={id}
+                    showSteps={showSteps}
                     onChange={onSliderChange}
                 />
                 {showTooltip && (

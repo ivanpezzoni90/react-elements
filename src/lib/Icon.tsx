@@ -24,7 +24,7 @@ const IconWrapper = styled.div<IconWrapperInterface>`
 
     background-color: ${props => props.backgroundColor};
     border-radius: ${props => props.borderRadius};
-    padding: ${props => props.padding}
+    padding: ${props => props.padding};
 `;
 
 interface IconProps {
@@ -85,4 +85,4 @@ const defaultProps: IconProps = {
 
 Icon.defaultProps = defaultProps;
 
-export { IconList, Icon};
+export { Icon};

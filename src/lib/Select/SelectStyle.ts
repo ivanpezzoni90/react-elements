@@ -143,11 +143,14 @@ export const DropDownListContainer = styled('div')<DropDownContainerProps>`
     position: absolute;
     width: ${(props) => (
         props.length === ElementLength.full
-            ? props.computedWidth
+            ? '100%'
             : props.length
         )
     };   
-    ${props => props.zIndex ? `z-index: ${props.zIndex}` : ''}
+    ${props => props.zIndex ? `z-index: ${props.zIndex}` : ''};
+    background-color: ${allColors['White']};
+    box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
 `;
 
 export interface DropDownListInterface {
@@ -156,10 +159,8 @@ export interface DropDownListInterface {
 export const DropDownList = styled('ul')<DropDownListInterface>`
     border-radius: ${props => props.borderRadius};
     margin-top: 0;
+    margin-bottom: 0.5em;
     padding: 0;
-    background-color: #ffffff;
-    box-shadow: 0px 4px 20px 0px  rgba(0, 0, 0, 0.2);
-    box-sizing: border-box;
     color: #666;
     font-size: 1em;
     font-weight: 500;

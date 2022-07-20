@@ -1,11 +1,11 @@
 import React from 'react';
 
 import Editor from './EditorBuilder';
-import { BorderRadius, Cursors, EditorSection, EditorSectionTypes, EditorTypes, Padding } from '../lib/types';
+import { EditorSection, EditorSectionTypes, EditorTypes, IconSize } from '../lib/types';
 import { Fragment } from 'react';
-import { Icon } from '../lib/Icon';
+import { Spinner } from '../lib/Spinner';
 import { useEditorInit } from '../lib/hooks';
-import { borderRadiusEditor, cursorEditor, iconEditor, iconSizeEditor, paddingEditor } from './commons/editors';
+import { iconEditor, iconSizeEditor, spinnerSpeedEditor, spinnerStepsEditor } from './commons/editors';
 import { ElementContainer } from './commons/ElementContainer';
 import { allColors } from '../lib/constants/colors';
 import { IconList } from '../lib/constants/icons';
@@ -16,29 +16,22 @@ const getEditor = () => {
             type: EditorSectionTypes.section,
             label: 'Icon',
             editors: [
-                iconEditor(IconList.check, false),
+                iconEditor(IconList.spinner, false),
                 {
                     type: EditorTypes.color,
                     default: allColors['Dim Gray'],
                     label: 'Color',
                     prop: 'color'
                 },
-                iconSizeEditor()
+                iconSizeEditor(IconSize.m)
             ]
         },
         {
             type: EditorSectionTypes.section,
-            label: 'Container',
+            label: 'Spinner',
             editors: [
-                {
-                    prop: 'backgroundColor',
-                    type: EditorTypes.color,
-                    label: 'Container color',
-                    default: allColors['Transparent'],
-                },
-                borderRadiusEditor(BorderRadius.no),
-                paddingEditor(Padding.xs),
-                cursorEditor(Cursors.auto)
+                spinnerSpeedEditor(),
+                spinnerStepsEditor(),
             ]
         }
     ];
@@ -51,9 +44,9 @@ export default function IconEditor() {
         const {
             onChangeProp,
             props
-        } = useEditorInit(Icon.defaultProps);
+        } = useEditorInit(Spinner.defaultProps);
 
-        const iconProps = props.icon ? props : Object.assign({}, props, {
+        const spinnerProps = props.icon ? props : Object.assign({}, props, {
             icon: IconList.check
         });
         const editorJson: EditorSection[] = getEditor();
@@ -61,13 +54,13 @@ export default function IconEditor() {
         return (
             <Fragment>
                 <ElementContainer>
-                    <Icon
-                        {...iconProps}
+                    <Spinner
+                        {...spinnerProps}
                     />
                 </ElementContainer>
                 <Editor
-                    element="Icon"
-                    defaultProps={Icon.defaultProps}
+                    element="Spinner"
+                    defaultProps={Spinner.defaultProps}
                     json={editorJson}
                     onChange={onChangeProp}
                 />

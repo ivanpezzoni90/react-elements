@@ -10,9 +10,10 @@ import {
     ToggleLabelType
 } from './types';
 import { AlignPositions, LabelPositions } from './types';
-import {IconList, Icon} from './Icon';
+import { Icon} from './Icon';
 import { allColors } from './constants/colors';
 import { useBodyFontSize } from './hooks';
+import { IconList } from './constants/icons';
 
 interface Slider {
     toggle: boolean,

@@ -32,7 +32,8 @@ export interface InputProps {
     placeholder?: string,
     showBorders?: boolean,
     hideBottomBorder?: boolean
-    borderRadius?: BorderRadius
+    borderRadius?: BorderRadius,
+    textarea?: boolean
 }
 
 export type SetErrorType = (e: boolean) => void;
@@ -59,7 +60,8 @@ export interface InputTypeProps {
     showBorders?: boolean,
     hideBottomBorder?: boolean,
     borderRadius?: BorderRadius,
-    placeholder?: string
+    placeholder?: string,
+    textarea?: boolean
 }
 
 export interface InputWrapperProps {
@@ -75,6 +77,7 @@ export interface InputWrapperProps {
     labelPosition?: LabelPositions,
     borderRadius?: BorderRadius,
     height?: ElementHeight
+    textarea?: boolean
 }
 
 export interface LabelProps {
@@ -90,7 +93,7 @@ export interface LabelProps {
     placeholder?: string
 }
 
-export interface InputElementProps {
+export interface CommonElementProps {
     error: boolean,
     length: string,
     active?: boolean,
@@ -100,12 +103,20 @@ export interface InputElementProps {
     placeholder?: string,
     id: string,
     defaultValue: string,
-    onChange: throttle<(event: React.ChangeEvent<HTMLInputElement>) => void>,
     onFocus: VoidFunction,
-    onBlur: (event: React.ChangeEvent<HTMLInputElement>) => void,
     computedWidth: string,
     minlength?: number,
     maxlength?: number,
+    textarea?: boolean
+}
+export interface InputElementProps extends CommonElementProps {
+    onChange: throttle<(event: React.ChangeEvent<HTMLInputElement>) => void>,
+    onBlur: (event: React.ChangeEvent<HTMLInputElement>) => void,
+}
+
+export interface TextareaElementProps extends CommonElementProps {
+    onChange: throttle<(event: React.ChangeEvent<HTMLTextAreaElement>) => void>,
+    onBlur: (event: React.ChangeEvent<HTMLTextAreaElement>) => void,
 }
 
 export type CheckValidatorsType = (v: string, opts?: {

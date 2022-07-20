@@ -8,6 +8,21 @@ import { verifyElementRgbColor, verifyElementRgbColorProp } from '../modules/ass
 import { selectSliderElementDatalist, selectSliderElementDatalistNthOption, selectSliderElementDatalistOptions, selectSliderElementInput, selectSliderElementTooltip, selectSliderElementValue, selectSliderLabel, selectSliderWrapper } from '../modules/selectors';
 import { log } from '../modules/utils';
 
+// Added workaround for input type range not firing React onChange
+// when using invoke() and trigger('change')
+// TODO: Remove `.then()` workaround and replace with commented steps when
+// issue is resolved: https://github.com/cypress-io/cypress/issues/1570
+const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
+    window.HTMLInputElement.prototype,
+    'value'
+).set;
+const changeRangeInputValue = input => value => {
+    nativeInputValueSetter.call(input[0], value);
+    const event = new Event('change', { value, bubbles: true } as EventInit);
+    input[0].dispatchEvent(event);
+    return input;
+};
+
 describe('Slider', () => {
     it('Slider props', () => {
         log('Verify slider default props');
@@ -145,21 +160,6 @@ describe('Slider', () => {
 
         log('Change slider value');
 
-        // Added workaround for input type range not firing React onChange
-        // when using invoke() and trigger('change')
-        // TODO: Remove `.then()` workaround and replace with commented steps when
-        // issue is resolved: https://github.com/cypress-io/cypress/issues/1570
-        const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
-            window.HTMLInputElement.prototype,
-            'value'
-        ).set;
-        const changeRangeInputValue = input => value => {
-            nativeInputValueSetter.call(input[0], value);
-            const event = new Event('change', { value, bubbles: true } as EventInit);
-            input[0].dispatchEvent(event);
-            return input;
-        };
-
         // 45
         selectSliderElementInput()
             // .invoke('val', '45')
@@ -200,5 +200,46 @@ describe('Slider', () => {
         selectSliderElementTooltip().should('have.text', '30');
 
 
+    });
+
+    it('Slider callbacks', () => {
+        let count = 0;
+        cy.mount(<Slider
+            length={ElementLength.xxl}
+            min={0}
+            max={100}
+            step={5}
+            onChange={(newValue) => {
+                switch(count) {
+                    case 0: expect(newValue).to.eq('5');break;
+                    case 1: expect(newValue).to.eq('15');break;
+                    case 2: expect(newValue).to.eq('25');break;
+                    case 3: expect(newValue).to.eq('35');break;
+                    case 4: expect(newValue).to.eq('45');break;
+                }
+                count++;
+            }}
+        />);
+
+        selectSliderElementInput()
+            // .invoke('val', '5')
+            // .trigger('change')
+            .then(input => changeRangeInputValue(input)(5));
+        selectSliderElementInput()
+            // .invoke('val', '15')
+            // .trigger('change')
+            .then(input => changeRangeInputValue(input)(15));
+        selectSliderElementInput()
+            // .invoke('val', '25')
+            // .trigger('change')
+            .then(input => changeRangeInputValue(input)(25));
+        selectSliderElementInput()
+            // .invoke('val', '35')
+            // .trigger('change')
+            .then(input => changeRangeInputValue(input)(35));
+        selectSliderElementInput()
+            // .invoke('val', '45')
+            // .trigger('change')
+            .then(input => changeRangeInputValue(input)(45));
     });
 });

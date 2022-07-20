@@ -18,6 +18,12 @@ const getEditor = (props: InputProps) => {
             label: 'Type',
             editors: [
                 {
+                    type: EditorTypes.toggle,
+                    default: false,
+                    prop: 'textarea',
+                    label: 'Textarea'
+                },
+                {
                     type: EditorTypes.select,
                     default: InputTypes.text,
                     label: 'Type',

@@ -15,7 +15,7 @@ import {
 } from '../modules/selectors';
 import { log } from '../modules/utils';
 import { verifyElementRgbColor, verifyElementRgbColorProp, verifySwitchToggleValue } from '../modules/assertions';
-import { IconList } from '../../src/lib/Icon';
+import { IconList } from '../../src/lib/constants/icons';
 
 const radioOptionsButton: Option[] = [{
     icon: IconList.volumeDown,
@@ -57,6 +57,39 @@ const radioOptionsCheckToggle: Option[] = [{
     label: 'Celes',
     value: 'celes'
 }];
+
+const verifyRadioIconInteractions = (nth, multiple) => {
+    verifyElementRgbColorProp(
+        selectRadioNthElementIcon(nth),
+        allRgbColors['Quick Silver'],
+        'background-color'
+    );
+    verifyElementRgbColorProp(
+        selectRadioNthElementIcon(nth).click(),
+        allRgbColors['Gray Web'],
+        'background-color'
+    );
+    verifyElementRgbColorProp(
+        selectRadioNthElementIcon(nth - 1),
+        multiple ? allRgbColors['Gray Web'] : allRgbColors['Quick Silver'],
+        'background-color'
+    );
+};
+
+const verifyRadioIconIsSelected = (nth, selected = true) => {
+    verifyElementRgbColorProp(
+        selectRadioNthElementIcon(nth),
+        selected ? allRgbColors['Gray Web'] : allRgbColors['Quick Silver'],
+        'background-color'
+    );
+};
+
+const verifyRadioToggleInteractions = (nth, multiple) => {
+    verifySwitchToggleValue(() => selectRadioNthElementToggleLabel(nth), 'NO');
+    verifySwitchToggleValue(() => selectRadioNthElementToggleSlider(nth).click(), 'YES');
+
+    verifySwitchToggleValue(() => selectRadioNthElementToggleLabel(nth - 1), multiple ? 'YES' : 'NO');
+};
 
 describe('Radio', () => {
     it('Radio default props', () => {
@@ -101,6 +134,16 @@ describe('Radio', () => {
         // labelColor
         verifyElementRgbColor(selectRadioLabel(), allRgbColors['Teal']);
     });
+
+    const verifyRadioCheckboxInteraction = (nth, multiple) => {
+        selectRadioNthElementCheckbox(nth).should('have.attr', 'data-checked').and('eq', 'not-checked');
+        selectRadioNthElementCheckbox(nth).click().should('have.attr', 'data-checked').and('eq', 'checked');
+
+        selectRadioNthElementCheckbox(nth - 1)
+            .should('have.attr', 'data-checked')
+            .and('eq', multiple ? 'checked' : 'not-checked');
+    };
+
     it('Radio type checkbox interactions', () => {
         log('Verify radio checkbox interactions');
         cy.mount(<Radio
@@ -111,30 +154,11 @@ describe('Radio', () => {
 
         log('Select another value and verify both data-checked status');
 
-        // Second el
-        selectRadioNthElementCheckbox(1).should('have.attr', 'data-checked').and('eq', 'not-checked');
-        selectRadioNthElementCheckbox(1).click().should('have.attr', 'data-checked').and('eq', 'checked');
-
-        selectRadioNthElementCheckbox(0).should('have.attr', 'data-checked').and('eq', 'not-checked');
+        verifyRadioCheckboxInteraction(1, false);
+        verifyRadioCheckboxInteraction(2, false);
+        verifyRadioCheckboxInteraction(3, false);
+        verifyRadioCheckboxInteraction(4, false);
     
-        // Third el
-        selectRadioNthElementCheckbox(2).should('have.attr', 'data-checked').and('eq', 'not-checked');
-        selectRadioNthElementCheckbox(2).click().should('have.attr', 'data-checked').and('eq', 'checked');
-
-        selectRadioNthElementCheckbox(1).should('have.attr', 'data-checked').and('eq', 'not-checked');
-
-        // Fourth el
-        selectRadioNthElementCheckbox(3).should('have.attr', 'data-checked').and('eq', 'not-checked');
-        selectRadioNthElementCheckbox(3).click().should('have.attr', 'data-checked').and('eq', 'checked');
-
-        selectRadioNthElementCheckbox(2).should('have.attr', 'data-checked').and('eq', 'not-checked');
-
-        // Fifth el
-        selectRadioNthElementCheckbox(4).should('have.attr', 'data-checked').and('eq', 'not-checked');
-        selectRadioNthElementCheckbox(4).click().should('have.attr', 'data-checked').and('eq', 'checked');
-
-        selectRadioNthElementCheckbox(3).should('have.attr', 'data-checked').and('eq', 'not-checked');
-
         log('Verify labels');
         selectRadioNthElementLabel(0).should('have.text', radioOptionsCheckToggle[0].label);
         selectRadioNthElementLabel(1).should('have.text', radioOptionsCheckToggle[1].label);
@@ -150,7 +174,34 @@ describe('Radio', () => {
         />);
 
         selectRadioNthElementCheckbox(0).should('have.attr', 'data-checked').and('eq', 'checked');
+
+        log('Radio checkbox multiple interactions');
+        cy.mount(<Radio
+            options={radioOptionsCheckToggle}
+            multiple
+        />);
+
+        selectRadioNthElementCheckbox(0).should('have.attr', 'data-checked').and('eq', 'not-checked');
+        selectRadioNthElementCheckbox(0).click().should('have.attr', 'data-checked').and('eq', 'checked');
+        
+        log('Select another item and verify the other one is still selected');
+        verifyRadioCheckboxInteraction(1, true);
+        verifyRadioCheckboxInteraction(2, true);
+        verifyRadioCheckboxInteraction(3, true);
+        verifyRadioCheckboxInteraction(4, true);
+
+        log('Verify radio checkbox multiple passed value');
+        cy.mount(<Radio
+            options={radioOptionsCheckToggle}
+            value={['terra', 'locke', 'edgar', 'cyan']}
+            multiple
+        />);
+        selectRadioNthElementCheckbox(0).should('have.attr', 'data-checked').and('eq', 'checked');
+        selectRadioNthElementCheckbox(1).should('have.attr', 'data-checked').and('eq', 'checked');
+        selectRadioNthElementCheckbox(2).should('have.attr', 'data-checked').and('eq', 'checked');
+        selectRadioNthElementCheckbox(4).should('have.attr', 'data-checked').and('eq', 'checked');
     });
+
     it('Radio type toggle interactions', () => {
         cy.mount(<Radio
             options={radioOptionsCheckToggle}
@@ -166,29 +217,10 @@ describe('Radio', () => {
 
         log('Select another value and verify other toggle labels');
 
-        // Second el
-        verifySwitchToggleValue(() => selectRadioNthElementToggleLabel(1), 'NO');
-        verifySwitchToggleValue(() => selectRadioNthElementToggleSlider(1).click(), 'YES');
-
-        verifySwitchToggleValue(() => selectRadioNthElementToggleLabel(0), 'NO');
-        
-        // Third el
-        verifySwitchToggleValue(() => selectRadioNthElementToggleLabel(2), 'NO');
-        verifySwitchToggleValue(() => selectRadioNthElementToggleSlider(2).click(), 'YES');
-
-        verifySwitchToggleValue(() => selectRadioNthElementToggleLabel(1), 'NO');
-        
-        // Fourth el
-        verifySwitchToggleValue(() => selectRadioNthElementToggleLabel(3), 'NO');
-        verifySwitchToggleValue(() => selectRadioNthElementToggleSlider(3).click(), 'YES');
-
-        verifySwitchToggleValue(() => selectRadioNthElementToggleLabel(2), 'NO');
-       
-        // Fifth el
-        verifySwitchToggleValue(() => selectRadioNthElementToggleLabel(4), 'NO');
-        verifySwitchToggleValue(() => selectRadioNthElementToggleSlider(4).click(), 'YES');
-
-        verifySwitchToggleValue(() => selectRadioNthElementToggleLabel(3), 'NO');
+        verifyRadioToggleInteractions(1, false);
+        verifyRadioToggleInteractions(2, false);
+        verifyRadioToggleInteractions(3, false);
+        verifyRadioToggleInteractions(4, false);
 
         log('Verify labels');
         selectRadioNthElementLabel(0).should('have.text', radioOptionsCheckToggle[0].label);
@@ -206,6 +238,33 @@ describe('Radio', () => {
         />);
 
         verifySwitchToggleValue(() => selectRadioNthElementToggleLabel(1), 'YES');
+
+        log('Verify radio toggle multiple interactions');
+        cy.mount(<Radio
+            options={radioOptionsCheckToggle}
+            type={RadioTypes.toggle}
+            multiple
+        />);
+        verifySwitchToggleValue(() => selectRadioNthElementToggleSlider(0).click(), 'YES');
+        log('Select another value and verify other toggles are still checked');
+        verifyRadioToggleInteractions(1, true);
+        verifyRadioToggleInteractions(2, true);
+        verifyRadioToggleInteractions(3, true);
+        verifyRadioToggleInteractions(4, true);
+
+
+        log('Verify radio toggle multiple passed value');
+        cy.mount(<Radio
+            options={radioOptionsCheckToggle}
+            type={RadioTypes.toggle}
+            value={['terra', 'locke', 'edgar', 'cyan']}
+            multiple
+        />);
+
+        verifySwitchToggleValue(() => selectRadioNthElementToggleLabel(0), 'YES');
+        verifySwitchToggleValue(() => selectRadioNthElementToggleLabel(1), 'YES');
+        verifySwitchToggleValue(() => selectRadioNthElementToggleLabel(2), 'YES');
+        verifySwitchToggleValue(() => selectRadioNthElementToggleLabel(4), 'YES');
     });
 
     it('Radio type icon interactions', () => {
@@ -223,23 +282,9 @@ describe('Radio', () => {
         log('Verify interactions');
         verifyElementRgbColorProp(selectRadioNthElementIcon(0).click(), allRgbColors['Gray Web'], 'background-color');
 
-        // Second el
-        verifyElementRgbColorProp(selectRadioNthElementIcon(1), allRgbColors['Quick Silver'], 'background-color');
-        verifyElementRgbColorProp(selectRadioNthElementIcon(1).click(), allRgbColors['Gray Web'], 'background-color');
-
-        verifyElementRgbColorProp(selectRadioNthElementIcon(0), allRgbColors['Quick Silver'], 'background-color');
-        
-        // Third el
-        verifyElementRgbColorProp(selectRadioNthElementIcon(2), allRgbColors['Quick Silver'], 'background-color');
-        verifyElementRgbColorProp(selectRadioNthElementIcon(2).click(), allRgbColors['Gray Web'], 'background-color');
-
-        verifyElementRgbColorProp(selectRadioNthElementIcon(1), allRgbColors['Quick Silver'], 'background-color');
-       
-        // Fourth el
-        verifyElementRgbColorProp(selectRadioNthElementIcon(3), allRgbColors['Quick Silver'], 'background-color');
-        verifyElementRgbColorProp(selectRadioNthElementIcon(3).click(), allRgbColors['Gray Web'], 'background-color');
-
-        verifyElementRgbColorProp(selectRadioNthElementIcon(2), allRgbColors['Quick Silver'], 'background-color');
+        verifyRadioIconInteractions(1, false);
+        verifyRadioIconInteractions(2, false);
+        verifyRadioIconInteractions(3, false);
 
         log('Verify labels not exists');
         selectRadioNthElementLabel(0).should('not.exist');
@@ -255,5 +300,140 @@ describe('Radio', () => {
         />);
 
         verifyElementRgbColorProp(selectRadioNthElementIcon(2), allRgbColors['Gray Web'], 'background-color');
+
+        log('Verify radio icon multiple interactions');
+        cy.mount(<Radio
+            options={radioOptionsButton}
+            type={RadioTypes.icon}
+            multiple
+        />);
+        verifyElementRgbColorProp(
+            selectRadioNthElementIcon(0).click(),
+            allRgbColors['Gray Web'],
+            'background-color'
+        );
+        verifyRadioIconInteractions(1, true);
+        verifyRadioIconInteractions(2, true);
+        verifyRadioIconInteractions(3, true);
+
+        log('Verify radio icon multiple passed value');
+        cy.mount(<Radio
+            options={radioOptionsButton}
+            type={RadioTypes.icon}
+            value={['down', 'up', 'off']}
+            multiple
+        />);
+        verifyRadioIconIsSelected(0);
+        verifyRadioIconIsSelected(1);
+        verifyRadioIconIsSelected(3);
+    });
+
+    it('Radio callbacks', () => {
+        const verifyOnChange = (newValue, count) => {
+            switch(count) {
+                case 0: expect(newValue).to.eq('terra'); break;
+                case 1: expect(newValue).to.eq('locke'); break;
+                case 2: expect(newValue).to.eq('edgar'); break;
+                case 3: expect(newValue).to.eq('sabin'); break;
+                case 4: expect(newValue).to.eq('cyan'); break;
+            }
+        };
+        const verifyMultipleOnChange = (newValue, count) => {
+            switch(count) {
+                case 0: expect(newValue).to.deep.equal(['terra']); break;
+                case 1: expect(newValue).to.deep.equal(['terra', 'locke']); break;
+                case 2: expect(newValue).to.deep.equal(['terra', 'locke', 'edgar']); break;
+                case 3: expect(newValue).to.deep.equal(['terra', 'locke', 'edgar', 'sabin']); break;
+                case 4: expect(newValue).to.deep.equal(['terra', 'locke', 'edgar', 'sabin', 'cyan']); break;
+            }
+        };
+
+        const selectRadioValues = (type: RadioTypes) => {
+            let selector;
+            switch(type) {
+                case RadioTypes.checkbox: selector = selectRadioNthElementCheckbox;break;
+                case RadioTypes.toggle: selector = selectRadioNthElementToggleSlider;break;
+                case RadioTypes.icon: selector = selectRadioNthElementIcon;break;
+            }
+            selector(0).click();
+            selector(1).click();
+            selector(2).click();
+            selector(3).click();
+            selector(4).click();
+        };
+
+        log('type checkbox');
+        let countC = 0;
+        cy.mount(<Radio
+            options={radioOptionsCheckToggle}
+            onChange={(newValue) => {
+                verifyOnChange(newValue, countC);
+                countC++;
+            }}
+        />);
+        selectRadioValues(RadioTypes.checkbox);
+
+        log('type checkbox multiple');
+        let countC2 = 0;
+        cy.mount(<Radio
+            multiple
+            options={radioOptionsCheckToggle}
+            onChange={(newValue) => {
+                verifyMultipleOnChange(newValue, countC2);
+                countC2++;
+            }}
+        />);
+        selectRadioValues(RadioTypes.checkbox);
+
+
+        log('type toggle');
+        let countT = 0;
+        cy.mount(<Radio
+            options={radioOptionsCheckToggle}
+            type={RadioTypes.toggle}
+            onChange={(newValue) => {
+                verifyOnChange(newValue, countT);
+                countT++;
+            }}
+        />);
+        selectRadioValues(RadioTypes.toggle);
+
+        log('type toggle multiple');
+        let countT2 = 0;
+        cy.mount(<Radio
+            multiple
+            options={radioOptionsCheckToggle}
+            type={RadioTypes.toggle}
+            onChange={(newValue) => {
+                verifyMultipleOnChange(newValue, countT2);
+                countT2++;
+            }}
+        />);
+        selectRadioValues(RadioTypes.toggle);
+
+        log('type icon');
+        let countI = 0;
+        cy.mount(<Radio
+            options={radioOptionsCheckToggle}
+            type={RadioTypes.icon}
+            onChange={(newValue) => {
+                verifyOnChange(newValue, countI);
+                countI++;
+            }}
+        />);
+        selectRadioValues(RadioTypes.icon);
+
+        log('type icon multiple');
+        let countI2 = 0;
+        cy.mount(<Radio
+            multiple
+            options={radioOptionsCheckToggle}
+            type={RadioTypes.icon}
+            onChange={(newValue) => {
+                verifyMultipleOnChange(newValue, countI2);
+                countI2++;
+            }}
+        />);
+        selectRadioValues(RadioTypes.icon);
     });
 });

@@ -5,7 +5,7 @@ import { InputTypes } from '../../src/lib/Input/config';
 import { BorderRadius, ElementHeight, ElementLength, LabelLength, LabelPositions } from '../../src/lib/types';
 import { checkDefaultElementProps } from '../modules/actions';
 import { verifyElementNotHasRgbColor, verifyElementRgbColor, verifyElementRgbColorProp } from '../modules/assertions';
-import { selectInput, selectInputLabel, selectInputNumberIcons, selectInputWrapper } from '../modules/selectors';
+import { selectInput, selectInputLabel, selectInputNumberIcons, selectInputWrapper, selectTextarea } from '../modules/selectors';
 import { log } from '../modules/utils';
 
 describe('Input', () => {
@@ -115,6 +115,7 @@ describe('Input', () => {
         selectInputLabel().should('have.css', 'max-width').and('eq', `${parseFloat(LabelLength.m)*16}px`);
         selectInputWrapper().should('have.css', 'border-radius').and('eq', `${parseFloat(BorderRadius.l)*16}px`);
     });
+    
     it('Text input', () => {
         cy.mount(<Input
             min={5}
@@ -140,6 +141,7 @@ describe('Input', () => {
             allRgbColors['Lava']
         );
     });
+    
     it('Number input', () => {
         cy.mount(<Input
             type={InputTypes.number}
@@ -215,5 +217,192 @@ describe('Input', () => {
             selectInput().type('2022-01-25').should('have.value', '2022-01-25'),
             allRgbColors['Lava']
         );
+    });
+
+    it('Input textarea props', () => {
+        cy.mount(<Input
+            textarea
+        />);
+
+        log('Verify initial value');
+        selectTextarea().should('have.value', '');
+        selectTextarea().should('have.css', 'resize').and('eq', 'vertical');
+
+        log('Verify label is always active on textarea');
+        selectInputLabel().should('have.css', 'font-size').and('eq', '12px');
+
+        log('Verify default props');
+        checkDefaultElementProps(
+            selectInputWrapper,
+            selectInputLabel,
+            {
+                height: null
+            }
+        );
+        // textColor
+        verifyElementRgbColor(selectTextarea().type('check my color'), allRgbColors['Dim Gray']);
+
+        const textareaValue = `Long ago, the War of the Magi reduced the world to a scorched wasteland, and magic simply ceased to exist.
+        1000 years have passed... Iron, gunpowder, and steam engines have been rediscovered, and high technology reigns...`;
+        log('Verify textarea with passed value');
+        cy.mount(<Input
+            textarea
+            value={textareaValue}
+        />);
+        selectTextarea().should('have.value', textareaValue);
+        selectInputLabel().should('have.css', 'font-size').and('eq', '12px');
+
+        log('Verify custom props and styles');
+        cy.mount(<Input
+            textarea
+            className="additional-class"
+            label="Name"
+            length={ElementLength.m}
+            placeholder="Your name"
+        />);
+
+        // className
+        selectInputWrapper().should('have.class', 'additional-class');
+
+        // label
+        selectInputLabel().should('have.text', 'Name');
+
+        // length
+        selectInputWrapper().should('have.css', 'width')
+            .and('eq', `${parseInt(ElementLength.m, 10)*16}px`);
+
+        // placeholder
+        selectTextarea().should('have.attr', 'placeholder').and('eq', 'Your name');
+
+        cy.mount(<Input
+            textarea
+            hideLabel
+        />);
+
+        // hideLabel
+        selectInputLabel().should('not.exist');
+
+        cy.mount(<Input
+            textarea
+            error
+            errorMessage="Error label"
+            value="Error value"
+            hideBottomBorder
+        />);
+
+        verifyElementRgbColor(selectInputLabel().should('have.text', 'Error label'), allRgbColors['Lava']);
+        verifyElementRgbColor(selectTextarea().should('have.value', 'Error value'), allRgbColors['Lava']);
+        // TODO: How to test there is no bottom border?
+
+
+        cy.mount(<Input
+            textarea
+            shadow={false}
+            labelColor={allColors['Teal']}
+            textColor={allColors['Teal']}
+            borderColor={allColors['Teal']}
+            labelPosition={LabelPositions.horizontal}
+            labelLength={LabelLength.m}
+            showBorders
+            borderRadius={BorderRadius.l}
+        />);
+
+        
+        // TODO: How to test there is no box-shadow?
+        verifyElementRgbColor(selectInputLabel(), allRgbColors['Teal']);
+        verifyElementRgbColor(selectTextarea(), allRgbColors['Teal']);
+        verifyElementRgbColorProp(selectInputWrapper(), allRgbColors['Teal'], 'border-bottom-color');
+        verifyElementRgbColorProp(selectInputWrapper(), allRgbColors['Teal'], 'border-top-color');
+        verifyElementRgbColorProp(selectInputWrapper(), allRgbColors['Teal'], 'border-left-color');
+        verifyElementRgbColorProp(selectInputWrapper(), allRgbColors['Teal'], 'border-right-color');
+
+        selectInputWrapper().should('have.css', 'flex-direction').and('eq', 'row');
+        selectInputLabel().should('have.css', 'max-width').and('eq', `${parseFloat(LabelLength.m)*16}px`);
+        selectInputWrapper().should('have.css', 'border-radius').and('eq', `${parseFloat(BorderRadius.l)*16}px`);
+
+
+        log('Verify textarea interactions');
+        cy.mount(<Input
+            textarea
+        />);
+
+        selectTextarea()
+            .type('But there are some who would enslave the world')
+            .should('have.value', 'But there are some who would enslave the world')
+            .type('{enter}')
+            .type('by reviving the dread destructive force known as “magic.”')
+            .should('have.value', 'But there are some who would enslave the world\nby reviving the dread destructive force known as “magic.”')
+            .clear()
+            .should('have.value', '');
+    });
+
+    it('Input callbacks', () => {
+        log('Verify onBlur');
+        cy.mount(<Input
+            onBlur={(newValue) => {
+                expect(newValue).to.eq('Sabin');
+            }}
+        />);
+        selectInput().type('Sabin').blur();
+
+        log('Verify onChange');
+        cy.mount(<Input
+            onChange={(newValue) => {
+                expect(newValue).to.eq('T');
+            }}
+        />);
+        selectInput().type('T');
+
+        log('Verify onChange typing with 250ms delay to avoid throttle');
+        let count = 0;
+        cy.mount(<Input
+            onChange={(newValue) => {
+                switch(count) {
+                    case 0: expect(newValue).to.eq('T');break;
+                    case 1: expect(newValue).to.eq('Te');break;
+                    case 2: expect(newValue).to.eq('Ter');break;
+                    case 3: expect(newValue).to.eq('Terr');break;
+                    case 4: expect(newValue).to.eq('Terra');break;
+                }
+                count++;
+            }}
+        />);
+        selectInput().type('Terra', {delay: 250});
+
+        log('Verify throttled onChange by asserting the first letter and the whole word on the next onChange');
+        let count2 = 0;
+        cy.mount(<Input
+            onChange={(newValue) => {
+                if (count2 === 0) {
+                    expect(newValue).to.eq('E');
+                } else {
+                    expect(newValue).to.eq('Edgar');
+                }
+                count2++;
+            }}
+        />);
+
+        selectInput().type('Edgar');
+
+    });
+
+    it('Textarea callbacks', () => {
+        log('Verify onBlur');
+        cy.mount(<Input
+            textarea
+            onBlur={(newValue) => {
+                expect(newValue).to.eq('Sabin');
+            }}
+        />);
+        selectTextarea().type('Sabin').blur();
+
+        log('Verify onChange');
+        cy.mount(<Input
+            textarea
+            onChange={(newValue) => {
+                expect(newValue).to.eq('T');
+            }}
+        />);
+        selectTextarea().type('T');
     });
 });

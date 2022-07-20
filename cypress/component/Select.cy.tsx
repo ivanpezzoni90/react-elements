@@ -1,9 +1,9 @@
 import React from 'react';
 import { allColors, allRgbColors } from '../../src/lib/constants/colors';
-import { IconList } from '../../src/lib/Icon';
+import { IconList } from '../../src/lib/constants/icons';
 import {Select} from '../../src/lib/Select';
 import { BorderRadius, ElementLength, LabelLength, LabelPositions, Option } from '../../src/lib/types';
-import { checkCustomElementProps, checkDefaultElementProps } from '../modules/actions';
+import { checkCustomElementProps, checkDefaultElementProps, selectOption, selectOptionMultiple } from '../modules/actions';
 import { verifyElementRgbColor, verifyElementRgbColorProp } from '../modules/assertions';
 import { selectDropdownFilter, selectDropdownListItems, selectDropdownListNthItem, selectDropdownListNthItemCheckbox, selectSelectChips, selectSelectElement, selectSelectLabel, selectSelectNthChip, selectSelectNthChipClose, selectSelectNthChipText, selectSelectResetButton, selectSelectSingleChipIcon, selectSelectSingleChipText, selectSelectWrapper } from '../modules/selectors';
 import { log } from '../modules/utils';
@@ -184,5 +184,47 @@ describe('Select', () => {
         
         log('Verify hide label');
         selectSelectLabel().should('not.exist');
+    });
+    it('Select callbacks', () => {
+        log('Verify onChange');
+        cy.mount(<Select
+            options={selectOptions}
+            onChange={(newValue) => {
+                expect(newValue).to.eq('heart');
+            }}
+        />);
+        selectOption(selectSelectWrapper, 0);
+
+        log('Verify multiple onChange');
+        let count = 0;
+        cy.mount(<Select
+            multiple
+            options={selectOptions}
+            onChange={(newValue) => {
+                switch(count) {
+                    case 0: expect(newValue).to.deep.equal(['heart']);break;
+                    case 1: expect(newValue).to.deep.equal(['heart', 'eye']);break;
+                    case 2: expect(newValue).to.deep.equal(['heart', 'eye', 'redo']);break;
+                    case 3: expect(newValue).to.deep.equal(['heart', 'eye', 'redo', 'search']);break;
+                    
+                    case 4: expect(newValue).to.deep.equal(['eye', 'redo', 'search']);break;
+                    case 5: expect(newValue).to.deep.equal(['redo', 'search']);break;
+                    case 6: expect(newValue).to.deep.equal(['search']);break;
+                    case 7: expect(newValue).to.deep.equal([]);break;
+                }
+                count++;
+            }}
+        />);
+
+        log('Select values');
+        selectOptionMultiple(selectSelectWrapper, 0, true);
+        selectOptionMultiple(selectSelectWrapper, 2);
+        selectOptionMultiple(selectSelectWrapper, 4);
+        selectOptionMultiple(selectSelectWrapper, 6);
+        log('Unselect values');
+        selectOptionMultiple(selectSelectWrapper, 0);
+        selectOptionMultiple(selectSelectWrapper, 2);
+        selectOptionMultiple(selectSelectWrapper, 4);
+        selectOptionMultiple(selectSelectWrapper, 6);
     });
 });

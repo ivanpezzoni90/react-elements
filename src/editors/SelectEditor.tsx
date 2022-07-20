@@ -9,6 +9,7 @@ import { BorderRadius, EditorSection, EditorSectionTypes, EditorTypes, LabelPosi
 import { Select, SelectProps } from '../lib/Select';
 import { useEditorInit } from '../lib/hooks';
 import { allColors } from '../lib/constants/colors';
+import { IconList } from '../lib/constants/icons';
 
 const getEditor = (props: SelectProps): EditorSection[] => ([
     labelSection(LabelPositions.vertical),
@@ -78,17 +79,33 @@ export default function SelectEditor() {
     return function SelectEditorFn () {
         const extendedProps = Object.assign({}, Select.defaultProps, {
             options: [{
-                label: 'Option 1',
-                value: 'option1'
+                label: 'Terra',
+                value: 'terra',
+                icon: IconList.aura
             }, {
-                label: 'Option 2',
-                value: 'option2'
+                label: 'Locke',
+                value: 'locke',
+                icon: IconList.broadDagger
             }, {
-                label: 'Option 3',
-                value: 'option3'
+                label: 'Edgar',
+                value: 'edgar',
+                icon: IconList.toolbox
             }, {
-                label: 'Option 4',
-                value: 'option4'
+                label: 'Sabin',
+                value: 'sabin',
+                icon: IconList.wolverineClaws
+            }, {
+                label: 'Cyan',
+                value: 'cyan',
+                icon: IconList.broadsword
+            }, {
+                label: 'Setzer',
+                value: 'setzer',
+                icon: IconList.zeppelin
+            }, {
+                label: 'Celes',
+                value: 'celes',
+                icon: IconList.runeSword
             }]
         });
 

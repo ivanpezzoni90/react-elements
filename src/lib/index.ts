@@ -7,3 +7,6 @@ export { Icon } from './Icon';
 export { Radio } from './Radio';
 export { SwitchToggleElement, SwitchToggle } from './SwitchToggle';
 export { SliderElement, Slider } from './Slider';
+export { Spinner } from './Spinner';
+export { Portal } from './Portal';
+export { Modal } from './Modal';
