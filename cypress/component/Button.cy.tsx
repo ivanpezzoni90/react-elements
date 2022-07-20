@@ -24,13 +24,13 @@ describe('Button', () => {
         // length
         selectButton().should('have.css', 'width').and('eq', '484px');
         // height
-        selectButton().should('have.css', 'height').and('eq', '63px'); // TODO: Computed height is different from 16*3.5em
+        selectButton().should('have.css', 'height').and('eq', '35px'); // TODO: Computed height is different from 16*3.5em
         // borderRadius
-        selectButton().should('have.css', 'border-radius').and('eq', '9px'); // TODO: Computed bradius is different from 16*0.5em
+        selectButton().should('have.css', 'border-radius').and('eq', '7px'); // TODO: Computed bradius is different from 16*0.5em
         // fontWeight
         selectButton().should('have.css', 'font-weight').and('eq', FontWeight.light);
         // fontSize
-        selectButton().should('have.css', 'font-size').and('eq', '18px'); // TODO: Computed fsize is different from FontSize.m
+        selectButton().should('have.css', 'font-size').and('eq', ElementSize.s);
         // color
         verifyElementRgbColorProp(selectButton(), allRgbColors['Firebrick'], 'background-color');
         // textcolor
@@ -71,7 +71,7 @@ describe('Button', () => {
         // fontWeight
         selectButton().should('have.css', 'font-weight').and('eq', FontWeight.bold);
         // fontSize
-        selectButton().should('have.css', 'font-size').and('eq', ElementSize.xl); // TODO: Computed fsize is different from FontSize.m
+        selectButton().should('have.css', 'font-size').and('eq', ElementSize.xl);
         // color
         verifyElementRgbColorProp(selectButton(), allRgbColors['Teal'], 'background-color');
         // textcolor
@@ -96,7 +96,7 @@ describe('Button', () => {
         // (computed sizes different from actual)
         selectButtonIcon().should('have.css', 'font-size').and(
             'eq',
-            `${18 * ButtonIconSize.xl}px`
+            `${parseInt(ElementSize.s, 10) * ButtonIconSize.xl}px`
         );
         verifyElementRgbColor(selectButtonIcon(), allRgbColors['Blue Violet']);
 
