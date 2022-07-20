@@ -247,17 +247,17 @@ export const selectIcon: Selector<HTMLDivElement> = (
 
 
 // BUTTON
-export const selectButton: Selector<HTMLDivElement> = () => cy.get('.ie-button');
+export const selectButton: Selector<HTMLButtonElement> = () => cy.get('.ie-button');
 
-export const selectButtonLabel: Selector<HTMLDivElement> = (
+export const selectButtonLabel: Selector<HTMLDivElement, HTMLButtonElement> = (
     parent = selectButton
 ) => parent().find('.ie-button__label');
 
-export const selectButtonIconContainer: Selector<HTMLDivElement> = (
+export const selectButtonIconContainer: Selector<HTMLDivElement, HTMLButtonElement> = (
     parent = selectButton
 ) => parent().find('.ie-button__icon');
 
-export const selectButtonIcon: Selector<HTMLDivElement> = (
+export const selectButtonIcon: Selector<HTMLDivElement, HTMLButtonElement> = (
     parent = selectButton
 ) => selectButtonIconContainer(parent).find('svg');
 
@@ -347,8 +347,63 @@ export const selectSliderElementDatalistNthOption: SelectorWithParam<number, HTM
     parent = selectSliderWrapper
 ) => selectSliderElementDatalistOptions(parent).eq(nth);
 
-
-
 // SPINNER
 export const selectSpinner: Selector<HTMLDivElement> = () => cy.get('.ie-spinner');
 
+
+// MODAL
+export const selectModalButton: Selector<HTMLButtonElement> = () => cy.get('.modal-with-button');
+export const selectModalBackground: Selector<HTMLDivElement> = () => cy.get('.ie-modal-background');
+export const selectModal: Selector<HTMLDivElement> = () => cy.get('.ie-modal');
+
+export const selectModalHeader: Selector<HTMLDivElement> = (
+    parent = selectModal
+) => parent().find('.ie-modal__header');
+
+export const selectModalHeaderButtonWrapper: Selector<HTMLDivElement> = (
+    parent = selectModal
+) =>
+    selectModalHeader(parent).find('.ie-modal__header__buttons');
+
+export const selectModalHeaderButtons: Selector<HTMLDivElement> = (
+    parent = selectModal
+) =>
+    selectModalHeaderButtonWrapper(parent).find('.ie-modal__header__buttons__button');
+
+export const selectModalHeaderNthButton: SelectorWithParam<number, HTMLDivElement, HTMLDivElement> = (
+    nth: number,
+    parent = selectModal
+) =>
+    selectModalHeaderButtons(parent).eq(nth);
+
+export const selectModalTitle: Selector<HTMLDivElement> = (
+    parent = selectModal
+) => selectModalHeader(parent).find('.ie-modal__header__title');
+
+export const selectModalClose: Selector<HTMLDivElement> = (
+    parent = selectModal
+) => selectModalHeader(parent).find('.ie-modal__header__close');
+
+export const selectModalContent: Selector<HTMLDivElement> = (
+    parent = selectModal
+) => parent().find('.ie-modal__content');
+
+export const selectModalFooter: Selector<HTMLDivElement> = (
+    parent = selectModal
+) => parent().find('.ie-modal__footer');
+
+export const selectModalFooterButtonWrapper: Selector<HTMLDivElement> = (
+    parent = selectModal
+) =>
+    selectModalFooter(parent).find('.ie-modal__footer__buttons');
+
+export const selectModalFooterButtons: Selector<HTMLDivElement> = (
+    parent = selectModal
+) =>
+    selectModalFooterButtonWrapper(parent).find('.ie-modal__footer__buttons__button');
+
+export const selectModalFooterNthButton: SelectorWithParam<number, HTMLDivElement, HTMLDivElement> = (
+    nth: number,
+    parent = selectModal
+) =>
+    selectModalFooterButtons(parent).eq(nth);
