@@ -8,6 +8,7 @@ import {
     EditorTypes,
     ElementHeight,
     ElementLength,
+    ElementPosition,
     ElementSize,
     FontWeight,
     IconSize,
@@ -437,6 +438,23 @@ export const bordersEditor: Editor[] = [
         prop: 'hideBottomBorder'
     }
 ];
+
+export const elementPositionEditor = (
+    def = ElementPosition.left,
+    label = 'Element Position'
+) => ({
+    type: EditorTypes.select,
+    default: def,
+    label,
+    prop: 'elementPosition',
+    options: [{
+        label: 'Left',
+        value: ElementPosition.left
+    }, {
+        label: 'Right',
+        value: ElementPosition.right
+    }]
+});
 
 export const bordersAndShadowSection = (): EditorSection => ({
     type: EditorSectionTypes.section,

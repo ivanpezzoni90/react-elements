@@ -7,6 +7,7 @@ import { useEditorInit } from '../lib/hooks';
 import {
     alignPositionEditor,
     borderRadiusEditor,
+    elementPositionEditor,
     fontSizeEditor,
     fontWeightEditor,
     heightEditor,
@@ -97,19 +98,7 @@ const getEditor = () => {
                         value: ButtonIconSize.xl
                     }]
                 },
-                {
-                    type: EditorTypes.select,
-                    default: ElementPosition.left,
-                    label: 'Icon Position',
-                    prop: 'elementPosition',
-                    options: [{
-                        label: 'Left',
-                        value: ElementPosition.left
-                    }, {
-                        label: 'Right',
-                        value: ElementPosition.right
-                    }]
-                }
+                elementPositionEditor(ElementPosition.left, 'Icon Position')
             ]
         },
         {

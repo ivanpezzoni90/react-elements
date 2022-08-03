@@ -168,7 +168,8 @@ export enum ToggleLabelType {
 export enum RadioTypes {
     checkbox = 'checkbox',
     toggle = 'toggle',
-    icon = 'icon'
+    icon = 'icon',
+    radio = 'radio'
 }
 
 export enum SpinnerSteps {

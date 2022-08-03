@@ -4,6 +4,7 @@ import { generateID, mergeClasses } from './helpers';
 import {
     BorderRadius,
     Cursors,
+    ElementPosition,
     ElementSize,
     LabelLength,
     LabelPositions,
@@ -100,6 +101,34 @@ const RadioLabel = styled.div`
     overflow: hidden;
 `;
 
+const RadioInputWrapper = styled.div`
+    padding: 0.25em 0.5em 0 0.25em;
+`;
+const RadioInput = styled.input`
+    -webkit-appearance: none;
+    width: 1.5em;
+    height: 1.5em;
+    border: 1px solid ${allColors['Dim Gray']};
+    border-radius: 50%;
+    outline: none;
+
+    :hover {
+        box-shadow: 0 0 5px 0px ${allColors['Quick Silver']} inset;
+    }
+
+    :before {
+        content: '';
+        display: block;
+        width: 100%;
+        height: 100%;
+        border-radius:50%;    
+    }
+
+    :checked:before {
+        background: ${allColors['Dim Gray']};
+    }
+`;
+
 interface RadioProps {
     className: string,
     label: string,
@@ -112,14 +141,16 @@ interface RadioProps {
     hideLabel?: boolean,
     labelColor?: string,
     multiple?: boolean,
+    elementPosition?: ElementPosition,
     onChange: (v: string | string[]) => void
 }
 
-interface getRadioElementType {
+interface RadioElementType {
     o: Option,
     type: RadioTypes,
     value: string | string[],
     multiple?: boolean,
+    elementPosition?: ElementPosition,
     isOptionSelected:  (value: string | string[], optionValue: string) => boolean,
     onRadioChange: (value: string) => void
 }
@@ -128,11 +159,24 @@ const RadioElementComponent = ({
     o,
     type,
     value,
+    elementPosition,
     isOptionSelected,
     onRadioChange
-}: getRadioElementType) => {
+}: RadioElementType) => {
     let element: ReactElement = <div></div>;
     switch(type) {
+        case RadioTypes.radio:
+            element = (<RadioInputWrapper>
+                <RadioInput
+                    className={'ie-radio__element__radio'}
+                    checked={isOptionSelected(value, o.value as string)}
+                    onClick={() => {
+                        onRadioChange(o.value as string);
+                    }}
+                    type="radio"
+                />
+            </RadioInputWrapper>);
+            break;
         case RadioTypes.checkbox:
             element = (<CheckboxElement
                 className={'ie-radio__element__checkbox'}
@@ -172,19 +216,23 @@ const RadioElementComponent = ({
         default:
             break;
     }
-    return <RadioElement
-        key={`key_${o.value}`}
-        type={type}
-        className="ie-radio__element"
-    >
-        {o.label !== '' ? (
+    const label = o.label !== ''
+        ? (
             <RadioLabel
                 className="ie-radio__element__label"
             >
                 {o.label}
             </RadioLabel>
-        ) : null}
-        {element}
+        ) : null;
+
+    return <RadioElement
+        key={`key_${o.value}`}
+        type={type}
+        className="ie-radio__element"
+    >
+        {elementPosition === ElementPosition.left && element}
+        {label}
+        {elementPosition === ElementPosition.right && element}
     </RadioElement>;
 };
 
@@ -201,6 +249,7 @@ function Radio(props: RadioProps) {
         labelColor,
         labelLength,
         multiple,
+        elementPosition,
         onChange
     } = props;
 
@@ -259,6 +308,7 @@ function Radio(props: RadioProps) {
                     type,
                     value,
                     multiple,
+                    elementPosition,
                     isOptionSelected,
                     onRadioChange
                 }))}
@@ -273,8 +323,9 @@ const defaultProps: RadioProps = {
     position: Positions.vertical,
     labelPosition: LabelPositions.vertical,
     labelLength: LabelLength.auto,
+    elementPosition: ElementPosition.left,
     value: '',
-    type: RadioTypes.checkbox,
+    type: RadioTypes.radio,
     options: [],
     labelColor: allColors['Dim Gray'],
     hideLabel: false,

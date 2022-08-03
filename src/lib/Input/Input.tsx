@@ -33,7 +33,8 @@ function InputElement({
     min,
     placeholder,
     computedWidth,
-    textarea
+    textarea,
+    name
 }: InputTypeProps) {
     const inputElementRef = useRef<HTMLInputElement>(null);
     const checkValidators: CheckValidatorsType = useCallback((newValue, opts = {}) => {
@@ -110,6 +111,7 @@ function InputElement({
         };
 
     const commonElementProps = {
+        name: name,
         className: 'ie-input__element',
         error: error,
         length: length,
@@ -185,7 +187,8 @@ function Input({
     borderRadius,
     height,
     placeholder,
-    textarea
+    textarea,
+    name
 }: InputProps) {
     // active = focused or with value
     const [active, setActive] = useState(activeFromProps || (valueFromProps !== ''));
@@ -281,6 +284,7 @@ function Input({
                 min={min}
                 placeholder={placeholder}
                 textarea={textarea}
+                name={name}
                 computedWidth={inputElementWidth}
             />
         </InputWrapper>
@@ -313,7 +317,8 @@ const defaultProps: InputProps = {
     hideLabel: false,
     height: ElementHeight.m,
     placeholder: '',
-    textarea: false
+    textarea: false,
+    name: ''
 };
 
 Input.defaultProps = defaultProps;
