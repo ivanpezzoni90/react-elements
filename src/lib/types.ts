@@ -172,6 +172,12 @@ export enum RadioTypes {
     radio = 'radio'
 }
 
+export enum ButtonTypes {
+    standard = 'standard',
+    outline = 'outline',
+    textOnly = 'textOnly'
+}
+
 export enum SpinnerSteps {
     'continuous' = 65,
     'sixteenSteps' = 17,

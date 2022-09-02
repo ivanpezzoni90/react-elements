@@ -2,7 +2,7 @@ import React from 'react';
 import { Fragment } from 'react';
 import Editor from './EditorBuilder';
 import {Button} from '../lib/Button';
-import { BorderRadius, ButtonIconSize, EditorSection, EditorSectionTypes, EditorTypes, ElementPosition } from '../lib/types';
+import { BorderRadius, ButtonIconSize, ButtonTypes, EditorSection, EditorSectionTypes, EditorTypes, ElementPosition } from '../lib/types';
 import { useEditorInit } from '../lib/hooks';
 import {
     alignPositionEditor,
@@ -113,6 +113,28 @@ const getEditor = () => {
                 },
                 alignPositionEditor(),
                 borderRadiusEditor(BorderRadius.s),
+                {
+                    type: EditorTypes.select,
+                    default: ButtonTypes.standard,
+                    label: 'Button type',
+                    prop: 'type',
+                    options: [{
+                        label: 'Standard',
+                        value: ButtonTypes.standard
+                    }, {
+                        label: 'Outline',
+                        value: ButtonTypes.outline
+                    }, {
+                        label: 'Text only',
+                        value: ButtonTypes.textOnly
+                    }]
+                },
+                {
+                    type: EditorTypes.toggle,
+                    default: true,
+                    label: 'Click animation',
+                    prop: 'clickAnimation'
+                }
             ]
         }
     ];

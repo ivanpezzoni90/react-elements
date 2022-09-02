@@ -1,5 +1,5 @@
 import { Option } from '../types';
-import { rgbFromHex } from './colorHelpers';
+import { hexToRgb } from './colorHelpers';
 
 // Calculate current step value (number) when needed
 export const getStepValue = (min: number, step: number, i: number) => {
@@ -51,6 +51,6 @@ export const calculateTooltipPosition = (min: number, max: number, value: string
 
 // Calculate outline color with alpha
 export function getOutlineColor(color: string, opacity = '0.5'): string {
-    const rgb = rgbFromHex(color);
+    const rgb = hexToRgb(color);
     return `rgba(${rgb.r},${rgb.g},${rgb.b},${opacity})`;
 }
