@@ -12,6 +12,7 @@ import {
     selectRadioNthElementToggleLabel,
     selectRadioNthElementToggleSlider,
     selectRadioNthElementIcon,
+    selectRadioNthElementRadio,
 } from '../modules/selectors';
 import { log } from '../modules/utils';
 import { verifyElementRgbColor, verifyElementRgbColorProp, verifySwitchToggleValue } from '../modules/assertions';
@@ -104,8 +105,8 @@ describe('Radio', () => {
         // position
         selectRadioContainer().should('have.css', 'flex-direction').and('eq', 'column');
 
-        log('Verify default type is checkbox');
-        selectRadioNthElementCheckbox(0).should('be.visible');
+        log('Verify default type is radio');
+        selectRadioNthElementRadio(0).should('be.visible');
 
         // labelColor
         verifyElementRgbColor(selectRadioLabel(), allRgbColors['Dim Gray']);
@@ -144,9 +145,77 @@ describe('Radio', () => {
             .and('eq', multiple ? 'checked' : 'not-checked');
     };
 
+    const verifyRadioRadioInteraction = (nth, multiple) => {
+        selectRadioNthElementRadio(nth).should('have.attr', 'data-checked').and('eq', 'not-checked');
+        selectRadioNthElementRadio(nth).click().should('have.attr', 'data-checked').and('eq', 'checked');
+
+        selectRadioNthElementRadio(nth - 1)
+            .should('have.attr', 'data-checked')
+            .and('eq', multiple ? 'checked' : 'not-checked');
+    };
+
+    it('Radio type radio interactions', () => {
+        log('Verify radio interactions');
+        cy.mount(<Radio
+            options={radioOptionsCheckToggle}
+        />);
+        selectRadioNthElementRadio(0).should('have.attr', 'data-checked').and('eq', 'not-checked');
+        selectRadioNthElementRadio(0).click().should('have.attr', 'data-checked').and('eq', 'checked');
+
+        log('Select another value and verify both data-checked status');
+
+        verifyRadioRadioInteraction(1, false);
+        verifyRadioRadioInteraction(2, false);
+        verifyRadioRadioInteraction(3, false);
+        verifyRadioRadioInteraction(4, false);
+    
+        log('Verify labels');
+        selectRadioNthElementLabel(0).should('have.text', radioOptionsCheckToggle[0].label);
+        selectRadioNthElementLabel(1).should('have.text', radioOptionsCheckToggle[1].label);
+        selectRadioNthElementLabel(2).should('have.text', radioOptionsCheckToggle[2].label);
+        selectRadioNthElementLabel(3).should('have.text', radioOptionsCheckToggle[3].label);
+        selectRadioNthElementLabel(4).should('have.text', radioOptionsCheckToggle[4].label);
+        selectRadioNthElementLabel(5).should('have.text', radioOptionsCheckToggle[5].label);
+
+        log('Verify radio passed value');
+        cy.mount(<Radio
+            options={radioOptionsCheckToggle}
+            value="terra"
+        />);
+
+        selectRadioNthElementRadio(0).should('have.attr', 'data-checked').and('eq', 'checked');
+
+        log('Radio checkbox multiple interactions');
+        cy.mount(<Radio
+            options={radioOptionsCheckToggle}
+            multiple
+        />);
+
+        selectRadioNthElementRadio(0).should('have.attr', 'data-checked').and('eq', 'not-checked');
+        selectRadioNthElementRadio(0).click().should('have.attr', 'data-checked').and('eq', 'checked');
+        
+        log('Select another item and verify the other one is still selected');
+        verifyRadioRadioInteraction(1, true);
+        verifyRadioRadioInteraction(2, true);
+        verifyRadioRadioInteraction(3, true);
+        verifyRadioRadioInteraction(4, true);
+
+        log('Verify radio multiple passed value');
+        cy.mount(<Radio
+            options={radioOptionsCheckToggle}
+            value={['terra', 'locke', 'edgar', 'cyan']}
+            multiple
+        />);
+        selectRadioNthElementRadio(0).should('have.attr', 'data-checked').and('eq', 'checked');
+        selectRadioNthElementRadio(1).should('have.attr', 'data-checked').and('eq', 'checked');
+        selectRadioNthElementRadio(2).should('have.attr', 'data-checked').and('eq', 'checked');
+        selectRadioNthElementRadio(4).should('have.attr', 'data-checked').and('eq', 'checked');
+    });
+
     it('Radio type checkbox interactions', () => {
         log('Verify radio checkbox interactions');
         cy.mount(<Radio
+            type={RadioTypes.checkbox}
             options={radioOptionsCheckToggle}
         />);
         selectRadioNthElementCheckbox(0).should('have.attr', 'data-checked').and('eq', 'not-checked');
@@ -169,6 +238,7 @@ describe('Radio', () => {
 
         log('Verify radio checkbox passed value');
         cy.mount(<Radio
+            type={RadioTypes.checkbox}
             options={radioOptionsCheckToggle}
             value="terra"
         />);
@@ -177,6 +247,7 @@ describe('Radio', () => {
 
         log('Radio checkbox multiple interactions');
         cy.mount(<Radio
+            type={RadioTypes.checkbox}
             options={radioOptionsCheckToggle}
             multiple
         />);
@@ -192,6 +263,7 @@ describe('Radio', () => {
 
         log('Verify radio checkbox multiple passed value');
         cy.mount(<Radio
+            type={RadioTypes.checkbox}
             options={radioOptionsCheckToggle}
             value={['terra', 'locke', 'edgar', 'cyan']}
             multiple
@@ -365,6 +437,7 @@ describe('Radio', () => {
         log('type checkbox');
         let countC = 0;
         cy.mount(<Radio
+            type={RadioTypes.checkbox}
             options={radioOptionsCheckToggle}
             onChange={(newValue) => {
                 verifyOnChange(newValue, countC);
@@ -376,6 +449,7 @@ describe('Radio', () => {
         log('type checkbox called');
         const onChange = cy.stub().as('onChangeHandler');
         cy.mount(<Radio
+            type={RadioTypes.checkbox}
             options={radioOptionsCheckToggle}
             onChange={onChange}
         />);
@@ -386,6 +460,7 @@ describe('Radio', () => {
         let countC2 = 0;
         cy.mount(<Radio
             multiple
+            type={RadioTypes.checkbox}
             options={radioOptionsCheckToggle}
             onChange={(newValue) => {
                 verifyMultipleOnChange(newValue, countC2);

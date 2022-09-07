@@ -2,7 +2,17 @@ import React from 'react';
 
 import {Button} from '../../src/lib/Button';
 import { allColors, allRgbColors } from '../../src/lib/constants/colors';
-import { AlignPositions, BorderRadius, ButtonIconSize, ElementHeight, ElementLength, ElementSize, FontWeight, ElementPosition } from '../../src/lib/types';
+import {
+    AlignPositions,
+    BorderRadius,
+    ButtonIconSize,
+    ElementHeight,
+    ElementLength,
+    ElementSize,
+    FontWeight,
+    ElementPosition
+} from '../../src/lib/types';
+
 import {
     selectButtonLabel,
     selectButton,

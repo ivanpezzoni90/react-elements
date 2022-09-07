@@ -308,9 +308,12 @@ export const selectRadioNthElementIcon: SelectorWithParam<number, HTMLDivElement
     parent = selectRadioWrapper
 ) => selectRadioNthElement(nth,parent).find('.ie-radio__element__icon');
 
+export const selectRadioNthElementRadio: SelectorWithParam<number, HTMLDivElement, HTMLDivElement> = (
+    nth: number,
+    parent = selectRadioWrapper
+) => selectRadioNthElement(nth,parent).find('.ie-radio__element__radio');
 
 // SLIDER
-
 
 export const selectSliderWrapper: Selector<HTMLDivElement> = () => cy.get('.ie-slider');
 

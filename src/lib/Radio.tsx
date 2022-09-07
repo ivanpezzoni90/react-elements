@@ -170,6 +170,10 @@ const RadioElementComponent = ({
                 <RadioInput
                     className={'ie-radio__element__radio'}
                     checked={isOptionSelected(value, o.value as string)}
+                    data-checked={isOptionSelected(value, o.value as string)
+                        ? 'checked'
+                        : 'not-checked'
+                    }
                     onClick={() => {
                         onRadioChange(o.value as string);
                     }}
