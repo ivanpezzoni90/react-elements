@@ -73,12 +73,12 @@ export const alignPositionEditor = (
     }]
 });
 
-export const shadowEditor: Editor = {
+export const shadowEditor = (def = true): Editor => ({
     label: 'Shadow',
     type: EditorTypes.toggle,
-    default: true,
+    default: def,
     prop: 'shadow'
-};
+});
 
 export const colorEditors: Editor[] = [
     {
@@ -460,7 +460,7 @@ export const bordersAndShadowSection = (): EditorSection => ({
     type: EditorSectionTypes.section,
     label: 'Borders and Shadow',
     editors: [
-        shadowEditor,
+        shadowEditor(),
         {
             type: EditorTypes.color,
             label: 'Border Color',

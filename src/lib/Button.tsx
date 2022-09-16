@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { allColors } from './constants/colors';
-import { lightenDarkenColor, mergeClasses, setAlphaToHex } from './helpers';
+import { getClickAnimationStyles, lightenDarkenColor, mergeClasses, setAlphaToHex } from './helpers';
 import {
     AlignPositions,
     BorderRadius,
@@ -23,36 +23,6 @@ const calculateIconSize = (iconSize: ButtonIconSize, fontSize: ElementSize) => {
 
     return `${calculatedIconSize}px`;
 };
-
-const getClickAnimationStyles = (props: ButtonElementProps) => `
-    position: relative;
-    overflow: hidden;
-    ${props.clickAnimation
-        ? (`
-            &:after {
-                content: "";
-                background: ${setAlphaToHex(
-                    props.color as string,
-                    props.buttonType === ButtonTypes.standard ? 90 : 20)};
-
-                display: block;
-                position: absolute;
-                padding-top: 300%;
-                padding-left: 350%;
-                margin-left: -20px!important;
-                margin-top: -120%;
-                opacity: 0;
-                transition: all 0.8s
-            }
-            :active:after {
-                padding: 0;
-                margin: 0;
-                opacity: 1;
-                transition: 0s
-            }
-        `)
-        : ''}
-`;
 
 const standardButtonStyles = (props: ButtonElementProps) => `
     background-color: ${props.color};
@@ -116,7 +86,10 @@ const ButtonElement = styled.button<ButtonElementProps>`
 
     ${props => getButtonTypeStyles(props)}
 
-    ${props => getClickAnimationStyles(props)}
+    ${props => getClickAnimationStyles(
+        props.clickAnimation as boolean,
+        props.color as string,
+        props.buttonType === ButtonTypes.standard ? 90 : 20)}
 
     justify-content: ${props => props.align};
     width: ${props => props.length};

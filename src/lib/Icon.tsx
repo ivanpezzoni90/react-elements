@@ -11,7 +11,8 @@ interface IconWrapperInterface {
     backgroundColor?: string,
     borderRadius?: BorderRadius,
     padding?: Padding,
-    cursor?: Cursors
+    cursor?: Cursors,
+    shadow?: boolean
 }
 
 const IconWrapper = styled.div<IconWrapperInterface>`
@@ -25,6 +26,10 @@ const IconWrapper = styled.div<IconWrapperInterface>`
     background-color: ${props => props.backgroundColor};
     border-radius: ${props => props.borderRadius};
     padding: ${props => props.padding};
+
+    ${props => props.shadow ? `box-shadow: rgb(0 0 0 / 20%) 0px 3px 5px -1px,
+        rgb(0 0 0 / 14%) 0px 6px 10px 0px,
+        rgb(0 0 0 / 12%) 0px 1px 18px 0px;` : ''}
 `;
 
 interface IconProps {
@@ -36,6 +41,7 @@ interface IconProps {
     borderRadius?: BorderRadius,
     padding?: Padding,
     cursor?: Cursors,
+    shadow?: boolean,
     onClick?: () => void
 }
 
@@ -48,6 +54,7 @@ function Icon({
     padding,
     cursor,
     className,
+    shadow,
     onClick
 }: IconProps) {
     const IconComponent = iconMap[icon as IconList | string];
@@ -58,6 +65,7 @@ function Icon({
             padding={padding}
             className={mergeClasses('ie-icon', className)}
             cursor={cursor}
+            shadow={shadow}
             onClick={(onClick)}
         >
             {IconComponent ? (
@@ -80,7 +88,8 @@ const defaultProps: IconProps = {
     backgroundColor: allColors['Transparent'],
     borderRadius: BorderRadius.no,
     padding: Padding.no,
-    cursor: Cursors.auto
+    cursor: Cursors.auto,
+    shadow: false,
 };
 
 Icon.defaultProps = defaultProps;

@@ -47,3 +47,6 @@ export function checkEventTargetContainsClass(e: any, className: string) {
 }
 
 export * from './colorHelpers';
+export * from './styleHelpers';
+export * from './sliderHelpers';
+export * from './spinnerHelpers';
