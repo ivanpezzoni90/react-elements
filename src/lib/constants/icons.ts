@@ -30,7 +30,6 @@ import {
     FaPaste,
     FaRegCopy,
     FaHome,
-    FaHeart,
     FaGripHorizontal,
     FaGripLinesVertical,
     FaGripLines,
@@ -62,7 +61,14 @@ import {
     BiLoaderCircle,
     BiLoader
 } from 'react-icons/bi';
-
+import {
+    BsStar,
+    BsStarHalf,
+    BsStarFill,
+    BsHeart,
+    BsHeartHalf,
+    BsHeartFill
+} from 'react-icons/bs';
 
 export enum IconList {
     caretDown = 'caret-down',
@@ -99,7 +105,6 @@ export enum IconList {
     paste = 'paste',
     regCopy = 'reg-copy',
     home = 'home',
-    heart = 'heart',
     gripHorizontal = 'grip-horizontal',
     gripLinesVertical = 'grip-lines-vertical',
     gripLines = 'grip-lines',
@@ -123,6 +128,12 @@ export enum IconList {
     loader5Line = 'loader5-line',
     loaderCircle = 'loader-circle',
     loader = 'loader',
+    star = 'star,',
+    starHalf = 'star-half,',
+    starFill = 'star-fill,',
+    heart = 'heart,',
+    heartHalf = 'heart-half,',
+    heartFill = 'heart-fill'
 }
 
 interface IconInterface {
@@ -163,7 +174,6 @@ export const iconMap: IconInterface = {
     [IconList.paste]: FaPaste,
     [IconList.regCopy]: FaRegCopy,
     [IconList.home]: FaHome,
-    [IconList.heart]: FaHeart,
     [IconList.gripHorizontal]: FaGripHorizontal,
     [IconList.gripLinesVertical]: FaGripLinesVertical,
     [IconList.gripLines]: FaGripLines,
@@ -187,4 +197,10 @@ export const iconMap: IconInterface = {
     [IconList.loader5Line]: RiLoader5Line,
     [IconList.loaderCircle]: BiLoaderCircle,
     [IconList.loader]: BiLoader,
+    [IconList.star]: BsStar,
+    [IconList.starHalf]: BsStarHalf,
+    [IconList.starFill]: BsStarFill,
+    [IconList.heart]: BsHeart,
+    [IconList.heartHalf]: BsHeartHalf,
+    [IconList.heartFill]: BsHeartFill,
 };
