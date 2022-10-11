@@ -401,11 +401,16 @@ export const spinnerStepsEditor = () => ({
     }]
 });
 
-export const iconEditor = (def: IconList | undefined, resettable = true):Editor => ({
+export const iconEditor = (
+    def: IconList | undefined,
+    resettable = true,
+    prop = 'icon',
+    label = 'Icon'
+):Editor => ({
     type: EditorTypes.select,
     default: def,
-    label: 'Icon',
-    prop: 'icon',
+    label,
+    prop,
     options: iconOptions,
     resettable,
     filterable: true
@@ -416,11 +421,11 @@ const sizeOptions: Option[] = Object.entries(IconSize).map(([k,v]) => ({
     value: v
 }));
 
-export const iconSizeEditor = (def = IconSize.xs): Editor =>  ({
+export const iconSizeEditor = (def = IconSize.xs, prop = 'fontSize'): Editor =>  ({
     label: 'Size',
     type: EditorTypes.select,
     default: def,
-    prop: 'fontSize',
+    prop,
     options: sizeOptions
 });
 

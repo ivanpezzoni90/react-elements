@@ -128,11 +128,11 @@ export enum IconList {
     loader5Line = 'loader5-line',
     loaderCircle = 'loader-circle',
     loader = 'loader',
-    star = 'star,',
-    starHalf = 'star-half,',
-    starFill = 'star-fill,',
-    heart = 'heart,',
-    heartHalf = 'heart-half,',
+    star = 'star',
+    starHalf = 'star-half',
+    starFill = 'star-fill',
+    heart = 'heart',
+    heartHalf = 'heart-half',
     heartFill = 'heart-fill'
 }
 

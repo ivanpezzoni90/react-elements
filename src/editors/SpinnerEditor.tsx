@@ -39,8 +39,8 @@ const getEditor = () => {
     return editorJson;
 };
 
-export default function IconEditor() {
-    return function IconEditorFn () {
+export default function SpinnerEditor() {
+    return function SpinnerEditorFn () {
         const {
             onChangeProp,
             props

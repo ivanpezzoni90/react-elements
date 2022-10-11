@@ -94,4 +94,4 @@ const defaultProps: IconProps = {
 
 Icon.defaultProps = defaultProps;
 
-export { Icon};
+export { Icon };
