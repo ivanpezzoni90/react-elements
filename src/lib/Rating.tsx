@@ -63,7 +63,7 @@ interface LabelProps {
     labelLength?: LabelLength
 }
 
-const RatingAdvancedLabel = styled.div<LabelProps>`
+const RatingAdvancedLabel = styled.label<LabelProps>`
     display: flex;
     justify-content: flex-start;
     flex: 1;
@@ -102,6 +102,8 @@ interface RatingComponentProps {
     length: number,
     iconSelected: IconList,
     iconNotSelected: IconList,
+    iconHalf: IconList,
+    displayHalfValue: boolean,
     highlightSelectedOnly: boolean,
     colorSelected: string,
     colorNotSelected: string,
@@ -115,6 +117,8 @@ const RatingComponent = ({
     length,
     iconSelected,
     iconNotSelected,
+    iconHalf,
+    displayHalfValue,
     highlightSelectedOnly,
     colorSelected,
     colorNotSelected,
@@ -126,8 +130,8 @@ const RatingComponent = ({
     const [currentItemHovered, setCurrentItemHovered] = useState(0);
 
     const onMouseMoveCb = (rating: number) => {
-        return (e: any) => {
-            const rect = e.target.getBoundingClientRect();
+        return (e: React.MouseEvent<HTMLElement>) => {
+            const rect = e.currentTarget.getBoundingClientRect();
             const halfWidth = rect.width / 2;
             const x = e.clientX - rect.left;
 
@@ -138,10 +142,7 @@ const RatingComponent = ({
             }
 
             if (newRating !== currentHoverRating) {
-                console.log('newRating ', newRating, 'is different from current rating ', currentHoverRating, 'setting new rating');
                 setCurrentHoverRating(newRating);
-            } else {
-                console.log('newRating ', newRating, 'is equal to', currentHoverRating);
             }
         };
     };
@@ -149,8 +150,12 @@ const RatingComponent = ({
     const onMouseEnterCb = useCallback((n: number) => {
         return () => {
             setCurrentItemHovered(n);
+            if (!displayHalfValue) {
+                // Set new hover rating on mouse enter when shouldn't display half
+                setCurrentHoverRating(n);
+            }
         };
-    }, []);
+    }, [displayHalfValue]);
 
     const onLeaveContainerCb = useCallback(() => {
         // Reset rating on leave
@@ -176,52 +181,72 @@ const RatingComponent = ({
         return currentHoverRating >= n;
     }, [currentHoverRating, highlightSelectedOnly]);
 
+    const getCorrectValue = useCallback((n: number) => {
+        return displayHalfValue ? n - 0.5 : n;
+    }, [displayHalfValue]);
+
     const getCorrectIcon = useCallback((n: number) => {
-        const value = n - 0.5;
+        const value = getCorrectValue(n);
         if (isValueSelected(value)) {
             const active = isItemActive(n);
-            // if (!active) {
-            //     console.log('Item selected not active => icon selected');
-            //     return iconSelected;
-            // }
-            // if (Number.isInteger(currentHoverRating)) {
-            //     console.log('current rating ', currentHoverRating, 'is integer');
-            //     console.log('Item selected and integer => icon selected');
-            //     return iconSelected;
-            // } else {
-            //     console.log('current rating ', currentHoverRating, 'is NOT an integer');
-            //     console.log('Item selected and half => icon half');
-            //     return IconList.starHalf;
-            // }
-            return !active
-                ? iconSelected
-                : Number.isInteger(currentHoverRating) ? iconSelected : IconList.starHalf;
+            return active
+                // When active, set icon full when hover rating is integer, half otherwise
+                ? Number.isInteger(currentHoverRating)
+                    ? iconSelected
+                    : iconHalf
+                // When not active, set icon half only when
+                // selected rating is a half value
+                // current icon is the one that should display as half
+                // nothing is being hovered (currentItemHovered = 0)
+                : !Number.isInteger(selectedRating) && value === selectedRating && currentItemHovered === 0
+                    ? iconHalf
+                    : iconSelected;
 
         }
-        console.log('Item not selected => icon not selected');
         return iconNotSelected;
-    }, [currentHoverRating, iconNotSelected, iconSelected, isItemActive, isValueSelected]);
+    }, [
+        currentHoverRating,
+        selectedRating,
+        currentItemHovered,
+        iconNotSelected,
+        iconSelected,
+        iconHalf,
+        isItemActive,
+        isValueSelected,
+        getCorrectValue
+    ]);
 
     const ratingArray = Array.from({length}, (x, i) => i + 1);
+
     return (
         <RatingContainer
+            data-value={selectedRating}
+            className="ie-rating__element"
             hideLabel={!!hideLabel}
             onMouseLeave={onLeaveContainerCb}
         >
             {ratingArray.map((n) => {
                 return (
                     <RatingItem
+                        className="ie-rating__element__item"
                         active={currentItemHovered === n}
                         key={`rating-${n}`}
-                        onMouseMove={onMouseMoveCb(n)}
+                        onMouseMove={displayHalfValue
+                            ? onMouseMoveCb(n)
+                            : undefined
+                        }
                         onMouseEnter={onMouseEnterCb(n)}
                     >
                         <Icon
+                            className="ie-rating__element__item__icon"
                             fontSize={size}
-                            color={isValueSelected(n - 0.5) ? colorSelected : colorNotSelected}
+                            color={isValueSelected(getCorrectValue(n))
+                                ? colorSelected
+                                : colorNotSelected
+                            }
                             cursor={Cursors.pointer}
                             icon={getCorrectIcon(n)}
-                            onClick={onSelectRatingCb(n)}
+                            onClick={onSelectRatingCb(currentHoverRating)}
                         />
                     </RatingItem>
                 );
@@ -249,6 +274,8 @@ interface RatingProps {
     length: number,
     iconSelected: IconList,
     iconNotSelected: IconList,
+    iconHalf: IconList,
+    displayHalfValue: boolean,
     highlightSelectedOnly: boolean,
     colorSelected: string,
     colorNotSelected: string,
@@ -273,6 +300,8 @@ const Rating = (props: RatingProps) => {
         length,
         iconSelected,
         iconNotSelected,
+        iconHalf,
+        displayHalfValue,
         highlightSelectedOnly,
         colorSelected,
         colorNotSelected,
@@ -290,11 +319,11 @@ const Rating = (props: RatingProps) => {
             hideBottomBorder={hideBottomBorder}
             borderRadius={borderRadius}
             labelPosition={labelPosition}
-            className={mergeClasses('ie-toggle', className)}
+            className={mergeClasses('ie-rating', className)}
         >
             {hideLabel ? null : (
                 <RatingAdvancedLabel
-                    className="ie-toggle__label"
+                    className="ie-rating__label"
                     htmlFor={id.current}
                     labelColor={labelColor}
                     labelPosition={labelPosition}
@@ -309,6 +338,8 @@ const Rating = (props: RatingProps) => {
                 length={length}
                 iconSelected={iconSelected}
                 iconNotSelected={iconNotSelected}
+                iconHalf={iconHalf}
+                displayHalfValue={displayHalfValue}
                 highlightSelectedOnly={highlightSelectedOnly}
                 colorSelected={colorSelected}
                 colorNotSelected={colorNotSelected}
@@ -340,9 +371,12 @@ Rating.defaultProps = {
     labelColor: allColors['Dim Gray'],
     hideLabel: false,
     labelLength: LabelLength.auto,
+    displayHalfValue: false,
+    iconHalf: IconList.starHalf,
     onChange: () => {}
 };
 
 export {
-    Rating
+    Rating,
+    RatingProps
 };

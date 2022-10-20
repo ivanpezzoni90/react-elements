@@ -3,7 +3,7 @@ import React from 'react';
 import Editor from './EditorBuilder';
 import { EditorSection, EditorSectionTypes, EditorTypes, IconSize } from '../lib/types';
 import { Fragment } from 'react';
-import { Rating } from '../lib/Rating';
+import { Rating, RatingProps } from '../lib/Rating';
 import { useEditorInit } from '../lib/hooks';
 import { alignPositionEditor, bordersAndShadowSection, iconEditor, iconSizeEditor, labelSection } from './commons/editors';
 import { ElementContainer } from './commons/ElementContainer';
@@ -11,7 +11,14 @@ import { allColors } from '../lib/constants/colors';
 import { IconList } from '../lib/constants/icons';
 import { InputTypes } from '../lib/Input/config';
 
-const getEditor = () => {
+const getEditor = (props: RatingProps) => {
+    const halfEditors = [];
+    if (props.displayHalfValue) {
+        halfEditors.push(
+            iconEditor(IconList.starHalf, false, 'iconHalf', 'Icon half')
+        );
+    }
+
     const editorJson: EditorSection[] = [
         labelSection(),
         {
@@ -33,7 +40,8 @@ const getEditor = () => {
             label: 'Icons',
             editors: [
                 iconEditor(IconList.starFill, false, 'iconSelected', 'Icon selected'),
-                iconEditor(IconList.star, false, 'iconNotSelected', 'Icon not selected')
+                iconEditor(IconList.star, false, 'iconNotSelected', 'Icon not selected'),
+                ...halfEditors
             ]
         },
         {
@@ -64,6 +72,12 @@ const getEditor = () => {
                     default: false,
                     prop: 'highlightSelectedOnly'
                 },
+                {
+                    type: EditorTypes.toggle,
+                    label: 'Display half value',
+                    default: false,
+                    prop: 'displayHalfValue'
+                },
                 alignPositionEditor()
             ]
         },
@@ -80,7 +94,7 @@ export default function RatingEditor() {
             props
         } = useEditorInit(Rating.defaultProps);
 
-        const editorJson: EditorSection[] = getEditor();
+        const editorJson: EditorSection[] = getEditor(props);
 
         return (
             <Fragment>
