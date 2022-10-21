@@ -16,11 +16,18 @@ import {
 import { log } from '../modules/utils';
 
 const mouseoverNthItem = (nth: number, position?: 'left' | 'right') => {
-    return selectRatingElementNthItem(nth).trigger('mouseover', position);
+    return selectRatingElementNthItem(nth)
+        .trigger('mouseover', position);
 };
-const mouseoverNthIcon = (nth: number, position?: 'left' | 'right') => {
-    return selectRatingElementNthIcon(nth).trigger('mouseover', position);
+const realMouseoverNthItem = (nth: number, position?: 'left' | 'right' | 'center') => {
+    return selectRatingElementNthItem(nth)
+        .realHover({ position, pointer: 'mouse' });
 };
+const realClickNthItem = (nth: number, position?: 'left' | 'right' | 'center') => {
+    return selectRatingElementNthItem(nth)
+        .realClick({ position, pointer: 'mouse' });
+};
+
 const verifyNthIconColor = (nth: number, color: string) => {
     verifyElementRgbColor(
         selectIcon(() => selectRatingElementNthIcon(nth))
@@ -178,11 +185,9 @@ describe('Rating', () => {
             displayHalfValue
         />);
 
-        mouseoverNthIcon(0, 'left');
-        // verifyNthIconColor(0, allRgbColors['Cyber Yellow']);
-        // selectRatingElementNthItem(0).click('left');
-        // selectRatingElementNthItem(0).should('have.attr', 'data-value').and('eq', '0.5');
-
+        realMouseoverNthItem(0, 'center');
+        realClickNthItem(0, 'center');
+        selectRatingElement().should('have.attr', 'data-value').and('eq', '0.5');
     });
 
     it('Rating callbacks', () => {
@@ -205,5 +210,17 @@ describe('Rating', () => {
         />);
         selectRatingElementNthItem(1).click();
         selectRatingElementNthItem(3).click();
+
+
+        log('Verify onchange values with half ratings');
+        cy.mount(<Rating
+            displayHalfValue
+            onChange={(newValue) => {
+                expect(newValue).eq(0.5);
+            }}
+        />);
+
+        realMouseoverNthItem(0, 'center');
+        realClickNthItem(0, 'center');
     });
 });
