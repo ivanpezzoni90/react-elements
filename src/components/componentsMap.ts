@@ -9,6 +9,7 @@ import RadioEditor from '../editors/RadioEditor';
 import SliderEditor from '../editors/SliderEditor';
 import SpinnerEditor from '../editors/SpinnerEditor';
 import ModalEditor from '../editors/ModalEditor';
+import RatingEditor from '../editors/RatingEditor';
 
 import { Component } from '../lib/types';
 
@@ -56,6 +57,10 @@ const Components: Component[] = [{
     key: 'modal',
     name: 'Modal',
     editor: ModalEditor
+}, {
+    key: 'rating',
+    name: 'Rating',
+    editor: RatingEditor
 }];
 
 function getComponentByKey(key: string) {

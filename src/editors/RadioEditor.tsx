@@ -2,10 +2,10 @@ import React from 'react';
 
 import Editor from './EditorBuilder';
 
-import { EditorSection, EditorSectionTypes, EditorTypes, LabelPositions, RadioTypes } from '../lib/types';
+import { EditorSection, EditorSectionTypes, EditorTypes, ElementPosition, LabelPositions, RadioTypes } from '../lib/types';
 import { Fragment } from 'react';
 import { useEditorInit } from '../lib/hooks';
-import { labelSection, positionEditor } from './commons/editors';
+import { elementPositionEditor, labelSection, positionEditor } from './commons/editors';
 import { ElementContainer } from './commons/ElementContainer';
 
 import { Radio, RadioProps } from '../lib/Radio';
@@ -38,7 +38,7 @@ const getEditor = (props: RadioProps) => {
             editors: [
                 {
                     type: EditorTypes.select,
-                    default: RadioTypes.checkbox,
+                    default: RadioTypes.radio,
                     label: 'Type',
                     prop: 'type',
                     options: [{
@@ -50,6 +50,9 @@ const getEditor = (props: RadioProps) => {
                     }, {
                         label: 'Icon',
                         value: RadioTypes.icon
+                    }, {
+                        label: 'Radio',
+                        value: RadioTypes.radio
                     }]
                 },
                 {
@@ -65,6 +68,7 @@ const getEditor = (props: RadioProps) => {
             label: 'Others',
             editors: [
                 positionEditor,
+                elementPositionEditor(ElementPosition.left, 'Radio element position')
             ]
         },
     ];

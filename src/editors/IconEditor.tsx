@@ -5,7 +5,7 @@ import { BorderRadius, Cursors, EditorSection, EditorSectionTypes, EditorTypes, 
 import { Fragment } from 'react';
 import { Icon } from '../lib/Icon';
 import { useEditorInit } from '../lib/hooks';
-import { borderRadiusEditor, cursorEditor, iconEditor, iconSizeEditor, paddingEditor } from './commons/editors';
+import { borderRadiusEditor, cursorEditor, iconEditor, iconSizeEditor, paddingEditor, shadowEditor } from './commons/editors';
 import { ElementContainer } from './commons/ElementContainer';
 import { allColors } from '../lib/constants/colors';
 import { IconList } from '../lib/constants/icons';
@@ -38,7 +38,14 @@ const getEditor = () => {
                 },
                 borderRadiusEditor(BorderRadius.no),
                 paddingEditor(Padding.xs),
-                cursorEditor(Cursors.auto)
+                cursorEditor(Cursors.auto),
+                shadowEditor(false),
+                {
+                    type: EditorTypes.toggle,
+                    default: false,
+                    label: 'Click animation',
+                    prop: 'clickAnimation'
+                }
             ]
         }
     ];

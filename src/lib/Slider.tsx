@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { fontColorFromBackground, generateID, lightenDarkenColor, mergeClasses, rgbFromHex } from './helpers';
+import { fontColorFromBackground, generateID, lightenDarkenColor, mergeClasses } from './helpers';
 import { AlignPositions, BorderRadius, ElementLength, LabelLength, LabelPositions, Option } from './types';
 import { allColors } from './constants/colors';
 import {

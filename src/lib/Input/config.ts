@@ -33,7 +33,8 @@ export interface InputProps {
     showBorders?: boolean,
     hideBottomBorder?: boolean
     borderRadius?: BorderRadius,
-    textarea?: boolean
+    textarea?: boolean,
+    name?: string
 }
 
 export type SetErrorType = (e: boolean) => void;
@@ -61,7 +62,8 @@ export interface InputTypeProps {
     hideBottomBorder?: boolean,
     borderRadius?: BorderRadius,
     placeholder?: string,
-    textarea?: boolean
+    textarea?: boolean,
+    name?: string
 }
 
 export interface InputWrapperProps {

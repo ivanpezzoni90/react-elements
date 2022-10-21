@@ -8,6 +8,7 @@ import {
     EditorTypes,
     ElementHeight,
     ElementLength,
+    ElementPosition,
     ElementSize,
     FontWeight,
     IconSize,
@@ -72,12 +73,12 @@ export const alignPositionEditor = (
     }]
 });
 
-export const shadowEditor: Editor = {
+export const shadowEditor = (def = true): Editor => ({
     label: 'Shadow',
     type: EditorTypes.toggle,
-    default: true,
+    default: def,
     prop: 'shadow'
-};
+});
 
 export const colorEditors: Editor[] = [
     {
@@ -400,11 +401,16 @@ export const spinnerStepsEditor = () => ({
     }]
 });
 
-export const iconEditor = (def: IconList | undefined, resettable = true):Editor => ({
+export const iconEditor = (
+    def: IconList | undefined,
+    resettable = true,
+    prop = 'icon',
+    label = 'Icon'
+):Editor => ({
     type: EditorTypes.select,
     default: def,
-    label: 'Icon',
-    prop: 'icon',
+    label,
+    prop,
     options: iconOptions,
     resettable,
     filterable: true
@@ -415,11 +421,11 @@ const sizeOptions: Option[] = Object.entries(IconSize).map(([k,v]) => ({
     value: v
 }));
 
-export const iconSizeEditor = (def = IconSize.xs): Editor =>  ({
+export const iconSizeEditor = (def = IconSize.xs, prop = 'fontSize'): Editor =>  ({
     label: 'Size',
     type: EditorTypes.select,
     default: def,
-    prop: 'fontSize',
+    prop,
     options: sizeOptions
 });
 
@@ -438,11 +444,28 @@ export const bordersEditor: Editor[] = [
     }
 ];
 
+export const elementPositionEditor = (
+    def = ElementPosition.left,
+    label = 'Element Position'
+) => ({
+    type: EditorTypes.select,
+    default: def,
+    label,
+    prop: 'elementPosition',
+    options: [{
+        label: 'Left',
+        value: ElementPosition.left
+    }, {
+        label: 'Right',
+        value: ElementPosition.right
+    }]
+});
+
 export const bordersAndShadowSection = (): EditorSection => ({
     type: EditorSectionTypes.section,
     label: 'Borders and Shadow',
     editors: [
-        shadowEditor,
+        shadowEditor(),
         {
             type: EditorTypes.color,
             label: 'Border Color',

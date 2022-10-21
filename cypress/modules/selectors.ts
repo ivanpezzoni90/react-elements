@@ -308,9 +308,12 @@ export const selectRadioNthElementIcon: SelectorWithParam<number, HTMLDivElement
     parent = selectRadioWrapper
 ) => selectRadioNthElement(nth,parent).find('.ie-radio__element__icon');
 
+export const selectRadioNthElementRadio: SelectorWithParam<number, HTMLDivElement, HTMLDivElement> = (
+    nth: number,
+    parent = selectRadioWrapper
+) => selectRadioNthElement(nth,parent).find('.ie-radio__element__radio');
 
 // SLIDER
-
 
 export const selectSliderWrapper: Selector<HTMLDivElement> = () => cy.get('.ie-slider');
 
@@ -407,3 +410,28 @@ export const selectModalFooterNthButton: SelectorWithParam<number, HTMLDivElemen
     parent = selectModal
 ) =>
     selectModalFooterButtons(parent).eq(nth);
+
+
+// RATING
+
+export const selectRatingWrapper: Selector<HTMLDivElement> = () => cy.get('.ie-rating');
+
+export const selectRatingElement: Selector<HTMLDivElement> = (
+    parent = selectRatingWrapper
+) => parent().find('.ie-rating__element');
+
+export const selectRatingLabel: Selector<HTMLLabelElement> = (
+    parent = selectRatingWrapper
+) => parent().find('label');
+
+export const selectRatingElementNthItem: SelectorWithParam<number, HTMLDivElement, HTMLDivElement> = (
+    nth: number,
+    parent = selectRatingWrapper,
+) => selectRatingElement(parent).find('.ie-rating__element__item').eq(nth);
+
+export const selectRatingElementNthIcon: SelectorWithParam<number, HTMLDivElement, HTMLDivElement> = (
+    nth: number,
+    parent = selectRatingWrapper,
+) => selectRatingElement(parent).find('.ie-rating__element__item__icon').eq(nth);
+
+
