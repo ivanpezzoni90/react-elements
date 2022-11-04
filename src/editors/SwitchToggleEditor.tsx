@@ -19,13 +19,7 @@ const getEditor = (props: SwitchToggleProps) => {
                     default: '#666',
                     label: 'Color',
                     prop: 'color'
-                },
-                {
-                    type: EditorTypes.color,
-                    default: 'white',
-                    label: 'Off Color',
-                    prop: 'colorOff'
-                },
+                }
             ]
         },
         {
@@ -34,10 +28,13 @@ const getEditor = (props: SwitchToggleProps) => {
             editors: [
                 {
                     type: EditorTypes.select,
-                    default: ToggleLabelType.label,
+                    default: ToggleLabelType.none,
                     label: 'Label type',
                     prop: 'labelType',
                     options: [{
+                        label: 'None',
+                        value: ToggleLabelType.none
+                    }, {
                         label: 'Label',
                         value: ToggleLabelType.label
                     }, {

@@ -1,6 +1,6 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { generateID, mergeClasses } from './helpers';
+import { fontColorFromBackground, generateID, mergeClasses, setAlphaToHex } from './helpers';
 import {
     BorderRadius,
     ElementLength, 
@@ -34,7 +34,9 @@ const Slider = styled.span<Slider>`
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: ${({ toggle, color, colorOff }) => (toggle ? color : colorOff)};
+    background-color: ${({ toggle, color, colorOff }) => (toggle
+        ? setAlphaToHex(color as string, 60)
+        : colorOff)};
     border-radius: 15px;
     border: 1px solid gray;
     transition: 0.4s;
@@ -54,7 +56,9 @@ const Slider = styled.span<Slider>`
         height: ${({bodyFontSize}) => (bodyFontSize * 1.5) - 4}px;
         border-radius: 100%;
 
-        background-color: ${({ toggle, color, colorOff }) => (toggle ? colorOff : color)};
+        background-color: ${({ toggle, color }) => (toggle
+        ? color
+        : allColors['White'])};
 
         transition: 0.4s;
     }
@@ -75,7 +79,6 @@ const Switch = styled.label<Switch>`
     display: inline-block;
     width: 3em;
     height: 1.5em;
-    background-color: ${({ toggle, color, colorOff }) => (toggle ? color : colorOff)};
     border-radius: 15px;
     transition: 0.4s;
 
@@ -166,7 +169,9 @@ interface ToggleInnerLabelType {
 const ToggleInnerLabel = styled.div<ToggleInnerLabelType>`
     font-size: 7px;
     font-weight: 600;
-    color: ${({ toggle, color }) => (toggle ? 'white' : color)};
+    color: ${({ toggle, color }) => (toggle
+        ? fontColorFromBackground(color as string)
+        : allColors['White'])};
     display: flex;
     flex: 0.5;
     justify-content: center;
@@ -237,6 +242,34 @@ function SwitchToggleElement({
 
     const bodyFontSize = useBodyFontSize();
 
+    const getInnerLabel = useMemo(() => {
+        switch (labelType) {
+            case ToggleLabelType.none:
+                return null;
+            case ToggleLabelType.label:
+                return toggle ? labelOn : labelOff;
+            case ToggleLabelType.icon:
+                return toggle
+                    ? <Icon
+                        icon={IconList.check}
+                        color={iconColor}
+                        fontSize={IconSize.xs}
+                    />
+                    : <Icon
+                        icon={IconList.close}
+                        color={iconOffColor}
+                        fontSize={IconSize.xs}
+                    />;
+        }
+    }, [
+        iconColor,
+        iconOffColor,
+        labelOff,
+        labelOn,
+        labelType,
+        toggle
+    ]);
+
     return (
         <SwitchElementWrapper
             className="ie-toggle__element"
@@ -264,20 +297,7 @@ function SwitchToggleElement({
                         color={color}
                         className="ie-toggle__element__switch__slider__label"
                     >
-                        {labelType === ToggleLabelType.label
-                            ? toggle ? labelOn : labelOff
-                            : toggle
-                                ? <Icon
-                                    icon={IconList.check}
-                                    color={iconColor}
-                                    fontSize={IconSize.xs}
-                                />
-                                : <Icon
-                                    icon={IconList.close}
-                                    color={iconOffColor}
-                                    fontSize={IconSize.xs}
-                                />
-                        }
+                        {getInnerLabel}
                     </ToggleInnerLabel>
                 </Slider>
             </Switch>
@@ -355,8 +375,8 @@ const SwitchToggle = (props: SwitchToggleProps) => {
 const defaultProps: SwitchToggleProps = {
     checked: false,
     className: '',
-    color: allColors['Dim Gray'],
-    colorOff: allColors['White'],
+    color: allColors['Firebrick'],
+    colorOff: allColors['Quick Silver'],
     iconColor: allColors['White'],
     iconOffColor: allColors['Dim Gray'],
     label: 'Label',
@@ -364,7 +384,7 @@ const defaultProps: SwitchToggleProps = {
     labelOn: 'YES',
     labelOff: 'NO',
     shadow: true,
-    labelType: ToggleLabelType.label,
+    labelType: ToggleLabelType.none,
     align: AlignPositions.center,
     length: ElementLength.m,
     borderColor: allColors['Silver Sand'],

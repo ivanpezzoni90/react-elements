@@ -228,7 +228,7 @@ const defaultProps: ButtonProps = {
     label: 'Label',
     disabled: false,
     onClick: () => {},
-    length: ElementLength.full,
+    length: ElementLength.s,
     height: ElementHeight.s,
     icon: undefined,
     iconColor: allColors['White'],

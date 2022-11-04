@@ -162,7 +162,8 @@ export enum LabelLength {
 
 export enum ToggleLabelType {
     label = 'label',
-    icon = 'icon'
+    icon = 'icon',
+    none = 'none'
 }
 
 export enum RadioTypes {
