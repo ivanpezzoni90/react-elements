@@ -435,3 +435,11 @@ export const selectRatingElementNthIcon: SelectorWithParam<number, HTMLDivElemen
 ) => selectRatingElement(parent).find('.ie-rating__element__item__icon').eq(nth);
 
 
+// BADGE
+export const selectBadgeWrapper: Selector<HTMLDivElement> = () => cy.get('.ie-badge');
+
+export const selectBadgeElement: Selector<HTMLDivElement> = (
+    parent = selectBadgeWrapper
+) => parent().find('.ie-badge__element');
+
+

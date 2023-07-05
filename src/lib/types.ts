@@ -149,6 +149,13 @@ export enum AlignPositions {
     right = 'flex-end'
 }
 
+export enum BadgePositions {
+    topRight = 'topRight',
+    bottomRight = 'bottomRight',
+    topLeft = 'topLeft',
+    bottomLeft = 'bottomLeft',
+}
+
 export enum LabelLength {
     xxs = '2em',
     xs = '4em',

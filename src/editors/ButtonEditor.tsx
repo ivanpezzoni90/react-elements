@@ -41,7 +41,7 @@ const getEditor = () => {
                 lengthEditor(ElementLength.s),
                 heightEditor(),
                 fontWeightEditor,
-                fontSizeEditor,
+                fontSizeEditor(),
             ]
         },
         {

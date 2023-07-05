@@ -316,11 +316,15 @@ export const borderRadiusEditor: borderRadiusEditorType =
     }]
 } as Editor);
 
-export const fontSizeEditor: Editor = {
-    label: 'Element Size',
+export const fontSizeEditor = (
+    def = ElementSize.m,
+    label = 'Element Size',
+    prop = 'fontSize'
+) => ({
+    label,
     type: EditorTypes.select,
-    default: ElementSize.m,
-    prop: 'fontSize',
+    default: def,
+    prop,
     options: [{
         label: 'XXS',
         value: ElementSize.xxs
@@ -343,7 +347,7 @@ export const fontSizeEditor: Editor = {
         label: 'XXL',
         value: ElementSize.xxl
     }]
-};
+});
 
 
 const iconOptions: Option[] = Object.values(IconList).map(v => ({
