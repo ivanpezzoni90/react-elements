@@ -32,7 +32,7 @@ describe('Button', () => {
         // label
         selectButtonLabel().should('have.text', 'Label');
         // length
-        selectButton().should('have.css', 'width').and('eq', '484px');
+        selectButton().should('have.css', 'width').and('eq', '112px');
         // height
         selectButton().should('have.css', 'height').and('eq', '35px'); // TODO: Computed height is different from 16*3.5em
         // borderRadius

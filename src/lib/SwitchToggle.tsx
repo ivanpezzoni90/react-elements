@@ -283,6 +283,7 @@ function SwitchToggleElement({
                     className="ie-toggle__element__switch__input"
                     type="checkbox"
                     checked={toggle}
+                    data-toggled={toggle ? 'toggled' : 'not-toggled'}
                     readOnly
                 />
                 <Slider

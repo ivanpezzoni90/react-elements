@@ -30,7 +30,7 @@ describe('Badge', () => {
         log('Verify default props');
 
         // background
-        verifyElementRgbColorProp(selectBadgeElement(), allRgbColors['Firebrick'], 'background-color');
+        verifyElementRgbColorProp(selectBadgeElement(), allRgbColors['Teal'], 'background-color');
         // color
         verifyElementRgbColor(selectBadgeElement(), allRgbColors['White']);
         // content

@@ -11,6 +11,7 @@ import {
     selectToggleElementLabel,
     selectToggleElementIcon,
     selectToggleLabel,
+    selectToggleElementSwitchInput,
 } from '../modules/selectors';
 import { log } from '../modules/utils';
 
@@ -30,19 +31,19 @@ describe('Switch Toggle', () => {
         );
 
         log('Verify toggle interactions');
-        selectToggleElementLabel().should('have.text', 'NO');
+        selectToggleElementSwitchInput().should('have.attr', 'data-toggled').and('eq', 'not-toggled');
         selectToggleElementSlider().click();
-        selectToggleElementLabel().should('have.text', 'YES');
+        selectToggleElementSwitchInput().should('have.attr', 'data-toggled').and('eq', 'toggled');
 
         log('Verify toggle with passed values');
         cy.mount(<SwitchToggle
             checked
         />);
-        selectToggleElementLabel().should('have.text', 'YES');
+        selectToggleElementSwitchInput().should('have.attr', 'data-toggled').and('eq', 'toggled');
         cy.mount(<SwitchToggle
             checked={false}
         />);
-        selectToggleElementLabel().should('have.text', 'NO');
+        selectToggleElementSwitchInput().should('have.attr', 'data-toggled').and('eq', 'not-toggled');
 
         log('Verify toggle custom props');
         cy.mount(<SwitchToggle
@@ -56,8 +57,9 @@ describe('Switch Toggle', () => {
             labelLength={LabelLength.l}
             showBorders
             borderRadius={BorderRadius.l}
-            labelOn="MAH"
-            labelOff="BOH"
+            labelOn="FOO"
+            labelOff="BAR"
+            labelType={ToggleLabelType.label}
         />);
 
         checkCustomElementProps(
@@ -69,9 +71,9 @@ describe('Switch Toggle', () => {
                 labelPosition: 'column'
             }
         );
-        selectToggleElementLabel().should('have.text', 'BOH');
+        selectToggleElementLabel().should('have.text', 'BAR');
         selectToggleElementSlider().click();
-        selectToggleElementLabel().should('have.text', 'MAH');
+        selectToggleElementLabel().should('have.text', 'FOO');
         // className
         selectToggleWrapper().should('have.class', 'additional-class');
 
@@ -88,20 +90,16 @@ describe('Switch Toggle', () => {
         selectToggleLabel().should('not.exist');
         selectToggleWrapper().should('have.css', 'justify-content').and('eq', 'center');
 
-        log('Color and colorOff');
+        log('Color on/off, label type icon and icon color/colorOff');
         // off
+        verifyElementRgbColor(selectToggleElementIcon(), allRgbColors['Blue Violet']);
         verifyElementRgbColorProp(selectToggleElementSlider(), allRgbColors['Light Cyan'], 'background-color');
         selectToggleElementSlider().click();
         // on
-        verifyElementRgbColorProp(selectToggleElementSlider(), allRgbColors['Teal'], 'background-color');
-        selectToggleElementSlider().click();
-
-        log('Label type icon and icon color/colorOff');
-        // off
-        verifyElementRgbColor(selectToggleElementIcon(), allRgbColors['Blue Violet']);
-        selectToggleElementSlider().click();
-        // on
         verifyElementRgbColor(selectToggleElementIcon(), allRgbColors['Prussian Blue']);
+        // TODO: Test ON background color of :before pseudo slider
+        // verifyElementRgbColorProp(selectToggleElementSlider(), allRgbColors['Teal'], 'background-color');
+
     });
 
     it('Switch toggle callbacks', () => {

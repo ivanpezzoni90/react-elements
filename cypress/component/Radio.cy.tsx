@@ -9,10 +9,10 @@ import {
     selectRadioContainer,
     selectRadioNthElementCheckbox,
     selectRadioNthElementLabel,
-    selectRadioNthElementToggleLabel,
     selectRadioNthElementToggleSlider,
     selectRadioNthElementIcon,
     selectRadioNthElementRadio,
+    selectRadioNthElementToggleInput,
 } from '../modules/selectors';
 import { log } from '../modules/utils';
 import { verifyElementRgbColor, verifyElementRgbColorProp, verifySwitchToggleValue } from '../modules/assertions';
@@ -86,10 +86,12 @@ const verifyRadioIconIsSelected = (nth, selected = true) => {
 };
 
 const verifyRadioToggleInteractions = (nth, multiple) => {
-    verifySwitchToggleValue(() => selectRadioNthElementToggleLabel(nth), 'NO');
-    verifySwitchToggleValue(() => selectRadioNthElementToggleSlider(nth).click(), 'YES');
+    verifySwitchToggleValue(() => selectRadioNthElementToggleInput(nth), 'not-toggled');
+    
+    selectRadioNthElementToggleSlider(nth).click();
+    verifySwitchToggleValue(() => selectRadioNthElementToggleInput(nth), 'toggled');
 
-    verifySwitchToggleValue(() => selectRadioNthElementToggleLabel(nth - 1), multiple ? 'YES' : 'NO');
+    verifySwitchToggleValue(() => selectRadioNthElementToggleInput(nth - 1), multiple ? 'toggled' : 'not-toggled');
 };
 
 describe('Radio', () => {
@@ -280,12 +282,13 @@ describe('Radio', () => {
             type={RadioTypes.toggle}
         />);
 
-        verifySwitchToggleValue(() => selectRadioNthElementToggleLabel(0), 'NO');
-        verifySwitchToggleValue(() => selectRadioNthElementToggleLabel(1), 'NO');
-        verifySwitchToggleValue(() => selectRadioNthElementToggleLabel(2), 'NO');
-        verifySwitchToggleValue(() => selectRadioNthElementToggleLabel(3), 'NO');
+        verifySwitchToggleValue(() => selectRadioNthElementToggleInput(0), 'not-toggled');
+        verifySwitchToggleValue(() => selectRadioNthElementToggleInput(1), 'not-toggled');
+        verifySwitchToggleValue(() => selectRadioNthElementToggleInput(2), 'not-toggled');
+        verifySwitchToggleValue(() => selectRadioNthElementToggleInput(3), 'not-toggled');
 
-        verifySwitchToggleValue(() => selectRadioNthElementToggleSlider(0).click(), 'YES');
+        selectRadioNthElementToggleSlider(0).click();
+        verifySwitchToggleValue(() => selectRadioNthElementToggleInput(0), 'toggled');
 
         log('Select another value and verify other toggle labels');
 
@@ -309,7 +312,7 @@ describe('Radio', () => {
             value="locke"
         />);
 
-        verifySwitchToggleValue(() => selectRadioNthElementToggleLabel(1), 'YES');
+        verifySwitchToggleValue(() => selectRadioNthElementToggleInput(1), 'toggled');
 
         log('Verify radio toggle multiple interactions');
         cy.mount(<Radio
@@ -317,7 +320,10 @@ describe('Radio', () => {
             type={RadioTypes.toggle}
             multiple
         />);
-        verifySwitchToggleValue(() => selectRadioNthElementToggleSlider(0).click(), 'YES');
+
+        selectRadioNthElementToggleSlider(0).click();
+        verifySwitchToggleValue(() => selectRadioNthElementToggleInput(0), 'toggled');
+        
         log('Select another value and verify other toggles are still checked');
         verifyRadioToggleInteractions(1, true);
         verifyRadioToggleInteractions(2, true);
@@ -333,10 +339,10 @@ describe('Radio', () => {
             multiple
         />);
 
-        verifySwitchToggleValue(() => selectRadioNthElementToggleLabel(0), 'YES');
-        verifySwitchToggleValue(() => selectRadioNthElementToggleLabel(1), 'YES');
-        verifySwitchToggleValue(() => selectRadioNthElementToggleLabel(2), 'YES');
-        verifySwitchToggleValue(() => selectRadioNthElementToggleLabel(4), 'YES');
+        verifySwitchToggleValue(() => selectRadioNthElementToggleInput(0), 'toggled');
+        verifySwitchToggleValue(() => selectRadioNthElementToggleInput(1), 'toggled');
+        verifySwitchToggleValue(() => selectRadioNthElementToggleInput(2), 'toggled');
+        verifySwitchToggleValue(() => selectRadioNthElementToggleInput(4), 'toggled');
     });
 
     it('Radio type icon interactions', () => {
