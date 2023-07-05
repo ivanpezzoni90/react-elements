@@ -38,7 +38,6 @@ const Slider = styled.span<Slider>`
         ? setAlphaToHex(color as string, 60)
         : colorOff)};
     border-radius: 15px;
-    border: 1px solid gray;
     transition: 0.4s;
 
     display: flex;
@@ -50,7 +49,7 @@ const Slider = styled.span<Slider>`
 
         position: absolute;
         left: ${({toggle}) => toggle ? '2px' : '2px'};
-        bottom: 1px;
+        bottom: 2px;
 
         width: ${({bodyFontSize}) => (bodyFontSize * 1.5) - 4}px;
         height: ${({bodyFontSize}) => (bodyFontSize * 1.5) - 4}px;
@@ -375,7 +374,7 @@ const SwitchToggle = (props: SwitchToggleProps) => {
 const defaultProps: SwitchToggleProps = {
     checked: false,
     className: '',
-    color: allColors['Firebrick'],
+    color: allColors['Teal'],
     colorOff: allColors['Quick Silver'],
     iconColor: allColors['White'],
     iconOffColor: allColors['Dim Gray'],

@@ -6,6 +6,7 @@ import { EditorSection, EditorSectionTypes, EditorTypes, ElementLength, ToggleLa
 import { useEditorInit } from '../lib/hooks';
 import { alignPositionEditor, bordersAndShadowSection, labelSection, lengthEditor } from './commons/editors';
 import { ElementContainer } from './commons/ElementContainer';
+import { allColors } from '../lib/constants/colors';
 
 const getEditor = (props: SwitchToggleProps) => {
     const editorJson: EditorSection[] = [
@@ -16,7 +17,7 @@ const getEditor = (props: SwitchToggleProps) => {
             editors: [
                 {
                     type: EditorTypes.color,
-                    default: '#666',
+                    default: allColors['Teal'],
                     label: 'Color',
                     prop: 'color'
                 }
