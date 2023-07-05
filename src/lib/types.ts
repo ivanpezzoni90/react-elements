@@ -149,6 +149,13 @@ export enum AlignPositions {
     right = 'flex-end'
 }
 
+export enum BadgePositions {
+    topRight = 'topRight',
+    bottomRight = 'bottomRight',
+    topLeft = 'topLeft',
+    bottomLeft = 'bottomLeft',
+}
+
 export enum LabelLength {
     xxs = '2em',
     xs = '4em',
@@ -162,7 +169,8 @@ export enum LabelLength {
 
 export enum ToggleLabelType {
     label = 'label',
-    icon = 'icon'
+    icon = 'icon',
+    none = 'none'
 }
 
 export enum RadioTypes {

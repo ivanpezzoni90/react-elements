@@ -20,7 +20,7 @@ const getEditor = (props: CheckboxProps) => {
             editors: [
                 {
                     type: EditorTypes.color,
-                    default: allColors['Dim Gray'],
+                    default: allColors['Teal'],
                     label: 'Color',
                     prop: 'color'
                 },

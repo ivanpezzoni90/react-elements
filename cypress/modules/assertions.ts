@@ -30,4 +30,4 @@ export const verifyCheckboxChecked = (element: () => Cypress.Chainable<JQuery<HT
 
 
 export const verifySwitchToggleValue = (element: () => Cypress.Chainable<JQuery<HTMLDivElement>>, value: string) =>
-    element().should('have.text', value);
+    element().should('have.attr', 'data-toggled').and('eq', value);

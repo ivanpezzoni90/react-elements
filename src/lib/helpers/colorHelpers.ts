@@ -79,7 +79,7 @@ export function shadeColor(color: string, percent: number) {
  * Higher (negative) the amount, darker the result color
  * @returns {String} The color lighter or darker
  */
-export function lightenDarkenColor(color: string, amount: number) {
+export function lightenDarkenColor(color: string, amount: number): string {
     return `#${color
         .replace(/^#/, '')
         .replace(/../g, color => (

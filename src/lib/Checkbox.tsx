@@ -10,46 +10,71 @@ const CheckboxContainer = styled.div`
     vertical-align: middle;
     padding: 0.25em 1em 0 0.25em;
 `;
-const Icon = styled.svg`
-    fill: none;
-    stroke: ${({colorOff}: {colorOff:string}) => colorOff};
-    stroke-width: 2px;
+
+const InputCheckbox = styled.input.attrs({ type: 'checkbox' })<InputCheckboxInterface>`
+    appearance: none;
+    width: 1.5em;
+    height: 1.5em;
+    position: relative;
+    margin: 2px;
+
+    &:focus + & {
+        box-shadow: 0 0 0 3px #dedede;
+    }
+
+    &::before {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 3px;
+        background-color: ${({colorOff}) => colorOff};
+        transform: translate(8px, 13px) rotate(-45deg);
+        transform-origin: left;
+        transition: 150ms all linear;
+        transition-delay: 0ms;
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 3px;
+        background-color: ${({colorOff}) => colorOff};
+        transform: translate(1px, 8px) rotate(45deg);
+        transform-origin: left;
+        transition: 150ms all linear;
+        transition-delay: 150ms;
+    }
+
+    &:checked::before {
+        width: 14px;
+        transition-delay: 150ms;
+    }
+
+    &:checked::after {
+        width: 10px;
+        transition-delay: 0ms;
+    }
 `;
-const HiddenCheckbox = styled.input.attrs({ type: 'checkbox' })`
-    border: 0;
-    clip: rect(0 0 0 0);
-    clippath: inset(50%);
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    padding: 0;
-    position: absolute;
-    white-space: nowrap;
-    width: 1px;
-`;
+
+interface InputCheckboxInterface {
+    checked: boolean,
+    colorOff?: string
+}
 
 interface StyledCheckboxInterface {
     checked: boolean,
     color: string,
-    colorOff: string
 }
 
 const StyledCheckbox = styled.div<StyledCheckboxInterface>`
     display: inline-block;
     width: 1.5em;
     height: 1.5em;
-    background: ${({ checked, color }) => (checked ? color : allColors['White'])};
     border-radius: 3px;
-    border: 1px solid #666;
-    transition: all 150ms;
-
-    ${HiddenCheckbox}:focus + & {
-        box-shadow: 0 0 0 3px #dedede;
-    }
-
-    ${Icon} {
-        visibility: ${({ checked }) => (checked ? 'visible' : 'hidden')}
-    }
+    background-color: ${({checked, color}) => checked ? color : allColors['White']};
+    border: 1px solid ${({checked, color}) => checked ? color : allColors['Dim Gray']};
+    transition: background-color 0.75s, border-color 0.75s;
 `;
 
 interface CheckboxAdvancedWrapperInterface {
@@ -176,24 +201,18 @@ function CheckboxElement({
     return (<CheckboxContainer
         className="ie-checkbox__element"
     >
-        <HiddenCheckbox
-            className="ie-checkbox__element__input"
-        />
         <StyledCheckbox
             className="checkbox__element__checkbox"
-            data-checked={checked ? 'checked' : 'not-checked'}
             checked={checked}
             color={color}
-            colorOff={colorOff}
-            onClick={onCheckboxChange}
+            data-checked={checked ? 'checked' : 'not-checked'}
         >
-            <Icon
-                viewBox="0 0 24 24"
-                className="checkbox__element__checkbox__icon"
+            <InputCheckbox
+                className="ie-checkbox__element__input"
+                onClick={onCheckboxChange}
+                checked={checked}
                 colorOff={colorOff}
-            >
-                <polyline points="20 6 9 17 4 12" />
-            </Icon>
+            />
         </StyledCheckbox>
     </CheckboxContainer>);
 }
@@ -259,7 +278,7 @@ function Checkbox(props: CheckboxProps) {
 const defaultProps: CheckboxProps = {
     className: '',
     checked: false,
-    color: allColors['Dim Gray'],
+    color: allColors['Teal'],
     colorOff: allColors['White'],
     label: 'Label',
     align: AlignPositions.center,
@@ -280,4 +299,4 @@ Checkbox.defaultProps = defaultProps;
 CheckboxElement.defaultProps = defaultProps;
 
 export { CheckboxElement, Checkbox };
-export type {CheckboxProps };
+export type { CheckboxProps };

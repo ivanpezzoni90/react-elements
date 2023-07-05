@@ -142,10 +142,6 @@ export const selectCheckboxElementCheck: Selector<HTMLDivElement> = (
     parent = selectCheckboxWrapper
 ) => selectCheckboxElement(parent).find('.checkbox__element__checkbox');
 
-export const selectCheckboxElementIcon: Selector<HTMLDivElement> = (
-    parent = selectCheckboxWrapper
-) => selectCheckboxElementCheck(parent).find('.checkbox__element__checkbox__icon');
-
 export const selectCheckboxLabel: Selector<HTMLLabelElement> = (
     parent = selectCheckboxWrapper
 ) => parent().find('label');
@@ -162,6 +158,10 @@ export const selectToggleElement: Selector<HTMLDivElement> = (
 export const selectToggleElementSwitch: Selector<HTMLDivElement> = (
     parent = selectToggleWrapper
 ) => selectToggleElement(parent).find('.ie-toggle__element__switch');
+
+export const selectToggleElementSwitchInput: Selector<HTMLDivElement> = (
+    parent = selectToggleWrapper
+) => selectToggleElementSwitch(parent).find('.ie-toggle__element__switch__input');
 
 export const selectToggleElementSlider: Selector<HTMLDivElement> = (
     parent = selectToggleWrapper
@@ -293,10 +293,10 @@ export const selectRadioNthElementCheckbox: SelectorWithParam<number, HTMLDivEle
     parent = selectRadioWrapper
 ) => selectCheckboxElementCheck(() => selectRadioNthElement(nth,parent));
 
-export const selectRadioNthElementToggleLabel: SelectorWithParam<number, HTMLDivElement, HTMLDivElement> = (
+export const selectRadioNthElementToggleInput: SelectorWithParam<number, HTMLDivElement, HTMLDivElement> = (
     nth: number,
     parent = selectRadioWrapper
-) => selectToggleElementLabel(() => selectRadioNthElement(nth,parent));
+) => selectToggleElementSwitchInput(() => selectRadioNthElement(nth,parent));
 
 export const selectRadioNthElementToggleSlider: SelectorWithParam<number, HTMLDivElement, HTMLDivElement> = (
     nth: number,
@@ -433,5 +433,13 @@ export const selectRatingElementNthIcon: SelectorWithParam<number, HTMLDivElemen
     nth: number,
     parent = selectRatingWrapper,
 ) => selectRatingElement(parent).find('.ie-rating__element__item__icon').eq(nth);
+
+
+// BADGE
+export const selectBadgeWrapper: Selector<HTMLDivElement> = () => cy.get('.ie-badge');
+
+export const selectBadgeElement: Selector<HTMLDivElement> = (
+    parent = selectBadgeWrapper
+) => parent().find('.ie-badge__element');
 
 

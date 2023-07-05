@@ -2,7 +2,7 @@ import React from 'react';
 import { Fragment } from 'react';
 import Editor from './EditorBuilder';
 import {Button} from '../lib/Button';
-import { BorderRadius, ButtonIconSize, ButtonTypes, EditorSection, EditorSectionTypes, EditorTypes, ElementPosition } from '../lib/types';
+import { BorderRadius, ButtonIconSize, ButtonTypes, EditorSection, EditorSectionTypes, EditorTypes, ElementLength, ElementPosition } from '../lib/types';
 import { useEditorInit } from '../lib/hooks';
 import {
     alignPositionEditor,
@@ -38,10 +38,10 @@ const getEditor = () => {
             type: EditorSectionTypes.section,
             label: 'Size and Weight',
             editors: [
-                lengthEditor(),
+                lengthEditor(ElementLength.s),
                 heightEditor(),
                 fontWeightEditor,
-                fontSizeEditor,
+                fontSizeEditor(),
             ]
         },
         {

@@ -10,6 +10,7 @@ import SliderEditor from '../editors/SliderEditor';
 import SpinnerEditor from '../editors/SpinnerEditor';
 import ModalEditor from '../editors/ModalEditor';
 import RatingEditor from '../editors/RatingEditor';
+import BadgeEditor from '../editors/BadgeEditor';
 
 import { Component } from '../lib/types';
 
@@ -61,6 +62,10 @@ const Components: Component[] = [{
     key: 'rating',
     name: 'Rating',
     editor: RatingEditor
+}, {
+    key: 'badge',
+    name: 'Badge',
+    editor: BadgeEditor
 }];
 
 function getComponentByKey(key: string) {

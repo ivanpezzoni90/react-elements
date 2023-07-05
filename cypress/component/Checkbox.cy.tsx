@@ -5,7 +5,7 @@ import { allColors, allRgbColors } from '../../src/lib/constants/colors';
 import { AlignPositions, BorderRadius, ElementLength, LabelLength, LabelPositions } from '../../src/lib/types';
 import { checkCustomElementProps, checkDefaultElementProps } from '../modules/actions';
 import { verifyElementRgbColorProp } from '../modules/assertions';
-import { selectCheckboxElementCheck, selectCheckboxElementIcon, selectCheckboxLabel, selectCheckboxWrapper } from '../modules/selectors';
+import { selectCheckboxElementCheck, selectCheckboxLabel, selectCheckboxWrapper } from '../modules/selectors';
 import { log } from '../modules/utils';
 
 describe('Checkbox', () => {
@@ -28,7 +28,7 @@ describe('Checkbox', () => {
             checked
         />);
         selectCheckboxElementCheck().should('have.attr', 'data-checked').and('eq', 'checked');
-        verifyElementRgbColorProp(selectCheckboxElementCheck(), allRgbColors['Dim Gray'], 'background-color');
+        verifyElementRgbColorProp(selectCheckboxElementCheck(), allRgbColors['Teal'], 'background-color');
         cy.mount(<Checkbox
             checked={false}
         />);
@@ -78,7 +78,6 @@ describe('Checkbox', () => {
         log('Click and verify checked status');
         verifyElementRgbColorProp(selectCheckboxElementCheck().click(), allRgbColors['Teal'], 'background-color');
         selectCheckboxElementCheck().should('have.attr', 'data-checked').and('eq', 'checked');
-        verifyElementRgbColorProp(selectCheckboxElementIcon(), allRgbColors['Light Cyan'], 'stroke');
         log('Click again and verify not checked status');
         verifyElementRgbColorProp(selectCheckboxElementCheck().click(), allRgbColors['White'], 'background-color');
         selectCheckboxElementCheck().should('have.attr', 'data-checked').and('eq', 'not-checked');
