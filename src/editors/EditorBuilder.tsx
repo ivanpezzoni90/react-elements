@@ -8,7 +8,7 @@ import { Select } from '../lib/Select';
 import { SwitchToggle } from '../lib/SwitchToggle';
 import { ColorPicker } from '../lib/ColorPicker';
 import { InputTypes } from '../lib/Input/config';
-import { getGroupLength, splitArrayInGroups, splitEditorsInGroups } from '../lib/helpers';
+import { getGroupLength, splitEditorsInGroups } from '../lib/helpers';
 import { CodeBlock } from '../components/CodeBlock';
 import { allColors } from '../lib/constants/colors';
 import { Radio } from '../lib';

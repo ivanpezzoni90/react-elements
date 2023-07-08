@@ -41,10 +41,17 @@ import {
     FaDownload,
     FaSpinner,
     FaCircleNotch,
-    FaCog
+    FaCog,
+    FaRegHandPointer
 } from 'react-icons/fa';
 import { IoCloseSharp, IoCheckmarkSharp } from 'react-icons/io5';
-import { AiOutlineCloseCircle } from 'react-icons/ai';
+import {
+    AiOutlineCloseCircle,
+    AiOutlineAlignCenter,
+    AiOutlineAlignLeft,
+    AiOutlineAlignRight,
+    AiOutlineFullscreen
+} from 'react-icons/ai';
 import {
     GiWolverineClaws,
     GiToolbox,
@@ -59,7 +66,10 @@ import { HiOutlineRefresh } from 'react-icons/hi';
 import { RiLoader5Line } from 'react-icons/ri';
 import {
     BiLoaderCircle,
-    BiLoader
+    BiLoader,
+    BiArrowToBottom,
+    BiArrowToRight,
+    BiSquare
 } from 'react-icons/bi';
 import {
     BsStar,
@@ -67,8 +77,15 @@ import {
     BsStarFill,
     BsHeart,
     BsHeartHalf,
-    BsHeartFill
+    BsHeartFill,
+    BsCaretLeftSquare,
+    BsCaretRightSquare,
+    BsThreeDotsVertical,
+    BsThreeDots,
 } from 'react-icons/bs';
+
+import { FiArrowLeft, FiArrowRight } from 'react-icons/fi';
+import { MdAutoAwesome } from 'react-icons/md';
 
 export enum IconList {
     caretDown = 'caret-down',
@@ -133,7 +150,22 @@ export enum IconList {
     starFill = 'star-fill',
     heart = 'heart',
     heartHalf = 'heart-half',
-    heartFill = 'heart-fill'
+    heartFill = 'heart-fill',
+    alignCenter = 'align-center',
+    alignLeft = 'align-left',
+    alignRight = 'align-right',
+    leftSquare = 'left-square',
+    rightSquare = 'right-square',
+    arrowLeft = 'arrow-left',
+    arrowRight = 'arrow-right',
+    verticalDots = 'vertical-dots',
+    horizontalDots = 'horizontal-dots',
+    verticalLabel = 'vertical-label',
+    horizontalLabel = 'horizontal-label',
+    fullScreen = 'full-screen',
+    square = 'square',
+    auto = 'auto',
+    pointer = 'pointer'
 }
 
 interface IconInterface {
@@ -203,4 +235,19 @@ export const iconMap: IconInterface = {
     [IconList.heart]: BsHeart,
     [IconList.heartHalf]: BsHeartHalf,
     [IconList.heartFill]: BsHeartFill,
+    [IconList.alignCenter]: AiOutlineAlignCenter,
+    [IconList.alignLeft]: AiOutlineAlignLeft,
+    [IconList.alignRight]: AiOutlineAlignRight,
+    [IconList.leftSquare]: BsCaretLeftSquare,
+    [IconList.rightSquare]: BsCaretRightSquare,
+    [IconList.arrowLeft]: FiArrowLeft,
+    [IconList.arrowRight]: FiArrowRight,
+    [IconList.verticalDots]: BsThreeDotsVertical,
+    [IconList.horizontalDots]: BsThreeDots,
+    [IconList.verticalLabel]: BiArrowToBottom,
+    [IconList.horizontalLabel]: BiArrowToRight,
+    [IconList.fullScreen]: AiOutlineFullscreen,
+    [IconList.square]: BiSquare,
+    [IconList.auto]: MdAutoAwesome,
+    [IconList.pointer]: FaRegHandPointer
 };

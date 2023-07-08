@@ -256,8 +256,13 @@ const RadioElementComponent = ({
                 icon={o.icon as IconList}
                 length={ElementLength.squared}
                 borderRadius={BorderRadius.no}
-                label={o.label}
+                label={o.icon ? '' : o.label} // Hide label when icon is present
+                title={o.icon ? o.label : ''} // Show title when icon is present
                 color={optionSelected ? primaryColor : secondaryColor}
+                textColor={fontColorFromBackground((optionSelected
+                    ? primaryColor 
+                    : secondaryColor) as string)
+                }
                 iconColor={optionSelected
                     ? fontColorFromBackground(primaryColor as string)
                     : fontColorFromBackground(secondaryColor as string)}

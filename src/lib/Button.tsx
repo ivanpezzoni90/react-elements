@@ -143,6 +143,7 @@ interface ButtonProps {
     height?: ElementHeight,
     align?: AlignPositions,
     type?: ButtonTypes,
+    title?: string,
     clickAnimation?: boolean
     onClick: VoidFunction
 }
@@ -173,6 +174,7 @@ const Button = ({
     buttonIconSize,
     elementPosition,
     type,
+    title,
     clickAnimation,
     onClick
 }: ButtonProps) => {
@@ -203,6 +205,7 @@ const Button = ({
             height={height}
             buttonType={type}
             clickAnimation={clickAnimation}
+            title={title}
             onClick={onClick}
         >
             {icon && elementPosition === ElementPosition.left && IconElement}
@@ -240,7 +243,8 @@ const defaultProps: ButtonProps = {
     elementPosition: ElementPosition.left,
     align: AlignPositions.center,
     type: ButtonTypes.standard,
-    clickAnimation: true
+    clickAnimation: true,
+    title: ''
 };
 
 Button.defaultProps = defaultProps;

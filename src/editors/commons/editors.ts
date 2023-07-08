@@ -25,30 +25,34 @@ import { IconList } from '../../lib/constants/icons';
 export const labelPositionEditor: (def?: LabelPositions) => Editor = (
     def = LabelPositions.horizontal
 ) => ({
-    type: EditorTypes.select,
+    type: EditorTypes.radioButton,
     label: 'Label Position',
     default: def,
     prop: 'labelPosition',
     options: [{
         label: 'Horizontal',
-        value: LabelPositions.horizontal
+        value: LabelPositions.horizontal,
+        icon: IconList.horizontalLabel
     }, {
         label: 'Vertical',
-        value: LabelPositions.vertical
+        value: LabelPositions.vertical,
+        icon: IconList.verticalLabel
     }]
 });
 
 export const positionEditor: Editor = {
-    type: EditorTypes.select,
+    type: EditorTypes.radioButton,
     label: 'Position',
     default: Positions.vertical,
     prop: 'position',
     options: [{
         label: 'Horizontal',
-        value: Positions.horizontal
+        value: Positions.horizontal,
+        icon: IconList.horizontalDots
     }, {
         label: 'Vertical',
-        value: Positions.vertical
+        value: Positions.vertical,
+        icon: IconList.verticalDots
     }]
 };
 
@@ -57,19 +61,22 @@ export const alignPositionEditor = (
     prop = 'align',
     label = 'Alignment'
 ): Editor => ({
-    type: EditorTypes.select,
+    type: EditorTypes.radioButton,
     label,
     default: def,
     prop,
     options: [{
         label: 'Left',
-        value: AlignPositions.left
+        value: AlignPositions.left,
+        icon: IconList.alignLeft
     }, {
         label: 'Center',
-        value: AlignPositions.center
+        value: AlignPositions.center,
+        icon: IconList.alignCenter
     }, {
         label: 'Right',
-        value: AlignPositions.right
+        value: AlignPositions.right,
+        icon: IconList.alignRight
     }]
 });
 
@@ -104,115 +111,101 @@ export const labelColorEditor: Editor =  {
 
 export const lengthEditor = (def = ElementLength.full): Editor => ({
     label: 'Length',
-    type: EditorTypes.select,
+    type: EditorTypes.radioButton,
     default: def,
     prop: 'length',
     options: [
         {
             value: ElementLength.squared,
-            label: 'Squared'
+            label: 'Squared',
+            icon: IconList.square
         },
         {
             value: ElementLength.xxs,
-            label: 'XXS'
+            label: 'xxs'
         },
         {
             value: ElementLength.xs,
-            label: 'XS'
+            label: 'xs'
         },
         {
             value: ElementLength.s,
-            label: 'S'
+            label: 's'
         },
         {
             value: ElementLength.m,
-            label: 'M'
+            label: 'm'
         },
         {
             value: ElementLength.l,
-            label: 'L'
+            label: 'l'
         },
         {
             value: ElementLength.xl,
-            label: 'XL'
+            label: 'xl'
         },
         {
             value: ElementLength.xxl,
-            label: 'XXL'
+            label: 'xxl'
         },
         {
             value: ElementLength.full,
-            label: 'Full'
+            label: 'Full',
+            icon: IconList.fullScreen
         },
     ]
 });
 
+const heightOptions: Option[] = Object.entries(ElementHeight).map(([k,v]) => ({
+    label: k,
+    value: v,
+}));
 export const heightEditor = (def = ElementHeight.m): Editor => ({
     label: 'Height',
-    type: EditorTypes.select,
+    type: EditorTypes.radioButton,
     default: def,
     prop: 'height',
-    options: [
-        {
-            label: 'XS',
-            value: ElementHeight.xs
-        },
-        {
-            label: 'S',
-            value: ElementHeight.s
-        },
-        {
-            label: 'M',
-            value: ElementHeight.m
-        },
-        {
-            label: 'L',
-            value: ElementHeight.l
-        },
-        {
-            label: 'XL',
-            value: ElementHeight.xl
-        },
-    ]
+    options: heightOptions
 });
 
 export const labelLengthEditor = (def = LabelLength.auto): Editor => ({
     label: 'Label length',
-    type: EditorTypes.select,
+    type: EditorTypes.radioButton,
     default: def,
     prop: 'labelLength',
     options: [
         {
             value: LabelLength.xxs,
-            label: 'XXS'
+            label: 'xxs'
         },
         {
             value: LabelLength.xs,
-            label: 'XS'
+            label: 'xs'
         },
         {
             value: LabelLength.s,
-            label: 'S'
+            label: 's'
         },
         {
             value: LabelLength.m,
-            label: 'M'
+            label: 'm'
         },
         {
             value: LabelLength.l,
-            label: 'L'
+            label: 'l'
         },
         {
             value: LabelLength.xl,
-            label: 'XL'
+            label: 'xl'
         },
         {
             value: LabelLength.xxl,
-            label: 'XXL'
+            label: 'xxl'
         },
         {
             value: LabelLength.auto,
-            label: 'Auto'
+            label: 'Auto',
+            icon: IconList.auto
         },
     ]
 });
@@ -231,37 +224,39 @@ export const paddingEditor = (def = Padding.m): Editor => ({
 
 export const cursorEditor = (def = Cursors.auto): Editor => ({
     label: 'Cursor type',
-    type: EditorTypes.select,
+    type: EditorTypes.radioButton,
     default: def,
     prop: 'cursor',
     options: [{
         label: 'Auto',
-        value: Cursors.auto
+        value: Cursors.auto,
+        icon: IconList.auto
     },{
         label: 'Pointer',
-        value: Cursors.pointer
+        value: Cursors.pointer,
+        icon: IconList.pointer
     }]
 });
 
 export const fontWeightEditor: Editor = {
     label: 'Font Weight',
-    type: EditorTypes.select,
+    type: EditorTypes.radioButton,
     default: FontWeight.light,
     prop: 'fontWeight',
     options: [{
-        label: 'Lighter',
+        label: 'xs',
         value: FontWeight.lighter
     }, {
-        label: 'Light',
+        label: 's',
         value: FontWeight.light
     }, {
-        label: 'Semibold',
+        label: 'm',
         value: FontWeight.semibold
     }, {
-        label: 'Bold',
+        label: 'l',
         value: FontWeight.bold
     }, {
-        label: 'Bolder',
+        label: 'xl',
         value: FontWeight.bolder
     }]
 };
@@ -286,37 +281,20 @@ export const borderRadiusEditor: borderRadiusEditorType =
     options: borderRadiusOptions
 } as Editor);
 
+const elementSizeOptions: Option[] = Object.entries(ElementSize).map(([k,v]) => ({
+    label: k,
+    value: v,
+}));
 export const fontSizeEditor = (
     def = ElementSize.m,
     label = 'Element Size',
     prop = 'fontSize'
 ) => ({
     label,
-    type: EditorTypes.select,
+    type: EditorTypes.radioButton,
     default: def,
     prop,
-    options: [{
-        label: 'XXS',
-        value: ElementSize.xxs
-    }, {
-        label: 'XS',
-        value: ElementSize.xs
-    }, {
-        label: 'S',
-        value: ElementSize.s
-    }, {
-        label: 'M',
-        value: ElementSize.m
-    }, {
-        label: 'L',
-        value: ElementSize.l
-    }, {
-        label: 'XL',
-        value: ElementSize.xl
-    }, {
-        label: 'XXL',
-        value: ElementSize.xxl
-    }]
+    options: elementSizeOptions
 });
 
 
@@ -422,16 +400,18 @@ export const elementPositionEditor = (
     def = ElementPosition.left,
     label = 'Element Position'
 ) => ({
-    type: EditorTypes.select,
+    type: EditorTypes.radioButton,
     default: def,
     label,
     prop: 'elementPosition',
     options: [{
         label: 'Left',
-        value: ElementPosition.left
+        value: ElementPosition.left,
+        icon: IconList.arrowLeft
     }, {
         label: 'Right',
-        value: ElementPosition.right
+        value: ElementPosition.right,
+        icon: IconList.arrowRight
     }]
 });
 
@@ -468,8 +448,8 @@ export const labelSection = (defaultPosition?: LabelPositions): EditorSection =>
             prop: 'hideLabel'
         },
         labelColorEditor,
-        labelPositionEditor(defaultPosition),
-        labelLengthEditor()
+        labelLengthEditor(),
+        labelPositionEditor(defaultPosition)
     ]
 });
 

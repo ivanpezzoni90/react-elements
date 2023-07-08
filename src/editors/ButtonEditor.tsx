@@ -111,8 +111,6 @@ const getEditor = () => {
                     label: 'Disabled',
                     prop: 'disabled'
                 },
-                alignPositionEditor(),
-                borderRadiusEditor(BorderRadius.s),
                 {
                     type: EditorTypes.select,
                     default: ButtonTypes.standard,
@@ -134,7 +132,9 @@ const getEditor = () => {
                     default: true,
                     label: 'Click animation',
                     prop: 'clickAnimation'
-                }
+                },
+                borderRadiusEditor(BorderRadius.s),
+                alignPositionEditor(),
             ]
         }
     ];

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Editor, { renderVoidEditor } from './EditorBuilder';
+import Editor from './EditorBuilder';
 import { BorderRadius, Cursors, EditorSection, EditorSectionTypes, EditorTypes, Padding } from '../lib/types';
 import { Fragment } from 'react';
 import { Icon } from '../lib/Icon';
