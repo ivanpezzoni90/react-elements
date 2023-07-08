@@ -514,7 +514,7 @@ const turquoiseExtArray = [
         ]
     },
     {
-        'name': 'Middle Blue Green',
+        'name': 'Riptide',
         'hex': '#8ce5df',
         'rgb': [
             140,
@@ -1042,7 +1042,9 @@ const allColors: AllColorsType = colorArray.reduce((acc, arr) => {
     return Object.assign({}, acc, newAcc);
 }, {});
 
-const getColorNameByHex = (hex: string) => Object.keys(allColors).find((k) => allColors[k] === hex);
+const getColorNameByHex = (hex: string) => {
+    return Object.keys(allColors).find((k) => allColors[k] === hex);
+};
 
 const allObjectColors = colorArray.reduce((acc, arr) => {
     const newAcc: { [key: string]: { rgb: string, hex: string } } = {};

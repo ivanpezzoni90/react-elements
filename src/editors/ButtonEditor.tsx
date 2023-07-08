@@ -172,3 +172,5 @@ export default function ButtonEditor() {
     };
        
 }
+
+export { getEditor as getButtonEditor };

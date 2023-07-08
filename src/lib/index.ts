@@ -10,3 +10,5 @@ export { SliderElement, Slider } from './Slider';
 export { Spinner } from './Spinner';
 export { Portal } from './Portal';
 export { Modal } from './Modal';
+export { Badge } from './Badge';
+export { ButtonGroup } from './ButtonGroup';

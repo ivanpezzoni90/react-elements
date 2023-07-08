@@ -1,21 +1,23 @@
 import React, { useState } from 'react';
 
 import styled from 'styled-components';
-import { ChangeEditorPropType, Editor, EditorSection, EditorTypes, ElementLength } from '../lib/types';
+import { ChangeEditorPropType, Editor, EditorSection, EditorTypes, ElementLength, LabelPositions, Positions, RadioTypes } from '../lib/types';
 import { Checkbox } from '../lib/Checkbox';
 import { Input } from '../lib/Input';
 import { Select } from '../lib/Select';
 import { SwitchToggle } from '../lib/SwitchToggle';
 import { ColorPicker } from '../lib/ColorPicker';
 import { InputTypes } from '../lib/Input/config';
-import { splitArrayInGroups } from '../lib/helpers';
+import { getGroupLength, splitArrayInGroups, splitEditorsInGroups } from '../lib/helpers';
 import { CodeBlock } from '../components/CodeBlock';
 import { allColors } from '../lib/constants/colors';
+import { Radio } from '../lib';
 
 interface EditorElementInterface {
     className: string,
     key: string, 
-    group: number
+    group: number,
+    type: EditorTypes
 }
 
 const Section = styled.div`
@@ -33,7 +35,11 @@ const EditorContainer = styled.div`
 const EditorElement = styled.div<EditorElementInterface>`
     padding: 0.5em;
     display: flex;
-    flex: ${({group}) => group === 4 ? '1' : '0.245'};
+    flex: ${({type, group}) => type === EditorTypes.radioButton
+        ? '2'
+        : group === 4
+            ? '1'
+            : '0.245'};
 `;
 const EditorRow = styled.div`
     display: flex;
@@ -98,6 +104,13 @@ const buildOutputJsx = (
   />`;
 };
 
+export const renderVoidEditor = () => ({
+    type: EditorTypes.void,
+    prop: '',
+    default: '',
+    label: ''
+});
+
 export default function EditorFunction({
     json,
     onChange,
@@ -131,7 +144,7 @@ export default function EditorFunction({
         >
             {json.map((s, i) => {
                 if (s.type === 'section') {
-                    const editorGroups = splitArrayInGroups<Editor>(s.editors, 4);
+                    const editorGroups = splitEditorsInGroups(s.editors, 4);
 
                     return (<Section
                         className="ie__workarea__editor__section"
@@ -150,6 +163,7 @@ export default function EditorFunction({
                         >
                             {editorGroups.map((group, i) => {
                                 if (group) {
+                                    const groupLength = getGroupLength(group);
                                     return (
                                         <EditorRow
                                             className="ie__workarea__editor__section__editors__row"
@@ -160,7 +174,8 @@ export default function EditorFunction({
                                                     <EditorElement
                                                         className="ie__workarea__editor__section__editors__row__element"
                                                         key={`${e.prop}_${e.label}`}
-                                                        group={group.length}
+                                                        group={groupLength}
+                                                        type={e.type}
                                                     >
                                                         {{
                                                             [EditorTypes.input]: (<Input
@@ -212,7 +227,23 @@ export default function EditorFunction({
                                                                 label={e.label}
                                                                 shadow={false}
                                                                 length={ElementLength.full}
-                                                                onChange={onChangeValue(e.prop)} />)
+                                                                onChange={onChangeValue(e.prop)} />),
+                                                            [EditorTypes.radioButton]: (<Radio
+                                                                className="ie__workarea__editor__section__editors__row__element__radio-button"
+                                                                type={RadioTypes.button}
+                                                                value={Array.isArray(e.default)
+                                                                    ? e.default as Array<string>
+                                                                    : e.default as string
+                                                                }
+                                                                label={e.label}
+                                                                labelColor={allColors['Teal']}
+                                                                labelPosition={LabelPositions.horizontal}
+                                                                onChange={onChangeValue(e.prop)}
+                                                                options={e.options ? e.options : []}
+                                                                position={Positions.horizontal}
+                                                                hideBottomBorder={false}
+                                                            />),
+                                                            [EditorTypes.void]: (<div></div>)
                                                         }[e.type]}
                                                     </EditorElement>
                                                 );

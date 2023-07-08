@@ -10,6 +10,7 @@ import { ElementContainer } from './commons/ElementContainer';
 
 import { Radio, RadioProps } from '../lib/Radio';
 import { IconList } from '../lib/constants/icons';
+import { allColors } from '../lib/constants/colors';
 
 const defaultOptions = [{
     label: 'Terra',
@@ -53,6 +54,9 @@ const getEditor = (props: RadioProps) => {
                     }, {
                         label: 'Radio',
                         value: RadioTypes.radio
+                    }, {
+                        label: 'Button',
+                        value: RadioTypes.button
                     }]
                 },
                 {
@@ -60,6 +64,42 @@ const getEditor = (props: RadioProps) => {
                     label: 'Multiple',
                     prop: 'multiple',
                     default: false
+                }
+            ]
+        },
+        {
+            type: EditorSectionTypes.section,
+            label: 'Element',
+            editors: [
+                {
+                    type: EditorTypes.color,
+                    default: allColors['Teal'],
+                    label: 'Primary color',
+                    prop: 'primaryColor'
+                },
+                {
+                    type: EditorTypes.color,
+                    default: allColors['Silver Sand'],
+                    label: 'Secondary color',
+                    prop: 'secondaryColor'
+                },
+            ]
+        },
+        {
+            type: EditorSectionTypes.section,
+            label: 'Borders',
+            editors: [
+                {
+                    type: EditorTypes.toggle,
+                    default: true,
+                    label: 'Hide bottom border',
+                    prop: 'hideBottomBorder'
+                },
+                {
+                    type: EditorTypes.color,
+                    default: allColors['Silver Sand'],
+                    label: 'Border color',
+                    prop: 'borderColor'
                 }
             ]
         },

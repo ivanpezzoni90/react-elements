@@ -70,7 +70,7 @@ const Input = styled.input`
 `;
 
 const SwitchElementWrapper = styled.div`
-    padding: 0 1em 0 0.25em;
+    padding: 0 0.25em 0 0.25em;
 `;
 
 const Switch = styled.label<Switch>`
@@ -110,6 +110,7 @@ const SwitchToggleAdvancedWrapper = styled.div<SwitchToggleAdvancedWrapperInterf
         flex-direction: row;
         justify-content: ${props.align};
         align-items: center;
+        padding-right: 1em;
     `}
     min-width: 7em;
     width: ${props => props.length};

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Editor from './EditorBuilder';
+import Editor, { renderVoidEditor } from './EditorBuilder';
 import { BorderRadius, Cursors, EditorSection, EditorSectionTypes, EditorTypes, Padding } from '../lib/types';
 import { Fragment } from 'react';
 import { Icon } from '../lib/Icon';
@@ -23,7 +23,7 @@ const getEditor = () => {
                     label: 'Color',
                     prop: 'color'
                 },
-                iconSizeEditor()
+                iconSizeEditor(),
             ]
         },
         {
@@ -37,15 +37,15 @@ const getEditor = () => {
                     default: allColors['Transparent'],
                 },
                 borderRadiusEditor(BorderRadius.no),
-                paddingEditor(Padding.xs),
-                cursorEditor(Cursors.auto),
-                shadowEditor(false),
                 {
                     type: EditorTypes.toggle,
                     default: false,
                     label: 'Click animation',
                     prop: 'clickAnimation'
-                }
+                },
+                paddingEditor(Padding.xs),
+                cursorEditor(Cursors.auto),
+                shadowEditor(false),
             ]
         }
     ];

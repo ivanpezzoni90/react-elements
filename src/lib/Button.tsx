@@ -206,12 +206,16 @@ const Button = ({
             onClick={onClick}
         >
             {icon && elementPosition === ElementPosition.left && IconElement}
-            <LabelWrapper
-                className="ie-button__label"
-                length={length}
-            >
-                {label}
-            </LabelWrapper>
+            {label !== ''
+                ? (
+                    <LabelWrapper
+                        className="ie-button__label"
+                        length={length}
+                    >
+                        {label}
+                    </LabelWrapper>
+                ) : null
+            }
             {icon && elementPosition === ElementPosition.right && IconElement}
         </ButtonElement>
     );
@@ -242,3 +246,4 @@ const defaultProps: ButtonProps = {
 Button.defaultProps = defaultProps;
 
 export { Button };
+export type { ButtonProps };

@@ -12,6 +12,8 @@ export enum EditorTypes {
     checkbox = 'checkbox',
     toggle = 'toggle',
     color = 'color',
+    radioButton = 'radioButton',
+    void = 'void'
 }
 
 export type Editor = {
@@ -177,7 +179,8 @@ export enum RadioTypes {
     checkbox = 'checkbox',
     toggle = 'toggle',
     icon = 'icon',
-    radio = 'radio'
+    radio = 'radio',
+    button = 'button'
 }
 
 export enum ButtonTypes {

@@ -13,6 +13,7 @@ import RatingEditor from '../editors/RatingEditor';
 import BadgeEditor from '../editors/BadgeEditor';
 
 import { Component } from '../lib/types';
+import ButtonGroupEditor from '../editors/ButtonGroupEditor';
 
 const Components: Component[] = [{
     key: 'input',
@@ -66,6 +67,10 @@ const Components: Component[] = [{
     key: 'badge',
     name: 'Badge',
     editor: BadgeEditor
+}, {
+    key: 'buttonGroup',
+    name: 'Button Group',
+    editor: ButtonGroupEditor
 }];
 
 function getComponentByKey(key: string) {

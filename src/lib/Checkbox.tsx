@@ -8,7 +8,7 @@ import { allColors } from './constants/colors';
 const CheckboxContainer = styled.div`
     display: inline-block;
     vertical-align: middle;
-    padding: 0.25em 1em 0 0.25em;
+    padding: 0 0.25em 0 0.25em;
 `;
 
 const InputCheckbox = styled.input.attrs({ type: 'checkbox' })<InputCheckboxInterface>`
@@ -99,6 +99,7 @@ const CheckboxAdvancedWrapper = styled.div<CheckboxAdvancedWrapperInterface>`
         flex-direction: row;
         justify-content: ${props.align};
         align-items: center;
+        padding-right: 1em;
     `}
     min-width: 7em;
     width: ${props => props.length};

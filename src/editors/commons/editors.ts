@@ -217,30 +217,16 @@ export const labelLengthEditor = (def = LabelLength.auto): Editor => ({
     ]
 });
 
+const paddingOptions: Option[] = Object.entries(Padding).map(([k,v]) => ({
+    label: k,
+    value: v,
+}));
 export const paddingEditor = (def = Padding.m): Editor => ({
     label: 'Padding',
-    type: EditorTypes.select,
+    type: EditorTypes.radioButton,
     default: def,
     prop: 'padding',
-    options: [{
-        label: 'No',
-        value: Padding.no
-    },{
-        label: 'XS',
-        value: Padding.xs
-    },{
-        label: 'S',
-        value: Padding.s
-    }, {
-        label: 'M',
-        value: Padding.m
-    }, {
-        label: 'L',
-        value: Padding.l
-    }, {
-        label: 'XL',
-        value: Padding.xl
-    }]
+    options: paddingOptions
 });
 
 export const cursorEditor = (def = Cursors.auto): Editor => ({
@@ -284,36 +270,20 @@ type borderRadiusEditorType = (
     _default: BorderRadius,
     label?: string,
     prop?: string
-) => Editor
+) => Editor;
+
+const borderRadiusOptions: Option[] = Object.entries(BorderRadius).map(([k,v]) => ({
+    label: k,
+    value: v,
+}));
 
 export const borderRadiusEditor: borderRadiusEditorType =
 (_default: BorderRadius, label = 'Border Radius', prop = 'borderRadius') => ({
     label,
-    type: EditorTypes.select,
+    type: EditorTypes.radioButton,
     default: _default,
     prop,
-    options: [{
-        label: 'No',
-        value: BorderRadius.no
-    }, {
-        label: 'XS',
-        value: BorderRadius.xs
-    }, {
-        label: 'S',
-        value: BorderRadius.s
-    }, {
-        label: 'M',
-        value: BorderRadius.m
-    }, {
-        label: 'L',
-        value: BorderRadius.l
-    }, {
-        label: 'XL',
-        value: BorderRadius.xl
-    }, {
-        label: 'XXL',
-        value: BorderRadius.xxl
-    }]
+    options: borderRadiusOptions
 } as Editor);
 
 export const fontSizeEditor = (
@@ -422,12 +392,12 @@ export const iconEditor = (
 
 const sizeOptions: Option[] = Object.entries(IconSize).map(([k,v]) => ({
     label: k,
-    value: v
+    value: v,
 }));
 
 export const iconSizeEditor = (def = IconSize.xs, prop = 'fontSize'): Editor =>  ({
     label: 'Size',
-    type: EditorTypes.select,
+    type: EditorTypes.radioButton,
     default: def,
     prop,
     options: sizeOptions
