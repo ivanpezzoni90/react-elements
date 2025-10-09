@@ -9,7 +9,7 @@ import {
     LabelLength
 } from './types';
 import { useClickOutside, useComputedZIndex } from './hooks';
-import { ColorObject, palette, getColorNameByHex, allColors } from './constants/colors';
+import { ColorObject, palette, getColorNameByHex, allColors, colorNames } from './constants/colors';
 import { Input } from './Input';
 
 const doNothing = () => {};
@@ -260,7 +260,7 @@ const ColorListFooterComponent = memo(({
     selectedColorLabel,
     onCustomColorChange
 }: {
-    hoverColor: ColorObject
+    hoverColor: ColorObject,
     selectedColor: string,
     selectedColorLabel?: string
     onCustomColorChange: (newColor: string | number) => void
@@ -280,10 +280,10 @@ const ColorListFooterComponent = memo(({
                 shadow={false}
                 value={hoverColor.hex !== '' ? hoverColor.hex : selectedColor}
                 label={ customColor
-                    ? '' 
-                    : hoverColor.name !== ''
+                    ? ''
+                    : hoverColor.name || hoverColor.name !== ''
                         ? hoverColor.name
-                        : selectedColorLabel
+                        : selectedColorLabel || ''
                 }
                 onChange={onInputChange}
                 onBlur={onCustomColorChange}
@@ -321,7 +321,7 @@ const ColorPickerElement = memo(({
     }, [onChange]);
 
     const emptyColorObj: ColorObject = {
-        name: '',
+        name: '' as colorNames,
         hex: '',
         rgb: []
     };

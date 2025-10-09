@@ -1,6 +1,119 @@
+enum colorNames {
+    'Ruby Red' = 'Ruby Red',
+    'Firebrick' = 'Firebrick',
+    'Firebrick 2' = 'Firebrick 2',
+    'Lava' = 'Lava',
+    'Geranium Lake' = 'Geranium Lake',
+    'Indian Red' = 'Indian Red',
+    'Fuzzy Wuzzy' = 'Fuzzy Wuzzy',
+    'Light Coral' = 'Light Coral',
+    'Pastel Pink' = 'Pastel Pink',
+    'Baby Pink' = 'Baby Pink',
+    'Cyber Yellow' = 'Cyber Yellow',
+    'School Bus' = 'School Bus',
+    'Sunrise' = 'Sunrise',
+    'Minion' = 'Minion',
+    'Minion 2' = 'Minion 2',
+    'Crayola' = 'Crayola',
+    'Crayola 2' = 'Crayola 2',
+    'Champagne' = 'Champagne',
+    'Lemon Chiffon' = 'Lemon Chiffon',
+    'Cosmic Latte' = 'Cosmic Latte',
+    'Dark Orange' = 'Dark Orange',
+    'Orange Peel' = 'Orange Peel',
+    'Honey' = 'Honey',
+    'Yellow Orange' = 'Yellow Orange',
+    'Sandy Brown' = 'Sandy Brown',
+    'Mellow Apricot' = 'Mellow Apricot',
+    'Peach Puff' = 'Peach Puff',
+    'Deep Champagne' = 'Deep Champagne',
+    'Light Orange' = 'Light Orange',
+    'Bisque' = 'Bisque',
+    'Forest Green' = 'Forest Green',
+    'Cadmium Green' = 'Cadmium Green',
+    'Dartmouth Green' = 'Dartmouth Green',
+    'Green Web' = 'Green Web',
+    'Green Pigment' = 'Green Pigment',
+    'Dark Pastel' = 'Dark Pastel',
+    'Malachite' = 'Malachite',
+    'Light Green' = 'Light Green',
+    'Granny Smith' = 'Granny Smith',
+    'Celadon' = 'Celadon',
+    'Prussian Blue' = 'Prussian Blue',
+    'Indigo Dye' = 'Indigo Dye',
+    'Indigo Dye 2' = 'Indigo Dye 2',
+    'USAFA Blue' = 'USAFA Blue',
+    'Honolulu Blue' = 'Honolulu Blue',
+    'Celadon Blue' = 'Celadon Blue',
+    'Blue Green' = 'Blue Green',
+    'Maximum Blue' = 'Maximum Blue',
+    'Dark Sky Blue' = 'Dark Sky Blue',
+    'Light Blue' = 'Light Blue',
+    'Dark Turquoise' = 'Dark Turquoise',
+    'Turquoise' = 'Turquoise',
+    'Medium Turquoise' = 'Medium Turquoise',
+    'Verdigris' = 'Verdigris',
+    'Tiffany Blue' = 'Tiffany Blue',
+    'Aquamarine Blue' = 'Aquamarine Blue',
+    'Riptide' = 'Riptide',
+    'Celeste' = 'Celeste',
+    'Powder Blue' = 'Powder Blue',
+    'Light Cyan' = 'Light Cyan',
+    'Teal' = 'Teal',
+    'Dark Cyan' = 'Dark Cyan',
+    'Viridian Green' = 'Viridian Green',
+    'Cadet Blue' = 'Cadet Blue',
+    'Middle Blue Green 2' = 'Middle Blue Green 2',
+    'Middle Blue Green' = 'Middle Blue Green',
+    'Opal' = 'Opal',
+    'Powder Blue 2' = 'Powder Blue 2',
+    'Light Cyan 2' = 'Light Cyan 2',
+    'Azure' = 'Azure',
+    'Raisin Black' = 'Raisin Black',
+    'Davys Grey' = 'Davys Grey',
+    'Dim Gray' = 'Dim Gray',
+    'Gray Web' = 'Gray Web',
+    'Quick Silver' = 'Quick Silver',
+    'Silver Sand' = 'Silver Sand',
+    'Platinum' = 'Platinum',
+    'Cultured' = 'Cultured',
+    'White' = 'White',
+    'Transparent' = 'Transparent',
+    'Blue Violet' = 'Blue Violet',
+    'Blue Violet 2' = 'Blue Violet 2',
+    'Purple' = 'Purple',
+    'Dark Violet' = 'Dark Violet',
+    'Purple X 11' = 'Purple X 11',
+    'Electric Purple' = 'Electric Purple',
+    'Medium Orchid' = 'Medium Orchid',
+    'Bright Lilac' = 'Bright Lilac',
+    'Mauve' = 'Mauve',
+    'Pale Purple' = 'Pale Purple',
+    'Hot Pink' = 'Hot Pink',
+    'Persian Pink 2' = 'Persian Pink 2',
+    'Persian Pink' = 'Persian Pink',
+    'Carnation Pink 2' = 'Carnation Pink 2',
+    'Carnation Pink' = 'Carnation Pink',
+    'Cotton Candy 2' = 'Cotton Candy 2',
+    'Cotton Candy' = 'Cotton Candy',
+    'Pink Lace' = 'Pink Lace',
+    'Mimi Pink' = 'Mimi Pink',
+    'Lavender Blush' = 'Lavender Blush',
+    'Bole' = 'Bole',
+    'Coffee' = 'Coffee',
+    'Brown Sugar' = 'Brown Sugar',
+    'Cafe Au Lait' = 'Cafe Au Lait',
+    'Antique Brass' = 'Antique Brass',
+    'Antique Brass 2' = 'Antique Brass 2',
+    'Antique Brass 3' = 'Antique Brass 3',
+    'Tumbleweed' = 'Tumbleweed',
+    'Tumbleweed 2' = 'Tumbleweed 2',
+    'Desert Sand' = 'Desert Sand',
+}
+
 const redExtArray = [
     {
-        'name': 'Ruby Red',
+        'name': colorNames['Ruby Red'],
         'hex': '#9c191b',
         'rgb': [
             156,
@@ -9,7 +122,7 @@ const redExtArray = [
         ]
     },
     {
-        'name': 'Firebrick',
+        'name': colorNames['Firebrick'],
         'hex': '#ac1c1e',
         'rgb': [
             172,
@@ -18,7 +131,7 @@ const redExtArray = [
         ]
     },
     {
-        'name': 'Firebrick 2',
+        'name': colorNames['Firebrick 2'],
         'hex': '#bd1f21',
         'rgb': [
             189,
@@ -27,7 +140,7 @@ const redExtArray = [
         ]
     },
     {
-        'name': 'Lava',
+        'name': colorNames['Lava'],
         'hex': '#d02224',
         'rgb': [
             208,
@@ -36,7 +149,7 @@ const redExtArray = [
         ]
     },
     {
-        'name': 'Geranium Lake',
+        'name': colorNames['Geranium Lake'],
         'hex': '#dd2c2f',
         'rgb': [
             221,
@@ -45,7 +158,7 @@ const redExtArray = [
         ]
     },
     {
-        'name': 'Indian Red',
+        'name': colorNames['Indian Red'],
         'hex': '#e35053',
         'rgb': [
             227,
@@ -54,7 +167,7 @@ const redExtArray = [
         ]
     },
     {
-        'name': 'Fuzzy Wuzzy',
+        'name': colorNames['Fuzzy Wuzzy'],
         'hex': '#e66063',
         'rgb': [
             230,
@@ -63,7 +176,7 @@ const redExtArray = [
         ]
     },
     {
-        'name': 'Light Coral',
+        'name': colorNames['Light Coral'],
         'hex': '#ec8385',
         'rgb': [
             236,
@@ -72,7 +185,7 @@ const redExtArray = [
         ]
     },
     {
-        'name': 'Pastel Pink',
+        'name': colorNames['Pastel Pink'],
         'hex': '#f1a7a9',
         'rgb': [
             241,
@@ -81,7 +194,7 @@ const redExtArray = [
         ]
     },
     {
-        'name': 'Baby Pink',
+        'name': colorNames['Baby Pink'],
         'hex': '#f6cacc',
         'rgb': [
             246,
@@ -92,7 +205,7 @@ const redExtArray = [
 ];
 const yellowExtArray = [
     {
-        'name': 'Cyber Yellow',
+        'name': colorNames['Cyber Yellow'],
         'hex': '#ffd400',
         'rgb': [
             255,
@@ -101,7 +214,7 @@ const yellowExtArray = [
         ]
     },
     {
-        'name': 'School Bus',
+        'name': colorNames['School Bus'],
         'hex': '#ffd819',
         'rgb': [
             255,
@@ -110,7 +223,7 @@ const yellowExtArray = [
         ]
     },
     {
-        'name': 'Sunrise',
+        'name': colorNames['Sunrise'],
         'hex': '#ffdd32',
         'rgb': [
             255,
@@ -119,7 +232,7 @@ const yellowExtArray = [
         ]
     },
     {
-        'name': 'Minion',
+        'name': colorNames['Minion'],
         'hex': '#ffe14c',
         'rgb': [
             255,
@@ -128,7 +241,7 @@ const yellowExtArray = [
         ]
     },
     {
-        'name': 'Minion 2',
+        'name': colorNames['Minion 2'],
         'hex': '#ffe566',
         'rgb': [
             255,
@@ -137,7 +250,7 @@ const yellowExtArray = [
         ]
     },
     {
-        'name': 'Crayola',
+        'name': colorNames['Crayola'],
         'hex': '#ffe97f',
         'rgb': [
             255,
@@ -146,7 +259,7 @@ const yellowExtArray = [
         ]
     },
     {
-        'name': 'Crayola 2',
+        'name': colorNames['Crayola 2'],
         'hex': '#ffee99',
         'rgb': [
             255,
@@ -155,7 +268,7 @@ const yellowExtArray = [
         ]
     },
     {
-        'name': 'Champagne',
+        'name': colorNames['Champagne'],
         'hex': '#fff2b2',
         'rgb': [
             255,
@@ -164,7 +277,7 @@ const yellowExtArray = [
         ]
     },
     {
-        'name': 'Lemon Chiffon',
+        'name': colorNames['Lemon Chiffon'],
         'hex': '#fff6cc',
         'rgb': [
             255,
@@ -173,7 +286,7 @@ const yellowExtArray = [
         ]
     },
     {
-        'name': 'Cosmic Latte',
+        'name': colorNames['Cosmic Latte'],
         'hex': '#fffae5',
         'rgb': [
             255,
@@ -184,7 +297,7 @@ const yellowExtArray = [
 ];
 const orangeExtArray = [
     {
-        'name': 'Dark Orange',
+        'name': colorNames['Dark Orange'],
         'hex': '#ff930f',
         'rgb': [
             255,
@@ -193,7 +306,7 @@ const orangeExtArray = [
         ]
     },
     {
-        'name': 'Orange Peel',
+        'name': colorNames['Orange Peel'],
         'hex': '#ff9c24',
         'rgb': [
             255,
@@ -202,7 +315,7 @@ const orangeExtArray = [
         ]
     },
     {
-        'name': 'Honey',
+        'name': colorNames['Honey'],
         'hex': '#ffa538',
         'rgb': [
             255,
@@ -211,7 +324,7 @@ const orangeExtArray = [
         ]
     },
     {
-        'name': 'Yellow Orange',
+        'name': colorNames['Yellow Orange'],
         'hex': '#ffaf4d',
         'rgb': [
             255,
@@ -220,7 +333,7 @@ const orangeExtArray = [
         ]
     },
     {
-        'name': 'Sandy Brown',
+        'name': colorNames['Sandy Brown'],
         'hex': '#ffb861',
         'rgb': [
             255,
@@ -229,7 +342,7 @@ const orangeExtArray = [
         ]
     },
     {
-        'name': 'Mellow Apricot',
+        'name': colorNames['Mellow Apricot'],
         'hex': '#ffc176',
         'rgb': [
             255,
@@ -238,7 +351,7 @@ const orangeExtArray = [
         ]
     },
     {
-        'name': 'Peach Puff',
+        'name': colorNames['Peach Puff'],
         'hex': '#ffca8a',
         'rgb': [
             255,
@@ -247,7 +360,7 @@ const orangeExtArray = [
         ]
     },
     {
-        'name': 'Deep Champagne',
+        'name': colorNames['Deep Champagne'],
         'hex': '#ffd49f',
         'rgb': [
             255,
@@ -256,7 +369,7 @@ const orangeExtArray = [
         ]
     },
     {
-        'name': 'Light Orange',
+        'name': colorNames['Light Orange'],
         'hex': '#ffddb3',
         'rgb': [
             255,
@@ -265,7 +378,7 @@ const orangeExtArray = [
         ]
     },
     {
-        'name': 'Bisque',
+        'name': colorNames['Bisque'],
         'hex': '#ffe6c8',
         'rgb': [
             255,
@@ -276,7 +389,7 @@ const orangeExtArray = [
 ];
 const greenExtArray = [
     {
-        'name': 'Forest Green',
+        'name': colorNames['Forest Green'],
         'hex': '#10451d',
         'rgb': [
             16,
@@ -285,7 +398,7 @@ const greenExtArray = [
         ]
     },
     {
-        'name': 'Cadmium Green',
+        'name': colorNames['Cadmium Green'],
         'hex': '#155d27',
         'rgb': [
             21,
@@ -294,7 +407,7 @@ const greenExtArray = [
         ]
     },
     {
-        'name': 'Dartmouth Green',
+        'name': colorNames['Dartmouth Green'],
         'hex': '#1a7431',
         'rgb': [
             26,
@@ -303,7 +416,7 @@ const greenExtArray = [
         ]
     },
     {
-        'name': 'Green Web',
+        'name': colorNames['Green Web'],
         'hex': '#208b3a',
         'rgb': [
             32,
@@ -312,7 +425,7 @@ const greenExtArray = [
         ]
     },
     {
-        'name': 'Green Pigment',
+        'name': colorNames['Green Pigment'],
         'hex': '#25a244',
         'rgb': [
             37,
@@ -321,7 +434,7 @@ const greenExtArray = [
         ]
     },
     {
-        'name': 'Dark Pastel',
+        'name': colorNames['Dark Pastel'],
         'hex': '#2dc653',
         'rgb': [
             45,
@@ -330,7 +443,7 @@ const greenExtArray = [
         ]
     },
     {
-        'name': 'Malachite',
+        'name': colorNames['Malachite'],
         'hex': '#4ad66d',
         'rgb': [
             74,
@@ -339,7 +452,7 @@ const greenExtArray = [
         ]
     },
     {
-        'name': 'Light Green',
+        'name': colorNames['Light Green'],
         'hex': '#6ede8a',
         'rgb': [
             110,
@@ -348,7 +461,7 @@ const greenExtArray = [
         ]
     },
     {
-        'name': 'Granny Smith',
+        'name': colorNames['Granny Smith'],
         'hex': '#92e6a7',
         'rgb': [
             146,
@@ -357,7 +470,7 @@ const greenExtArray = [
         ]
     },
     {
-        'name': 'Celadon',
+        'name': colorNames['Celadon'],
         'hex': '#b7efc5',
         'rgb': [
             183,
@@ -368,7 +481,7 @@ const greenExtArray = [
 ];
 const blueExtArray = [
     {
-        'name': 'Prussian Blue',
+        'name': colorNames['Prussian Blue'],
         'hex': '#012a4a',
         'rgb': [
             1,
@@ -377,7 +490,7 @@ const blueExtArray = [
         ]
     },
     {
-        'name': 'Indigo Dye',
+        'name': colorNames['Indigo Dye'],
         'hex': '#013a63',
         'rgb': [
             1,
@@ -386,7 +499,7 @@ const blueExtArray = [
         ]
     },
     {
-        'name': 'Indigo Dye 2',
+        'name': colorNames['Indigo Dye 2'],
         'hex': '#01497c',
         'rgb': [
             1,
@@ -395,7 +508,7 @@ const blueExtArray = [
         ]
     },
     {
-        'name': 'USAFA Blue',
+        'name': colorNames['USAFA Blue'],
         'hex': '#014f86',
         'rgb': [
             1,
@@ -404,7 +517,7 @@ const blueExtArray = [
         ]
     },
     {
-        'name': 'Honolulu Blue',
+        'name': colorNames['Honolulu Blue'],
         'hex': '#2a6f97',
         'rgb': [
             42,
@@ -413,7 +526,7 @@ const blueExtArray = [
         ]
     },
     {
-        'name': 'Celadon Blue',
+        'name': colorNames['Celadon Blue'],
         'hex': '#2c7da0',
         'rgb': [
             44,
@@ -422,7 +535,7 @@ const blueExtArray = [
         ]
     },
     {
-        'name': 'Blue Green',
+        'name': colorNames['Blue Green'],
         'hex': '#468faf',
         'rgb': [
             70,
@@ -431,7 +544,7 @@ const blueExtArray = [
         ]
     },
     {
-        'name': 'Maximum Blue',
+        'name': colorNames['Maximum Blue'],
         'hex': '#61a5c2',
         'rgb': [
             97,
@@ -440,7 +553,7 @@ const blueExtArray = [
         ]
     },
     {
-        'name': 'Dark Sky Blue',
+        'name': colorNames['Dark Sky Blue'],
         'hex': '#89c2d9',
         'rgb': [
             137,
@@ -449,7 +562,7 @@ const blueExtArray = [
         ]
     },
     {
-        'name': 'Light Blue',
+        'name': colorNames['Light Blue'],
         'hex': '#a9d6e5',
         'rgb': [
             169,
@@ -460,7 +573,7 @@ const blueExtArray = [
 ];
 const turquoiseExtArray = [
     {
-        'name': 'Dark Turquoise',
+        'name': colorNames['Dark Turquoise'],
         'hex': '#00cfc1',
         'rgb': [
             0,
@@ -469,7 +582,7 @@ const turquoiseExtArray = [
         ]
     },
     {
-        'name': 'Turquoise',
+        'name': colorNames['Turquoise'],
         'hex': '#17d3c6',
         'rgb': [
             23,
@@ -478,7 +591,7 @@ const turquoiseExtArray = [
         ]
     },
     {
-        'name': 'Medium Turquoise',
+        'name': colorNames['Medium Turquoise'],
         'hex': '#2fd6cb',
         'rgb': [
             47,
@@ -487,7 +600,7 @@ const turquoiseExtArray = [
         ]
     },
     {
-        'name': 'Verdigris',
+        'name': colorNames['Verdigris'],
         'hex': '#46dad0',
         'rgb': [
             70,
@@ -496,7 +609,7 @@ const turquoiseExtArray = [
         ]
     },
     {
-        'name': 'Turquoise',
+        'name': colorNames['Aquamarine Blue'],
         'hex': '#5dded5',
         'rgb': [
             93,
@@ -505,7 +618,7 @@ const turquoiseExtArray = [
         ]
     },
     {
-        'name': 'Blue Green',
+        'name': colorNames['Tiffany Blue'],
         'hex': '#75e1da',
         'rgb': [
             117,
@@ -514,7 +627,7 @@ const turquoiseExtArray = [
         ]
     },
     {
-        'name': 'Riptide',
+        'name': colorNames['Riptide'],
         'hex': '#8ce5df',
         'rgb': [
             140,
@@ -523,7 +636,7 @@ const turquoiseExtArray = [
         ]
     },
     {
-        'name': 'Celeste',
+        'name': colorNames['Celeste'],
         'hex': '#a3e9e4',
         'rgb': [
             163,
@@ -532,7 +645,7 @@ const turquoiseExtArray = [
         ]
     },
     {
-        'name': 'Powder Blue',
+        'name': colorNames['Powder Blue'],
         'hex': '#bbece9',
         'rgb': [
             187,
@@ -541,7 +654,7 @@ const turquoiseExtArray = [
         ]
     },
     {
-        'name': 'Light Cyan',
+        'name': colorNames['Light Cyan'],
         'hex': '#d2f0ee',
         'rgb': [
             210,
@@ -552,7 +665,7 @@ const turquoiseExtArray = [
 ];
 const tealExtArray = [
     {
-        'name': 'Teal',
+        'name': colorNames['Teal'],
         'hex': '#008080',
         'rgb': [
             0,
@@ -561,7 +674,7 @@ const tealExtArray = [
         ]
     },
     {
-        'name': 'Dark Cyan',
+        'name': colorNames['Dark Cyan'],
         'hex': '#178b8b',
         'rgb': [
             23,
@@ -570,7 +683,7 @@ const tealExtArray = [
         ]
     },
     {
-        'name': 'Viridian Green',
+        'name': colorNames['Viridian Green'],
         'hex': '#2e9797',
         'rgb': [
             46,
@@ -579,7 +692,7 @@ const tealExtArray = [
         ]
     },
     {
-        'name': 'Cadet Blue',
+        'name': colorNames['Cadet Blue'],
         'hex': '#45a2a2',
         'rgb': [
             69,
@@ -588,7 +701,7 @@ const tealExtArray = [
         ]
     },
     {
-        'name': 'Middle Blue Green 2',
+        'name': colorNames['Middle Blue Green 2'],
         'hex': '#5cadad',
         'rgb': [
             92,
@@ -597,7 +710,7 @@ const tealExtArray = [
         ]
     },
     {
-        'name': 'Middle Blue Green',
+        'name': colorNames['Middle Blue Green'],
         'hex': '#74b9b9',
         'rgb': [
             116,
@@ -606,7 +719,7 @@ const tealExtArray = [
         ]
     },
     {
-        'name': 'Opal',
+        'name': colorNames['Opal'],
         'hex': '#8bc4c4',
         'rgb': [
             139,
@@ -615,7 +728,7 @@ const tealExtArray = [
         ]
     },
     {
-        'name': 'Powder Blue 2',
+        'name': colorNames['Powder Blue 2'],
         'hex': '#a2cfcf',
         'rgb': [
             162,
@@ -624,7 +737,7 @@ const tealExtArray = [
         ]
     },
     {
-        'name': 'Light Cyan 2',
+        'name': colorNames['Light Cyan 2'],
         'hex': '#b9dbdb',
         'rgb': [
             185,
@@ -633,7 +746,7 @@ const tealExtArray = [
         ]
     },
     {
-        'name': 'Azure',
+        'name': colorNames['Azure'],
         'hex': '#d0e6e6',
         'rgb': [
             208,
@@ -644,7 +757,7 @@ const tealExtArray = [
 ];
 const blackExtArray = [
     {
-        'name': 'Raisin Black',
+        'name': colorNames['Raisin Black'],
         'hex': '#272829',
         'rgb': [
             39,
@@ -653,7 +766,7 @@ const blackExtArray = [
         ]
     },
     {
-        'name': 'Davys Grey',
+        'name': colorNames['Davys Grey'],
         'hex': '#484a4b',
         'rgb': [
             72,
@@ -662,7 +775,7 @@ const blackExtArray = [
         ]
     },
     {
-        'name': 'Dim Gray',
+        'name': colorNames['Dim Gray'],
         'hex': '#666',
         'rgb': [
             102,
@@ -671,7 +784,7 @@ const blackExtArray = [
         ]
     },
     {
-        'name': 'Gray Web',
+        'name': colorNames['Gray Web'],
         'hex': '#7c7e7f',
         'rgb': [
             124,
@@ -680,7 +793,7 @@ const blackExtArray = [
         ]
     },
     {
-        'name': 'Quick Silver',
+        'name': colorNames['Quick Silver'],
         'hex': '#a6a8a9',
         'rgb': [
             166,
@@ -689,7 +802,7 @@ const blackExtArray = [
         ]
     },
     {
-        'name': 'Silver Sand',
+        'name': colorNames['Silver Sand'],
         'hex': '#c4c6c7',
         'rgb': [
             196,
@@ -698,7 +811,7 @@ const blackExtArray = [
         ]
     },
     {
-        'name': 'Platinum',
+        'name': colorNames['Platinum'],
         'hex': '#e6e8e9',
         'rgb': [
             230,
@@ -707,7 +820,7 @@ const blackExtArray = [
         ]
     },
     {
-        'name': 'Cultured',
+        'name': colorNames['Cultured'],
         'hex': '#f0f2f3',
         'rgb': [
             240,
@@ -716,7 +829,7 @@ const blackExtArray = [
         ]
     },
     {
-        'name': 'White',
+        'name': colorNames['White'],
         'hex': '#f9fcfd',
         'rgb': [
             249,
@@ -725,7 +838,7 @@ const blackExtArray = [
         ]
     },
     {
-        'name': 'Transparent',
+        'name': colorNames['Transparent'],
         'hex': '#ffffff00',
         'rgb': [
             255,
@@ -737,7 +850,7 @@ const blackExtArray = [
 ];
 const violetExtArray = [
     {
-        'name': 'Blue Violet',
+        'name': colorNames['Blue Violet'],
         'hex': '#461873',
         'rgb': [
             70,
@@ -746,7 +859,7 @@ const violetExtArray = [
         ]
     },
     {
-        'name': 'Blue Violet 2',
+        'name': colorNames['Blue Violet 2'],
         'hex': '#58148e',
         'rgb': [
             88,
@@ -755,7 +868,7 @@ const violetExtArray = [
         ]
     },
     {
-        'name': 'Purple',
+        'name': colorNames['Purple'],
         'hex': '#6910a8',
         'rgb': [
             105,
@@ -764,7 +877,7 @@ const violetExtArray = [
         ]
     },
     {
-        'name': 'Dark Violet',
+        'name': colorNames['Dark Violet'],
         'hex': '#8c07dd',
         'rgb': [
             140,
@@ -773,7 +886,7 @@ const violetExtArray = [
         ]
     },
     {
-        'name': 'Purple X 11',
+        'name': colorNames['Purple X 11'],
         'hex': '#9f21e3',
         'rgb': [
             159,
@@ -782,7 +895,7 @@ const violetExtArray = [
         ]
     },
     {
-        'name': 'Electric Purple',
+        'name': colorNames['Electric Purple'],
         'hex': '#b333e9',
         'rgb': [
             179,
@@ -791,7 +904,7 @@ const violetExtArray = [
         ]
     },
     {
-        'name': 'Medium Orchid',
+        'name': colorNames['Medium Orchid'],
         'hex': '#cb5df1',
         'rgb': [
             203,
@@ -800,7 +913,7 @@ const violetExtArray = [
         ]
     },
     {
-        'name': 'Bright Lilac',
+        'name': colorNames['Bright Lilac'],
         'hex': '#dc93f6',
         'rgb': [
             220,
@@ -809,7 +922,7 @@ const violetExtArray = [
         ]
     },
     {
-        'name': 'Mauve',
+        'name': colorNames['Mauve'],
         'hex': '#eabffa',
         'rgb': [
             234,
@@ -818,7 +931,7 @@ const violetExtArray = [
         ]
     },
     {
-        'name': 'Pale Purple',
+        'name': colorNames['Pale Purple'],
         'hex': '#f7ebfd',
         'rgb': [
             247,
@@ -829,7 +942,7 @@ const violetExtArray = [
 ];
 const pinkExtArray = [
     {
-        'name': 'Hot Pink',
+        'name': colorNames['Hot Pink'],
         'hex': '#ff70bf',
         'rgb': [
             255,
@@ -838,7 +951,7 @@ const pinkExtArray = [
         ]
     },
     {
-        'name': 'Persian Pink 2',
+        'name': colorNames['Persian Pink 2'],
         'hex': '#ff7ec5',
         'rgb': [
             255,
@@ -847,7 +960,7 @@ const pinkExtArray = [
         ]
     },
     {
-        'name': 'Persian Pink',
+        'name': colorNames['Persian Pink'],
         'hex': '#fe8ccb',
         'rgb': [
             254,
@@ -856,7 +969,7 @@ const pinkExtArray = [
         ]
     },
     {
-        'name': 'Carnation Pink 2',
+        'name': colorNames['Carnation Pink 2'],
         'hex': '#fe9ad1',
         'rgb': [
             254,
@@ -865,7 +978,7 @@ const pinkExtArray = [
         ]
     },
     {
-        'name': 'Carnation Pink',
+        'name': colorNames['Carnation Pink'],
         'hex': '#fea8d7',
         'rgb': [
             254,
@@ -874,7 +987,7 @@ const pinkExtArray = [
         ]
     },
     {
-        'name': 'Cotton Candy 2',
+        'name': colorNames['Cotton Candy 2'],
         'hex': '#fdb6de',
         'rgb': [
             253,
@@ -883,7 +996,7 @@ const pinkExtArray = [
         ]
     },
     {
-        'name': 'Cotton Candy',
+        'name': colorNames['Cotton Candy'],
         'hex': '#fdc4e4',
         'rgb': [
             253,
@@ -892,7 +1005,7 @@ const pinkExtArray = [
         ]
     },
     {
-        'name': 'Pink Lace',
+        'name': colorNames['Pink Lace'],
         'hex': '#fdd2ea',
         'rgb': [
             253,
@@ -901,7 +1014,7 @@ const pinkExtArray = [
         ]
     },
     {
-        'name': 'Mimi Pink',
+        'name': colorNames['Mimi Pink'],
         'hex': '#fce0f0',
         'rgb': [
             252,
@@ -910,7 +1023,7 @@ const pinkExtArray = [
         ]
     },
     {
-        'name': 'Lavender Blush',
+        'name': colorNames['Lavender Blush'],
         'hex': '#fceef6',
         'rgb': [
             252,
@@ -921,7 +1034,7 @@ const pinkExtArray = [
 ];
 const brownExtArray = [
     {
-        'name': 'Bole',
+        'name': colorNames['Bole'],
         'hex': '#774936',
         'rgb': [
             119,
@@ -930,7 +1043,7 @@ const brownExtArray = [
         ]
     },
     {
-        'name': 'Coffee',
+        'name': colorNames['Coffee'],
         'hex': '#8a5a44',
         'rgb': [
             138,
@@ -939,7 +1052,7 @@ const brownExtArray = [
         ]
     },
     {
-        'name': 'Brown Sugar',
+        'name': colorNames['Brown Sugar'],
         'hex': '#9d6b53',
         'rgb': [
             157,
@@ -948,7 +1061,7 @@ const brownExtArray = [
         ]
     },
     {
-        'name': 'Cafe Au Lait',
+        'name': colorNames['Cafe Au Lait'],
         'hex': '#b07d62',
         'rgb': [
             176,
@@ -957,7 +1070,7 @@ const brownExtArray = [
         ]
     },
     {
-        'name': 'Antique Brass',
+        'name': colorNames['Antique Brass'],
         'hex': '#c38e70',
         'rgb': [
             195,
@@ -966,7 +1079,7 @@ const brownExtArray = [
         ]
     },
     {
-        'name': 'Antique Brass 2',
+        'name': colorNames['Antique Brass 2'],
         'hex': '#cd9777',
         'rgb': [
             205,
@@ -975,7 +1088,7 @@ const brownExtArray = [
         ]
     },
     {
-        'name': 'Antique Brass 3',
+        'name': colorNames['Antique Brass 3'],
         'hex': '#d69f7e',
         'rgb': [
             214,
@@ -984,7 +1097,7 @@ const brownExtArray = [
         ]
     },
     {
-        'name': 'Tumbleweed',
+        'name': colorNames['Tumbleweed'],
         'hex': '#deab90',
         'rgb': [
             222,
@@ -993,7 +1106,7 @@ const brownExtArray = [
         ]
     },
     {
-        'name': 'Tumbleweed 2',
+        'name': colorNames['Tumbleweed 2'],
         'hex': '#e6b8a2',
         'rgb': [
             230,
@@ -1002,7 +1115,7 @@ const brownExtArray = [
         ]
     },
     {
-        'name': 'Desert Sand',
+        'name': colorNames['Desert Sand'],
         'hex': '#edc4b3',
         'rgb': [
             237,
@@ -1031,19 +1144,18 @@ const colorArray: Array<Array<ColorObject>> = [
 ];
 
 type AllColorsType = {
-    [key: string]: string
+    [K in colorNames]: string
 }
+const allColors: AllColorsType = {} as AllColorsType;
 
-const allColors: AllColorsType = colorArray.reduce((acc, arr) => {
-    const newAcc: { [key: string]: string } = {};
+colorArray.forEach((arr) => {
     arr.forEach((c) => {
-        newAcc[c.name] = c.hex;
+        allColors[c.name as colorNames] = c.hex;
     });
-    return Object.assign({}, acc, newAcc);
-}, {});
+});
 
 const getColorNameByHex = (hex: string) => {
-    return Object.keys(allColors).find((k) => allColors[k] === hex);
+    return Object.keys(allColors).find((k) => allColors[k as colorNames] === hex);
 };
 
 const allObjectColors = colorArray.reduce((acc, arr) => {
@@ -1057,16 +1169,16 @@ const allObjectColors = colorArray.reduce((acc, arr) => {
     return Object.assign({}, acc, newAcc);
 }, {});
 
-const allRgbColors: AllColorsType = colorArray.reduce((acc, arr) => {
-    const newAcc: { [key: string]: string } = {};
+const allRgbColors: AllColorsType = {} as AllColorsType;
+
+colorArray.forEach((arr) => {
     arr.forEach((c) => {
-        newAcc[c.name] = c.rgb.join();
+        allRgbColors[c.name as colorNames] = c.rgb.join();
     });
-    return Object.assign({}, acc, newAcc);
-}, {});
+});
 
 export type ColorObject = {
-    name: string,
+    name: colorNames | '',
     hex: string,
     rgb: Array<number>,
 }
@@ -1089,4 +1201,4 @@ const palette: ColorPaletteType = {
     black: blackExtArray,
 };
 
-export { palette, allColors, allRgbColors, allObjectColors, getColorNameByHex };
+export { palette, allColors, allRgbColors, allObjectColors, getColorNameByHex, colorNames };

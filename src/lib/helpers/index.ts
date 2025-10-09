@@ -11,19 +11,8 @@ export const calculateInnerElementLength = (length: string) => ({
     full: '100%'
 }[length]);
 
-export const mergeClasses = (
-    currentClass: string,
-    additionalClasses: string | Array<string>
-) => {
-    const classesToMerge = Array.isArray(additionalClasses)
-        ? additionalClasses
-        : [additionalClasses];
-    let newClass = currentClass;
-
-    classesToMerge.forEach(c => {
-        newClass = `${newClass} ${c}`;
-    });
-    return newClass;
+export const mergeClasses = (...classNames: (string | undefined)[]): string => {
+    return classNames.filter(Boolean).join(' ');
 };
 
 export const elaborateComputedWidth = (width: string, padding = 32) => {
