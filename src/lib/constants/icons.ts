@@ -50,7 +50,13 @@ import {
     AiOutlineAlignCenter,
     AiOutlineAlignLeft,
     AiOutlineAlignRight,
-    AiOutlineFullscreen
+    AiOutlineFullscreen,
+    AiOutlineSortAscending,
+    AiOutlineSortDescending,
+    AiOutlineDoubleLeft,
+    AiOutlineDoubleRight,
+    AiOutlineLeft,
+    AiOutlineRight
 } from 'react-icons/ai';
 import {
     GiWolverineClaws,
@@ -165,7 +171,13 @@ export enum IconList {
     fullScreen = 'full-screen',
     square = 'square',
     auto = 'auto',
-    pointer = 'pointer'
+    pointer = 'pointer',
+    sortAscending = 'sort-ascending',
+    sortDescending = 'sort-descending',
+    outlineLeft  = 'outline-left',
+    outlineRight = 'outline-right',
+    outlineDoubleLeft = 'outline-double-left',
+    outlineDoubleRight = 'outline-double-right',
 }
 
 interface IconInterface {
@@ -249,5 +261,11 @@ export const iconMap: IconInterface = {
     [IconList.fullScreen]: AiOutlineFullscreen,
     [IconList.square]: BiSquare,
     [IconList.auto]: MdAutoAwesome,
-    [IconList.pointer]: FaRegHandPointer
+    [IconList.pointer]: FaRegHandPointer,
+    [IconList.sortAscending]: AiOutlineSortAscending,
+    [IconList.sortDescending]: AiOutlineSortDescending,
+    [IconList.outlineDoubleLeft]: AiOutlineDoubleLeft,
+    [IconList.outlineDoubleRight]: AiOutlineDoubleRight,
+    [IconList.outlineLeft]: AiOutlineLeft,
+    [IconList.outlineRight]: AiOutlineRight
 };

@@ -12,3 +12,4 @@ export { Portal } from './Portal';
 export { Modal } from './Modal';
 export { Badge } from './Badge';
 export { ButtonGroup } from './ButtonGroup';
+export { Table } from './Table';

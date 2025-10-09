@@ -12,7 +12,8 @@ interface IconWrapperInterface {
     borderRadius?: BorderRadius,
     padding?: Padding,
     cursor?: Cursors,
-    shadow?: boolean
+    shadow?: boolean,
+    disabled?: boolean,
 }
 
 const IconWrapper = styled.div<IconWrapperInterface>`
@@ -26,6 +27,11 @@ const IconWrapper = styled.div<IconWrapperInterface>`
     background-color: ${props => props.backgroundColor};
     border-radius: ${props => props.borderRadius};
     padding: ${props => props.padding};
+    ${props => props.disabled ? `
+        opacity: 0.5;
+        pointer-events: none;
+        cursor: not-allowed;
+    ` : ''}
 
     ${props => props.shadow ? `box-shadow: rgb(0 0 0 / 20%) 0px 3px 5px -1px,
         rgb(0 0 0 / 14%) 0px 6px 10px 0px,
@@ -42,6 +48,7 @@ interface IconProps {
     padding?: Padding,
     cursor?: Cursors,
     shadow?: boolean,
+    disabled?: boolean,
     onClick?: () => void
 }
 
@@ -55,6 +62,7 @@ function Icon({
     cursor,
     className,
     shadow,
+    disabled,
     onClick
 }: IconProps) {
     const IconComponent = iconMap[icon as IconList | string];
@@ -66,6 +74,7 @@ function Icon({
             className={mergeClasses('ie-icon', className)}
             cursor={cursor}
             shadow={shadow}
+            disabled={disabled}
             onClick={(onClick)}
         >
             {IconComponent ? (
