@@ -24,8 +24,7 @@ const ColorPickerContainer = styled.div`
 `;
 
 interface StyledColorPickerInterface {
-    color: string,
-    ref: React.RefObject<HTMLDivElement>
+    $color: string
 }
 
 const StyledColorPicker = styled.div<StyledColorPickerInterface>`
@@ -34,7 +33,7 @@ const StyledColorPicker = styled.div<StyledColorPickerInterface>`
     height: 1.5em;
     border-radius: 3px;
     border: 1px solid #666;
-    background: ${props => props.color};
+    background: ${props => props.$color};
 `;
 
 interface ColorPickerAdvancedWrapperInterface {
@@ -390,7 +389,7 @@ const ColorPickerElement = memo(({
                 <StyledColorPicker
                     className="ie-color-picker__element__picker"
                     ref={styledColorPickerRef}
-                    color={selectedColor}
+                    $color={selectedColor}
                     onClick={toggling}
                 />
                 {isOpen && (

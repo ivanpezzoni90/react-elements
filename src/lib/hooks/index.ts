@@ -18,7 +18,7 @@ export function useEditorInit (defaultProps: any) {
     };
 }
 
-export const useComputedZIndex = (ref: React.RefObject<Element>) => {
+export const useComputedZIndex = (ref: React.RefObject<Element | null>) => {
     const [
         zIndex, setZIndex
     ]: [
@@ -27,8 +27,8 @@ export const useComputedZIndex = (ref: React.RefObject<Element>) => {
     ] = useState(0);
 
     useEffect(() => {
-        if (ref !== null) {
-            const style = window.getComputedStyle(ref.current as Element);
+        if (ref.current) {
+            const style = window.getComputedStyle(ref.current);
             const computedZIndex = style.zIndex;
             if (computedZIndex !== 'auto') {
                 setZIndex(parseInt(computedZIndex, 10) +1);
@@ -40,7 +40,7 @@ export const useComputedZIndex = (ref: React.RefObject<Element>) => {
     return zIndex;
 };
 
-export const useComputedWidth = (ref: React.RefObject<Element>) => {
+export const useComputedWidth = (ref: React.RefObject<Element | null>) => {
     const [
         width, setWidth
     ]: [
@@ -49,8 +49,8 @@ export const useComputedWidth = (ref: React.RefObject<Element>) => {
     ] = useState('');
 
     useEffect(() => {
-        if (ref !== null) {
-            const style = window.getComputedStyle(ref.current as Element);
+        if (ref.current) {
+            const style = window.getComputedStyle(ref.current);
             const computedWidth = style.width;
             setWidth(computedWidth);
         }
@@ -59,11 +59,11 @@ export const useComputedWidth = (ref: React.RefObject<Element>) => {
     return width;
 };
 
-export const useInputValue = (ref: React.RefObject<HTMLInputElement>, defaultValue: string) => {
+export const useInputValue = (ref: React.RefObject<HTMLInputElement | null>, defaultValue: string) => {
     const [value, setValue] = useState(defaultValue);
     useEffect(() => {
-        if (ref !== null) {
-            setValue(ref.current?.getAttribute('value') as string);
+        if (ref.current) {
+            setValue(ref.current.getAttribute('value') as string);
         }
     }, [ref]);
     return value;
@@ -82,9 +82,9 @@ export const useBodyFontSize = () => {
 };
 
 export function useClickOutside (
-    ref: React.RefObject<HTMLDivElement>,
+    ref: React.RefObject<HTMLDivElement | null>,
     cb: VoidFunction,
-    exceptions?: React.RefObject<Element>[]
+    exceptions?: React.RefObject<Element | null>[]
 ) {
     useEffect(() => {
         function handleClickOutside(event: CustomEvent) {

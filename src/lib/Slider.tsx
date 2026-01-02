@@ -128,8 +128,8 @@ const getSliderCursorStyles = (color: string, showSteps?: boolean) => (`
 `);
 
 interface SliderInputInterface {
-    color: string,
-    showSteps?: boolean
+    $color: string,
+    $showSteps?: boolean
 }
 
 const SliderElementContainer = styled.div`
@@ -152,15 +152,16 @@ const SliderInput = styled.input<SliderInputInterface>`
     &::-webkit-slider-thumb {
         -webkit-appearance: none;
         appearance: none;
-        ${({color, showSteps}) => getSliderCursorStyles(color, showSteps)}
+        ${({$color, $showSteps}) => getSliderCursorStyles($color, $showSteps)}
     }
     &::-moz-range-thumb {
-        ${({color, showSteps}) => getSliderCursorStyles(color, showSteps)}
+        ${({$color, $showSteps}) => getSliderCursorStyles($color, $showSteps)}
     }
 `;
 
 interface SliderDataListInterface {
-    showValue: boolean;
+    $showValue: boolean;
+    $color: string;
 }
 
 const SliderDataList = styled.datalist<SliderDataListInterface>`
@@ -170,9 +171,9 @@ const SliderDataList = styled.datalist<SliderDataListInterface>`
     overflow: hidden;
     padding-left: 0.25em;
     padding-right: 0.075em;
-    color: ${props => props.color};
+    color: ${props => props.$color};
 
-    ${(props) => props.showValue ? `
+    ${(props) => props.$showValue ? `
         font-size: 8px;
         height: 1em;
     ` : ''}
@@ -189,7 +190,12 @@ const SliderDataListOption = styled.option`
     }
 `;
 
-const SliderTooltip = styled.output`
+interface SliderTooltipInterface {
+    $left: string;
+    $color: string;
+}
+
+const SliderTooltip = styled.output<SliderTooltipInterface>`
     padding: 0.25em 0.5em;
     position: absolute;
     border-radius: 4px;
@@ -202,12 +208,12 @@ const SliderTooltip = styled.output`
     opacity: 0;
     transition: visibility 0s 0.5s, opacity 0.5s;
 
-    background-color: ${props => props.color};
-    color: ${props => fontColorFromBackground(props.color as string)};
+    background-color: ${props => props.$color};
+    color: ${props => fontColorFromBackground(props.$color)};
     text-align: center;
     border-radius: 6px;
 
-    left: ${({left}: {left: string}) => left};
+    left: ${({$left}) => $left};
 
     ::after {
         content: "";
@@ -217,7 +223,7 @@ const SliderTooltip = styled.output`
         margin-left: -5px;
         border-width: 5px;
         border-style: solid;
-        border-color: ${props => props.color} transparent transparent transparent;
+        border-color: ${props => props.$color} transparent transparent transparent;
     }
 `;
 
@@ -238,7 +244,8 @@ const SliderInputWrapper = styled.div`
 interface SliderValueInterface {
     length: ElementLength,
     labelPosition?: LabelPositions,
-    showSteps?: boolean
+    showSteps?: boolean,
+    $color: string
 }
 const SliderValue = styled.div<SliderValueInterface>`
     ${props => props.labelPosition === LabelPositions.horizontal
@@ -248,7 +255,7 @@ const SliderValue = styled.div<SliderValueInterface>`
         `}
     font-size: ${({length}) =>
         length === ElementLength.l || length === ElementLength.full ? '14px' : '11px'};
-    color: ${props => props.color};
+    color: ${props => props.$color};
     padding-right: 0.5em;
     display: flex;
     width: ${({length}) =>
@@ -342,8 +349,8 @@ function SliderElement({
         return (<SliderDataList
             className="ie-slider__element__slider__data-list"
             id={id}
-            color={cursorColor}
-            showValue={showStepValue}
+            $color={cursorColor}
+            $showValue={showStepValue}
         >
             {Array.from(Array(nOfSteps)).map((e, i) => (
                 <SliderDataListOption
@@ -383,7 +390,7 @@ function SliderElement({
             <SliderValue
                 className="ie-slider__element__value"
                 length={length}
-                color={cursorColor}
+                $color={cursorColor}
                 labelPosition={labelPosition}
                 showSteps={showSteps}
             >
@@ -398,22 +405,22 @@ function SliderElement({
                 <SliderInput
                     className="ie-slider__element__slider__input"
                     name={id}
-                    color={cursorColor}
+                    $color={cursorColor}
                     type="range"
                     step={newStep}
                     min={newMin}
                     max={newMax}
                     value={value}
                     list={id}
-                    showSteps={showSteps}
+                    $showSteps={showSteps}
                     onChange={onSliderChange}
                 />
                 {showTooltip && (
                     <SliderTooltip
                         className="ie-slider__element__slider__tooltip"
                         htmlFor={id}
-                        left={calculateTooltipPosition(newMin, newMax, value)}
-                        color={cursorColor}
+                        $left={calculateTooltipPosition(newMin, newMax, value)}
+                        $color={cursorColor}
                     >
                         {value}
                     </SliderTooltip>

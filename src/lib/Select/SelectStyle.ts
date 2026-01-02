@@ -215,8 +215,8 @@ export const SelectChip = styled.div<SelectChipInterface>`
     font-size: 12px;
 `;
 
-export const ChipText = styled.div`
-    padding: 0 0.5em 0 ${({multiple}: {multiple: boolean}) => multiple ? '0.5em' : '0'};
+export const ChipText = styled.div<{ $multiple: boolean }>`
+    padding: 0 0.5em 0 ${({$multiple}) => $multiple ? '0.5em' : '0'};
 `;
 
 export const ChipsWrapper = styled.div`

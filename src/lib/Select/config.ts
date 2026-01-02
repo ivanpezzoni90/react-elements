@@ -32,8 +32,7 @@ export interface SelectElementProps {
     length: string,
     shadow?: boolean,
     computedWidth: string,
-    textColor?: string,
-    multiple?: boolean
+    textColor?: string
 }
 
 export interface DropDownContainerProps {
@@ -49,7 +48,6 @@ export interface SelectWrapperProps{
     showBorders?: boolean,
     hideBottomBorder?: boolean,
     labelPosition?: LabelPositions,
-    ref: React.RefObject<HTMLDivElement>,
     borderRadius?: BorderRadius
 }
 

@@ -24,7 +24,13 @@ export const fontColorFromBackground = (colorCode: string): string => {
 };
 
 export const hexToRgb: HexToRgbType = (colorCode) => {
+    if (!colorCode || typeof colorCode !== 'string' || !colorCode.startsWith('#')) {
+        return { r: 0, g: 0, b: 0 };
+    }
     const code = colorCode.slice(1);
+    if (code.length < 6 || !/^[0-9a-fA-F]+$/.test(code)) {
+        return { r: 0, g: 0, b: 0 };
+    }
  
     const num = parseInt(code, 16);
 
@@ -80,6 +86,9 @@ export function shadeColor(color: string, percent: number) {
  * @returns {String} The color lighter or darker
  */
 export function lightenDarkenColor(color: string, amount: number): string {
+    if (!color || typeof color !== 'string') {
+        return '#000000';
+    }
     return `#${color
         .replace(/^#/, '')
         .replace(/../g, color => (

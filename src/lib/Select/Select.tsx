@@ -166,7 +166,7 @@ function Select(props: SelectProps) {
         ) : null}
         <ChipText
             className="ie-select__element__chip_text"
-            multiple={multiple}
+            $multiple={multiple}
         >
             {currentOptionObject && currentOptionObject.label}
         </ChipText>
@@ -221,7 +221,6 @@ function Select(props: SelectProps) {
                     length={length}
                     shadow={shadow}
                     computedWidth={selectElementWidth}
-                    multiple={multiple}
                     textColor={textColor}
                 >
                     <ChipsWrapper

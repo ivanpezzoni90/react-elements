@@ -1,14 +1,16 @@
 {
   "compilerOptions": {
     "strict": true,
-    "jsx": "react",
+    "jsx": "react-jsx",
     "declaration": true,
     "esModuleInterop": true,
     "outDir": "dist/lib",
     "rootDir": "./src/lib",
     "target": "es6",
     "module": "es6",
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "types": ["react", "react-dom"]
   },
   "include": ["src/lib"]
 }

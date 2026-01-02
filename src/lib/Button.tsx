@@ -147,9 +147,9 @@ interface ButtonProps {
     onClick: VoidFunction
 }
 
-const LabelWrapper = styled.div`
+const LabelWrapper = styled.div<{ $length: ElementLength }>`
     padding: 0 0.25em 0 0.25em;
-    max-width: ${({length}: {length: ElementLength}) => length};
+    max-width: ${({$length}) => $length};
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
@@ -208,7 +208,7 @@ const Button = ({
             {icon && elementPosition === ElementPosition.left && IconElement}
             <LabelWrapper
                 className="ie-button__label"
-                length={length}
+                $length={length}
             >
                 {label}
             </LabelWrapper>

@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
       "strict": true,
-      "jsx": "react",
+      "jsx": "react-jsx",
       "declaration": true,
       "esModuleInterop": true,
       "outDir": "dist",
@@ -9,7 +9,7 @@
       "target": "es6",
       "module": "es6",
       "moduleResolution": "node",
-      "types": ["node", "vite/client"]
+      "types": ["node", "react", "react-dom", "vite/client"]
     },
     "include": ["src"],
 }
