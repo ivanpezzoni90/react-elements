@@ -1,78 +1,78 @@
 {
-    "name": "react-interface-elements",
-    "description": "React interface elements",
-    "author": "ivanpezzoni90",
-    "keywords": [
-        "react",
-        "elements",
-        "ui",
-        "component",
-        "interface"
+  "name": "react-interface-elements",
+  "description": "React interface elements",
+  "author": "ivanpezzoni90",
+  "keywords": [
+    "react",
+    "elements",
+    "ui",
+    "component",
+    "interface"
+  ],
+  "version": "1.1.5",
+  "dependencies": {
+    "react-icons": "^4.3.1",
+    "react-scripts": "5.0.1",
+    "styled-components": "^5.3.3",
+    "throttle-debounce": "^3.0.1",
+    "web-vitals": "^2.1.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ivanpezzoni90/react-elements"
+  },
+  "devDependencies": {
+    "@cypress/mount-utils": "^2.0.0",
+    "@types/jest": "^28.1.6",
+    "@types/react": "^18.0.14",
+    "@types/react-dom": "^18.0.5",
+    "@types/styled-components": "^5.1.23",
+    "@types/throttle-debounce": "^2.1.0",
+    "@typescript-eslint/eslint-plugin": "^5.12.1",
+    "@typescript-eslint/parser": "^5.12.1",
+    "cypress": "^10.3.0",
+    "cypress-real-events": "^1.7.2",
+    "eslint": "^8.9.0",
+    "eslint-plugin-cypress": "^2.12.1",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-only-warn": "^1.0.3",
+    "eslint-plugin-react": "^7.29.1",
+    "eslint-plugin-react-hooks": "^4.3.0",
+    "jest": "^28.1.3",
+    "react": "^18.2.0",
+    "react-code-blocks": "^0.0.9-0",
+    "react-dom": "^18.2.0",
+    "typescript": "^4.7.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "clean": "rm -rf dist",
+    "cypress": "sudo ./node_modules/.bin/cypress open",
+    "build-dist": "npm run clean && tsc && cp package.json README.md ./dist/lib",
+    "lintfix": "eslint --fix --ext .js,.jsx,.ts,.tsx .",
+    "cypress-run-components": "npx cypress run --component",
+    "cypress-run-e2e": "npx cypress run",
+    "jest": "jest"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
     ],
-    "version": "1.1.4",
-    "dependencies": {
-        "cypress-real-events": "^1.7.2",
-        "react-icons": "^4.3.1",
-        "react-scripts": "5.0.1",
-        "styled-components": "^5.3.3",
-        "throttle-debounce": "^3.0.1",
-        "web-vitals": "^2.1.4"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/ivanpezzoni90/react-elements"
-    },
-    "devDependencies": {
-        "@cypress/mount-utils": "^2.0.0",
-        "@types/jest": "^28.1.6",
-        "@types/react": "^18.0.14",
-        "@types/react-dom": "^18.0.5",
-        "@types/styled-components": "^5.1.23",
-        "@types/throttle-debounce": "^2.1.0",
-        "@typescript-eslint/eslint-plugin": "^5.12.1",
-        "@typescript-eslint/parser": "^5.12.1",
-        "cypress": "^10.3.0",
-        "eslint": "^8.9.0",
-        "eslint-plugin-cypress": "^2.12.1",
-        "eslint-plugin-jsx-a11y": "^6.5.1",
-        "eslint-plugin-only-warn": "^1.0.3",
-        "eslint-plugin-react": "^7.29.1",
-        "eslint-plugin-react-hooks": "^4.3.0",
-        "jest": "^28.1.3",
-        "react": "^18.2.0",
-        "react-code-blocks": "^0.0.9-0",
-        "react-dom": "^18.2.0",
-        "typescript": "^4.7.4"
-    },
-    "scripts": {
-        "start": "react-scripts start",
-        "build": "react-scripts build",
-        "test": "react-scripts test",
-        "eject": "react-scripts eject",
-        "clean": "rm -rf dist",
-        "cypress": "sudo ./node_modules/.bin/cypress open",
-        "build-dist": "npm run clean && tsc && cp package.json README.md ./dist/lib",
-        "lintfix": "eslint --fix --ext .js,.jsx,.ts,.tsx .",
-        "cypress-run-components": "npx cypress run --component",
-        "cypress-run-e2e": "npx cypress run",
-        "jest": "jest"
-    },
-    "eslintConfig": {
-        "extends": [
-            "react-app",
-            "react-app/jest"
-        ]
-    },
-    "browserslist": {
-        "production": [
-            ">0.2%",
-            "not dead",
-            "not op_mini all"
-        ],
-        "development": [
-            "last 1 chrome version",
-            "last 1 firefox version",
-            "last 1 safari version"
-        ]
-    }
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
 }
