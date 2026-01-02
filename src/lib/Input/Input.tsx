@@ -37,13 +37,22 @@ function InputElement({
     name
 }: InputTypeProps) {
     const inputElementRef = useRef<HTMLInputElement>(null);
+    const coerceNumber = (value?: number | string): number | undefined => {
+        if (value === undefined || value === null || value === '') {
+            return undefined;
+        }
+        const parsed = typeof value === 'number' ? value : Number(value);
+        return Number.isNaN(parsed) ? undefined : parsed;
+    };
+    const maxValue = coerceNumber(max);
+    const minValue = coerceNumber(min);
     const checkValidators: CheckValidatorsType = useCallback((newValue, opts = {}) => {
         switch (type) {
             case InputTypes.text:
-                if (max && newValue.length > max) {
+                if (maxValue !== undefined && newValue.length > maxValue) {
                     return false;
                 }
-                if (min && newValue.length < min) {
+                if (minValue !== undefined && newValue.length < minValue) {
                     setError(true);
                 } else {
                     setError(false);
@@ -52,8 +61,8 @@ function InputElement({
             case InputTypes.number: {
                 const parsedValue = parseFloat(newValue);
                 if (
-                    (max !== undefined && parsedValue > max)
-                    || (min !== undefined && parsedValue < min)
+                    (maxValue !== undefined && parsedValue > maxValue)
+                    || (minValue !== undefined && parsedValue < minValue)
                 ) {
                     setError(true);
                     if (opts.changeFromCaret) {
@@ -66,7 +75,7 @@ function InputElement({
             }
         }
         return true;
-    }, [max, min, type, setError]);
+    }, [maxValue, minValue, type, setError]);
    
     
     const onChangeValue = throttle(200, (
@@ -103,11 +112,11 @@ function InputElement({
 
     const maxMin = type === InputTypes.text
         ? {
-            minLength: min as number,
-            maxLength: max as number
+            minLength: minValue,
+            maxLength: maxValue
         } : {
-            min: min,
-            max: max
+            min: minValue,
+            max: maxValue
         };
 
     const commonElementProps = {

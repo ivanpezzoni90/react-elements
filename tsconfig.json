@@ -9,7 +9,7 @@
       "target": "es6",
       "module": "es6",
       "moduleResolution": "node",
-      "types": ["cypress", "node"]
+      "types": ["node", "vite/client"]
     },
     "include": ["src"],
 }
